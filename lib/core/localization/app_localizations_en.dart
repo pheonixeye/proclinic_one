@@ -18,4 +18,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get todayVisits => 'Today\'s Visits';
+
+  @override
+  String get login => 'Login';
+
+  @override
+  String get register => 'Create Account';
 }

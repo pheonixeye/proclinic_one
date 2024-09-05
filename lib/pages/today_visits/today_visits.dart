@@ -11,11 +11,13 @@ class TodayVisits extends StatelessWidget {
     return Consumer<PxLocale>(
       builder: (context, l, _) {
         return Scaffold(
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(DateFormat('dd/MM/yyyy', l.lang).format(DateTime.now())),
-            ],
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(DateFormat('dd/MM/yyyy', l.lang).format(DateTime.now())),
+              ],
+            ),
           ),
         );
       },

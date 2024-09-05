@@ -122,6 +122,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Today\'s Visits'**
   String get todayVisits;
+
+  /// No description provided for @login.
+  ///
+  /// In en, this message translates to:
+  /// **'Login'**
+  String get login;
+
+  /// No description provided for @register.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Account'**
+  String get register;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -80,9 +80,9 @@ class ErrorPage extends StatelessWidget {
                           backgroundColor: Colors.white,
                         ),
                         onPressed: () {
-                          //todo: go to homepage
+                          //TODO: go to homepage
                           GoRouter.of(context).goNamed(
-                            AppRouter.home,
+                            AppRouter.lang,
                             pathParameters: defaultPathParameters(context),
                           );
                         },

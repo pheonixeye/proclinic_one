@@ -3,5 +3,7 @@
     "somethingWentWrong" : "Something Went Wrong",
     "errorText" : "This Page Seems To Be Moved Or Not Available At The Moment, Kindly Try Again Later.",
     "loading" : "Loading...",
-    "todayVisits" : "Today's Visits"
+    "todayVisits" : "Today's Visits",
+    "login": "Login",
+    "register": "Create Account"
 }

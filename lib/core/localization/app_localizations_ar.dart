@@ -18,4 +18,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get todayVisits => 'زيارات اليوم';
+
+  @override
+  String get login => 'تسجيل الدخول';
+
+  @override
+  String get register => 'انشاء حساب';
 }

@@ -1,22 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:proklinik_doctor_portal/functions/dprint.dart';
 import 'package:proklinik_doctor_portal/pages/error_page/error_page.dart';
-import 'package:proklinik_doctor_portal/pages/home_page/home_page.dart';
+import 'package:proklinik_doctor_portal/pages/lang_page/lang_page.dart';
 import 'package:proklinik_doctor_portal/pages/loading_page/loading_page.dart';
-import 'package:proklinik_doctor_portal/pages/shell_page/shell_page.dart';
-import 'package:proklinik_doctor_portal/pages/today_visits/today_visits.dart';
+import 'package:proklinik_doctor_portal/pages/login_page/login_page.dart';
 import 'package:proklinik_doctor_portal/providers/px_locale.dart';
 import 'package:proklinik_doctor_portal/utils/utils_keys.dart';
 import 'package:provider/provider.dart';
 
-const _langs = ["en", "ar"];
-
 Map<String, String> defaultPathParameters(BuildContext context) {
   final lang = context.read<PxLocale>().lang;
-  return {
-    "lang": lang,
-  };
+  return {"lang": lang};
 }
 
 /// GoRouter configuration
@@ -24,10 +18,14 @@ Map<String, String> defaultPathParameters(BuildContext context) {
 class AppRouter {
   AppRouter();
   static const String loading = "/";
-  static const String home = ":lang";
+  static const String lang = ":lang";
+  static const String login = "login";
+  static const String register = "register";
+  static const String app = "app";
   static const String todayvisits = "today";
 
   static final router = GoRouter(
+    debugLogDiagnostics: true,
     refreshListenable: Listenable.merge(
       [
         PxLocale(),
@@ -36,8 +34,8 @@ class AppRouter {
     navigatorKey: UtilsKeys.navigatorKey,
     initialLocation: loading,
     redirect: (context, state) {
-      dprint(state.fullPath);
       if (state.fullPath == '/') {
+        context.read<PxLocale>().setLang('en');
         return '/en';
       } else {
         final lang = state.pathParameters['lang'];
@@ -63,40 +61,23 @@ class AppRouter {
           );
         },
         routes: [
-          ShellRoute(
-            pageBuilder: (context, state, child) {
-              final lang = state.pathParameters["lang"]!;
-
-              final key = ValueKey((lang, state.pageKey));
-              return MaterialPage(
-                child: ShellPage(
-                  key: key,
-                  child: child,
-                ),
+          GoRoute(
+            path: lang,
+            name: lang,
+            builder: (context, state) {
+              return LangPage(
+                key: state.pageKey,
               );
             },
             routes: [
               GoRoute(
-                path: home,
-                name: home,
+                path: login,
+                name: login,
                 builder: (context, state) {
-                  final lang = state.pathParameters["lang"]!;
-                  final key = ValueKey(lang);
-                  return HomePage(
-                    key: key,
+                  return LoginPage(
+                    key: state.pageKey,
                   );
                 },
-                routes: [
-                  GoRoute(
-                    path: todayvisits,
-                    name: todayvisits,
-                    builder: (context, state) {
-                      return TodayVisits(
-                        key: state.pageKey,
-                      );
-                    },
-                  ),
-                ],
               ),
             ],
           ),

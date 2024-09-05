@@ -12,6 +12,7 @@ class EndDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      elevation: 8.0,
       width: MediaQuery.sizeOf(context).width * 0.65,
       backgroundColor: Colors.green.shade500.withOpacity(0.9),
       child: Column(
