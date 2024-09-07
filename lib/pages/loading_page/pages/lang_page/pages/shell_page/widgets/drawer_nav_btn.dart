@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:proklinik_doctor_portal/extensions/is_mobile_context.dart';
 import 'package:proklinik_doctor_portal/providers/px_locale.dart';
+import 'package:proklinik_doctor_portal/router/router.dart';
 import 'package:proklinik_doctor_portal/theme/app_theme.dart';
 import 'package:provider/provider.dart';
 
@@ -30,7 +31,10 @@ class _DrawerNavBtnState extends State<DrawerNavBtn> {
           child: ListTile(
             mouseCursor: SystemMouseCursors.click,
             onTap: () {
-              GoRouter.of(context).go("/${l.lang}/${widget.routePath ?? ''}");
+              GoRouter.of(context).goNamed(
+                widget.routePath!,
+                pathParameters: defaultPathParameters(context),
+              );
               if (context.isMobile) {
                 Scaffold.of(context).closeEndDrawer();
               }

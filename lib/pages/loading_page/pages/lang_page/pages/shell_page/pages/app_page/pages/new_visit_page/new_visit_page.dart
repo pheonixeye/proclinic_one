@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:proklinik_doctor_portal/extensions/loc_ext.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class NewVisitPage extends StatelessWidget {
+  const NewVisitPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +10,7 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(context.loc.homepage),
+            Text('New Visit Page'),
           ],
         ),
       ),

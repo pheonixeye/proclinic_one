@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:proklinik_doctor_portal/pages/error_page/error_page.dart';
-import 'package:proklinik_doctor_portal/pages/lang_page/lang_page.dart';
+import 'package:proklinik_doctor_portal/core/api/auth/auth.dart';
+import 'package:proklinik_doctor_portal/functions/dprint.dart';
+import 'package:proklinik_doctor_portal/pages/loading_page/pages/error_page/error_page.dart';
+import 'package:proklinik_doctor_portal/pages/loading_page/pages/lang_page/lang_page.dart';
 import 'package:proklinik_doctor_portal/pages/loading_page/loading_page.dart';
-import 'package:proklinik_doctor_portal/pages/login_page/login_page.dart';
+import 'package:proklinik_doctor_portal/pages/loading_page/pages/lang_page/pages/login_page/login_page.dart';
+import 'package:proklinik_doctor_portal/pages/loading_page/pages/lang_page/pages/register_page/register_page.dart';
+import 'package:proklinik_doctor_portal/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/app_page.dart';
+import 'package:proklinik_doctor_portal/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/appointment_organizer_page/appointment_organizer_page.dart';
+import 'package:proklinik_doctor_portal/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/bookkeeping_page/bookkeeping_page.dart';
+import 'package:proklinik_doctor_portal/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/new_visit_page/new_visit_page.dart';
+import 'package:proklinik_doctor_portal/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/patients_page/patients_page.dart';
+import 'package:proklinik_doctor_portal/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/settings_page/settings_page.dart';
+import 'package:proklinik_doctor_portal/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/today_visits/today_visits.dart';
+import 'package:proklinik_doctor_portal/pages/loading_page/pages/lang_page/pages/shell_page/shell_page.dart';
 import 'package:proklinik_doctor_portal/providers/px_locale.dart';
 import 'package:proklinik_doctor_portal/utils/utils_keys.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +33,12 @@ class AppRouter {
   static const String login = "login";
   static const String register = "register";
   static const String app = "app";
-  static const String todayvisits = "today";
+  static const String todayvisits = "todayvisits";
+  static const String newvisit = "newvisit";
+  static const String patients = "patients";
+  static const String organizer = "organizer";
+  static const String bookkeeping = "bookkeeping";
+  static const String settings = "settings";
 
   static final router = GoRouter(
     debugLogDiagnostics: true,
@@ -69,6 +85,16 @@ class AppRouter {
                 key: state.pageKey,
               );
             },
+            redirect: (context, state) async {
+              //TODO: check saved token logic
+              // final lang = state.pathParameters['lang'];
+              // ignore: no_leading_underscores_for_local_identifiers
+              // final _token = await AppDummyAuth.fetchAuthToken();
+              // dprint(_token);
+              // if (_token != null) return '/$lang/$app';
+              // if (_token == null) return '/$lang/$login';
+              return null;
+            },
             routes: [
               GoRoute(
                 path: login,
@@ -78,6 +104,90 @@ class AppRouter {
                     key: state.pageKey,
                   );
                 },
+              ),
+              GoRoute(
+                path: register,
+                name: register,
+                builder: (context, state) {
+                  return RegisterPage(
+                    key: state.pageKey,
+                  );
+                },
+              ),
+              ShellRoute(
+                builder: (context, state, child) {
+                  return ShellPage(
+                    key: state.pageKey,
+                    child: child,
+                  );
+                },
+                routes: [
+                  GoRoute(
+                    path: app,
+                    name: app,
+                    builder: (context, state) {
+                      return AppPage(
+                        key: state.pageKey,
+                      );
+                    },
+                    routes: [
+                      GoRoute(
+                        path: todayvisits,
+                        name: todayvisits,
+                        builder: (context, state) {
+                          return TodayVisits(
+                            key: state.pageKey,
+                          );
+                        },
+                      ),
+                      GoRoute(
+                        path: newvisit,
+                        name: newvisit,
+                        builder: (context, state) {
+                          return NewVisitPage(
+                            key: state.pageKey,
+                          );
+                        },
+                      ),
+                      GoRoute(
+                        path: patients,
+                        name: patients,
+                        builder: (context, state) {
+                          return PatientsPage(
+                            key: state.pageKey,
+                          );
+                        },
+                      ),
+                      GoRoute(
+                        path: organizer,
+                        name: organizer,
+                        builder: (context, state) {
+                          return AppointmentOrganizerPage(
+                            key: state.pageKey,
+                          );
+                        },
+                      ),
+                      GoRoute(
+                        path: bookkeeping,
+                        name: bookkeeping,
+                        builder: (context, state) {
+                          return BookkeepingPage(
+                            key: state.pageKey,
+                          );
+                        },
+                      ),
+                      GoRoute(
+                        path: settings,
+                        name: settings,
+                        builder: (context, state) {
+                          return SettingsPage(
+                            key: state.pageKey,
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ],
           ),

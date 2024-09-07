@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:proklinik_doctor_portal/extensions/after_layout.dart';
 import 'package:proklinik_doctor_portal/extensions/is_mobile_context.dart';
-import 'package:proklinik_doctor_portal/pages/shell_page/widgets/end_drawer.dart';
-import 'package:proklinik_doctor_portal/pages/shell_page/widgets/language_btn.dart';
-import 'package:proklinik_doctor_portal/pages/shell_page/widgets/nav_bar.dart';
-import 'package:proklinik_doctor_portal/providers/px_locale.dart';
-import 'package:provider/provider.dart';
+import 'package:proklinik_doctor_portal/pages/loading_page/pages/lang_page/pages/shell_page/widgets/end_drawer.dart';
+import 'package:proklinik_doctor_portal/pages/loading_page/pages/lang_page/pages/shell_page/widgets/language_btn.dart';
+import 'package:proklinik_doctor_portal/pages/loading_page/pages/lang_page/pages/shell_page/widgets/nav_bar.dart';
 
 class ShellPage extends StatefulWidget {
   const ShellPage({super.key, required this.child});
@@ -15,7 +12,7 @@ class ShellPage extends StatefulWidget {
   State<ShellPage> createState() => _ShellPageState();
 }
 
-class _ShellPageState extends State<ShellPage> with AfterLayoutMixin {
+class _ShellPageState extends State<ShellPage> {
   late final ScrollController _controller;
 
   @override
@@ -31,14 +28,10 @@ class _ShellPageState extends State<ShellPage> with AfterLayoutMixin {
   }
 
   @override
-  void afterFirstLayout(BuildContext context) {
-    context.read<PxLocale>().setLocale();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const Navbar(),
+      //TODO: Adjust location of navigation drawer according to language
       body: Row(
         children: [
           if (!context.isMobile)
@@ -57,23 +50,3 @@ class _ShellPageState extends State<ShellPage> with AfterLayoutMixin {
     );
   }
 }
-///
-///ListView(
-///  controller: _controller,
-///  shrinkWrap: true,
-///  children: [
-///    FutureBuilder<Widget>(
-///      future: _buildWidgetChild(),
-///      builder: (context, snapshot) {
-///        while (!snapshot.hasData || snapshot.data == null) {
-///          return const Center(
-///            child: CircularProgressIndicator.adaptive(),
-///          );
-///        }
-///        return snapshot.data!;
-///      },
-///    ),
-///    const FooterSection(),
-///  ],
-///)
-///
