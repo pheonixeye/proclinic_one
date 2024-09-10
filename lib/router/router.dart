@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:proklinik_doctor_portal/core/api/auth/auth.dart';
-import 'package:proklinik_doctor_portal/functions/dprint.dart';
 import 'package:proklinik_doctor_portal/pages/loading_page/pages/error_page/error_page.dart';
 import 'package:proklinik_doctor_portal/pages/loading_page/pages/lang_page/lang_page.dart';
 import 'package:proklinik_doctor_portal/pages/loading_page/loading_page.dart';
@@ -10,7 +8,7 @@ import 'package:proklinik_doctor_portal/pages/loading_page/pages/lang_page/pages
 import 'package:proklinik_doctor_portal/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/app_page.dart';
 import 'package:proklinik_doctor_portal/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/appointment_organizer_page/appointment_organizer_page.dart';
 import 'package:proklinik_doctor_portal/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/bookkeeping_page/bookkeeping_page.dart';
-import 'package:proklinik_doctor_portal/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/new_visit_page/new_visit_page.dart';
+import 'package:proklinik_doctor_portal/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/visits_page/visits_page.dart';
 import 'package:proklinik_doctor_portal/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/patients_page/patients_page.dart';
 import 'package:proklinik_doctor_portal/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/settings_page/settings_page.dart';
 import 'package:proklinik_doctor_portal/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/today_visits/today_visits.dart';
@@ -24,6 +22,11 @@ Map<String, String> defaultPathParameters(BuildContext context) {
   return {"lang": lang};
 }
 
+extension GoRouterExtension on GoRouter {
+  String? get currentRouteName =>
+      routerDelegate.currentConfiguration.last.route.name;
+}
+
 /// GoRouter configuration
 ///
 class AppRouter {
@@ -34,11 +37,14 @@ class AppRouter {
   static const String register = "register";
   static const String app = "app";
   static const String todayvisits = "todayvisits";
-  static const String newvisit = "newvisit";
+  static const String visits = "visits";
   static const String patients = "patients";
   static const String organizer = "organizer";
   static const String bookkeeping = "bookkeeping";
   static const String settings = "settings";
+
+  static String? get currentRouteName =>
+      router.routerDelegate.currentConfiguration.last.route.name;
 
   static final router = GoRouter(
     debugLogDiagnostics: true,
@@ -86,7 +92,7 @@ class AppRouter {
               );
             },
             redirect: (context, state) async {
-              //TODO: check saved token logic
+              ///TODO: check saved token logic
               // final lang = state.pathParameters['lang'];
               // ignore: no_leading_underscores_for_local_identifiers
               // final _token = await AppDummyAuth.fetchAuthToken();
@@ -141,10 +147,10 @@ class AppRouter {
                         },
                       ),
                       GoRoute(
-                        path: newvisit,
-                        name: newvisit,
+                        path: visits,
+                        name: visits,
                         builder: (context, state) {
-                          return NewVisitPage(
+                          return VisitsPage(
                             key: state.pageKey,
                           );
                         },

@@ -16,7 +16,6 @@ class EndDrawer extends StatelessWidget {
       width: MediaQuery.sizeOf(context).width * 0.65,
       backgroundColor: Colors.green.shade500.withOpacity(0.9),
       child: ListView(
-        // mainAxisAlignment: MainAxisAlignment.start,
         children: [
           if (context.isMobile)
             Padding(
@@ -55,9 +54,9 @@ class EndDrawer extends StatelessWidget {
           ),
           const ThinDivider(),
           const DrawerNavBtn(
-            title: 'New Visit',
+            title: 'Visits',
             icondata: FontAwesomeIcons.personCirclePlus,
-            routePath: AppRouter.newvisit,
+            routePath: AppRouter.visits,
           ),
           const ThinDivider(),
           const DrawerNavBtn(

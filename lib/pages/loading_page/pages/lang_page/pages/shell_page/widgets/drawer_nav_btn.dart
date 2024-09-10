@@ -12,10 +12,12 @@ class DrawerNavBtn extends StatefulWidget {
     this.routePath,
     required this.title,
     this.icondata,
+    this.selected = false,
   });
   final String? routePath;
   final String title;
   final IconData? icondata;
+  final bool selected;
 
   @override
   State<DrawerNavBtn> createState() => _DrawerNavBtnState();
@@ -23,12 +25,23 @@ class DrawerNavBtn extends StatefulWidget {
 
 class _DrawerNavBtnState extends State<DrawerNavBtn> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Consumer<PxLocale>(
       builder: (context, l, _) {
+        final r = AppRouter.router.routeInformationProvider;
+        print(r.value.uri.path);
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: ListTile(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(4),
+              side: const BorderSide(color: Colors.white),
+            ),
             mouseCursor: SystemMouseCursors.click,
             onTap: () {
               GoRouter.of(context).goNamed(
@@ -38,8 +51,11 @@ class _DrawerNavBtnState extends State<DrawerNavBtn> {
               if (context.isMobile) {
                 Scaffold.of(context).closeEndDrawer();
               }
+              setState(() {});
             },
             selectedColor: AppTheme.secondaryOrangeColor,
+            selectedTileColor: AppTheme.secondaryOrangeColor,
+            selected: r.value.uri.path.endsWith(widget.routePath!),
             title: Row(
               children: [
                 const SizedBox(width: 20),

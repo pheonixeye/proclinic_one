@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class NewVisitPage extends StatelessWidget {
-  const NewVisitPage({super.key});
+class VisitsPage extends StatelessWidget {
+  const VisitsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +10,7 @@ class NewVisitPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('New Visit Page'),
+            Text('Visits Page'),
           ],
         ),
       ),

@@ -4,6 +4,7 @@ import 'package:proklinik_doctor_portal/assets/assets.dart';
 import 'package:proklinik_doctor_portal/extensions/is_mobile_context.dart';
 import 'package:proklinik_doctor_portal/extensions/switch_lang.dart';
 import 'package:proklinik_doctor_portal/providers/px_locale.dart';
+import 'package:proklinik_doctor_portal/router/router.dart';
 import 'package:provider/provider.dart';
 
 class Navbar extends StatelessWidget implements PreferredSizeWidget {
@@ -20,7 +21,7 @@ class Navbar extends StatelessWidget implements PreferredSizeWidget {
             onTap: context.isMobile
                 ? null
                 : () {
-                    GoRouter.of(context).go("/${l.lang}");
+                    GoRouter.of(context).go("/${l.lang}/${AppRouter.app}");
                   },
             child: Row(
               children: [
