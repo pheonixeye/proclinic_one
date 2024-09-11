@@ -53,6 +53,7 @@ class AppTheme {
         TargetPlatform.windows: FadeUpwardsPageTransitionsBuilder(),
       },
     ),
+    scaffoldBackgroundColor: Colors.green.shade200.withOpacity(0.5),
   );
 
   static get theme => _theme;

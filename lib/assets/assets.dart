@@ -7,4 +7,5 @@ class AppAssets {
   static const String bgSvg = 'assets/images/bg-svg.svg';
   static const String err = 'assets/images/404.svg';
   static const String construction = 'assets/images/const-svg.svg';
+  static const String registerAvatar = 'assets/images/register-avatar.webp';
 }
