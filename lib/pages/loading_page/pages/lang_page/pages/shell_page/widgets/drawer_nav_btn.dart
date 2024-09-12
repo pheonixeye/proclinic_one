@@ -52,15 +52,17 @@ class DrawerNavBtn extends StatelessWidget {
                       ? const SizedBox()
                       : Icon(
                           icondata,
-                          size: 18,
+                          size: selected ? 22 : 18,
+                          color:
+                              selected ? AppTheme.secondaryOrangeColor : null,
                         ),
                 ),
                 const SizedBox(width: 10),
                 Text(
                   title,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w300,
+                  style: TextStyle(
+                    fontSize: selected ? 16 : 14,
+                    fontWeight: selected ? FontWeight.w600 : FontWeight.w300,
                     color: Colors.white,
                   ),
                 ),

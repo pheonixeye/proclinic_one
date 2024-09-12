@@ -5,5 +5,27 @@
     "loading" : "Loading...",
     "todayVisits" : "Today's Visits",
     "login": "Login",
-    "register": "Create Account"
+    "register": "Create Account",
+    "heroTitle" : "A Doctor's Second Brain and Companion.",
+    "heroSubtitle" : "ProKliniK HealthCare CRM is a Powerful Tool to Manage Your Workday and Keep in Touch With Your Patients.",
+    "welcomeBack" : "Welcome Back",
+    "loginTag" : "Connect with Your Patients, Simplify Your Schedule, and Grow Your Practice.",
+    "email" : "Email",
+    "password": "Password",
+    "rememberMe": "Remember Me",
+    "forgotPassword": "Forgot Password ?",
+    "notRegisteredYet": "Not Registered Yet ?",
+    "createAccount": "Create An Account",
+    "enterEmailAddress": "Enter Email Address",
+    "enterPassword" : "Enter Password",
+    "invalidEmailAddress" : "Invalid Email Address",
+    "registerTag" : "Join ProKliniK Today and Empower Your Practice with Better Patient Care and Meaningful Growth.",
+    "confirmPassword" : "Confirm Password",
+    "enterConfirmPassword" : "Confirm Password",
+    "speciality" : "Speciality",
+    "selectSpeciality" : "Select Speciality",
+    "alreadyRegistered" : "Already Registered ?",
+    "passwordsNotMatching" : "Password Not Matching.",
+    "passwordEightLetters" : "Password Length Should Be Longer Than 8 Characters."
+
 }

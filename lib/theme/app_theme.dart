@@ -1,24 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:proklinik_doctor_portal/providers/px_locale.dart';
-import 'package:provider/provider.dart';
 
 class AppTheme {
   const AppTheme();
 
-  static final appBarColor = Colors.green.shade500.withOpacity(0.9);
+  static final appBarColor = Colors.blue.shade500.withOpacity(0.9);
   static final secondaryOrangeColor = Colors.orange.shade500.withOpacity(0.9);
 
   static final _theme = ThemeData(
-    colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+    colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
     useMaterial3: true,
     fontFamily: "IBM",
     textButtonTheme: TextButtonThemeData(
       style: ButtonStyle(
-        foregroundColor: const WidgetStatePropertyAll(Colors.white),
+        shape: WidgetStatePropertyAll(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+        foregroundColor: const WidgetStatePropertyAll(Colors.blue),
         textStyle: const WidgetStatePropertyAll(
           TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w300,
+            color: Colors.white,
+          ),
+        ),
+        overlayColor: WidgetStatePropertyAll(Colors.amber.shade500),
+        surfaceTintColor: WidgetStatePropertyAll(Colors.amber.shade500),
+        mouseCursor: const WidgetStatePropertyAll(SystemMouseCursors.click),
+      ),
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ButtonStyle(
+        shape: WidgetStatePropertyAll(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+        foregroundColor: const WidgetStatePropertyAll(Colors.white),
+        backgroundColor: const WidgetStatePropertyAll(Colors.blue),
+        textStyle: const WidgetStatePropertyAll(
+          TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+            color: Colors.white,
           ),
         ),
         overlayColor: WidgetStatePropertyAll(Colors.amber.shade500),
@@ -39,8 +64,8 @@ class AppTheme {
       centerTitle: false,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(8),
-          bottomRight: Radius.circular(8),
+          bottomLeft: Radius.circular(2),
+          bottomRight: Radius.circular(2),
         ),
       ),
     ),
@@ -53,57 +78,35 @@ class AppTheme {
         TargetPlatform.windows: FadeUpwardsPageTransitionsBuilder(),
       },
     ),
-    scaffoldBackgroundColor: Colors.green.shade200.withOpacity(0.5),
+    scaffoldBackgroundColor: Colors.blue.shade100.withOpacity(0.5),
+    inputDecorationTheme: InputDecorationTheme(
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: const BorderSide(width: 0.8),
+      ),
+    ),
+    listTileTheme: const ListTileThemeData(
+      contentPadding: EdgeInsets.zero,
+      titleTextStyle: TextStyle(
+        color: Colors.black87,
+        fontWeight: FontWeight.bold,
+      ),
+    ),
+    drawerTheme: const DrawerThemeData(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.horizontal(
+          right: Radius.elliptical(8, 8),
+        ),
+      ),
+    ),
   );
 
   static get theme => _theme;
 
-  static RoundedRectangleBorder localizedCardBorder(
-    BuildContext context,
-    int index,
-  ) {
-    final isEnglish = context.read<PxLocale>().lang == "en";
-    const borderRadius = 16.0;
-    if (index == 1 || index == 2) {
-      return RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(0),
-      );
-    }
-    if (isEnglish && index == 0) {
-      return const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(borderRadius),
-          bottomLeft: Radius.circular(borderRadius),
-        ),
-      );
-    } else if (isEnglish && index == 3) {
-      return const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topRight: Radius.circular(borderRadius),
-          bottomRight: Radius.circular(borderRadius),
-        ),
-      );
-    } else if (!isEnglish && index == 0) {
-      return const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topRight: Radius.circular(borderRadius),
-          bottomRight: Radius.circular(borderRadius),
-        ),
-      );
-    } else {
-      return const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(borderRadius),
-          bottomLeft: Radius.circular(borderRadius),
-        ),
-      );
-    }
-  }
-
   static BoxDecoration searchContainerDecoration = BoxDecoration(
     border: Border.all(
       width: 3,
-      color: Colors.green.shade800,
+      color: Colors.blue.shade800,
     ),
   );
 

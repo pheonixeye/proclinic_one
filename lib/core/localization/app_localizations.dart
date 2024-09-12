@@ -134,6 +134,132 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Create Account'**
   String get register;
+
+  /// No description provided for @heroTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'A Doctor\'s Second Brain and Companion.'**
+  String get heroTitle;
+
+  /// No description provided for @heroSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'ProKliniK HealthCare CRM is a Powerful Tool to Manage Your Workday and Keep in Touch With Your Patients.'**
+  String get heroSubtitle;
+
+  /// No description provided for @welcomeBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome Back'**
+  String get welcomeBack;
+
+  /// No description provided for @loginTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect with Your Patients, Simplify Your Schedule, and Grow Your Practice.'**
+  String get loginTag;
+
+  /// No description provided for @email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get email;
+
+  /// No description provided for @password.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password;
+
+  /// No description provided for @rememberMe.
+  ///
+  /// In en, this message translates to:
+  /// **'Remember Me'**
+  String get rememberMe;
+
+  /// No description provided for @forgotPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot Password ?'**
+  String get forgotPassword;
+
+  /// No description provided for @notRegisteredYet.
+  ///
+  /// In en, this message translates to:
+  /// **'Not Registered Yet ?'**
+  String get notRegisteredYet;
+
+  /// No description provided for @createAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Create An Account'**
+  String get createAccount;
+
+  /// No description provided for @enterEmailAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Email Address'**
+  String get enterEmailAddress;
+
+  /// No description provided for @enterPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Password'**
+  String get enterPassword;
+
+  /// No description provided for @invalidEmailAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid Email Address'**
+  String get invalidEmailAddress;
+
+  /// No description provided for @registerTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Join ProKliniK Today and Empower Your Practice with Better Patient Care and Meaningful Growth.'**
+  String get registerTag;
+
+  /// No description provided for @confirmPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get confirmPassword;
+
+  /// No description provided for @enterConfirmPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get enterConfirmPassword;
+
+  /// No description provided for @speciality.
+  ///
+  /// In en, this message translates to:
+  /// **'Speciality'**
+  String get speciality;
+
+  /// No description provided for @selectSpeciality.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Speciality'**
+  String get selectSpeciality;
+
+  /// No description provided for @alreadyRegistered.
+  ///
+  /// In en, this message translates to:
+  /// **'Already Registered ?'**
+  String get alreadyRegistered;
+
+  /// No description provided for @passwordsNotMatching.
+  ///
+  /// In en, this message translates to:
+  /// **'Password Not Matching.'**
+  String get passwordsNotMatching;
+
+  /// No description provided for @passwordEightLetters.
+  ///
+  /// In en, this message translates to:
+  /// **'Password Length Should Be Longer Than 8 Characters.'**
+  String get passwordEightLetters;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

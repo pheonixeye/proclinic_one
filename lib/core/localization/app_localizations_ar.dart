@@ -24,4 +24,67 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get register => 'انشاء حساب';
+
+  @override
+  String get heroTitle => 'مساعد الطبيب الذكي ورفيقه';
+
+  @override
+  String get heroSubtitle => 'نظام بروكلينيك لادارة العيادات اداه ذكية لتنظيم يوم عملك و البقاء علي اتصال مع مرضاك';
+
+  @override
+  String get welcomeBack => 'اهلا بعودتك';
+
+  @override
+  String get loginTag => 'تواصل مع مرضاك، نظّم مواعيدك، ووسّع نطاق ممارستك الطبية';
+
+  @override
+  String get email => 'البريد الالكتروني';
+
+  @override
+  String get password => 'كلمة السر';
+
+  @override
+  String get rememberMe => 'تذكرني';
+
+  @override
+  String get forgotPassword => 'نسيت كلمة السر ؟';
+
+  @override
+  String get notRegisteredYet => 'ليس لديك حساب ؟';
+
+  @override
+  String get createAccount => 'انشاء حساب الان';
+
+  @override
+  String get enterEmailAddress => 'ادخل البريد الالكتروني';
+
+  @override
+  String get enterPassword => 'ادخل كلمة السر';
+
+  @override
+  String get invalidEmailAddress => 'بريد الكتروني غير صالح';
+
+  @override
+  String get registerTag => 'انضم إلى بروكلينيك اليوم لتحسين رعاية مرضاك بشكل فعال وتعزيز نمو عيادتك من خلال أدواتنا المتطورة والدعم المخصص.';
+
+  @override
+  String get confirmPassword => 'تأكيد كلمة السر';
+
+  @override
+  String get enterConfirmPassword => 'تأكيد كلمة السر';
+
+  @override
+  String get speciality => 'التخصص';
+
+  @override
+  String get selectSpeciality => 'اختر التخصص';
+
+  @override
+  String get alreadyRegistered => 'هل لديك حساب ؟';
+
+  @override
+  String get passwordsNotMatching => 'كلمة السر غير متطابقة';
+
+  @override
+  String get passwordEightLetters => 'طول كلمة السر يجب ان يكون اكثر من ثمانية احرف';
 }

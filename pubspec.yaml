@@ -49,6 +49,7 @@ flutter:
     - assets/fonts/
     - assets/fonts/IBM/
     - assets/lang/
+    - assets/json/
 
   fonts:
     - family: IBM

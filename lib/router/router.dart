@@ -13,7 +13,9 @@ import 'package:proklinik_doctor_portal/pages/loading_page/pages/lang_page/pages
 import 'package:proklinik_doctor_portal/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/settings_page/settings_page.dart';
 import 'package:proklinik_doctor_portal/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/today_visits/today_visits.dart';
 import 'package:proklinik_doctor_portal/pages/loading_page/pages/lang_page/pages/shell_page/shell_page.dart';
+import 'package:proklinik_doctor_portal/pages/loading_page/pages/lang_page/pages/thankyou_page/thankyou_screen.dart';
 import 'package:proklinik_doctor_portal/providers/px_locale.dart';
+import 'package:proklinik_doctor_portal/providers/px_speciality.dart';
 import 'package:proklinik_doctor_portal/utils/utils_keys.dart';
 import 'package:provider/provider.dart';
 
@@ -35,6 +37,7 @@ class AppRouter {
   static const String lang = ":lang";
   static const String login = "login";
   static const String register = "register";
+  static const String thankyou = "thankyou";
   static const String app = "app";
   static const String todayvisits = "todayvisits";
   static const String visits = "visits";
@@ -115,7 +118,20 @@ class AppRouter {
                 path: register,
                 name: register,
                 builder: (context, state) {
-                  return RegisterPage(
+                  return ChangeNotifierProvider.value(
+                    key: state.pageKey,
+                    value: PxSpec.instance(),
+                    child: RegisterPage(
+                      key: state.pageKey,
+                    ),
+                  );
+                },
+              ),
+              GoRoute(
+                path: thankyou,
+                name: thankyou,
+                builder: (context, state) {
+                  return ThankyouPage(
                     key: state.pageKey,
                   );
                 },

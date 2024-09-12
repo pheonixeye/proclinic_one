@@ -5,6 +5,28 @@
     "loading" : "جارى التحميل ...",
     "todayVisits" : "زيارات اليوم",
     "login": "تسجيل الدخول",
-    "register": "انشاء حساب"
+    "register": "انشاء حساب",
+    "heroTitle" : "مساعد الطبيب الذكي ورفيقه",
+    "heroSubtitle" : "نظام بروكلينيك لادارة العيادات اداه ذكية لتنظيم يوم عملك و البقاء علي اتصال مع مرضاك",
+    "welcomeBack" : "اهلا بعودتك",
+    "loginTag" : "تواصل مع مرضاك، نظّم مواعيدك، ووسّع نطاق ممارستك الطبية",
+    "email" : "البريد الالكتروني",
+    "password": "كلمة السر",
+    "rememberMe": "تذكرني",
+    "forgotPassword": "نسيت كلمة السر ؟",
+    "notRegisteredYet": "ليس لديك حساب ؟",
+    "createAccount": "انشاء حساب الان",
+    "enterEmailAddress": "ادخل البريد الالكتروني",
+    "enterPassword" : "ادخل كلمة السر",
+    "invalidEmailAddress" : "بريد الكتروني غير صالح",
+    "registerTag" : "انضم إلى بروكلينيك اليوم لتحسين رعاية مرضاك بشكل فعال وتعزيز نمو عيادتك من خلال أدواتنا المتطورة والدعم المخصص.",
+    "confirmPassword" : "تأكيد كلمة السر",
+    "enterConfirmPassword" : "تأكيد كلمة السر",
+    "speciality" : "التخصص",
+    "selectSpeciality" : "اختر التخصص",
+    "alreadyRegistered" : "هل لديك حساب ؟",
+    "passwordsNotMatching" : "كلمة السر غير متطابقة",
+    "passwordEightLetters" : "طول كلمة السر يجب ان يكون اكثر من ثمانية احرف"
+
 
 }

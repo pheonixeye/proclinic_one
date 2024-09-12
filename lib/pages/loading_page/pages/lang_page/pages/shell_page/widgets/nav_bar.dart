@@ -68,6 +68,9 @@ class Navbar extends StatelessWidget implements PreferredSizeWidget {
                     child: Consumer<PxLocale>(
                       builder: (context, l, _) {
                         return TextButton(
+                          style: TextButton.styleFrom(
+                            foregroundColor: Colors.white,
+                          ),
                           onPressed: () {
                             context.switchLanguage();
                           },

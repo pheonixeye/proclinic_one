@@ -16,7 +16,7 @@ class EndDrawer extends StatelessWidget {
     return Drawer(
       elevation: 8.0,
       width: MediaQuery.sizeOf(context).width * 0.65,
-      backgroundColor: Colors.green.shade500.withOpacity(0.9),
+      backgroundColor: Colors.blue.shade500.withOpacity(0.9),
       child: Consumer<GoRouteInformationProvider>(
         builder: (context, r, _) {
           bool selected(String path) => r.value.uri.path.endsWith('/$path');
