@@ -3,11 +3,15 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:proklinik_doctor_portal/assets/assets.dart';
+import 'package:proklinik_doctor_portal/core/api/auth/api_auth.dart';
 import 'package:proklinik_doctor_portal/extensions/is_mobile_context.dart';
 import 'package:proklinik_doctor_portal/extensions/loc_ext.dart';
+import 'package:proklinik_doctor_portal/providers/px_auth.dart';
 import 'package:proklinik_doctor_portal/providers/px_locale.dart';
 import 'package:proklinik_doctor_portal/router/router.dart';
+import 'package:proklinik_doctor_portal/widgets/central_loading.dart';
 import 'package:proklinik_doctor_portal/widgets/login_register_avatar.dart';
+import 'package:proklinik_doctor_portal/widgets/snackbar_.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -20,10 +24,13 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final formKey = GlobalKey<FormState>();
 
+  final emailFieldKey = GlobalKey<FormFieldState>();
+
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
 
   bool _rememberMe = false;
+  bool _obscure = true;
 
   @override
   void initState() {
@@ -112,6 +119,7 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                               subtitle: TextFormField(
                                 controller: _emailController,
+                                key: emailFieldKey,
                                 decoration: const InputDecoration(
                                   hintText: 'example@domain.com',
                                 ),
@@ -130,13 +138,29 @@ class _LoginPageState extends State<LoginPage> {
                               contentPadding: EdgeInsets.zero,
                               title: Padding(
                                 padding: const EdgeInsets.only(bottom: 8.0),
-                                child: Text(context.loc.password),
+                                child: Row(
+                                  children: [
+                                    Text(context.loc.password),
+                                    const SizedBox(width: 20),
+                                    InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          _obscure = !_obscure;
+                                        });
+                                      },
+                                      child: const Icon(
+                                        Icons.remove_red_eye_outlined,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                               subtitle: TextFormField(
                                 controller: _passwordController,
                                 decoration: const InputDecoration(
                                   hintText: '********',
                                 ),
+                                obscureText: _obscure,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return context.loc.enterPassword;
@@ -156,8 +180,20 @@ class _LoginPageState extends State<LoginPage> {
                                     TextSpan(
                                       text: context.loc.forgotPassword,
                                       recognizer: TapGestureRecognizer()
-                                        ..onTap = () {
-                                          //TODO: show snackbar that a password reset mail was sent
+                                        ..onTap = () async {
+                                          //todo: verify that email address was entered
+                                          if (emailFieldKey.currentState!
+                                              .validate()) {
+                                            //todo: end forgot password email
+                                            await AuthApi()
+                                                .requestResetPassword(
+                                                    _emailController.text);
+                                            if (context.mounted) {
+                                              //todo: show snackbar that a password reset mail was sent
+                                              showIsnackbar(context
+                                                  .loc.passwordResetEmailSent);
+                                            }
+                                          }
                                         },
                                       style: const TextStyle(
                                         color: Colors.blue,
@@ -181,10 +217,48 @@ class _LoginPageState extends State<LoginPage> {
                               children: [
                                 Expanded(
                                   child: ElevatedButton(
-                                    onPressed: () {
+                                    onPressed: () async {
+                                      //todo: validate credentials
+                                      // ignore: no_leading_underscores_for_local_identifiers
+                                      late BuildContext _loadingContext;
                                       if (formKey.currentState!.validate()) {
-                                        //TODO: validate credentials
                                         //TODO: navigate to app
+                                        showDialog(
+                                          context: context,
+                                          builder: (loadingContext) {
+                                            _loadingContext = loadingContext;
+                                            return const CentralLoading();
+                                          },
+                                        );
+                                        if (context.mounted) {
+                                          try {
+                                            await context
+                                                .read<PxAuth>()
+                                                .loginAccount(
+                                                  _emailController.text,
+                                                  _passwordController.text,
+                                                  _rememberMe,
+                                                );
+                                          } catch (e) {
+                                            if (_loadingContext.mounted) {
+                                              Navigator.pop(_loadingContext);
+                                            }
+                                            if (context.mounted) {
+                                              showIsnackbar(e.toString());
+                                            }
+                                            return;
+                                          }
+                                        }
+                                        if (_loadingContext.mounted) {
+                                          Navigator.pop(_loadingContext);
+                                        }
+                                        if (context.mounted) {
+                                          GoRouter.of(context).goNamed(
+                                            AppRouter.app,
+                                            pathParameters:
+                                                defaultPathParameters(context),
+                                          );
+                                        }
                                       }
                                     },
                                     child: Text(context.loc.login),

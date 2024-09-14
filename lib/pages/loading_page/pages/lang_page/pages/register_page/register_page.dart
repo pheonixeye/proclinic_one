@@ -288,10 +288,10 @@ class _RegisterPageState extends State<RegisterPage> {
                                                       _loadingContext);
                                                 }
                                                 if (context.mounted) {
-                                                  //TODO: navigate to thankyou page
+                                                  //todo: navigate to thankyou page
 
                                                   GoRouter.of(context).goNamed(
-                                                    AppRouter.login,
+                                                    AppRouter.thankyou,
                                                     pathParameters:
                                                         defaultPathParameters(
                                                             context),
@@ -303,11 +303,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                                 Navigator.pop(_loadingContext);
                                               }
                                               if (context.mounted) {
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(Isnackbar(
-                                                  e.toString(),
-                                                  context,
-                                                ));
+                                                showIsnackbar(e.toString());
                                               }
                                             }
                                           }

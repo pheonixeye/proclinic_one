@@ -5,6 +5,7 @@ import 'package:proklinik_doctor_portal/providers/_main.dart';
 import 'package:proklinik_doctor_portal/providers/px_locale.dart';
 import 'package:proklinik_doctor_portal/router/router.dart';
 import 'package:proklinik_doctor_portal/theme/app_theme.dart';
+import 'package:proklinik_doctor_portal/utils/shared_prefs.dart';
 import 'package:proklinik_doctor_portal/utils/utils_keys.dart';
 import 'package:provider/provider.dart';
 
@@ -12,6 +13,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting('ar');
   await initializeDateFormatting('en');
+  AsyncPrefs.instance;
   runApp(const AppProvider());
 }
 

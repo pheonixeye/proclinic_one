@@ -7,14 +7,14 @@ class AuthApiErrorHandler implements Exception {
       : message = clientException.response['message'],
         details = ((clientException.response['data'] as Map<String, dynamic>)
             .entries
-            .first
-            .value as Map<String, dynamic>)['message'];
+            .firstOrNull
+            ?.value as Map<String, dynamic>?)?['message'];
 
   final String message;
-  final String details;
+  final String? details;
 
   @override
   String toString() {
-    return '$message $details';
+    return '$message ${details ?? ''}';
   }
 }

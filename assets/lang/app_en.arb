@@ -26,6 +26,11 @@
     "selectSpeciality" : "Select Speciality",
     "alreadyRegistered" : "Already Registered ?",
     "passwordsNotMatching" : "Password Not Matching.",
-    "passwordEightLetters" : "Password Length Should Be Longer Than 8 Characters."
+    "passwordEightLetters" : "Password Length Should Be Longer Than 8 Characters.",
+    "allRightsReserved" : "All Rights Reserved @Proklinik Medical Software",
+    "professionalMessage" : "We look forward to helping you easily manage your healthcare appointments. If you have any feedback on how we can improve, feel free to share it with us. We value your input as we continuously work to enhance our platform.",
+    "verificationEmailSent" : "A Verification Message Was Sent To Your Email Address.",
+    "thankyouForRegistering" : "Welcome to ProKliniK! We’re excited to have you on board.",
+    "passwordResetEmailSent" : "A Password Reset Message Was Sent To Your Email Address."
 
 }

@@ -87,4 +87,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get passwordEightLetters => 'Password Length Should Be Longer Than 8 Characters.';
+
+  @override
+  String get allRightsReserved => 'All Rights Reserved @Proklinik Medical Software';
+
+  @override
+  String get professionalMessage => 'We look forward to helping you easily manage your healthcare appointments. If you have any feedback on how we can improve, feel free to share it with us. We value your input as we continuously work to enhance our platform.';
+
+  @override
+  String get verificationEmailSent => 'A Verification Message Was Sent To Your Email Address.';
+
+  @override
+  String get thankyouForRegistering => 'Welcome to ProKliniK! We’re excited to have you on board.';
+
+  @override
+  String get passwordResetEmailSent => 'A Password Reset Message Was Sent To Your Email Address.';
 }

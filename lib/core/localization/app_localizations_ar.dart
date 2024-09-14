@@ -87,4 +87,19 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get passwordEightLetters => 'طول كلمة السر يجب ان يكون اكثر من ثمانية احرف';
+
+  @override
+  String get allRightsReserved => 'جميع الحقوق محفوظة @بروكلينيك للبرمجيات الطبية';
+
+  @override
+  String get professionalMessage => 'شكرًا لاستخدامك بروكلينيك لإدارة العيادات. إذا كان لديك أي ملاحظات حول كيفية تحسين خدماتنا، لا تتردد في مشاركتها معنا. نحن نقدر ملاحظاتك بينما نعمل باستمرار على تحسين منصتنا.';
+
+  @override
+  String get verificationEmailSent => 'تم ارسال بريد الكتروني لاستكمال انشاء الحساب.';
+
+  @override
+  String get thankyouForRegistering => 'مرحبًا بك في بروكلينيك! يسعدنا انضمامك إلى منصتنا.';
+
+  @override
+  String get passwordResetEmailSent => 'تم ارسال بريد الكتروني لاسترجاع كلمة السر.';
 }

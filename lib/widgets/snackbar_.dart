@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:proklinik_doctor_portal/utils/utils_keys.dart';
 
 // ignore: non_constant_identifier_names
-SnackBar Isnackbar(String message, BuildContext context) {
+SnackBar Isnackbar(String message) {
   return SnackBar(
     action: SnackBarAction(
       label: 'X',
       onPressed: () {
-        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        UtilsKeys.scaffoldMessengerKey.currentState?.hideCurrentSnackBar();
       },
     ),
     duration: const Duration(seconds: 5),
     content: Text(message),
     behavior: SnackBarBehavior.floating,
   );
+}
+
+void showIsnackbar(String message) {
+  UtilsKeys.scaffoldMessengerKey.currentState?.showSnackBar(Isnackbar(message));
 }

@@ -10,13 +10,13 @@ class LoginRegisterAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       flex: 1,
-      child: Hero(
-        tag: 'login-register-avatar',
-        child: Stack(
-          fit: StackFit.expand,
-          alignment: Alignment.center,
-          children: [
-            Container(
+      child: Stack(
+        fit: StackFit.expand,
+        alignment: Alignment.center,
+        children: [
+          Hero(
+            tag: 'login-register-avatar',
+            child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
                 image: const DecorationImage(
@@ -25,38 +25,38 @@ class LoginRegisterAvatar extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Align(
-                alignment: alignment,
-                child: Text.rich(
-                  TextSpan(
-                    text: '',
-                    children: [
-                      TextSpan(
-                        text: context.loc.heroTitle,
-                        style: const TextStyle(
-                          color: Colors.black87,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 32,
-                        ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Align(
+              alignment: alignment,
+              child: Text.rich(
+                TextSpan(
+                  text: '',
+                  children: [
+                    TextSpan(
+                      text: context.loc.heroTitle,
+                      style: const TextStyle(
+                        color: Colors.black87,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 32,
                       ),
-                      const TextSpan(text: '\n'),
-                      TextSpan(
-                        text: context.loc.heroSubtitle,
-                        style: const TextStyle(
-                          color: Colors.black87,
-                          fontWeight: FontWeight.normal,
-                          fontSize: 16,
-                        ),
+                    ),
+                    const TextSpan(text: '\n'),
+                    TextSpan(
+                      text: context.loc.heroSubtitle,
+                      style: const TextStyle(
+                        color: Colors.black87,
+                        fontWeight: FontWeight.normal,
+                        fontSize: 16,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

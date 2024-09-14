@@ -94,16 +94,6 @@ class AppRouter {
                 key: state.pageKey,
               );
             },
-            redirect: (context, state) async {
-              ///TODO: check saved token logic
-              // final lang = state.pathParameters['lang'];
-              // ignore: no_leading_underscores_for_local_identifiers
-              // final _token = await AppDummyAuth.fetchAuthToken();
-              // dprint(_token);
-              // if (_token != null) return '/$lang/$app';
-              // if (_token == null) return '/$lang/$login';
-              return null;
-            },
             routes: [
               GoRoute(
                 path: login,

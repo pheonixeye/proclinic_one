@@ -260,6 +260,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Password Length Should Be Longer Than 8 Characters.'**
   String get passwordEightLetters;
+
+  /// No description provided for @allRightsReserved.
+  ///
+  /// In en, this message translates to:
+  /// **'All Rights Reserved @Proklinik Medical Software'**
+  String get allRightsReserved;
+
+  /// No description provided for @professionalMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'We look forward to helping you easily manage your healthcare appointments. If you have any feedback on how we can improve, feel free to share it with us. We value your input as we continuously work to enhance our platform.'**
+  String get professionalMessage;
+
+  /// No description provided for @verificationEmailSent.
+  ///
+  /// In en, this message translates to:
+  /// **'A Verification Message Was Sent To Your Email Address.'**
+  String get verificationEmailSent;
+
+  /// No description provided for @thankyouForRegistering.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to ProKliniK! We’re excited to have you on board.'**
+  String get thankyouForRegistering;
+
+  /// No description provided for @passwordResetEmailSent.
+  ///
+  /// In en, this message translates to:
+  /// **'A Password Reset Message Was Sent To Your Email Address.'**
+  String get passwordResetEmailSent;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
