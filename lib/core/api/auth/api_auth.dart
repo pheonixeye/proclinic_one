@@ -44,8 +44,6 @@ class AuthApi {
           .authWithPassword(email, password);
       if (rememberMe) {
         await asyncPrefs?.setString('token', result.token);
-        await asyncPrefs?.setString(
-            'email', result.record!.getStringValue('email'));
         PocketbaseHelper.pb.authStore.save(result.token, result.record);
       }
       return result;
@@ -56,21 +54,15 @@ class AuthApi {
   }
 
   //# remember me login flow
-  Future<RecordAuth?> loginWithToken(String email, String token) async {
+  Future<RecordAuth?> loginWithToken() async {
     try {
-      final ({String token, RecordAuth model}) storedAuth = (
-        token: PocketbaseHelper.pb.authStore.token,
-        model: PocketbaseHelper.pb.authStore.model
-      );
-
       final _token = await asyncPrefs?.getString('token');
-      final _email = await asyncPrefs?.getString('email');
-      if (storedAuth.token == _token &&
-          storedAuth.model.record?.getStringValue('email') == _email) {
-        return storedAuth.model;
-      } else {
-        throw Exception('Session Timeout');
-      }
+      PocketbaseHelper.pb.authStore.save(_token!, null);
+      final result =
+          await PocketbaseHelper.pb.collection('users').authRefresh();
+      PocketbaseHelper.pb.authStore.save(result.token, result.record);
+      await asyncPrefs?.setString('token', result.token);
+      return result;
     } on ClientException catch (e) {
       dprint(e.toString());
       throw AuthApiErrorHandler(e);

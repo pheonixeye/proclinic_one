@@ -14,6 +14,7 @@ import 'package:proklinik_doctor_portal/pages/loading_page/pages/lang_page/pages
 import 'package:proklinik_doctor_portal/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/today_visits/today_visits.dart';
 import 'package:proklinik_doctor_portal/pages/loading_page/pages/lang_page/pages/shell_page/shell_page.dart';
 import 'package:proklinik_doctor_portal/pages/loading_page/pages/lang_page/pages/thankyou_page/thankyou_screen.dart';
+import 'package:proklinik_doctor_portal/providers/px_auth.dart';
 import 'package:proklinik_doctor_portal/providers/px_locale.dart';
 import 'package:proklinik_doctor_portal/providers/px_speciality.dart';
 import 'package:proklinik_doctor_portal/utils/utils_keys.dart';
@@ -63,8 +64,8 @@ class AppRouter {
         context.read<PxLocale>().setLang('en');
         return '/en';
       } else {
-        final lang = state.pathParameters['lang'];
-        context.read<PxLocale>().setLang(lang!);
+        final lang = state.pathParameters['lang']!;
+        context.read<PxLocale>().setLang(lang);
         return null;
       }
     },
@@ -132,6 +133,15 @@ class AppRouter {
                     key: state.pageKey,
                     child: child,
                   );
+                },
+                redirect: (context, state) {
+                  final lang = state.pathParameters['lang']!;
+                  final _pxAuth = context.read<PxAuth>();
+                  if (_pxAuth.authModel != null) {
+                    return null;
+                  } else {
+                    return '/$lang/$login';
+                  }
                 },
                 routes: [
                   GoRoute(

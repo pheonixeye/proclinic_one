@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pocketbase/pocketbase.dart';
 import 'package:proklinik_doctor_portal/core/api/auth/api_auth.dart';
+import 'package:proklinik_doctor_portal/functions/dprint.dart';
 import 'package:proklinik_doctor_portal/models/dto_create_doctor_account.dart';
 
 class PxAuth extends ChangeNotifier {
@@ -9,21 +11,38 @@ class PxAuth extends ChangeNotifier {
     required this.api,
   });
 
+  RecordAuth? _auth;
+  RecordAuth? get authModel => _auth;
+
   Future<void> createAccount(DtoCreateDoctorAccount dto) async {
     await api.createAccount(dto);
   }
 
-  Future<void> loginAccount(
+  Future<void> loginWithEmailAndPassword(
     String email,
     String password, [
     bool rememberMe = false,
   ]) async {
-    await api.loginWithEmailAndPassword(email, password, rememberMe);
-    //TODO: save auth record in this provider
+    try {
+      final result =
+          await api.loginWithEmailAndPassword(email, password, rememberMe);
+      _auth = result;
+      notifyListeners();
+    } catch (e) {
+      _auth = null;
+      notifyListeners();
+    }
   }
 
-  Future<void> loginWithToken(String email, String token) async {
-    await api.loginWithToken(email, token);
-    //TODO: save auth record in this provider
+  Future<void> loginWithToken() async {
+    try {
+      final result = await api.loginWithToken();
+      _auth = result;
+      notifyListeners();
+      dprint('token from api: ${result?.token.substring(0, 5)}');
+    } catch (e) {
+      _auth = null;
+      notifyListeners();
+    }
   }
 }

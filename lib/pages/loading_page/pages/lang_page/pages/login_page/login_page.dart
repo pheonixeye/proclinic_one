@@ -219,10 +219,9 @@ class _LoginPageState extends State<LoginPage> {
                                   child: ElevatedButton(
                                     onPressed: () async {
                                       //todo: validate credentials
-                                      // ignore: no_leading_underscores_for_local_identifiers
                                       late BuildContext _loadingContext;
                                       if (formKey.currentState!.validate()) {
-                                        //TODO: navigate to app
+                                        //todo: navigate to app
                                         showDialog(
                                           context: context,
                                           builder: (loadingContext) {
@@ -234,7 +233,7 @@ class _LoginPageState extends State<LoginPage> {
                                           try {
                                             await context
                                                 .read<PxAuth>()
-                                                .loginAccount(
+                                                .loginWithEmailAndPassword(
                                                   _emailController.text,
                                                   _passwordController.text,
                                                   _rememberMe,

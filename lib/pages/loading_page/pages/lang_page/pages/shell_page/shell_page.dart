@@ -31,7 +31,6 @@ class _ShellPageState extends State<ShellPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const Navbar(),
-      //TODO: Adjust location of navigation drawer according to language
       body: Row(
         children: [
           if (!context.isMobile)
