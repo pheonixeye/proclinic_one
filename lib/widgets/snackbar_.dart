@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:proklinik_doctor_portal/utils/utils_keys.dart';
+import 'package:proklinik_one/utils/utils_keys.dart';
 
 // ignore: non_constant_identifier_names
 SnackBar Isnackbar(String message) {

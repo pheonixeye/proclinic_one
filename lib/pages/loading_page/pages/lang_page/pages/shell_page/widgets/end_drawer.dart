@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:proklinik_doctor_portal/extensions/is_mobile_context.dart';
-import 'package:proklinik_doctor_portal/extensions/loc_ext.dart';
-import 'package:proklinik_doctor_portal/pages/loading_page/pages/lang_page/pages/shell_page/widgets/drawer_nav_btn.dart';
-import 'package:proklinik_doctor_portal/pages/loading_page/pages/lang_page/pages/shell_page/widgets/thin_divider.dart';
-import 'package:proklinik_doctor_portal/router/router.dart';
+import 'package:proklinik_one/extensions/is_mobile_context.dart';
+import 'package:proklinik_one/extensions/loc_ext.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/widgets/drawer_nav_btn.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/widgets/thin_divider.dart';
+import 'package:proklinik_one/router/router.dart';
 import 'package:provider/provider.dart';
 
 class EndDrawer extends StatelessWidget {

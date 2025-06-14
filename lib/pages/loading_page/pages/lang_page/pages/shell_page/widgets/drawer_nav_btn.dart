@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:proklinik_doctor_portal/extensions/is_mobile_context.dart';
-import 'package:proklinik_doctor_portal/providers/px_locale.dart';
-import 'package:proklinik_doctor_portal/router/router.dart';
-import 'package:proklinik_doctor_portal/theme/app_theme.dart';
+import 'package:proklinik_one/extensions/is_mobile_context.dart';
+import 'package:proklinik_one/providers/px_locale.dart';
+import 'package:proklinik_one/router/router.dart';
+import 'package:proklinik_one/theme/app_theme.dart';
 import 'package:provider/provider.dart';
 
 class DrawerNavBtn extends StatelessWidget {

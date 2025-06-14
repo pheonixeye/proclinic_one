@@ -1,41 +1,33 @@
 import 'package:equatable/equatable.dart';
 
 class Speciality extends Equatable {
-  final String en;
-  final String ar;
+  final String name_en;
+  final String name_ar;
   final String id;
+  final String image;
 
   const Speciality({
-    required this.en,
-    required this.ar,
     required this.id,
+    required this.name_en,
+    required this.name_ar,
+    required this.image,
   });
-
-  Speciality copyWith({
-    String? en,
-    String? ar,
-    String? id,
-  }) {
-    return Speciality(
-      en: en ?? this.en,
-      ar: ar ?? this.ar,
-      id: id ?? this.id,
-    );
-  }
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'id': id,
-      'speciality_en': en,
-      'speciality_ar': ar,
+      'name_en': name_en,
+      'name_ar': name_ar,
+      'image': image,
     };
   }
 
   factory Speciality.fromJson(Map<String, dynamic> map) {
     return Speciality(
       id: map['id'] as String,
-      en: map['speciality_en'] as String,
-      ar: map['speciality_ar'] as String,
+      name_en: map['name_en'] as String,
+      name_ar: map['name_ar'] as String,
+      image: map['image'] as String,
     );
   }
 
@@ -43,5 +35,5 @@ class Speciality extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object> get props => [en, ar, id];
+  List<Object> get props => [name_en, name_ar, id, image];
 }

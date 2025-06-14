@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:proklinik_doctor_portal/assets/assets.dart';
-import 'package:proklinik_doctor_portal/extensions/after_layout.dart';
-import 'package:proklinik_doctor_portal/providers/px_locale.dart';
+import 'package:proklinik_one/assets/assets.dart';
+import 'package:proklinik_one/extensions/after_layout.dart';
+import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:provider/provider.dart';
 
 class LoadingPage extends StatefulWidget {

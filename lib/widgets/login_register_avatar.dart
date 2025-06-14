@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:proklinik_doctor_portal/assets/assets.dart';
-import 'package:proklinik_doctor_portal/extensions/loc_ext.dart';
+import 'package:proklinik_one/assets/assets.dart';
+import 'package:proklinik_one/extensions/loc_ext.dart';
 
 class LoginRegisterAvatar extends StatelessWidget {
   const LoginRegisterAvatar({super.key, required this.alignment});

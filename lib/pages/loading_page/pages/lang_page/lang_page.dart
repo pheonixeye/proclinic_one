@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:proklinik_doctor_portal/functions/dprint.dart';
-import 'package:proklinik_doctor_portal/providers/px_auth.dart';
-import 'package:proklinik_doctor_portal/router/router.dart';
-import 'package:proklinik_doctor_portal/utils/shared_prefs.dart';
-import 'package:proklinik_doctor_portal/widgets/central_loading.dart';
+import 'package:proklinik_one/functions/dprint.dart';
+import 'package:proklinik_one/providers/px_auth.dart';
+import 'package:proklinik_one/router/router.dart';
+import 'package:proklinik_one/utils/shared_prefs.dart';
+import 'package:proklinik_one/widgets/central_loading.dart';
 import 'package:provider/provider.dart';
 
 class LangPage extends StatefulWidget {

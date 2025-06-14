@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, non_constant_identifier_names
 
 import 'package:equatable/equatable.dart';
-import 'package:proklinik_doctor_portal/models/speciality.dart';
+import 'package:proklinik_one/models/speciality.dart';
 
 class DtoCreateDoctorAccount extends Equatable {
   final String email;
@@ -37,8 +37,8 @@ class DtoCreateDoctorAccount extends Equatable {
       'email': email,
       'password': password,
       'passwordConfirm': passwordConfirm,
-      'spec_en': speciality.en,
-      'spec_ar': speciality.ar,
+      'spec_en': speciality.name_en,
+      'spec_ar': speciality.name_ar,
       'emailVisibility': emailVisibility,
     };
   }

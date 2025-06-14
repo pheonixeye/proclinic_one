@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:proklinik_doctor_portal/assets/assets.dart';
-import 'package:proklinik_doctor_portal/extensions/is_mobile_context.dart';
-import 'package:proklinik_doctor_portal/extensions/switch_lang.dart';
-import 'package:proklinik_doctor_portal/providers/px_locale.dart';
-import 'package:proklinik_doctor_portal/router/router.dart';
+import 'package:proklinik_one/assets/assets.dart';
+import 'package:proklinik_one/extensions/is_mobile_context.dart';
+import 'package:proklinik_one/extensions/switch_lang.dart';
+import 'package:proklinik_one/providers/px_locale.dart';
+import 'package:proklinik_one/router/router.dart';
 import 'package:provider/provider.dart';
 
 class Navbar extends StatelessWidget implements PreferredSizeWidget {

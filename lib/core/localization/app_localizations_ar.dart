@@ -1,4 +1,8 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
 
 /// The translations for Arabic (`ar`).
 class AppLocalizationsAr extends AppLocalizations {
@@ -11,7 +15,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get somethingWentWrong => 'حدث خطأ اثناء البحث';
 
   @override
-  String get errorText => 'يبدو أن هذه الصفحة قد تم نقلها أو أنها غير متوفرة في الوقت الحالي، يرجى المحاولة مرة أخرى لاحقًا.';
+  String get errorText =>
+      'يبدو أن هذه الصفحة قد تم نقلها أو أنها غير متوفرة في الوقت الحالي، يرجى المحاولة مرة أخرى لاحقًا.';
 
   @override
   String get loading => 'جارى التحميل ...';
@@ -29,13 +34,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get heroTitle => 'مساعد الطبيب الذكي ورفيقه';
 
   @override
-  String get heroSubtitle => 'نظام بروكلينيك لادارة العيادات اداه ذكية لتنظيم يوم عملك و البقاء علي اتصال مع مرضاك';
+  String get heroSubtitle =>
+      'نظام بروكلينيك لادارة العيادات اداه ذكية لتنظيم يوم عملك و البقاء علي اتصال مع مرضاك';
 
   @override
   String get welcomeBack => 'اهلا بعودتك';
 
   @override
-  String get loginTag => 'تواصل مع مرضاك، نظّم مواعيدك، ووسّع نطاق ممارستك الطبية';
+  String get loginTag =>
+      'تواصل مع مرضاك، نظّم مواعيدك، ووسّع نطاق ممارستك الطبية';
 
   @override
   String get email => 'البريد الالكتروني';
@@ -65,7 +72,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get invalidEmailAddress => 'بريد الكتروني غير صالح';
 
   @override
-  String get registerTag => 'انضم إلى بروكلينيك اليوم لتحسين رعاية مرضاك بشكل فعال وتعزيز نمو عيادتك من خلال أدواتنا المتطورة والدعم المخصص.';
+  String get registerTag =>
+      'انضم إلى بروكلينيك اليوم لتحسين رعاية مرضاك بشكل فعال وتعزيز نمو عيادتك من خلال أدواتنا المتطورة والدعم المخصص.';
 
   @override
   String get confirmPassword => 'تأكيد كلمة السر';
@@ -86,20 +94,26 @@ class AppLocalizationsAr extends AppLocalizations {
   String get passwordsNotMatching => 'كلمة السر غير متطابقة';
 
   @override
-  String get passwordEightLetters => 'طول كلمة السر يجب ان يكون اكثر من ثمانية احرف';
+  String get passwordEightLetters =>
+      'طول كلمة السر يجب ان يكون اكثر من ثمانية احرف';
 
   @override
-  String get allRightsReserved => 'جميع الحقوق محفوظة @بروكلينيك للبرمجيات الطبية';
+  String get allRightsReserved =>
+      'جميع الحقوق محفوظة @بروكلينيك للبرمجيات الطبية';
 
   @override
-  String get professionalMessage => 'شكرًا لاستخدامك بروكلينيك لإدارة العيادات. إذا كان لديك أي ملاحظات حول كيفية تحسين خدماتنا، لا تتردد في مشاركتها معنا. نحن نقدر ملاحظاتك بينما نعمل باستمرار على تحسين منصتنا.';
+  String get professionalMessage =>
+      'شكرًا لاستخدامك بروكلينيك لإدارة العيادات. إذا كان لديك أي ملاحظات حول كيفية تحسين خدماتنا، لا تتردد في مشاركتها معنا. نحن نقدر ملاحظاتك بينما نعمل باستمرار على تحسين منصتنا.';
 
   @override
-  String get verificationEmailSent => 'تم ارسال بريد الكتروني لاستكمال انشاء الحساب.';
+  String get verificationEmailSent =>
+      'تم ارسال بريد الكتروني لاستكمال انشاء الحساب.';
 
   @override
-  String get thankyouForRegistering => 'مرحبًا بك في بروكلينيك! يسعدنا انضمامك إلى منصتنا.';
+  String get thankyouForRegistering =>
+      'مرحبًا بك في بروكلينيك! يسعدنا انضمامك إلى منصتنا.';
 
   @override
-  String get passwordResetEmailSent => 'تم ارسال بريد الكتروني لاسترجاع كلمة السر.';
+  String get passwordResetEmailSent =>
+      'تم ارسال بريد الكتروني لاسترجاع كلمة السر.';
 }

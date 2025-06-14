@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:proklinik_doctor_portal/assets/assets.dart';
-import 'package:proklinik_doctor_portal/extensions/is_mobile_context.dart';
-import 'package:proklinik_doctor_portal/extensions/loc_ext.dart';
-import 'package:proklinik_doctor_portal/router/router.dart';
-import 'package:proklinik_doctor_portal/theme/app_theme.dart';
+import 'package:proklinik_one/assets/assets.dart';
+import 'package:proklinik_one/extensions/is_mobile_context.dart';
+import 'package:proklinik_one/extensions/loc_ext.dart';
+import 'package:proklinik_one/router/router.dart';
+import 'package:proklinik_one/theme/app_theme.dart';
 
 class ErrorPage extends StatelessWidget {
   const ErrorPage({super.key});

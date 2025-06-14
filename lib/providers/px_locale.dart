@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart' show ChangeNotifier, Locale;
-import 'package:proklinik_doctor_portal/functions/dprint.dart';
+import 'package:proklinik_one/functions/dprint.dart';
 
 class PxLocale extends ChangeNotifier {
   Locale _locale = const Locale("en");

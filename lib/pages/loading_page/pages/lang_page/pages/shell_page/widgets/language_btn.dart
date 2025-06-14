@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:proklinik_doctor_portal/extensions/switch_lang.dart';
+import 'package:proklinik_one/extensions/switch_lang.dart';
 
 class LanguageBtn extends StatelessWidget {
   const LanguageBtn({super.key});

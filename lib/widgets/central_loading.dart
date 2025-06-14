@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:proklinik_doctor_portal/extensions/loc_ext.dart';
+import 'package:proklinik_one/extensions/loc_ext.dart';
 
 class CentralLoading extends StatelessWidget {
   const CentralLoading({super.key});

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:proklinik_doctor_portal/providers/px_locale.dart';
+import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:provider/provider.dart';
 
 class TodayVisits extends StatelessWidget {

@@ -1,21 +1,23 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:proklinik_doctor_portal/assets/assets.dart';
-import 'package:proklinik_doctor_portal/extensions/is_mobile_context.dart';
-import 'package:proklinik_doctor_portal/extensions/loc_ext.dart';
-import 'package:proklinik_doctor_portal/models/dto_create_doctor_account.dart';
-import 'package:proklinik_doctor_portal/models/speciality.dart';
-import 'package:proklinik_doctor_portal/providers/px_auth.dart';
-import 'package:proklinik_doctor_portal/providers/px_locale.dart';
-import 'package:proklinik_doctor_portal/providers/px_speciality.dart';
-import 'package:proklinik_doctor_portal/router/router.dart';
-import 'package:proklinik_doctor_portal/widgets/central_loading.dart';
-import 'package:proklinik_doctor_portal/widgets/login_register_avatar.dart';
-import 'package:proklinik_doctor_portal/widgets/snackbar_.dart';
+import 'package:proklinik_one/assets/assets.dart';
+import 'package:proklinik_one/extensions/is_mobile_context.dart';
+import 'package:proklinik_one/extensions/loc_ext.dart';
+import 'package:proklinik_one/extensions/model_ext.dart';
+import 'package:proklinik_one/models/dto_create_doctor_account.dart';
+import 'package:proklinik_one/models/speciality.dart';
+import 'package:proklinik_one/providers/px_auth.dart';
+import 'package:proklinik_one/providers/px_locale.dart';
+import 'package:proklinik_one/providers/px_speciality.dart';
+import 'package:proklinik_one/router/router.dart';
+import 'package:proklinik_one/widgets/central_loading.dart';
+import 'package:proklinik_one/widgets/login_register_avatar.dart';
+import 'package:proklinik_one/widgets/snackbar_.dart';
 import 'package:provider/provider.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -229,9 +231,25 @@ class _RegisterPageState extends State<RegisterPage> {
                                         return DropdownMenuItem<Speciality>(
                                           alignment: Alignment.center,
                                           value: e,
-                                          child: Text(
-                                            l.isEnglish ? e.en : e.ar,
-                                            textAlign: TextAlign.center,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              CachedNetworkImage(
+                                                imageUrl: e.imageUrl,
+                                                height: 50,
+                                                width: 50,
+                                              ),
+                                              const SizedBox(
+                                                width: 10,
+                                              ),
+                                              Text(
+                                                l.isEnglish
+                                                    ? e.name_en
+                                                    : e.name_ar,
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ],
                                           ),
                                         );
                                       }).toList(),

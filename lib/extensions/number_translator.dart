@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:proklinik_doctor_portal/providers/px_locale.dart';
+import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:provider/provider.dart';
 
 class ArabicNumbers {
-  static String convert(number) {
+  static String convert(dynamic number) {
     if (number is int) {
       String replace1 = number.toString().replaceAll('0', '٠');
       String replace2 = replace1.replaceAll('1', '١');

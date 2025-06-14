@@ -1,8 +1,8 @@
 import 'package:pocketbase/pocketbase.dart';
-import 'package:proklinik_doctor_portal/core/api/auth/api_error_handler.dart';
-import 'package:proklinik_doctor_portal/core/api/constants/pocketbase_helper.dart';
-import 'package:proklinik_doctor_portal/functions/dprint.dart';
-import 'package:proklinik_doctor_portal/models/dto_create_doctor_account.dart';
+import 'package:proklinik_one/core/api/auth/api_error_handler.dart';
+import 'package:proklinik_one/core/api/constants/pocketbase_helper.dart';
+import 'package:proklinik_one/functions/dprint.dart';
+import 'package:proklinik_one/models/dto_create_doctor_account.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthApi {

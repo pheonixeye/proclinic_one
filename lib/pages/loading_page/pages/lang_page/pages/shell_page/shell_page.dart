@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:proklinik_doctor_portal/extensions/is_mobile_context.dart';
-import 'package:proklinik_doctor_portal/pages/loading_page/pages/lang_page/pages/shell_page/widgets/end_drawer.dart';
-import 'package:proklinik_doctor_portal/pages/loading_page/pages/lang_page/pages/shell_page/widgets/language_btn.dart';
-import 'package:proklinik_doctor_portal/pages/loading_page/pages/lang_page/pages/shell_page/widgets/nav_bar.dart';
+import 'package:proklinik_one/extensions/is_mobile_context.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/widgets/end_drawer.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/widgets/language_btn.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/widgets/nav_bar.dart';
 
 class ShellPage extends StatefulWidget {
   const ShellPage({super.key, required this.child});
