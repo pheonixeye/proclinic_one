@@ -1,34 +1,51 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, non_constant_identifier_names
 
 import 'package:equatable/equatable.dart';
+import 'package:proklinik_one/models/account_type.dart';
 import 'package:proklinik_one/models/speciality.dart';
 
 class DtoCreateDoctorAccount extends Equatable {
   final String email;
   final String password;
+  final String name_en;
+  final String name_ar;
+  final String phone;
   final String passwordConfirm;
   final Speciality speciality;
+  final AccountType accountType;
   final bool emailVisibility;
 
   const DtoCreateDoctorAccount({
     required this.email,
     required this.password,
+    required this.name_en,
+    required this.name_ar,
+    required this.phone,
     required this.passwordConfirm,
     required this.speciality,
+    required this.accountType,
     this.emailVisibility = true,
   });
 
   DtoCreateDoctorAccount copyWith({
     String? email,
     String? password,
+    String? name_en,
+    String? name_ar,
+    String? phone,
     String? passwordConfirm,
     Speciality? speciality,
+    AccountType? accountType,
   }) {
     return DtoCreateDoctorAccount(
       email: email ?? this.email,
       password: password ?? this.password,
+      name_en: name_en ?? this.name_en,
+      name_ar: name_ar ?? this.name_ar,
+      phone: phone ?? this.phone,
       passwordConfirm: passwordConfirm ?? this.passwordConfirm,
       speciality: speciality ?? this.speciality,
+      accountType: accountType ?? this.accountType,
     );
   }
 
@@ -37,9 +54,9 @@ class DtoCreateDoctorAccount extends Equatable {
       'email': email,
       'password': password,
       'passwordConfirm': passwordConfirm,
-      'spec_en': speciality.name_en,
-      'spec_ar': speciality.name_ar,
       'emailVisibility': emailVisibility,
+      // 'speciality_id': speciality.id,
+      'account_type_id': accountType.id,
     };
   }
 
@@ -51,7 +68,11 @@ class DtoCreateDoctorAccount extends Equatable {
         email,
         password,
         passwordConfirm,
+        name_en,
+        name_ar,
+        phone,
         speciality,
+        accountType,
         emailVisibility,
       ];
 }

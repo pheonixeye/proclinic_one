@@ -18,7 +18,11 @@ class AuthApi {
 
       await PocketbaseHelper.pb.collection('doctors').create(
         body: {
-          'doc_id': result.id,
+          'id': result.id,
+          'speciality_id': dto.speciality.id,
+          'name_en': dto.name_en,
+          'name_ar': dto.name_ar,
+          'phone': dto.phone,
         },
       );
 

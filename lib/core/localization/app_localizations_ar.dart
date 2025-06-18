@@ -116,4 +116,26 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get passwordResetEmailSent =>
       'تم ارسال بريد الكتروني لاسترجاع كلمة السر.';
+
+  @override
+  String get englishName => 'الاسم بالانجليزية';
+
+  @override
+  String get arabicName => 'الاسم بالعربية';
+
+  @override
+  String get enterEnglishName => 'ادخل الاسم بالانجليزية';
+
+  @override
+  String get enterArabicName => 'ادخل الاسم بالعربية';
+
+  @override
+  String get phone => 'رقم الموبايل';
+
+  @override
+  String get enterPhoneNumber => 'ادخل رقم الموبايل';
+
+  @override
+  String get enterValidPhoneNumber =>
+      'ادخل رقم موبايل صحيح - مكون من احد عشر رقم';
 }

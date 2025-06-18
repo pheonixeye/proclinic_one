@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class AppTheme {
   const AppTheme();
 
-  static final appBarColor = Colors.blue.shade500.withOpacity(0.9);
-  static final secondaryOrangeColor = Colors.orange.shade500.withOpacity(0.9);
+  static final appBarColor = Colors.blue.shade500.withValues(alpha: 0.9);
+  static final secondaryOrangeColor =
+      Colors.orange.shade500.withValues(alpha: 0.9);
 
   static final _theme = ThemeData(
     colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
@@ -78,7 +79,7 @@ class AppTheme {
         TargetPlatform.windows: FadeUpwardsPageTransitionsBuilder(),
       },
     ),
-    scaffoldBackgroundColor: Colors.blue.shade100.withOpacity(0.5),
+    scaffoldBackgroundColor: Colors.blue.shade100.withValues(alpha: 0.5),
     inputDecorationTheme: InputDecorationTheme(
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
@@ -101,7 +102,7 @@ class AppTheme {
     ),
   );
 
-  static get theme => _theme;
+  static ThemeData get theme => _theme;
 
   static BoxDecoration searchContainerDecoration = BoxDecoration(
     border: Border.all(

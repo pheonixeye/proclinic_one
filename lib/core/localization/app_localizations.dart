@@ -295,6 +295,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A Password Reset Message Was Sent To Your Email Address.'**
   String get passwordResetEmailSent;
+
+  /// No description provided for @englishName.
+  ///
+  /// In en, this message translates to:
+  /// **'English Name'**
+  String get englishName;
+
+  /// No description provided for @arabicName.
+  ///
+  /// In en, this message translates to:
+  /// **'Arabic Name'**
+  String get arabicName;
+
+  /// No description provided for @enterEnglishName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter English Name'**
+  String get enterEnglishName;
+
+  /// No description provided for @enterArabicName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Arabic Name'**
+  String get enterArabicName;
+
+  /// No description provided for @phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile Number'**
+  String get phone;
+
+  /// No description provided for @enterPhoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Mobile Number'**
+  String get enterPhoneNumber;
+
+  /// No description provided for @enterValidPhoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a Valid Mobile Number - 11 Digits.'**
+  String get enterValidPhoneNumber;
 }
 
 class _AppLocalizationsDelegate

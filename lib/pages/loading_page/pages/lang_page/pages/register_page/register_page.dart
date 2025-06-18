@@ -11,6 +11,7 @@ import 'package:proklinik_one/extensions/loc_ext.dart';
 import 'package:proklinik_one/extensions/model_ext.dart';
 import 'package:proklinik_one/models/dto_create_doctor_account.dart';
 import 'package:proklinik_one/models/speciality.dart';
+import 'package:proklinik_one/providers/px_app_constants.dart';
 import 'package:proklinik_one/providers/px_auth.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:proklinik_one/providers/px_speciality.dart';
@@ -32,6 +33,9 @@ class _RegisterPageState extends State<RegisterPage> {
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
   late final TextEditingController _passwordConfirmController;
+  late final TextEditingController _nameEnController;
+  late final TextEditingController _nameArController;
+  late final TextEditingController _phoneController;
   Speciality? _speciality;
   bool _obscurePasswords = true;
 
@@ -41,6 +45,9 @@ class _RegisterPageState extends State<RegisterPage> {
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
     _passwordConfirmController = TextEditingController();
+    _nameEnController = TextEditingController();
+    _nameArController = TextEditingController();
+    _phoneController = TextEditingController();
   }
 
   @override
@@ -48,6 +55,9 @@ class _RegisterPageState extends State<RegisterPage> {
     _emailController.dispose();
     _passwordController.dispose();
     _passwordConfirmController.dispose();
+    _nameEnController.dispose();
+    _nameArController.dispose();
+    _phoneController.dispose();
     super.dispose();
   }
 
@@ -114,6 +124,66 @@ class _RegisterPageState extends State<RegisterPage> {
                               ),
                             ),
                             const SizedBox(height: 40),
+                            ListTile(
+                              contentPadding: EdgeInsets.zero,
+                              title: Padding(
+                                padding: const EdgeInsets.only(bottom: 8.0),
+                                child: Text(context.loc.englishName),
+                              ),
+                              subtitle: TextFormField(
+                                controller: _nameEnController,
+                                decoration: const InputDecoration(
+                                  hintText: 'Mohammed Ali',
+                                ),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return context.loc.enterEnglishName;
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ),
+                            ListTile(
+                              contentPadding: EdgeInsets.zero,
+                              title: Padding(
+                                padding: const EdgeInsets.only(bottom: 8.0),
+                                child: Text(context.loc.arabicName),
+                              ),
+                              subtitle: TextFormField(
+                                controller: _nameArController,
+                                decoration: const InputDecoration(
+                                  hintText: 'محمد على',
+                                ),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return context.loc.enterArabicName;
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ),
+                            ListTile(
+                              contentPadding: EdgeInsets.zero,
+                              title: Padding(
+                                padding: const EdgeInsets.only(bottom: 8.0),
+                                child: Text(context.loc.phone),
+                              ),
+                              subtitle: TextFormField(
+                                controller: _phoneController,
+                                decoration: const InputDecoration(
+                                  hintText: '01XX-XXXX-XXX',
+                                ),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return context.loc.enterPhoneNumber;
+                                  }
+                                  if (value.length != 11) {
+                                    return context.loc.enterValidPhoneNumber;
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ),
                             ListTile(
                               contentPadding: EdgeInsets.zero,
                               title: Padding(
@@ -235,6 +305,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: [
+                                              const Spacer(),
                                               CachedNetworkImage(
                                                 imageUrl: e.imageUrl,
                                                 height: 50,
@@ -243,12 +314,16 @@ class _RegisterPageState extends State<RegisterPage> {
                                               const SizedBox(
                                                 width: 10,
                                               ),
-                                              Text(
-                                                l.isEnglish
-                                                    ? e.name_en
-                                                    : e.name_ar,
-                                                textAlign: TextAlign.center,
+                                              Expanded(
+                                                flex: 4,
+                                                child: Text(
+                                                  l.isEnglish
+                                                      ? e.name_en
+                                                      : e.name_ar,
+                                                  textAlign: TextAlign.center,
+                                                ),
                                               ),
+                                              const Spacer(),
                                             ],
                                           ),
                                         );
@@ -274,8 +349,8 @@ class _RegisterPageState extends State<RegisterPage> {
                             Row(
                               children: [
                                 Expanded(
-                                  child: Consumer<PxAuth>(
-                                    builder: (context, auth, _) {
+                                  child: Consumer2<PxAuth, PxAppConstants>(
+                                    builder: (context, auth, app, _) {
                                       return ElevatedButton(
                                         onPressed: () async {
                                           late BuildContext _loadingContext;
@@ -291,6 +366,11 @@ class _RegisterPageState extends State<RegisterPage> {
                                                   _passwordConfirmController
                                                       .text,
                                               speciality: _speciality!,
+                                              accountType:
+                                                  app.doctorAccountType,
+                                              name_en: _nameEnController.text,
+                                              name_ar: _nameArController.text,
+                                              phone: _phoneController.text,
                                             );
                                             try {
                                               showDialog(

@@ -116,4 +116,26 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get passwordResetEmailSent =>
       'A Password Reset Message Was Sent To Your Email Address.';
+
+  @override
+  String get englishName => 'English Name';
+
+  @override
+  String get arabicName => 'Arabic Name';
+
+  @override
+  String get enterEnglishName => 'Enter English Name';
+
+  @override
+  String get enterArabicName => 'Enter Arabic Name';
+
+  @override
+  String get phone => 'Mobile Number';
+
+  @override
+  String get enterPhoneNumber => 'Enter Mobile Number';
+
+  @override
+  String get enterValidPhoneNumber =>
+      'Enter a Valid Mobile Number - 11 Digits.';
 }
