@@ -138,4 +138,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get enterValidPhoneNumber =>
       'Enter a Valid Mobile Number - 11 Digits.';
+
+  @override
+  String get success => 'Success';
 }

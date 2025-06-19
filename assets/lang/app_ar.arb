@@ -39,5 +39,6 @@
     "enterArabicName": "ادخل الاسم بالعربية",
     "phone": "رقم الموبايل",
     "enterPhoneNumber": "ادخل رقم الموبايل",
-    "enterValidPhoneNumber": "ادخل رقم موبايل صحيح - مكون من احد عشر رقم"
+    "enterValidPhoneNumber": "ادخل رقم موبايل صحيح - مكون من احد عشر رقم",
+    "success": "تم بنجاح"
 }

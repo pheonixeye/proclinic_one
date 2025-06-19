@@ -39,5 +39,6 @@
     "enterArabicName": "Enter Arabic Name",
     "phone": "Mobile Number",
     "enterPhoneNumber": "Enter Mobile Number",
-    "enterValidPhoneNumber": "Enter a Valid Mobile Number - 11 Digits."
+    "enterValidPhoneNumber": "Enter a Valid Mobile Number - 11 Digits.",
+    "success": "Success"
 }

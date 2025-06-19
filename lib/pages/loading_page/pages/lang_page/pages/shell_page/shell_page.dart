@@ -1,31 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:proklinik_one/extensions/is_mobile_context.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/widgets/end_drawer.dart';
-import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/widgets/language_btn.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/widgets/nav_bar.dart';
 
-class ShellPage extends StatefulWidget {
+class ShellPage extends StatelessWidget {
   const ShellPage({super.key, required this.child});
   final Widget child;
-
-  @override
-  State<ShellPage> createState() => _ShellPageState();
-}
-
-class _ShellPageState extends State<ShellPage> {
-  late final ScrollController _controller;
-
-  @override
-  void initState() {
-    _controller = ScrollController(debugLabel: "main-scroll-controller");
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,12 +20,11 @@ class _ShellPageState extends State<ShellPage> {
             ),
           Expanded(
             flex: 5,
-            child: widget.child,
+            child: child,
           ),
         ],
       ),
       endDrawer: context.isMobile ? const EndDrawer() : null,
-      floatingActionButton: context.isMobile ? const LanguageBtn() : null,
     );
   }
 }

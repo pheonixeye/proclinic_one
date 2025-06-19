@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:proklinik_one/core/api/patients_api.dart';
 import 'package:proklinik_one/pages/loading_page/pages/error_page/error_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/lang_page.dart';
 import 'package:proklinik_one/pages/loading_page/loading_page.dart';
@@ -15,7 +16,9 @@ import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_pag
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/shell_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/thankyou_page/thankyou_screen.dart';
 import 'package:proklinik_one/providers/px_auth.dart';
+import 'package:proklinik_one/providers/px_doctor.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
+import 'package:proklinik_one/providers/px_patients.dart';
 import 'package:proklinik_one/providers/px_speciality.dart';
 import 'package:proklinik_one/utils/utils_keys.dart';
 import 'package:provider/provider.dart';
@@ -175,8 +178,15 @@ class AppRouter {
                         path: patients,
                         name: patients,
                         builder: (context, state) {
-                          return PatientsPage(
-                            key: state.pageKey,
+                          return ChangeNotifierProvider(
+                            create: (context) => PxPatients(
+                              api: PatientsApi(
+                                  doc_id: context.read<PxDoctor>().doctor?.id ??
+                                      ''),
+                            ),
+                            child: PatientsPage(
+                              key: state.pageKey,
+                            ),
                           );
                         },
                       ),

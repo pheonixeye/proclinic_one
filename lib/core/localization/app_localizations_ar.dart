@@ -138,4 +138,7 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get enterValidPhoneNumber =>
       'ادخل رقم موبايل صحيح - مكون من احد عشر رقم';
+
+  @override
+  String get success => 'تم بنجاح';
 }
