@@ -112,6 +112,7 @@ class _PatientInfoCardState extends State<PatientInfoCard> {
                       ),
                     ),
                     PopupMenuButton(
+                      tooltip: context.loc.patientActions,
                       icon: const Icon(Icons.add_reaction),
                       shadowColor: Colors.grey,
                       shape: RoundedRectangleBorder(
@@ -131,7 +132,6 @@ class _PatientInfoCardState extends State<PatientInfoCard> {
                       ),
                       borderRadius: BorderRadius.circular(8),
                       iconColor: Colors.white,
-                      tooltip: context.loc.patientActions,
                       elevation: 8,
                       offset: const Offset(0, 32),
                       itemBuilder: (context) {

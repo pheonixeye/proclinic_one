@@ -234,8 +234,69 @@ class AppLocalizationsAr extends AppLocalizations {
   String get organizer => 'المواعيد';
 
   @override
+  String get forms => 'النماذج';
+
+  @override
   String get bookkeeping => 'الحسابات';
 
   @override
   String get settings => 'الاعدادات';
+
+  @override
+  String get addNewForm => 'اضافة نموذج جديد';
+
+  @override
+  String get editForm => 'تعديل اسم النموذج';
+
+  @override
+  String get englishFormName => 'اسم النموذج بالانجليزية';
+
+  @override
+  String get arabicFormName => 'اسم النموذج بالعربية';
+
+  @override
+  String get enterEnglishFormName => 'ادخل اسم النموذج بالانجليزية';
+
+  @override
+  String get enterArabicFormName => 'ادخل اسم النموذج بالعربية';
+
+  @override
+  String get noFormsFound => 'لم يتم العثور على نماذج';
+
+  @override
+  String get addNewField => 'اضافة حقل جديد';
+
+  @override
+  String get deleteForm => 'الغاء النموذج';
+
+  @override
+  String get formFields => 'حقول النموذج';
+
+  @override
+  String get fieldValues => 'قيم الحقل';
+
+  @override
+  String get commaSeparatedValues => 'ادخل القيم بينها علامة (-)';
+
+  @override
+  String get editFieldName => 'تعديل اسم الحقل';
+
+  @override
+  String get fieldName => 'اسم الحقل';
+
+  @override
+  String get fieldType => 'نوع الحقل';
+
+  @override
+  String get fieldNameHint => 'اختر اسم مميز يتسق مع بيانات الحقل';
+
+  @override
+  String get enterFieldName => 'ادخل اسم الحقل';
+
+  @override
+  String get promptDialog => 'نافذة تاكيدية';
+
+  @override
+  String get confirmDeleteForm =>
+      'سيتم الغاء هذا النموذج و كل البيانات و الحقول الملحقة به - هل انت متأكد؟';
 }

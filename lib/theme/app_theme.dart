@@ -104,6 +104,27 @@ class AppTheme {
       foregroundColor: Colors.white,
       backgroundColor: Colors.orange.shade300,
     ),
+    // menuButtonTheme: MenuButtonThemeData(
+    //   style: ButtonStyle(
+    //     shape: WidgetStatePropertyAll(
+    //       RoundedRectangleBorder(
+    //         borderRadius: BorderRadius.circular(12),
+    //       ),
+    //     ),
+    //     elevation: WidgetStatePropertyAll(6),
+    //     shadowColor: WidgetStatePropertyAll(Colors.grey),
+    //     backgroundColor: WidgetStatePropertyAll(Colors.orange.shade300),
+    //     foregroundColor: WidgetStatePropertyAll(Colors.white),
+    //   ),
+    // ),
+    // popupMenuTheme: PopupMenuThemeData(
+    //   shadowColor: Colors.grey,
+    //   shape: RoundedRectangleBorder(
+    //     borderRadius: BorderRadiusGeometry.circular(8),
+    //   ),
+    //   iconColor: Colors.white,
+    //   elevation: 8,
+    // ),
   );
 
   static ThemeData get theme => _theme;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:proklinik_one/core/api/forms_api.dart';
 import 'package:proklinik_one/core/api/patients_api.dart';
 import 'package:proklinik_one/pages/loading_page/pages/error_page/error_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/lang_page.dart';
@@ -9,6 +10,7 @@ import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/register_
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/app_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/appointment_organizer_page/appointment_organizer_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/bookkeeping_page/bookkeeping_page.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/forms_page/forms_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/visits_page/visits_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/patients_page/patients_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/settings_page/settings_page.dart';
@@ -17,6 +19,7 @@ import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_pag
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/thankyou_page/thankyou_screen.dart';
 import 'package:proklinik_one/providers/px_auth.dart';
 import 'package:proklinik_one/providers/px_doctor.dart';
+import 'package:proklinik_one/providers/px_forms.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:proklinik_one/providers/px_patients.dart';
 import 'package:proklinik_one/providers/px_speciality.dart';
@@ -47,6 +50,7 @@ class AppRouter {
   static const String visits = "visits";
   static const String patients = "patients";
   static const String organizer = "organizer";
+  static const String forms = "forms";
   static const String bookkeeping = "bookkeeping";
   static const String settings = "settings";
 
@@ -196,6 +200,23 @@ class AppRouter {
                         builder: (context, state) {
                           return AppointmentOrganizerPage(
                             key: state.pageKey,
+                          );
+                        },
+                      ),
+                      GoRoute(
+                        path: forms,
+                        name: forms,
+                        builder: (context, state) {
+                          return ChangeNotifierProvider(
+                            create: (context) => PxForms(
+                              api: FormsApi(
+                                doc_id:
+                                    context.read<PxDoctor>().doctor?.id ?? '',
+                              ),
+                            ),
+                            child: FormsPage(
+                              key: state.pageKey,
+                            ),
                           );
                         },
                       ),

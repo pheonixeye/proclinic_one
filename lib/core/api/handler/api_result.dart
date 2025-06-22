@@ -1,6 +1,6 @@
-abstract class ApiResult {}
+abstract class ApiResult<T> {}
 
-class ApiErrorResult extends ApiResult implements Exception {
+class ApiErrorResult<T> extends ApiResult<T> implements Exception {
   final int errorCode;
   final String originalErrorMessage;
 
@@ -10,7 +10,7 @@ class ApiErrorResult extends ApiResult implements Exception {
   });
 }
 
-class ApiDataResult<T> extends ApiResult {
+class ApiDataResult<T> extends ApiResult<T> {
   final T data;
 
   ApiDataResult({required this.data});

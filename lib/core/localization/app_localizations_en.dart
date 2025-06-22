@@ -235,8 +235,69 @@ class AppLocalizationsEn extends AppLocalizations {
   String get organizer => 'Organizer';
 
   @override
+  String get forms => 'Forms';
+
+  @override
   String get bookkeeping => 'Bookkeeping';
 
   @override
   String get settings => 'Settings';
+
+  @override
+  String get addNewForm => 'Add New Form';
+
+  @override
+  String get editForm => 'Edit Form';
+
+  @override
+  String get englishFormName => 'English Form Name';
+
+  @override
+  String get arabicFormName => 'Arabic Form Name';
+
+  @override
+  String get enterEnglishFormName => 'Enter English Form Name';
+
+  @override
+  String get enterArabicFormName => 'Enter Arabic Form Name';
+
+  @override
+  String get noFormsFound => 'No Forms Found';
+
+  @override
+  String get addNewField => 'Add New Field';
+
+  @override
+  String get deleteForm => 'Delete Form';
+
+  @override
+  String get formFields => 'Form Fields';
+
+  @override
+  String get fieldValues => 'Field Values';
+
+  @override
+  String get commaSeparatedValues => 'Separate Values by a (-) sign';
+
+  @override
+  String get editFieldName => 'Edit Field Name';
+
+  @override
+  String get fieldName => 'Field Name';
+
+  @override
+  String get fieldType => 'Field Type';
+
+  @override
+  String get fieldNameHint => 'Try Making The Field Name Remarkable';
+
+  @override
+  String get enterFieldName => 'Enter Field Name';
+
+  @override
+  String get promptDialog => 'Prompt Dialog';
+
+  @override
+  String get confirmDeleteForm =>
+      'This Action Will Delete This Form And All Data Related To It\'s Entries, Are You Sure ?';
 }

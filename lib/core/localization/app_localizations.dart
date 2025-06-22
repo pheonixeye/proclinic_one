@@ -524,6 +524,12 @@ abstract class AppLocalizations {
   /// **'Organizer'**
   String get organizer;
 
+  /// No description provided for @forms.
+  ///
+  /// In en, this message translates to:
+  /// **'Forms'**
+  String get forms;
+
   /// No description provided for @bookkeeping.
   ///
   /// In en, this message translates to:
@@ -535,6 +541,120 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Settings'**
   String get settings;
+
+  /// No description provided for @addNewForm.
+  ///
+  /// In en, this message translates to:
+  /// **'Add New Form'**
+  String get addNewForm;
+
+  /// No description provided for @editForm.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Form'**
+  String get editForm;
+
+  /// No description provided for @englishFormName.
+  ///
+  /// In en, this message translates to:
+  /// **'English Form Name'**
+  String get englishFormName;
+
+  /// No description provided for @arabicFormName.
+  ///
+  /// In en, this message translates to:
+  /// **'Arabic Form Name'**
+  String get arabicFormName;
+
+  /// No description provided for @enterEnglishFormName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter English Form Name'**
+  String get enterEnglishFormName;
+
+  /// No description provided for @enterArabicFormName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Arabic Form Name'**
+  String get enterArabicFormName;
+
+  /// No description provided for @noFormsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No Forms Found'**
+  String get noFormsFound;
+
+  /// No description provided for @addNewField.
+  ///
+  /// In en, this message translates to:
+  /// **'Add New Field'**
+  String get addNewField;
+
+  /// No description provided for @deleteForm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Form'**
+  String get deleteForm;
+
+  /// No description provided for @formFields.
+  ///
+  /// In en, this message translates to:
+  /// **'Form Fields'**
+  String get formFields;
+
+  /// No description provided for @fieldValues.
+  ///
+  /// In en, this message translates to:
+  /// **'Field Values'**
+  String get fieldValues;
+
+  /// No description provided for @commaSeparatedValues.
+  ///
+  /// In en, this message translates to:
+  /// **'Separate Values by a (-) sign'**
+  String get commaSeparatedValues;
+
+  /// No description provided for @editFieldName.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Field Name'**
+  String get editFieldName;
+
+  /// No description provided for @fieldName.
+  ///
+  /// In en, this message translates to:
+  /// **'Field Name'**
+  String get fieldName;
+
+  /// No description provided for @fieldType.
+  ///
+  /// In en, this message translates to:
+  /// **'Field Type'**
+  String get fieldType;
+
+  /// No description provided for @fieldNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Try Making The Field Name Remarkable'**
+  String get fieldNameHint;
+
+  /// No description provided for @enterFieldName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Field Name'**
+  String get enterFieldName;
+
+  /// No description provided for @promptDialog.
+  ///
+  /// In en, this message translates to:
+  /// **'Prompt Dialog'**
+  String get promptDialog;
+
+  /// No description provided for @confirmDeleteForm.
+  ///
+  /// In en, this message translates to:
+  /// **'This Action Will Delete This Form And All Data Related To It\'s Entries, Are You Sure ?'**
+  String get confirmDeleteForm;
 }
 
 class _AppLocalizationsDelegate

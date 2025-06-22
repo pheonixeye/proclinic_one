@@ -81,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                                   width: 10,
                                 ),
                                 const Text(
-                                  'ProKliniK',
+                                  'ProKliniK-One',
                                   style: TextStyle(
                                     fontSize: 32,
                                     fontWeight: FontWeight.bold,
