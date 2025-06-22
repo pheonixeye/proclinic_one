@@ -48,6 +48,11 @@ class PxPatients extends ChangeNotifier {
     await fetchPatients();
   }
 
+  Future<void> editPatientBaseData(Patient patient) async {
+    await api.editPatientBaseData(patient);
+    await fetchPatients();
+  }
+
   Future<void> searchPatientsByName(String query) async {
     _page = 1;
     notifyListeners();

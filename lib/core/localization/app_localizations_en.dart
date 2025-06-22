@@ -193,6 +193,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String get retry => 'Retry';
 
   @override
+  String get findPatient => 'Find Patient';
+
+  @override
+  String get clearSearch => 'Clear Search';
+
+  @override
+  String get editPatientData => 'Edit Patient Data';
+
+  @override
+  String get patientActions => 'Patient Actions';
+
+  @override
+  String get quickVisit => 'Quick Visit';
+
+  @override
+  String get addNewVisit => 'Add New Visit';
+
+  @override
+  String get scheduleAppointment => 'Schedule Appointment';
+
+  @override
+  String get attachForm => 'Attach Form';
+
+  @override
+  String get editFormData => 'Edit Form Data';
+
+  @override
+  String get detachForm => 'Detach Form';
+
+  @override
   String get dashboard => 'Dashboard';
 
   @override

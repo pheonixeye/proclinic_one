@@ -5,14 +5,16 @@ import 'package:proklinik_one/models/patient.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:provider/provider.dart';
 
-class CreatePatientDialog extends StatefulWidget {
-  const CreatePatientDialog({super.key});
+class CreateEditPatientDialog extends StatefulWidget {
+  const CreateEditPatientDialog({super.key, this.patient});
+  final Patient? patient;
 
   @override
-  State<CreatePatientDialog> createState() => _CreatePatientDialogState();
+  State<CreateEditPatientDialog> createState() =>
+      _CreateEditPatientDialogState();
 }
 
-class _CreatePatientDialogState extends State<CreatePatientDialog> {
+class _CreateEditPatientDialogState extends State<CreateEditPatientDialog> {
   final formKey = GlobalKey<FormState>();
   late final TextEditingController _nameController;
   late final TextEditingController _phoneController;
@@ -21,9 +23,13 @@ class _CreatePatientDialogState extends State<CreatePatientDialog> {
   @override
   void initState() {
     super.initState();
-    _nameController = TextEditingController();
-    _phoneController = TextEditingController();
-    _dobController = TextEditingController();
+    _nameController = TextEditingController(text: widget.patient?.name ?? '');
+    _phoneController = TextEditingController(text: widget.patient?.phone ?? '');
+    _dobController = TextEditingController(
+        text: DateFormat(
+      'dd-MM-yyyy',
+      context.read<PxLocale>().lang,
+    ).format(DateTime.tryParse(widget.patient?.dob ?? '') ?? DateTime.now()));
   }
 
   @override
@@ -34,14 +40,18 @@ class _CreatePatientDialogState extends State<CreatePatientDialog> {
     super.dispose();
   }
 
-  DateTime? _dob;
+  late DateTime? _dob = DateTime.parse(widget.patient?.dob ?? '');
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Row(
         children: [
-          Expanded(child: Text(context.loc.addNewPatient)),
+          Expanded(
+            child: widget.patient == null
+                ? Text(context.loc.addNewPatient)
+                : Text(context.loc.editPatientData),
+          ),
           IconButton.outlined(
             onPressed: () {
               Navigator.pop(context, null);
@@ -168,7 +178,7 @@ class _CreatePatientDialogState extends State<CreatePatientDialog> {
           onPressed: () {
             if (formKey.currentState!.validate() && _dob != null) {
               final _patient = Patient(
-                id: '',
+                id: widget.patient?.id ?? '',
                 name: _nameController.text,
                 phone: _phoneController.text,
                 dob: _dob!.toIso8601String(),

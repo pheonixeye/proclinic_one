@@ -102,7 +102,7 @@ class AppTheme {
     ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       foregroundColor: Colors.white,
-      backgroundColor: Colors.amber,
+      backgroundColor: Colors.orange.shade300,
     ),
   );
 

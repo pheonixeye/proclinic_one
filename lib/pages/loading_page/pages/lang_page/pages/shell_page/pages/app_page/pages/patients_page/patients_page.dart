@@ -4,7 +4,7 @@ import 'package:proklinik_one/extensions/loc_ext.dart';
 import 'package:proklinik_one/functions/shell_function.dart';
 import 'package:proklinik_one/models/patient.dart';
 import 'package:proklinik_one/models/api_result_mapper.dart';
-import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/patients_page/widgets/create_patient_dialog.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/patients_page/widgets/create_edit_patient_dialog.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/patients_page/widgets/patient_info_card.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/patients_page/widgets/search_patients_header.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
@@ -29,7 +29,7 @@ class PatientsPage extends StatelessWidget {
               final _patient = await showDialog<Patient?>(
                 context: context,
                 builder: (context) {
-                  return CreatePatientDialog();
+                  return CreateEditPatientDialog();
                 },
               );
               if (_patient == null) {

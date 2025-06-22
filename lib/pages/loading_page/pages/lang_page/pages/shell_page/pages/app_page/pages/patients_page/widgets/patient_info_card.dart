@@ -1,8 +1,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:proklinik_one/extensions/loc_ext.dart';
+import 'package:proklinik_one/functions/shell_function.dart';
 import 'package:proklinik_one/models/patient.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/patients_page/widgets/create_edit_patient_dialog.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
+import 'package:proklinik_one/providers/px_patients.dart';
 import 'package:provider/provider.dart';
 import 'package:web/web.dart' as web;
 
@@ -23,47 +27,171 @@ class _PatientInfoCardState extends State<PatientInfoCard> {
   @override
   Widget build(BuildContext context) {
     return Card.outlined(
+      elevation: 6,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: ListTile(
-          leading: FloatingActionButton.small(
-            heroTag: widget.patient.id,
-            onPressed: null,
-            child: Text('${widget.index + 1}'),
-          ),
-          title: Text(widget.patient.name),
-          subtitle: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              spacing: 8,
-              children: [
-                Text(
-                  DateFormat(
-                    'dd/MM/yyyy',
-                    context.read<PxLocale>().lang,
-                  ).format(
-                    DateTime.parse(widget.patient.dob),
-                  ),
-                ),
-                Text.rich(
-                  TextSpan(
-                    text: widget.patient.phone,
-                    style: TextStyle(
-                      decoration: TextDecoration.underline,
-                    ),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        web.window.open(
-                          'tel://+2${widget.patient.phone}',
-                          '_blank',
+        child: Consumer<PxPatients>(
+          builder: (context, p, _) {
+            return ListTile(
+              leading: FloatingActionButton.small(
+                heroTag: widget.patient.id,
+                onPressed: null,
+                child: Text('${widget.index + 1}'),
+              ),
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Expanded(child: Text(widget.patient.name)),
+                  FloatingActionButton.small(
+                    tooltip: context.loc.editPatientData,
+                    heroTag: '${widget.patient.id}+${widget.index}',
+                    onPressed: () async {
+                      //TODO: edit patient name/phone/dob
+
+                      final _patient = await showDialog<Patient?>(
+                        context: context,
+                        builder: (context) {
+                          return CreateEditPatientDialog(
+                            patient: widget.patient,
+                          );
+                        },
+                      );
+                      if (_patient == null) {
+                        return;
+                      }
+                      if (context.mounted) {
+                        await shellFunction(
+                          context,
+                          toExecute: () async {
+                            await p.editPatientBaseData(_patient);
+                          },
                         );
-                      },
+                      }
+                    },
+                    child: const Icon(Icons.edit),
                   ),
+                  const SizedBox(width: 10),
+                ],
+              ),
+              titleAlignment: ListTileTitleAlignment.top,
+              subtitle: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        spacing: 8,
+                        children: [
+                          Text(
+                            DateFormat(
+                              'dd / MM / yyyy',
+                              context.read<PxLocale>().lang,
+                            ).format(
+                              DateTime.parse(widget.patient.dob),
+                            ),
+                          ),
+                          Text.rich(
+                            TextSpan(
+                              text: widget.patient.phone,
+                              style: TextStyle(
+                                decoration: TextDecoration.underline,
+                              ),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  web.window.open(
+                                    'tel://+2${widget.patient.phone}',
+                                    '_blank',
+                                  );
+                                },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    PopupMenuButton(
+                      icon: const Icon(Icons.add_reaction),
+                      shadowColor: Colors.grey,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadiusGeometry.circular(8),
+                      ),
+                      style: ButtonStyle(
+                        shape: WidgetStatePropertyAll(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        elevation: WidgetStatePropertyAll(6),
+                        shadowColor: WidgetStatePropertyAll(Colors.grey),
+                        backgroundColor:
+                            WidgetStatePropertyAll(Colors.orange.shade300),
+                        foregroundColor: WidgetStatePropertyAll(Colors.white),
+                      ),
+                      borderRadius: BorderRadius.circular(8),
+                      iconColor: Colors.white,
+                      tooltip: context.loc.patientActions,
+                      elevation: 8,
+                      offset: const Offset(0, 32),
+                      itemBuilder: (context) {
+                        return [
+                          PopupMenuItem(
+                            child: Row(
+                              children: [
+                                const Icon(Icons.electric_bolt),
+                                Text(context.loc.quickVisit),
+                              ],
+                            ),
+                          ),
+                          PopupMenuItem(
+                            child: Row(
+                              children: [
+                                const Icon(Icons.calendar_month),
+                                Text(context.loc.addNewVisit),
+                              ],
+                            ),
+                          ),
+                          PopupMenuItem(
+                            child: Row(
+                              children: [
+                                const Icon(Icons.watch_later),
+                                Text(context.loc.scheduleAppointment),
+                              ],
+                            ),
+                          ),
+                          PopupMenuItem(
+                            child: Row(
+                              children: [
+                                const Icon(Icons.attach_file),
+                                Text(context.loc.attachForm),
+                              ],
+                            ),
+                          ),
+                          PopupMenuItem(
+                            child: Row(
+                              children: [
+                                const Icon(Icons.edit),
+                                Text(context.loc.editFormData),
+                              ],
+                            ),
+                          ),
+                          PopupMenuItem(
+                            child: Row(
+                              children: [
+                                const Icon(Icons.edit_off),
+                                Text(context.loc.detachForm),
+                              ],
+                            ),
+                          ),
+                        ];
+                      },
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
+              ),
+            );
+          },
         ),
       ),
     );

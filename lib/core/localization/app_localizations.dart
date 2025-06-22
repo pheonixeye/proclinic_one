@@ -440,6 +440,66 @@ abstract class AppLocalizations {
   /// **'Retry'**
   String get retry;
 
+  /// No description provided for @findPatient.
+  ///
+  /// In en, this message translates to:
+  /// **'Find Patient'**
+  String get findPatient;
+
+  /// No description provided for @clearSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Search'**
+  String get clearSearch;
+
+  /// No description provided for @editPatientData.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Patient Data'**
+  String get editPatientData;
+
+  /// No description provided for @patientActions.
+  ///
+  /// In en, this message translates to:
+  /// **'Patient Actions'**
+  String get patientActions;
+
+  /// No description provided for @quickVisit.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Visit'**
+  String get quickVisit;
+
+  /// No description provided for @addNewVisit.
+  ///
+  /// In en, this message translates to:
+  /// **'Add New Visit'**
+  String get addNewVisit;
+
+  /// No description provided for @scheduleAppointment.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule Appointment'**
+  String get scheduleAppointment;
+
+  /// No description provided for @attachForm.
+  ///
+  /// In en, this message translates to:
+  /// **'Attach Form'**
+  String get attachForm;
+
+  /// No description provided for @editFormData.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Form Data'**
+  String get editFormData;
+
+  /// No description provided for @detachForm.
+  ///
+  /// In en, this message translates to:
+  /// **'Detach Form'**
+  String get detachForm;
+
   /// No description provided for @dashboard.
   ///
   /// In en, this message translates to:

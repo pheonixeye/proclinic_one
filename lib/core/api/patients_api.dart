@@ -91,4 +91,11 @@ class PatientsApi {
       );
     }
   }
+
+  Future<void> editPatientBaseData(Patient patient) async {
+    await PocketbaseHelper.pb.collection(collection).update(
+          patient.id,
+          body: patient.toJson(),
+        );
+  }
 }

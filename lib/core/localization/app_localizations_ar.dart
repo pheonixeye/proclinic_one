@@ -192,6 +192,36 @@ class AppLocalizationsAr extends AppLocalizations {
   String get retry => 'اعادة المحاولة';
 
   @override
+  String get findPatient => 'بحث عن مريض';
+
+  @override
+  String get clearSearch => 'اخلاء البحث';
+
+  @override
+  String get editPatientData => 'تعديل بيانات المريض';
+
+  @override
+  String get patientActions => 'اجرائات المريض';
+
+  @override
+  String get quickVisit => 'زيارة سريعة';
+
+  @override
+  String get addNewVisit => 'اضافة زيارة جديدة';
+
+  @override
+  String get scheduleAppointment => 'تحديد موعد لاحق';
+
+  @override
+  String get attachForm => 'الحاق نموذج';
+
+  @override
+  String get editFormData => 'تعديل بيانات النموذج';
+
+  @override
+  String get detachForm => 'ازالة النموذج الملحق';
+
+  @override
   String get dashboard => 'الرئيسية';
 
   @override

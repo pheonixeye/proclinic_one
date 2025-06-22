@@ -65,6 +65,7 @@ class _SearchPatientsHeaderState extends State<SearchPatientsHeader> {
                     padding: const EdgeInsets.all(8.0),
                     child: FloatingActionButton.small(
                       heroTag: 'patient-search-button',
+                      tooltip: context.loc.findPatient,
                       onPressed: () async {
                         if (formKey.currentState!.validate()) {
                           await shellFunction(
@@ -85,7 +86,9 @@ class _SearchPatientsHeaderState extends State<SearchPatientsHeader> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: FloatingActionButton.small(
+                      tooltip: context.loc.clearSearch,
                       heroTag: 'patient-clear-search-button',
+                      backgroundColor: Colors.red.shade300,
                       onPressed: () async {
                         _controller.clear();
                         await shellFunction(
