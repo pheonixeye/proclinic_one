@@ -141,4 +141,71 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get success => 'تم بنجاح';
+
+  @override
+  String get myPatients => 'المرضي';
+
+  @override
+  String get noPatientsFound => 'لم يتم العثور علي مرضي';
+
+  @override
+  String get next => 'التالى';
+
+  @override
+  String get previous => 'السابق';
+
+  @override
+  String get addNewPatient => 'اضافة مريض جديد';
+
+  @override
+  String get name => 'الاسم';
+
+  @override
+  String get enterPatientName => 'ادخل اسم المريض';
+
+  @override
+  String get mobileNumber => 'رقم الموبايل';
+
+  @override
+  String get enterPatientPhone => 'ادخل رقم موبايل المريض';
+
+  @override
+  String get enterValidPatientPhone => 'ادخل رقم موبايل مكون من احد عشر رقم';
+
+  @override
+  String get dateOfBirth => 'تاريخ الميلاد';
+
+  @override
+  String get selectPatientDateOfBirth => 'اختر تاريخ ميلاد المريض';
+
+  @override
+  String get searchByPatientNameorMobileNumber =>
+      'بحث باسم المريض او رقم الموبايل';
+
+  @override
+  String get confirm => 'تاكيد';
+
+  @override
+  String get cancel => 'الغاء';
+
+  @override
+  String get retry => 'اعادة المحاولة';
+
+  @override
+  String get dashboard => 'الرئيسية';
+
+  @override
+  String get patients => 'المرضى';
+
+  @override
+  String get visits => 'الزيارات';
+
+  @override
+  String get organizer => 'المواعيد';
+
+  @override
+  String get bookkeeping => 'الحسابات';
+
+  @override
+  String get settings => 'الاعدادات';
 }

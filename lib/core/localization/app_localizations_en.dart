@@ -141,4 +141,72 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get success => 'Success';
+
+  @override
+  String get myPatients => 'My Patients';
+
+  @override
+  String get noPatientsFound => 'No Patients Found.';
+
+  @override
+  String get next => 'Next';
+
+  @override
+  String get previous => 'Previous';
+
+  @override
+  String get addNewPatient => 'Add New Patient';
+
+  @override
+  String get name => 'Name';
+
+  @override
+  String get enterPatientName => 'Enter Patient Name';
+
+  @override
+  String get mobileNumber => 'Mobile Number';
+
+  @override
+  String get enterPatientPhone => 'Enter Patient Mobile Number';
+
+  @override
+  String get enterValidPatientPhone =>
+      'Enter a Valid Patient Mobile Number - 11 digits';
+
+  @override
+  String get dateOfBirth => 'Date Of Birth';
+
+  @override
+  String get selectPatientDateOfBirth => 'Select Patient Date Of Birth';
+
+  @override
+  String get searchByPatientNameorMobileNumber =>
+      'Search By Patient Name or Mobile Number';
+
+  @override
+  String get confirm => 'Confirm';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get retry => 'Retry';
+
+  @override
+  String get dashboard => 'Dashboard';
+
+  @override
+  String get patients => 'Patients';
+
+  @override
+  String get visits => 'Visits';
+
+  @override
+  String get organizer => 'Organizer';
+
+  @override
+  String get bookkeeping => 'Bookkeeping';
+
+  @override
+  String get settings => 'Settings';
 }

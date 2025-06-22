@@ -1,4 +1,7 @@
+import 'package:pocketbase/pocketbase.dart';
 import 'package:proklinik_one/core/api/constants/pocketbase_helper.dart';
+import 'package:proklinik_one/core/api/handler/api_result.dart';
+import 'package:proklinik_one/errors/code_to_error.dart';
 import 'package:proklinik_one/models/patient.dart';
 
 class PatientsApi {
@@ -14,25 +17,78 @@ class PatientsApi {
     //TODO:
   }
 
-  Future<List<Patient>> fetchPatients({
+  Future<ApiResult> fetchPatients({
     required int page,
     required int perPage,
   }) async {
-    final _response = await PocketbaseHelper.pb.collection(collection).getList(
-          page: page,
-          perPage: perPage,
-          sort: '-created',
-        );
+    try {
+      final _response =
+          await PocketbaseHelper.pb.collection(collection).getList(
+                page: page,
+                perPage: perPage,
+                sort: '-created',
+              );
 
-    final patients =
-        _response.items.map((e) => Patient.fromJson(e.toJson())).toList();
+      final patients =
+          _response.items.map((e) => Patient.fromJson(e.toJson())).toList();
 
-    return patients;
+      return ApiDataResult<List<Patient>>(data: patients);
+    } on ClientException catch (e) {
+      return ApiErrorResult(
+        errorCode: AppErrorCode.clientException.code,
+        originalErrorMessage: e.toString(),
+      );
+    }
   }
 
   Future<void> createPatientProfile(Patient patient) async {
     await PocketbaseHelper.pb.collection(collection).create(
           body: patient.toJson(),
         );
+  }
+
+  Future<ApiResult> searchPatientByPhone({
+    required String query,
+  }) async {
+    try {
+      final _response = await PocketbaseHelper.pb
+          .collection(collection)
+          .getList(filter: 'phone = $query');
+
+      final patients =
+          _response.items.map((e) => Patient.fromJson(e.toJson())).toList();
+
+      return ApiDataResult<List<Patient>>(data: patients);
+    } on ClientException catch (e) {
+      return ApiErrorResult(
+        errorCode: AppErrorCode.clientException.code,
+        originalErrorMessage: e.toString(),
+      );
+    }
+  }
+
+  Future<ApiResult> searchPatientByName({
+    required String query,
+    required int page,
+    required int perPage,
+  }) async {
+    try {
+      final _response =
+          await PocketbaseHelper.pb.collection(collection).getList(
+                filter: "name ?~ '$query'",
+                sort: '-created',
+                page: page,
+                perPage: perPage,
+              );
+      final patients =
+          _response.items.map((e) => Patient.fromJson(e.toJson())).toList();
+
+      return ApiDataResult<List<Patient>>(data: patients);
+    } on ClientException catch (e) {
+      return ApiErrorResult(
+        errorCode: AppErrorCode.clientException.code,
+        originalErrorMessage: e.toString(),
+      );
+    }
   }
 }

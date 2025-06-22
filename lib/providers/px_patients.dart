@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proklinik_one/core/api/handler/api_result.dart';
 import 'package:proklinik_one/core/api/patients_api.dart';
 import 'package:proklinik_one/models/patient.dart';
 
@@ -9,8 +10,8 @@ class PxPatients extends ChangeNotifier {
     fetchPatients();
   }
 
-  List<Patient>? _patients;
-  List<Patient>? get patients => _patients;
+  ApiResult? _data;
+  ApiResult? get data => _data;
 
   int _page = 1;
   int get page => _page;
@@ -18,12 +19,14 @@ class PxPatients extends ChangeNotifier {
   final int perPage = 10;
 
   Future<void> fetchPatients() async {
-    _patients = await api.fetchPatients(page: page, perPage: perPage);
+    _data = await api.fetchPatients(page: page, perPage: perPage);
     notifyListeners();
   }
 
   Future<void> nextPage() async {
-    if (_patients != null && _patients!.length < 10) {
+    if (_data != null &&
+        _data is ApiDataResult &&
+        (_data as ApiDataResult<List<Patient>>).data.length < 10) {
       return;
     }
     _page++;
@@ -42,6 +45,30 @@ class PxPatients extends ChangeNotifier {
 
   Future<void> createPatientProfile(Patient patient) async {
     await api.createPatientProfile(patient);
+    await fetchPatients();
+  }
+
+  Future<void> searchPatientsByName(String query) async {
+    _page = 1;
+    notifyListeners();
+    _data = await api.searchPatientByName(
+      query: query,
+      page: page,
+      perPage: perPage,
+    );
+    notifyListeners();
+  }
+
+  Future<void> searchPatientsByPhone(String query) async {
+    _page = 1;
+    notifyListeners();
+    _data = await api.searchPatientByPhone(query: query);
+    notifyListeners();
+  }
+
+  Future<void> clearSearch() async {
+    _page = 1;
+    notifyListeners();
     await fetchPatients();
   }
 }

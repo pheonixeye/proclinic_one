@@ -343,6 +343,138 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Success'**
   String get success;
+
+  /// No description provided for @myPatients.
+  ///
+  /// In en, this message translates to:
+  /// **'My Patients'**
+  String get myPatients;
+
+  /// No description provided for @noPatientsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No Patients Found.'**
+  String get noPatientsFound;
+
+  /// No description provided for @next.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get next;
+
+  /// No description provided for @previous.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous'**
+  String get previous;
+
+  /// No description provided for @addNewPatient.
+  ///
+  /// In en, this message translates to:
+  /// **'Add New Patient'**
+  String get addNewPatient;
+
+  /// No description provided for @name.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get name;
+
+  /// No description provided for @enterPatientName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Patient Name'**
+  String get enterPatientName;
+
+  /// No description provided for @mobileNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile Number'**
+  String get mobileNumber;
+
+  /// No description provided for @enterPatientPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Patient Mobile Number'**
+  String get enterPatientPhone;
+
+  /// No description provided for @enterValidPatientPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a Valid Patient Mobile Number - 11 digits'**
+  String get enterValidPatientPhone;
+
+  /// No description provided for @dateOfBirth.
+  ///
+  /// In en, this message translates to:
+  /// **'Date Of Birth'**
+  String get dateOfBirth;
+
+  /// No description provided for @selectPatientDateOfBirth.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Patient Date Of Birth'**
+  String get selectPatientDateOfBirth;
+
+  /// No description provided for @searchByPatientNameorMobileNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Search By Patient Name or Mobile Number'**
+  String get searchByPatientNameorMobileNumber;
+
+  /// No description provided for @confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get confirm;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retry;
+
+  /// No description provided for @dashboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Dashboard'**
+  String get dashboard;
+
+  /// No description provided for @patients.
+  ///
+  /// In en, this message translates to:
+  /// **'Patients'**
+  String get patients;
+
+  /// No description provided for @visits.
+  ///
+  /// In en, this message translates to:
+  /// **'Visits'**
+  String get visits;
+
+  /// No description provided for @organizer.
+  ///
+  /// In en, this message translates to:
+  /// **'Organizer'**
+  String get organizer;
+
+  /// No description provided for @bookkeeping.
+  ///
+  /// In en, this message translates to:
+  /// **'Bookkeeping'**
+  String get bookkeeping;
+
+  /// No description provided for @settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settings;
 }
 
 class _AppLocalizationsDelegate

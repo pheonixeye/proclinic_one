@@ -100,6 +100,10 @@ class AppTheme {
         ),
       ),
     ),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      foregroundColor: Colors.white,
+      backgroundColor: Colors.amber,
+    ),
   );
 
   static ThemeData get theme => _theme;

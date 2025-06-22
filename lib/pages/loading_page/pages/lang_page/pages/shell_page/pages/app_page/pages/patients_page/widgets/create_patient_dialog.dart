@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:proklinik_one/extensions/loc_ext.dart';
 import 'package:proklinik_one/models/patient.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:provider/provider.dart';
@@ -40,7 +41,7 @@ class _CreatePatientDialogState extends State<CreatePatientDialog> {
     return AlertDialog(
       title: Row(
         children: [
-          Expanded(child: Text('Add New Patient')),
+          Expanded(child: Text(context.loc.addNewPatient)),
           IconButton.outlined(
             onPressed: () {
               Navigator.pop(context, null);
@@ -58,7 +59,7 @@ class _CreatePatientDialogState extends State<CreatePatientDialog> {
             ListTile(
               title: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text('Name'),
+                child: Text(context.loc.name),
               ),
               subtitle: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -70,7 +71,7 @@ class _CreatePatientDialogState extends State<CreatePatientDialog> {
                   controller: _nameController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'enter patient name';
+                      return context.loc.enterPatientName;
                     }
                     return null;
                   },
@@ -80,7 +81,7 @@ class _CreatePatientDialogState extends State<CreatePatientDialog> {
             ListTile(
               title: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text('Mobile Number'),
+                child: Text(context.loc.mobileNumber),
               ),
               subtitle: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -92,10 +93,10 @@ class _CreatePatientDialogState extends State<CreatePatientDialog> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'enter patient phone';
+                      return context.loc.enterPatientPhone;
                     }
                     if (value.length != 11) {
-                      return 'enter valid patient phone';
+                      return context.loc.enterValidPatientPhone;
                     }
                     return null;
                   },
@@ -105,46 +106,56 @@ class _CreatePatientDialogState extends State<CreatePatientDialog> {
             ListTile(
               title: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text('Date Of Birth'),
+                child: Text(context.loc.dateOfBirth),
               ),
+              titleAlignment: ListTileTitleAlignment.center,
               subtitle: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
-                  controller: _dobController,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'dd-MM-yyyy',
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'select patient date of birth';
-                    }
-                    return null;
-                  },
-                  enabled: false,
-                ),
-              ),
-              trailing: FloatingActionButton.small(
-                heroTag: 'patient-dob-picker',
-                onPressed: () async {
-                  _dob = await showDatePicker(
-                    context: context,
-                    firstDate: DateTime.now().subtract(
-                      const Duration(days: 36525),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        controller: _dobController,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: 'dd-MM-yyyy',
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return context.loc.selectPatientDateOfBirth;
+                          }
+                          return null;
+                        },
+                        enabled: false,
+                      ),
                     ),
-                    lastDate: DateTime.now(),
-                  );
-                  if (_dob == null) {
-                    return;
-                  }
-                  setState(() {
-                    _dobController.text = DateFormat(
-                      'dd-MM-yyyy',
-                      context.read<PxLocale>().lang,
-                    ).format(_dob!);
-                  });
-                },
-                child: const Icon(Icons.calendar_month),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: FloatingActionButton.small(
+                        heroTag: 'patient-dob-picker',
+                        onPressed: () async {
+                          _dob = await showDatePicker(
+                            context: context,
+                            firstDate: DateTime.now().subtract(
+                              const Duration(days: 36525),
+                            ),
+                            lastDate: DateTime.now(),
+                          );
+                          if (_dob == null) {
+                            return;
+                          }
+                          setState(() {
+                            _dobController.text = DateFormat(
+                              'dd-MM-yyyy',
+                              context.read<PxLocale>().lang,
+                            ).format(_dob!);
+                          });
+                        },
+                        child: const Icon(Icons.calendar_month),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
@@ -165,15 +176,21 @@ class _CreatePatientDialogState extends State<CreatePatientDialog> {
               Navigator.pop(context, _patient);
             }
           },
-          label: Text('Confirm'),
-          icon: const Icon(Icons.check),
+          label: Text(context.loc.confirm),
+          icon: Icon(
+            Icons.check,
+            color: Colors.green.shade100,
+          ),
         ),
         ElevatedButton.icon(
           onPressed: () {
             Navigator.pop(context, null);
           },
-          label: Text('Cancel'),
-          icon: const Icon(Icons.close),
+          label: Text(context.loc.cancel),
+          icon: const Icon(
+            Icons.close,
+            color: Colors.red,
+          ),
         ),
       ],
     );

@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:proklinik_one/core/api/handler/api_result.dart';
+import 'package:proklinik_one/extensions/loc_ext.dart';
 import 'package:proklinik_one/functions/shell_function.dart';
 import 'package:proklinik_one/models/patient.dart';
+import 'package:proklinik_one/models/api_result_mapper.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/patients_page/widgets/create_patient_dialog.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/patients_page/widgets/patient_info_card.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/patients_page/widgets/search_patients_header.dart';
+import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:proklinik_one/providers/px_patients.dart';
+import 'package:proklinik_one/widgets/central_error.dart';
 import 'package:proklinik_one/widgets/central_loading.dart';
 import 'package:provider/provider.dart';
 
@@ -16,6 +23,7 @@ class PatientsPage extends StatelessWidget {
         return Scaffold(
           floatingActionButton: FloatingActionButton.small(
             heroTag: 'add-new-patient',
+            tooltip: context.loc.addNewPatient,
             onPressed: () async {
               //todo: Add new patient file dialog
               final _patient = await showDialog<Patient?>(
@@ -40,70 +48,42 @@ class PatientsPage extends StatelessWidget {
           ),
           body: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ListTile(
-                  title: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text('My Patients'),
-                      ),
-                      Expanded(
-                        child: TextFormField(),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: FloatingActionButton.small(
-                          heroTag: 'patient-search-button',
-                          onPressed: () async {},
-                          child: const Icon(Icons.search),
-                        ),
-                      ),
-                    ],
-                  ),
-                  subtitle: const Divider(),
-                ),
-              ),
+              const SearchPatientsHeader(),
               Expanded(
-                child: Builder(
-                  builder: (context) {
-                    while (p.patients == null) {
+                child: Consumer<PxLocale>(
+                  builder: (context, l, _) {
+                    while (p.data == null) {
                       return const CentralLoading();
                     }
-                    while (p.patients != null && p.patients!.isEmpty) {
-                      return Center(
-                        child: const Card.outlined(
-                          child: Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text('No Patients Found.'),
-                          ),
-                        ),
+                    if (p.data is ApiErrorResult) {
+                      return CentralError(
+                        code: (p.data as ApiErrorResult).errorCode,
+                        toExecute: p.fetchPatients,
                       );
-                    }
-                    return ListView.builder(
-                      itemCount: p.patients?.length,
-                      itemBuilder: (context, index) {
-                        final item = p.patients![index];
-                        return ListTile(
-                          leading: FloatingActionButton.small(
-                            heroTag: item.id,
-                            onPressed: null,
-                            child: Text('${index + 1}'),
-                          ),
-                          title: Text(item.name),
-                          subtitle: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              children: [
-                                Text(item.dob),
-                                Text(item.phone),
-                              ],
+                    } else {
+                      while (p.data != null &&
+                          (p.data! as PatientDataResult).data.isEmpty) {
+                        return Center(
+                          child: Card.outlined(
+                            child: Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text(context.loc.noPatientsFound),
                             ),
                           ),
                         );
-                      },
-                    );
+                      }
+                      return ListView.builder(
+                        itemCount: (p.data! as PatientDataResult).data.length,
+                        itemBuilder: (context, index) {
+                          final item =
+                              (p.data! as PatientDataResult).data[index];
+                          return PatientInfoCard(
+                            patient: item,
+                            index: index,
+                          );
+                        },
+                      );
+                    }
                   },
                 ),
               ),
@@ -113,8 +93,14 @@ class PatientsPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     IconButton.outlined(
+                      tooltip: context.loc.previous,
                       onPressed: () async {
-                        await p.previousPage();
+                        await shellFunction(
+                          context,
+                          toExecute: () async {
+                            await p.previousPage();
+                          },
+                        );
                       },
                       icon: const Icon(Icons.arrow_back),
                     ),
@@ -123,8 +109,14 @@ class PatientsPage extends StatelessWidget {
                       child: Text('- ${p.page} -'),
                     ),
                     IconButton.outlined(
+                      tooltip: context.loc.next,
                       onPressed: () async {
-                        await p.nextPage();
+                        await shellFunction(
+                          context,
+                          toExecute: () async {
+                            await p.nextPage();
+                          },
+                        );
                       },
                       icon: const Icon(Icons.arrow_forward),
                     ),

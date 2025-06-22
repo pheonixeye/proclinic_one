@@ -8,6 +8,7 @@ class AppAssets {
   static const String err = 'assets/images/404.svg';
   static const String construction = 'assets/images/const-svg.svg';
   static const String registerAvatar = 'assets/images/register-avatar.webp';
+  static const String errorIcon = 'assets/images/error.png';
 
   ///json files
   static const String specialities = "assets/json/specialities.json";
