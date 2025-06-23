@@ -4,6 +4,7 @@ import 'package:proklinik_one/functions/shell_function.dart';
 import 'package:proklinik_one/models/pc_form.dart';
 import 'package:proklinik_one/models/pc_form_field.dart';
 import 'package:proklinik_one/models/pc_form_field_types.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/forms_page/widgets/create_edit_form_dialog.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/forms_page/widgets/edit_field_name_dialog.dart';
 import 'package:proklinik_one/providers/px_forms.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
@@ -148,7 +149,11 @@ class _FormViewEditCardState extends State<FormViewEditCard> {
                               builder: (context) {
                                 final _buffer = StringBuffer();
                                 field.values.map((e) {
-                                  _buffer.write('$e - ');
+                                  if (e == field.values.last) {
+                                    _buffer.write(e);
+                                  } else {
+                                    _buffer.write('$e - ');
+                                  }
                                 }).toList();
                                 final _valuesController = TextEditingController(
                                   text: _buffer.toString(),
@@ -213,6 +218,7 @@ class _FormViewEditCardState extends State<FormViewEditCard> {
                   );
                 }),
               ],
+              //form_actions
               trailing: PopupMenuButton(
                 icon: const Icon(Icons.settings),
                 shadowColor: Colors.grey,
@@ -247,16 +253,48 @@ class _FormViewEditCardState extends State<FormViewEditCard> {
                       onTap: () async {
                         final _newField = PcFormField(
                           id: const Uuid().v4(),
-                          field_name: 'new field',
+                          field_name: 'new_field',
                           field_type: PcFormFieldType.textfield,
                           values: const [],
                         );
                         await shellFunction(
                           context,
                           toExecute: () async {
-                            await f.addNewFieldToForm(widget.pcForm, _newField);
+                            await f.addNewFieldToForm(
+                              widget.pcForm,
+                              _newField,
+                            );
                           },
                         );
+                      },
+                    ),
+                    PopupMenuItem<void>(
+                      child: Row(
+                        children: [
+                          const Icon(Icons.edit_document),
+                          Text(context.loc.editForm),
+                        ],
+                      ),
+                      onTap: () async {
+                        final _toUpdate = await showDialog<PcForm?>(
+                          context: context,
+                          builder: (context) {
+                            return CreateEditFormDialog(
+                              form: widget.pcForm,
+                            );
+                          },
+                        );
+                        if (_toUpdate == null) {
+                          return;
+                        }
+                        if (context.mounted) {
+                          await shellFunction(
+                            context,
+                            toExecute: () async {
+                              await f.updatePcForm(_toUpdate);
+                            },
+                          );
+                        }
                       },
                     ),
                     PopupMenuItem<void>(

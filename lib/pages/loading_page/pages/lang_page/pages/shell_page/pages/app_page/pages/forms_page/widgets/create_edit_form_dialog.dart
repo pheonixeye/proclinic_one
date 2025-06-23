@@ -114,7 +114,7 @@ class _CreateEditFormDialogState extends State<CreateEditFormDialog> {
                 id: widget.form?.id ?? '',
                 name_en: _nameEnController.text,
                 name_ar: _nameArController.text,
-                form_fields: const [],
+                form_fields: widget.form?.form_fields ?? const [],
               );
               Navigator.pop(context, _form);
             }
