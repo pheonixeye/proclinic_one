@@ -223,6 +223,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get detachForm => 'Detach Form';
 
   @override
+  String get patientForms => 'Patient Forms';
+
+  @override
   String get dashboard => 'Dashboard';
 
   @override
@@ -300,4 +303,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get confirmDeleteForm =>
       'This Action Will Delete This Form And All Data Related To It\'s Entries, Are You Sure ?';
+
+  @override
+  String get fillForm => 'Fill Form';
+
+  @override
+  String get noFormIsSelected => 'No Form Is Selected.';
 }

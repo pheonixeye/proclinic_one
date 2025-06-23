@@ -1,11 +1,16 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:proklinik_one/core/api/forms_api.dart';
+import 'package:proklinik_one/core/api/patient_forms_api.dart';
 import 'package:proklinik_one/extensions/loc_ext.dart';
 import 'package:proklinik_one/functions/shell_function.dart';
 import 'package:proklinik_one/models/patient.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/patients_page/widgets/create_edit_patient_dialog.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/patients_page/widgets/patient_forms_dialog.dart';
+import 'package:proklinik_one/providers/px_forms.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
+import 'package:proklinik_one/providers/px_patient_forms.dart';
 import 'package:proklinik_one/providers/px_patients.dart';
 import 'package:provider/provider.dart';
 import 'package:web/web.dart' as web;
@@ -111,7 +116,7 @@ class _PatientInfoCardState extends State<PatientInfoCard> {
                         ],
                       ),
                     ),
-                    PopupMenuButton(
+                    PopupMenuButton<void>(
                       tooltip: context.loc.patientActions,
                       icon: const Icon(Icons.add_reaction),
                       shadowColor: Colors.grey,
@@ -164,25 +169,37 @@ class _PatientInfoCardState extends State<PatientInfoCard> {
                             child: Row(
                               children: [
                                 const Icon(Icons.attach_file),
-                                Text(context.loc.attachForm),
+                                Text(context.loc.patientForms),
                               ],
                             ),
-                          ),
-                          PopupMenuItem(
-                            child: Row(
-                              children: [
-                                const Icon(Icons.edit),
-                                Text(context.loc.editFormData),
-                              ],
-                            ),
-                          ),
-                          PopupMenuItem(
-                            child: Row(
-                              children: [
-                                const Icon(Icons.edit_off),
-                                Text(context.loc.detachForm),
-                              ],
-                            ),
+                            onTap: () async {
+                              final _doc_id = p.api.doc_id;
+                              await showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return MultiProvider(
+                                    providers: [
+                                      ChangeNotifierProvider(
+                                        create: (context) => PxForms(
+                                          api: FormsApi(
+                                            doc_id: _doc_id,
+                                          ),
+                                        ),
+                                      ),
+                                      ChangeNotifierProvider(
+                                        create: (context) => PxPatientForms(
+                                          api: PatientFormsApi(
+                                            doc_id: _doc_id,
+                                            patient_id: widget.patient.id,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                    child: PatientFormsDialog(),
+                                  );
+                                },
+                              );
+                            },
                           ),
                         ];
                       },

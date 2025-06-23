@@ -222,6 +222,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get detachForm => 'ازالة النموذج الملحق';
 
   @override
+  String get patientForms => 'نماذج المريض';
+
+  @override
   String get dashboard => 'الرئيسية';
 
   @override
@@ -299,4 +302,10 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get confirmDeleteForm =>
       'سيتم الغاء هذا النموذج و كل البيانات و الحقول الملحقة به - هل انت متأكد؟';
+
+  @override
+  String get fillForm => 'ملئ النموذج';
+
+  @override
+  String get noFormIsSelected => 'لم يتم اختيار نموذج';
 }

@@ -66,6 +66,7 @@
     "attachForm" : "الحاق نموذج",
     "editFormData" : "تعديل بيانات النموذج",
     "detachForm" : "ازالة النموذج الملحق",
+    "patientForms" : "نماذج المريض",
     "confirm" : "تاكيد",
     "cancel" : "الغاء",
     "retry" : "اعادة المحاولة",
@@ -97,5 +98,8 @@
     "fieldNameHint" : "اختر اسم مميز يتسق مع بيانات الحقل",
     "enterFieldName" : "ادخل اسم الحقل",
     "promptDialog" : "نافذة تاكيدية",
-    "confirmDeleteForm" : "سيتم الغاء هذا النموذج و كل البيانات و الحقول الملحقة به - هل انت متأكد؟"
+    "confirmDeleteForm" : "سيتم الغاء هذا النموذج و كل البيانات و الحقول الملحقة به - هل انت متأكد؟",
+    "@@patient_forms_dialog": "",
+    "fillForm" : "ملئ النموذج",
+    "noFormIsSelected" : "لم يتم اختيار نموذج"
 }

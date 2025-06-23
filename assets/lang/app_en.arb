@@ -69,6 +69,7 @@
     "attachForm" : "Attach Form",
     "editFormData" : "Edit Form Data",
     "detachForm" : "Detach Form",
+    "patientForms" : "Patient Forms",
     "@@navigation_drawer": "",
     "dashboard" : "Dashboard",
     "patients" : "Patients",
@@ -97,6 +98,9 @@
     "fieldNameHint" : "Try Making The Field Name Remarkable",
     "enterFieldName" : "Enter Field Name",
     "promptDialog" : "Prompt Dialog",
-    "confirmDeleteForm" : "This Action Will Delete This Form And All Data Related To It's Entries, Are You Sure ?"
+    "confirmDeleteForm" : "This Action Will Delete This Form And All Data Related To It's Entries, Are You Sure ?",
+    "@@patient_forms_dialog": "",
+    "fillForm" : "Fill Form",
+    "noFormIsSelected" : "No Form Is Selected."
 
 }

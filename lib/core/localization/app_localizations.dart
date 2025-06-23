@@ -500,6 +500,12 @@ abstract class AppLocalizations {
   /// **'Detach Form'**
   String get detachForm;
 
+  /// No description provided for @patientForms.
+  ///
+  /// In en, this message translates to:
+  /// **'Patient Forms'**
+  String get patientForms;
+
   /// No description provided for @dashboard.
   ///
   /// In en, this message translates to:
@@ -655,6 +661,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This Action Will Delete This Form And All Data Related To It\'s Entries, Are You Sure ?'**
   String get confirmDeleteForm;
+
+  /// No description provided for @fillForm.
+  ///
+  /// In en, this message translates to:
+  /// **'Fill Form'**
+  String get fillForm;
+
+  /// No description provided for @noFormIsSelected.
+  ///
+  /// In en, this message translates to:
+  /// **'No Form Is Selected.'**
+  String get noFormIsSelected;
 }
 
 class _AppLocalizationsDelegate

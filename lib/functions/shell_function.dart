@@ -87,7 +87,7 @@ OverlayEntry _overlay(
   final _entry = OverlayEntry(
     builder: (context) {
       return Padding(
-        padding: const EdgeInsets.only(bottom: 8.0),
+        padding: const EdgeInsets.only(bottom: 8.0, left: 4.0, right: 4.0),
         child: Align(
           alignment: AlignmentDirectional.bottomCenter,
           child: SizedBox(
