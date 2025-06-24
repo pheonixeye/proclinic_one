@@ -132,6 +132,20 @@
     "toogleClinicActivity" : "Toogle Clinic Activity",
     "clinicSchedule" : "Clinic Schedule",
     "deleteClinic" : "Delete Clinic",
-    "deleteClinicPrompt" : "Deleting This Clinic Will Remove All The Clinic Information And All Visits/Schedules Related To This Clinic In Different Parts Of The Application, This Action Is Irreversible, Are You Sure?"
+    "deleteClinicPrompt" : "Deleting This Clinic Will Remove All The Clinic Information And All Visits/Schedules Related To This Clinic In Different Parts Of The Application, This Action Is Irreversible, Are You Sure?",
+    "deletePrimaryClinicPrompt" : "Confirm Delete Primary Clinic ? Are You Sure ?",
+    "@@clinics_schedule_dialog": "",
+    "clinicDays": "Clinic Days",
+    "dayShifts": "Day Shifts",
+    "addClinicDay": "Add Clinic Day",
+    "addDayShift": "Add Day Shift",
+    "noScheduleDaysFound": "No Working Days Were Added To This Clinic.",
+    "addWorkingWeekday": "Add Working Day",
+    "shiftStartingTime": "Shift Starting Time",
+    "shiftEndingTime": "Shift Ending Time",
+    "noDayShiftsFound": "No Shifts Added Yet",
+    "allowedNumberOfVisits": "Allowed Number Of Visits Per Shift",
+    "visitsPerShift": "Visits Per Shift"
+
 
 }

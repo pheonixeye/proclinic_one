@@ -392,4 +392,42 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get deleteClinicPrompt =>
       'Deleting This Clinic Will Remove All The Clinic Information And All Visits/Schedules Related To This Clinic In Different Parts Of The Application, This Action Is Irreversible, Are You Sure?';
+
+  @override
+  String get deletePrimaryClinicPrompt =>
+      'Confirm Delete Primary Clinic ? Are You Sure ?';
+
+  @override
+  String get clinicDays => 'Clinic Days';
+
+  @override
+  String get dayShifts => 'Day Shifts';
+
+  @override
+  String get addClinicDay => 'Add Clinic Day';
+
+  @override
+  String get addDayShift => 'Add Day Shift';
+
+  @override
+  String get noScheduleDaysFound =>
+      'No Working Days Were Added To This Clinic.';
+
+  @override
+  String get addWorkingWeekday => 'Add Working Day';
+
+  @override
+  String get shiftStartingTime => 'Shift Starting Time';
+
+  @override
+  String get shiftEndingTime => 'Shift Ending Time';
+
+  @override
+  String get noDayShiftsFound => 'No Shifts Added Yet';
+
+  @override
+  String get allowedNumberOfVisits => 'Allowed Number Of Visits Per Shift';
+
+  @override
+  String get visitsPerShift => 'Visits Per Shift';
 }

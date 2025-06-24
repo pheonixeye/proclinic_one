@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:proklinik_one/core/api/_api_result.dart';
+import 'package:proklinik_one/core/api/clinic_schedule_api.dart';
 import 'package:proklinik_one/extensions/loc_ext.dart';
 import 'package:proklinik_one/functions/shell_function.dart';
 import 'package:proklinik_one/models/clinic.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/clinics_page/widgets/clinic_schedule_dialog.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/clinics_page/widgets/create_edit_clinic_dialog.dart';
+import 'package:proklinik_one/providers/px_clinic_schedule.dart';
 import 'package:proklinik_one/providers/px_clinics.dart';
+import 'package:proklinik_one/providers/px_doctor.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:proklinik_one/widgets/central_error.dart';
 import 'package:proklinik_one/widgets/central_loading.dart';
 import 'package:proklinik_one/widgets/central_no_items.dart';
 import 'package:proklinik_one/widgets/prompt_dialog.dart';
+import 'package:proklinik_one/widgets/themed_popupmenu_btn.dart';
 import 'package:provider/provider.dart';
 
 class ClinicsPage extends StatelessWidget {
@@ -111,10 +116,28 @@ class ClinicsPage extends StatelessWidget {
                                 title: Row(
                                   children: [
                                     Expanded(
-                                      child: Text(
-                                        l.isEnglish
-                                            ? _clinic.name_en
-                                            : _clinic.name_ar,
+                                      child: Text.rich(
+                                        TextSpan(
+                                          text: l.isEnglish
+                                              ? _clinic.name_en
+                                              : _clinic.name_ar,
+                                          children: [
+                                            TextSpan(text: ' '),
+                                            TextSpan(
+                                                text: !_clinic.is_active
+                                                    ? l.isEnglish
+                                                        ? "(InActive)"
+                                                        : "(غير مفعلة)"
+                                                    : ''),
+                                            TextSpan(text: ' '),
+                                            TextSpan(
+                                                text: _clinic.is_main
+                                                    ? l.isEnglish
+                                                        ? "(Primary)"
+                                                        : "(الرئيسية)"
+                                                    : ''),
+                                          ],
+                                        ),
                                         style: _clinic.is_active
                                             ? null
                                             : TextStyle(
@@ -173,33 +196,9 @@ class ClinicsPage extends StatelessWidget {
                                         ],
                                       ),
                                     ),
-                                    PopupMenuButton<void>(
+                                    ThemedPopupmenuBtn<void>(
                                       tooltip: context.loc.settings,
                                       icon: const Icon(Icons.settings),
-                                      shadowColor: Colors.grey,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadiusGeometry.circular(8),
-                                      ),
-                                      style: ButtonStyle(
-                                        shape: WidgetStatePropertyAll(
-                                          RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                          ),
-                                        ),
-                                        elevation: WidgetStatePropertyAll(6),
-                                        shadowColor:
-                                            WidgetStatePropertyAll(Colors.grey),
-                                        backgroundColor: WidgetStatePropertyAll(
-                                            Colors.orange.shade300),
-                                        foregroundColor: WidgetStatePropertyAll(
-                                            Colors.white),
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                      iconColor: Colors.white,
-                                      elevation: 8,
-                                      offset: const Offset(0, 32),
                                       itemBuilder: (context) {
                                         return [
                                           PopupMenuItem(
@@ -233,11 +232,35 @@ class ClinicsPage extends StatelessWidget {
                                                 ),
                                               ],
                                             ),
+                                            onTap: () async {
+                                              await showDialog(
+                                                context: context,
+                                                builder: (context) {
+                                                  return ChangeNotifierProvider(
+                                                    create: (context) =>
+                                                        PxClinicSchedule(
+                                                      api: ClinicScheduleApi(
+                                                        doc_id: context
+                                                            .read<PxDoctor>()
+                                                            .doctor!
+                                                            .id,
+                                                        clinic_id: _clinic.id,
+                                                      ),
+                                                    ),
+                                                    child: ClinicScheduleDialog(
+                                                      clinic: _clinic,
+                                                    ),
+                                                  );
+                                                },
+                                              );
+                                            },
                                           ),
                                           PopupMenuItem(
                                             child: Row(
                                               children: [
-                                                const Icon(Icons.watch_later),
+                                                const Icon(
+                                                  Icons.delete_forever,
+                                                ),
                                                 Text(
                                                   context.loc.deleteClinic,
                                                 ),
@@ -253,8 +276,26 @@ class ClinicsPage extends StatelessWidget {
                                                           .deleteClinicPrompt);
                                                 },
                                               );
+                                              bool? _toDeletePrimary = false;
+                                              if (_clinic.is_main &&
+                                                  context.mounted) {
+                                                _toDeletePrimary =
+                                                    await showDialog<bool>(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return PromptDialog(
+                                                      message: context.loc
+                                                          .deletePrimaryClinicPrompt,
+                                                    );
+                                                  },
+                                                );
+                                              }
                                               if (_toDelete == null ||
-                                                  !_toDelete) {
+                                                  !_toDelete ||
+                                                  (_clinic.is_main &&
+                                                      (_toDeletePrimary ==
+                                                              null ||
+                                                          !_toDeletePrimary))) {
                                                 return;
                                               }
 

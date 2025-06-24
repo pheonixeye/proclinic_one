@@ -391,4 +391,41 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get deleteClinicPrompt =>
       'الغاء هذه العيادة سيقوم ايضا بالغاء كافة البيانات المتصلة بالعيادة من زيارات و مواعيد و تقارير - لا يمكن الرجوع في هذا الفعل - هل انت متأكد؟';
+
+  @override
+  String get deletePrimaryClinicPrompt =>
+      'تاكيد الغاء العيادة الرئيسية ؟ هل انت متأكد؟';
+
+  @override
+  String get clinicDays => 'ايام العيادة';
+
+  @override
+  String get dayShifts => 'مواعيد اليوم';
+
+  @override
+  String get addClinicDay => 'اضافة يوم للعيادة';
+
+  @override
+  String get addDayShift => 'اضافة موعد ليوم';
+
+  @override
+  String get noScheduleDaysFound => 'لم يتم اضافة ايام عمل لهذه العيادة.';
+
+  @override
+  String get addWorkingWeekday => 'اضافة يوم عمل';
+
+  @override
+  String get shiftStartingTime => 'وقت بداية العيادة';
+
+  @override
+  String get shiftEndingTime => 'وقت انتهاء العيادة';
+
+  @override
+  String get noDayShiftsFound => 'لم يتم اضافة مواعيد لهذا اليوم';
+
+  @override
+  String get allowedNumberOfVisits => 'عدد الزيارات المسموح للفترة';
+
+  @override
+  String get visitsPerShift => 'عدد الزيارات';
 }

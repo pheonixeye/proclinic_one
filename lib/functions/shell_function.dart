@@ -42,6 +42,9 @@ class _BaseOverlayEntryState extends State<BaseOverlayEntry>
     return ListTile(
       tileColor: Theme.of(context).primaryColor.withValues(alpha: 0.5),
       onTap: widget.onTap,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
       title: Row(
         children: [
           const SizedBox(width: 10),
@@ -51,25 +54,28 @@ class _BaseOverlayEntryState extends State<BaseOverlayEntry>
               overflow: TextOverflow.ellipsis,
             ),
           ),
-          const SizedBox(
-            width: 20,
-          ),
-          Icon(
-            Icons.info,
-            color: widget.color ?? Theme.of(context).primaryColor,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Icon(
+              Icons.info,
+              color: widget.color ?? Theme.of(context).primaryColor,
+            ),
           ),
         ],
       ),
-      subtitle: AnimatedBuilder(
-        animation: _controller.view,
-        builder: (context, child) {
-          return LinearProgressIndicator(
-            value: _controller.value,
-            color: Colors.amber,
-            backgroundColor: Theme.of(context).primaryColor,
-            borderRadius: BorderRadius.circular(8),
-          );
-        },
+      subtitle: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: AnimatedBuilder(
+          animation: _controller.view,
+          builder: (context, child) {
+            return LinearProgressIndicator(
+              value: _controller.value,
+              color: Colors.amber,
+              backgroundColor: Theme.of(context).primaryColor,
+              borderRadius: BorderRadius.circular(8),
+            );
+          },
+        ),
       ),
     );
   }
@@ -92,7 +98,7 @@ OverlayEntry _overlay(
           alignment: AlignmentDirectional.bottomCenter,
           child: SizedBox(
             width: MediaQuery.sizeOf(context).width - 10,
-            height: 60,
+            height: 65,
             child: Card.outlined(
               child: _overlay,
             ),

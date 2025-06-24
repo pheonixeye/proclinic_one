@@ -12,6 +12,7 @@ import 'package:proklinik_one/providers/px_forms.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:proklinik_one/providers/px_patient_forms.dart';
 import 'package:proklinik_one/providers/px_patients.dart';
+import 'package:proklinik_one/widgets/themed_popupmenu_btn.dart';
 import 'package:provider/provider.dart';
 import 'package:web/web.dart' as web;
 
@@ -116,29 +117,9 @@ class _PatientInfoCardState extends State<PatientInfoCard> {
                         ],
                       ),
                     ),
-                    PopupMenuButton<void>(
+                    ThemedPopupmenuBtn<void>(
                       tooltip: context.loc.patientActions,
                       icon: const Icon(Icons.add_reaction),
-                      shadowColor: Colors.grey,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadiusGeometry.circular(8),
-                      ),
-                      style: ButtonStyle(
-                        shape: WidgetStatePropertyAll(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                        elevation: WidgetStatePropertyAll(6),
-                        shadowColor: WidgetStatePropertyAll(Colors.grey),
-                        backgroundColor:
-                            WidgetStatePropertyAll(Colors.orange.shade300),
-                        foregroundColor: WidgetStatePropertyAll(Colors.white),
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                      iconColor: Colors.white,
-                      elevation: 8,
-                      offset: const Offset(0, 32),
                       itemBuilder: (context) {
                         return [
                           PopupMenuItem(

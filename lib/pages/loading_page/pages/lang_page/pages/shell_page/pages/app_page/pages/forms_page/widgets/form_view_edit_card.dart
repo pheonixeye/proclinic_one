@@ -9,6 +9,7 @@ import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_pag
 import 'package:proklinik_one/providers/px_forms.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:proklinik_one/widgets/prompt_dialog.dart';
+import 'package:proklinik_one/widgets/themed_popupmenu_btn.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -255,28 +256,9 @@ class _FormViewEditCardState extends State<FormViewEditCard> {
                 }),
               ],
               //form_actions
-              trailing: PopupMenuButton(
+              trailing: ThemedPopupmenuBtn<void>(
+                tooltip: context.loc.settings,
                 icon: const Icon(Icons.settings),
-                shadowColor: Colors.grey,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadiusGeometry.circular(8),
-                ),
-                style: ButtonStyle(
-                  shape: WidgetStatePropertyAll(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  elevation: WidgetStatePropertyAll(6),
-                  shadowColor: WidgetStatePropertyAll(Colors.grey),
-                  backgroundColor:
-                      WidgetStatePropertyAll(Colors.orange.shade300),
-                  foregroundColor: WidgetStatePropertyAll(Colors.white),
-                ),
-                borderRadius: BorderRadius.circular(8),
-                iconColor: Colors.white,
-                elevation: 8,
-                offset: const Offset(0, 32),
                 itemBuilder: (context) {
                   return [
                     PopupMenuItem<void>(

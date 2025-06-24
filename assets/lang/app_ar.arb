@@ -132,5 +132,19 @@
     "toogleClinicActivity" : "تغيير نشاط العيادة",
     "clinicSchedule" : "مواعيد العيادة",
     "deleteClinic" : "الغاء العيادة",
-    "deleteClinicPrompt" : "الغاء هذه العيادة سيقوم ايضا بالغاء كافة البيانات المتصلة بالعيادة من زيارات و مواعيد و تقارير - لا يمكن الرجوع في هذا الفعل - هل انت متأكد؟"
+    "deleteClinicPrompt" : "الغاء هذه العيادة سيقوم ايضا بالغاء كافة البيانات المتصلة بالعيادة من زيارات و مواعيد و تقارير - لا يمكن الرجوع في هذا الفعل - هل انت متأكد؟",
+    "deletePrimaryClinicPrompt" : "تاكيد الغاء العيادة الرئيسية ؟ هل انت متأكد؟",
+    "@@clinics_schedule_dialog": "",
+    "clinicDays": "ايام العيادة",
+    "dayShifts": "مواعيد اليوم",
+    "addClinicDay": "اضافة يوم للعيادة",
+    "addDayShift": "اضافة موعد ليوم",
+    "noScheduleDaysFound": "لم يتم اضافة ايام عمل لهذه العيادة.",
+    "addWorkingWeekday": "اضافة يوم عمل",
+    "shiftStartingTime": "وقت بداية العيادة",
+    "shiftEndingTime": "وقت انتهاء العيادة",
+    "noDayShiftsFound": "لم يتم اضافة مواعيد لهذا اليوم",
+    "allowedNumberOfVisits": "عدد الزيارات المسموح للفترة",
+    "visitsPerShift": "عدد الزيارات"
+
 }

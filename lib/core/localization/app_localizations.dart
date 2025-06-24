@@ -835,6 +835,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Deleting This Clinic Will Remove All The Clinic Information And All Visits/Schedules Related To This Clinic In Different Parts Of The Application, This Action Is Irreversible, Are You Sure?'**
   String get deleteClinicPrompt;
+
+  /// No description provided for @deletePrimaryClinicPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Delete Primary Clinic ? Are You Sure ?'**
+  String get deletePrimaryClinicPrompt;
+
+  /// No description provided for @clinicDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Clinic Days'**
+  String get clinicDays;
+
+  /// No description provided for @dayShifts.
+  ///
+  /// In en, this message translates to:
+  /// **'Day Shifts'**
+  String get dayShifts;
+
+  /// No description provided for @addClinicDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Clinic Day'**
+  String get addClinicDay;
+
+  /// No description provided for @addDayShift.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Day Shift'**
+  String get addDayShift;
+
+  /// No description provided for @noScheduleDaysFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No Working Days Were Added To This Clinic.'**
+  String get noScheduleDaysFound;
+
+  /// No description provided for @addWorkingWeekday.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Working Day'**
+  String get addWorkingWeekday;
+
+  /// No description provided for @shiftStartingTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Shift Starting Time'**
+  String get shiftStartingTime;
+
+  /// No description provided for @shiftEndingTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Shift Ending Time'**
+  String get shiftEndingTime;
+
+  /// No description provided for @noDayShiftsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No Shifts Added Yet'**
+  String get noDayShiftsFound;
+
+  /// No description provided for @allowedNumberOfVisits.
+  ///
+  /// In en, this message translates to:
+  /// **'Allowed Number Of Visits Per Shift'**
+  String get allowedNumberOfVisits;
+
+  /// No description provided for @visitsPerShift.
+  ///
+  /// In en, this message translates to:
+  /// **'Visits Per Shift'**
+  String get visitsPerShift;
 }
 
 class _AppLocalizationsDelegate
