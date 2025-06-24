@@ -24,9 +24,12 @@ class PromptDialog extends StatelessWidget {
         ],
       ),
       contentPadding: const EdgeInsets.all(8),
-      content: Text(
-        message,
-        textAlign: TextAlign.center,
+      content: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(
+          message,
+          textAlign: TextAlign.center,
+        ),
       ),
       actionsAlignment: MainAxisAlignment.center,
       actionsPadding: const EdgeInsets.all(8),

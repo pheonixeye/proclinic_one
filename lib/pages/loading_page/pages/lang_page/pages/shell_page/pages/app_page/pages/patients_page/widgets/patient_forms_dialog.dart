@@ -13,6 +13,7 @@ import 'package:proklinik_one/providers/px_patient_forms.dart';
 import 'package:proklinik_one/widgets/central_error.dart';
 import 'package:proklinik_one/widgets/central_loading.dart';
 import 'package:proklinik_one/widgets/central_no_items.dart';
+import 'package:proklinik_one/widgets/prompt_dialog.dart';
 import 'package:provider/provider.dart';
 
 class PatientFormsDialog extends StatefulWidget {
@@ -96,7 +97,7 @@ class _PatientFormsDialogState extends State<PatientFormsDialog>
                 children: [
                   Container(
                     decoration: BoxDecoration(
-                      color: Colors.amber.shade50,
+                      color: Colors.transparent,
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(12),
                         bottomRight: Radius.circular(12),
@@ -166,8 +167,21 @@ class _PatientFormsDialogState extends State<PatientFormsDialog>
                                             context,
                                             toExecute: () async {
                                               if (_value) {
-                                                await pf.detachFormFromPatient(
-                                                    _formItem);
+                                                final _toDetach =
+                                                    await showDialog<bool>(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return PromptDialog(
+                                                      message: context.loc
+                                                          .confirmDeleteForm,
+                                                    );
+                                                  },
+                                                );
+                                                if (_toDetach == true) {
+                                                  await pf
+                                                      .detachFormFromPatient(
+                                                          _formItem);
+                                                }
                                               } else {
                                                 await pf.attachFormToPatient(
                                                   PatientFormItem(
@@ -200,9 +214,17 @@ class _PatientFormsDialogState extends State<PatientFormsDialog>
                                         heroTag: _pcForm.id,
                                         tooltip: context.loc.fillForm,
                                         onPressed: () async {
-                                          _tabController.animateTo(1);
                                           //todo: navigate to edit page with form designed
-                                          pf.selectForms(_pcForm, _formItem);
+                                          await shellFunction(
+                                            context,
+                                            toExecute: () async {
+                                              await pf.selectForms(
+                                                _pcForm,
+                                                _formItem,
+                                              );
+                                              _tabController.animateTo(1);
+                                            },
+                                          );
                                         },
                                         child: const Icon(Icons.arrow_forward),
                                       ),
@@ -218,7 +240,7 @@ class _PatientFormsDialogState extends State<PatientFormsDialog>
                   ),
                   Container(
                     decoration: BoxDecoration(
-                      color: Colors.orange.shade50,
+                      color: Colors.transparent,
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(12),
                         bottomRight: Radius.circular(12),
@@ -250,182 +272,210 @@ class _PatientFormsDialogState extends State<PatientFormsDialog>
                             final _patientFormData = pf.formItem!.form_data
                                 .firstWhereOrNull(
                                     (__f) => __f.id == _formField.id);
-                            return switch (_formField.field_type) {
-                              PcFormFieldType.textfield => ListTile(
-                                  title: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(_formField.field_name),
-                                  ),
-                                  subtitle: Builder(
-                                    builder: (context) {
-                                      final _controller = TextEditingController(
-                                        //todo: change initial value
-                                        text: _patientFormData?.field_value,
-                                      );
-                                      return Row(
-                                        children: [
-                                          Expanded(
-                                            child: TextFormField(
-                                              decoration: InputDecoration(
-                                                border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
+                            return Card.outlined(
+                              elevation: 6,
+                              color: switch (_formField.field_type) {
+                                PcFormFieldType.textfield =>
+                                  Colors.green.shade50,
+                                PcFormFieldType.dropdown => Colors.blue.shade50,
+                                PcFormFieldType.checkbox => Colors.red.shade50,
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: switch (_formField.field_type) {
+                                  PcFormFieldType.textfield => ListTile(
+                                      title: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(_formField.field_name),
+                                      ),
+                                      subtitle: Builder(
+                                        builder: (context) {
+                                          final _controller =
+                                              TextEditingController(
+                                            //todo: change initial value
+                                            text: _patientFormData?.field_value,
+                                          );
+                                          return Row(
+                                            children: [
+                                              Expanded(
+                                                child: TextFormField(
+                                                  decoration: InputDecoration(
+                                                    border: OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                    ),
+                                                  ),
+                                                  controller: _controller,
                                                 ),
                                               ),
-                                              controller: _controller,
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: FloatingActionButton.small(
-                                              heroTag: _formField.id +
-                                                  _formField.field_type.name,
-                                              onPressed: () async {
-                                                final _toUpdate =
-                                                    _patientFormData?.copyWith(
-                                                  field_value: _controller.text,
-                                                );
-                                                if (_toUpdate != null) {
-                                                  await shellFunction(
-                                                    context,
-                                                    toExecute: () async {
-                                                      await pf
-                                                          .updatePatientFormFieldData(
-                                                        pf.formItem!,
-                                                        _toUpdate,
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child:
+                                                    FloatingActionButton.small(
+                                                  heroTag: _formField.id +
+                                                      _formField
+                                                          .field_type.name,
+                                                  onPressed: () async {
+                                                    final _toUpdate =
+                                                        _patientFormData
+                                                            ?.copyWith(
+                                                      field_value:
+                                                          _controller.text,
+                                                    );
+                                                    if (_toUpdate != null) {
+                                                      await shellFunction(
+                                                        context,
+                                                        toExecute: () async {
+                                                          await pf
+                                                              .updatePatientFormFieldData(
+                                                            pf.formItem!,
+                                                            _toUpdate,
+                                                          );
+                                                        },
                                                       );
-                                                    },
+                                                    }
+                                                  },
+                                                  child: const Icon(Icons.save),
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  PcFormFieldType.dropdown => ListTile(
+                                      title: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(_formField.field_name),
+                                      ),
+                                      subtitle: Row(
+                                        children: [
+                                          Expanded(
+                                            child: DropdownButtonHideUnderline(
+                                              child: DropdownButtonFormField<
+                                                  String>(
+                                                items:
+                                                    _formField.values.map((e) {
+                                                  return DropdownMenuItem<
+                                                      String>(
+                                                    value: e,
+                                                    alignment: Alignment.center,
+                                                    child: Text(
+                                                      e,
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                    ),
                                                   );
-                                                }
-                                              },
-                                              child: const Icon(Icons.save),
+                                                }).toList(),
+                                                value: _patientFormData
+                                                            ?.field_value ==
+                                                        ''
+                                                    ? null
+                                                    : _patientFormData
+                                                        ?.field_value,
+                                                alignment: Alignment.center,
+                                                onChanged: (value) async {
+                                                  //todo: update values in _formItem.formData
+
+                                                  if (value != null) {
+                                                    final _toUpdate =
+                                                        _patientFormData
+                                                            ?.copyWith(
+                                                      field_value: value,
+                                                    );
+                                                    if (_toUpdate != null) {
+                                                      await shellFunction(
+                                                        context,
+                                                        toExecute: () async {
+                                                          await pf
+                                                              .updatePatientFormFieldData(
+                                                            pf.formItem!,
+                                                            _toUpdate,
+                                                          );
+                                                        },
+                                                      );
+                                                    }
+                                                  }
+                                                },
+                                              ),
                                             ),
                                           ),
                                         ],
-                                      );
-                                    },
-                                  ),
-                                ),
-                              PcFormFieldType.dropdown => ListTile(
-                                  title: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(_formField.field_name),
-                                  ),
-                                  subtitle: Row(
-                                    children: [
-                                      Expanded(
-                                        child: DropdownButtonHideUnderline(
-                                          child:
-                                              DropdownButtonFormField<String>(
-                                            items: _formField.values.map((e) {
-                                              return DropdownMenuItem<String>(
-                                                value: e,
-                                                alignment: Alignment.center,
-                                                child: Text(
-                                                  e,
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                              );
-                                            }).toList(),
-                                            value: _patientFormData
-                                                        ?.field_value ==
-                                                    ''
-                                                ? null
-                                                : _patientFormData?.field_value,
-                                            alignment: Alignment.center,
-                                            onChanged: (value) async {
-                                              //todo: update values in _formItem.formData
-
-                                              if (value != null) {
-                                                final _toUpdate =
-                                                    _patientFormData?.copyWith(
-                                                  field_value: value,
-                                                );
-                                                if (_toUpdate != null) {
-                                                  await shellFunction(
-                                                    context,
-                                                    toExecute: () async {
-                                                      await pf
-                                                          .updatePatientFormFieldData(
-                                                        pf.formItem!,
-                                                        _toUpdate,
-                                                      );
-                                                    },
-                                                  );
-                                                }
-                                              }
-                                            },
-                                          ),
-                                        ),
                                       ),
-                                    ],
-                                  ),
-                                ),
-                              PcFormFieldType.checkbox => ListTile(
-                                  title: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(_formField.field_name),
-                                  ),
-                                  subtitle: Wrap(
-                                    children: [
-                                      ..._formField.values.map((e) {
-                                        return CheckboxListTile(
-                                          controlAffinity:
-                                              ListTileControlAffinity.leading,
-                                          title: Text(e),
-                                          value: _patientFormData?.field_value
-                                              .contains(e),
-                                          onChanged: (val) async {
-                                            //todo:
-                                            final _updatedStringAdd =
-                                                _patientFormData!
-                                                        .field_value.isEmpty
-                                                    ? e
-                                                    : '${_patientFormData.field_value} - $e';
-                                            final _updatedStringList =
-                                                _patientFormData.field_value
-                                                    .split('-')
-                                                  ..forEach((e) => e.trim());
-                                            _updatedStringList.removeWhere(
-                                                (va) => va.trim() == e);
-                                            final _removeBuffer =
-                                                StringBuffer();
+                                    ),
+                                  PcFormFieldType.checkbox => ListTile(
+                                      title: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(_formField.field_name),
+                                      ),
+                                      subtitle: Wrap(
+                                        children: [
+                                          ..._formField.values.map((e) {
+                                            return CheckboxListTile(
+                                              controlAffinity:
+                                                  ListTileControlAffinity
+                                                      .leading,
+                                              title: Text(e),
+                                              value: _patientFormData
+                                                  ?.field_value
+                                                  .contains(e),
+                                              onChanged: (val) async {
+                                                //todo:
+                                                final _updatedStringAdd =
+                                                    _patientFormData!
+                                                            .field_value.isEmpty
+                                                        ? e
+                                                        : '${_patientFormData.field_value} - $e';
+                                                final _updatedStringList =
+                                                    _patientFormData.field_value
+                                                        .split('-')
+                                                      ..forEach(
+                                                          (e) => e.trim());
+                                                _updatedStringList.removeWhere(
+                                                    (va) => va.trim() == e);
+                                                final _removeBuffer =
+                                                    StringBuffer();
 
-                                            _updatedStringList.map((e) {
-                                              if (e ==
-                                                  _updatedStringList.last) {
-                                                _removeBuffer.write(e);
-                                              } else {
-                                                _removeBuffer.write('$e - ');
-                                              }
-                                            }).toList();
-                                            final _toUpdate =
-                                                _patientFormData.copyWith(
-                                              field_value: _patientFormData
-                                                          .field_value
-                                                          .contains(e) ==
-                                                      true
-                                                  ? _removeBuffer.toString()
-                                                  : _updatedStringAdd,
-                                            );
-                                            // print(_toUpdate);
-                                            await shellFunction(
-                                              context,
-                                              toExecute: () async {
-                                                await pf
-                                                    .updatePatientFormFieldData(
-                                                  pf.formItem!,
-                                                  _toUpdate,
+                                                _updatedStringList.map((e) {
+                                                  if (e ==
+                                                      _updatedStringList.last) {
+                                                    _removeBuffer.write(e);
+                                                  } else {
+                                                    _removeBuffer
+                                                        .write('$e - ');
+                                                  }
+                                                }).toList();
+                                                final _toUpdate =
+                                                    _patientFormData.copyWith(
+                                                  field_value: _patientFormData
+                                                              .field_value
+                                                              .contains(e) ==
+                                                          true
+                                                      ? _removeBuffer.toString()
+                                                      : _updatedStringAdd,
+                                                );
+                                                // print(_toUpdate);
+                                                await shellFunction(
+                                                  context,
+                                                  toExecute: () async {
+                                                    await pf
+                                                        .updatePatientFormFieldData(
+                                                      pf.formItem!,
+                                                      _toUpdate,
+                                                    );
+                                                  },
                                                 );
                                               },
                                             );
-                                          },
-                                        );
-                                      })
-                                    ],
-                                  ),
-                                ),
-                            };
+                                          })
+                                        ],
+                                      ),
+                                    ),
+                                },
+                              ),
+                            );
                           },
                         );
                       },

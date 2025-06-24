@@ -77,6 +77,7 @@ class _FormViewEditCardState extends State<FormViewEditCard> {
                               const SizedBox(width: 10),
                               Expanded(child: Text(field.field_name)),
                               FloatingActionButton.small(
+                                tooltip: context.loc.editFormFieldName,
                                 heroTag: '${field.field_name}+${field.id}',
                                 onPressed: () async {
                                   final _newFieldName =
@@ -107,6 +108,40 @@ class _FormViewEditCardState extends State<FormViewEditCard> {
                                   }
                                 },
                                 child: const Icon(Icons.edit),
+                              ),
+                              const SizedBox(width: 10),
+                              FloatingActionButton.small(
+                                tooltip: context.loc.deleteFormField,
+                                backgroundColor: Colors.red.shade300,
+                                heroTag:
+                                    '${field.field_name}+${field.id}+remove',
+                                onPressed: () async {
+                                  final _toRemove = await showDialog<bool>(
+                                    context: context,
+                                    builder: (context) {
+                                      return PromptDialog(
+                                        message:
+                                            context.loc.confirmDeleteFormField,
+                                      );
+                                    },
+                                  );
+                                  if (_toRemove == null || _toRemove == false) {
+                                    return;
+                                  }
+
+                                  if (context.mounted) {
+                                    await shellFunction(
+                                      context,
+                                      toExecute: () async {
+                                        await f.removeFieldFromForm(
+                                          widget.pcForm,
+                                          field,
+                                        );
+                                      },
+                                    );
+                                  }
+                                },
+                                child: const Icon(Icons.delete),
                               ),
                               const SizedBox(width: 10),
                             ],
@@ -181,6 +216,7 @@ class _FormViewEditCardState extends State<FormViewEditCard> {
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: FloatingActionButton.small(
+                                          tooltip: context.loc.save,
                                           heroTag: field.id +
                                               field.field_name +
                                               field.field_type.name,

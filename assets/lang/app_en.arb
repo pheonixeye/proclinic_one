@@ -98,7 +98,11 @@
     "fieldNameHint" : "Try Making The Field Name Remarkable",
     "enterFieldName" : "Enter Field Name",
     "promptDialog" : "Prompt Dialog",
+    "save" : "Save",
+    "deleteFormField" : "Delete Form Field",
+    "editFormFieldName" : "Edit Form Field Name",
     "confirmDeleteForm" : "This Action Will Delete This Form And All Data Related To It's Entries, Are You Sure ?",
+    "confirmDeleteFormField" : "This Action Will Delete This Field From This Form And All Data Related To It's Entries, This Action Is Irreversible, Are You Sure ?",
     "@@patient_forms_dialog": "",
     "fillForm" : "Fill Form",
     "noFormIsSelected" : "No Form Is Selected."

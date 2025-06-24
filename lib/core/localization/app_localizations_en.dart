@@ -301,8 +301,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get promptDialog => 'Prompt Dialog';
 
   @override
+  String get save => 'Save';
+
+  @override
+  String get deleteFormField => 'Delete Form Field';
+
+  @override
+  String get editFormFieldName => 'Edit Form Field Name';
+
+  @override
   String get confirmDeleteForm =>
       'This Action Will Delete This Form And All Data Related To It\'s Entries, Are You Sure ?';
+
+  @override
+  String get confirmDeleteFormField =>
+      'This Action Will Delete This Field From This Form And All Data Related To It\'s Entries, This Action Is Irreversible, Are You Sure ?';
 
   @override
   String get fillForm => 'Fill Form';

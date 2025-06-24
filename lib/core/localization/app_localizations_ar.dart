@@ -300,8 +300,21 @@ class AppLocalizationsAr extends AppLocalizations {
   String get promptDialog => 'نافذة تاكيدية';
 
   @override
+  String get save => 'حفظ';
+
+  @override
+  String get deleteFormField => 'الغاء الحقل';
+
+  @override
+  String get editFormFieldName => 'تعديل اسم الحقل';
+
+  @override
   String get confirmDeleteForm =>
       'سيتم الغاء هذا النموذج و كل البيانات و الحقول الملحقة به - هل انت متأكد؟';
+
+  @override
+  String get confirmDeleteFormField =>
+      'سيتم الغاء هذا الحقل من هذا النموذج و قد يؤثر علي البيانات الملحقة في اماكن اخري من البرنامج - لا يمكن الرجوع في هذا الفعل - هل انت متأكد؟';
 
   @override
   String get fillForm => 'ملئ النموذج';

@@ -4,6 +4,8 @@ import 'package:proklinik_one/core/api/handler/api_result.dart';
 import 'package:proklinik_one/errors/code_to_error.dart';
 import 'package:proklinik_one/models/patient_form_field_data.dart';
 import 'package:proklinik_one/models/patient_form_item.dart';
+import 'package:proklinik_one/models/pc_form.dart';
+import 'package:collection/collection.dart';
 
 class PatientFormsApi {
   final String doc_id;
@@ -65,6 +67,48 @@ class PatientFormsApi {
       ..removeWhere((e) => e.id == formData.id)
       ..add(formData);
 
+    await PocketbaseHelper.pb.collection(collection).update(
+      formItem.id,
+      body: {
+        'form_data': _newData.map((e) => e.toJson()).toList(),
+      },
+    );
+  }
+
+  Future<void> checkIfFormIsUpdated(
+    PatientFormItem formItem,
+    PcForm form,
+  ) async {
+    final _bluePrintIds = form.form_fields.map((e) => e.id).toList();
+    final _dataIds = formItem.form_data.map((e) => e.id).toList();
+    // print(_bluePrintIds);
+    // print(_dataIds);
+    if (DeepCollectionEquality.unordered().equals(_bluePrintIds, _dataIds)) {
+      return;
+    }
+    late final List<PatientFormFieldData> _newData;
+
+    if (_bluePrintIds.length > _dataIds.length) {
+      final _newField =
+          form.form_fields.firstWhere((e) => !_dataIds.contains(e.id));
+      final _newFormData = PatientFormFieldData(
+        id: _newField.id,
+        field_name: _newField.field_name,
+        field_value: '',
+      );
+      _newData = formItem.form_data..add(_newFormData);
+    } else {
+      _dataIds.map((id) {
+        if (_bluePrintIds.contains(id)) {
+          return;
+        } else {
+          _newData = formItem.form_data
+            ..removeWhere(
+              (e) => e.id == id,
+            );
+        }
+      }).toList();
+    }
     await PocketbaseHelper.pb.collection(collection).update(
       formItem.id,
       body: {

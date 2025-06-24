@@ -51,7 +51,7 @@ class _PatientInfoCardState extends State<PatientInfoCard> {
                     tooltip: context.loc.editPatientData,
                     heroTag: '${widget.patient.id}+${widget.index}',
                     onPressed: () async {
-                      //TODO: edit patient name/phone/dob
+                      //todo: edit patient name/phone/dob
 
                       final _patient = await showDialog<Patient?>(
                         context: context,

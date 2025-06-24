@@ -98,7 +98,11 @@
     "fieldNameHint" : "اختر اسم مميز يتسق مع بيانات الحقل",
     "enterFieldName" : "ادخل اسم الحقل",
     "promptDialog" : "نافذة تاكيدية",
+    "save" : "حفظ",
+    "deleteFormField" : "الغاء الحقل",
+    "editFormFieldName" : "تعديل اسم الحقل",
     "confirmDeleteForm" : "سيتم الغاء هذا النموذج و كل البيانات و الحقول الملحقة به - هل انت متأكد؟",
+    "confirmDeleteFormField" : "سيتم الغاء هذا الحقل من هذا النموذج و قد يؤثر علي البيانات الملحقة في اماكن اخري من البرنامج - لا يمكن الرجوع في هذا الفعل - هل انت متأكد؟",
     "@@patient_forms_dialog": "",
     "fillForm" : "ملئ النموذج",
     "noFormIsSelected" : "لم يتم اختيار نموذج"

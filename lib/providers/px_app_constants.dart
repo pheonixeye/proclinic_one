@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:proklinik_one/core/api/constants_api/constants_api.dart';
 import 'package:proklinik_one/models/account_type.dart';
 import 'package:proklinik_one/models/app_constants.dart';
+import 'package:proklinik_one/models/visit_status.dart';
 
 class PxAppConstants extends ChangeNotifier {
   final ConstantsApi api;
@@ -23,4 +24,13 @@ class PxAppConstants extends ChangeNotifier {
 
   AccountType get doctorAccountType =>
       _constants!.accountTypes.firstWhere((acc) => acc.name_en == 'doctor');
+
+  AccountType get assistantAccountType =>
+      _constants!.accountTypes.firstWhere((acc) => acc.name_en == 'assistant');
+
+  VisitStatus get attended =>
+      _constants!.visitStatus.firstWhere((vs) => vs.name_en == 'Attended');
+
+  VisitStatus get notAttended =>
+      _constants!.visitStatus.firstWhere((vs) => vs.name_en == 'Not Attended');
 }

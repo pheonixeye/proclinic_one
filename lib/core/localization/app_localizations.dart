@@ -656,11 +656,35 @@ abstract class AppLocalizations {
   /// **'Prompt Dialog'**
   String get promptDialog;
 
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @deleteFormField.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Form Field'**
+  String get deleteFormField;
+
+  /// No description provided for @editFormFieldName.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Form Field Name'**
+  String get editFormFieldName;
+
   /// No description provided for @confirmDeleteForm.
   ///
   /// In en, this message translates to:
   /// **'This Action Will Delete This Form And All Data Related To It\'s Entries, Are You Sure ?'**
   String get confirmDeleteForm;
+
+  /// No description provided for @confirmDeleteFormField.
+  ///
+  /// In en, this message translates to:
+  /// **'This Action Will Delete This Field From This Form And All Data Related To It\'s Entries, This Action Is Irreversible, Are You Sure ?'**
+  String get confirmDeleteFormField;
 
   /// No description provided for @fillForm.
   ///

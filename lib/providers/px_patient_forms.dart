@@ -46,7 +46,19 @@ class PxPatientForms extends ChangeNotifier {
   PatientFormItem? _formItem;
   PatientFormItem? get formItem => _formItem;
 
-  void selectForms(PcForm? pcForm, PatientFormItem? formItem) {
+  Future<void> _checkIfFormIsUpdated(
+    PcForm? pcForm,
+    PatientFormItem? formItem,
+  ) async {
+    await api.checkIfFormIsUpdated(formItem!, pcForm!);
+    await _fetchPatientForms();
+  }
+
+  Future<void> selectForms(
+    PcForm? pcForm,
+    PatientFormItem? formItem,
+  ) async {
+    await _checkIfFormIsUpdated(pcForm, formItem);
     _pcForm = pcForm;
     _formItem = formItem;
     notifyListeners();

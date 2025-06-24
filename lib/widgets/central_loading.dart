@@ -6,7 +6,7 @@ class CentralLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //TODO: modulate to show specialities svg icons spinning
+    //TODO: show specialities icons spinning
     return Center(
       child: Container(
         height: 100,
