@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:proklinik_one/core/api/handler/api_result.dart';
+import 'package:proklinik_one/core/api/_api_result.dart';
 import 'package:proklinik_one/core/api/patients_api.dart';
 import 'package:proklinik_one/models/patient.dart';
 

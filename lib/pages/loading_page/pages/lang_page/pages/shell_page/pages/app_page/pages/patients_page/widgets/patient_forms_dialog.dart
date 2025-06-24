@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:proklinik_one/core/api/handler/api_result.dart';
+import 'package:proklinik_one/core/api/_api_result.dart';
 import 'package:proklinik_one/extensions/loc_ext.dart';
 import 'package:proklinik_one/functions/first_where_or_null.dart';
 import 'package:proklinik_one/functions/shell_function.dart';

@@ -238,6 +238,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get organizer => 'Organizer';
 
   @override
+  String get myClinics => 'My Clinics';
+
+  @override
   String get forms => 'Forms';
 
   @override
@@ -334,4 +337,59 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get logoutPrompt => 'Leaving So Soon ? Are You Sure ?';
+
+  @override
+  String get addNewClinic => 'Add New Clinic';
+
+  @override
+  String get editClinic => 'Update Clinic Info';
+
+  @override
+  String get englishClinicName => 'English Clinic Name';
+
+  @override
+  String get enterEnglishClinicName => 'Enter English Clinic Name';
+
+  @override
+  String get arabicClinicName => 'Arabic Clinic Name';
+
+  @override
+  String get enterArabicClinicName => 'Enter Arabic Clinic Name';
+
+  @override
+  String get consultationFees => 'Consultation Fees';
+
+  @override
+  String get enterConsultationFees => 'Enter Consultation Fees';
+
+  @override
+  String get followupFees => 'Followup Fees';
+
+  @override
+  String get enterFollowupFees => 'Enter Followup Fees';
+
+  @override
+  String get followupDuration => 'Followup Duration (Days)';
+
+  @override
+  String get enterFollowupDuration => 'Enter Followup Duration In (Days)';
+
+  @override
+  String get isMain => 'Is Primary Clinic';
+
+  @override
+  String get noClinicsFound => 'No Clinics Found.';
+
+  @override
+  String get toogleClinicActivity => 'Toogle Clinic Activity';
+
+  @override
+  String get clinicSchedule => 'Clinic Schedule';
+
+  @override
+  String get deleteClinic => 'Delete Clinic';
+
+  @override
+  String get deleteClinicPrompt =>
+      'Deleting This Clinic Will Remove All The Clinic Information And All Visits/Schedules Related To This Clinic In Different Parts Of The Application, This Action Is Irreversible, Are You Sure?';
 }

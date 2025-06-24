@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:proklinik_one/core/api/constants_api/constants_api.dart';
+import 'package:proklinik_one/core/api/constants_api.dart';
 import 'package:proklinik_one/models/account_type.dart';
 import 'package:proklinik_one/models/app_constants.dart';
 import 'package:proklinik_one/models/visit_status.dart';

@@ -1,6 +1,6 @@
 import 'package:pocketbase/pocketbase.dart';
 import 'package:proklinik_one/core/api/constants/pocketbase_helper.dart';
-import 'package:proklinik_one/core/api/handler/api_result.dart';
+import 'package:proklinik_one/core/api/_api_result.dart';
 import 'package:proklinik_one/errors/code_to_error.dart';
 import 'package:proklinik_one/models/patient_form_field_data.dart';
 import 'package:proklinik_one/models/patient_form_item.dart';

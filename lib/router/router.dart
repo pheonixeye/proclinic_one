@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:proklinik_one/core/api/clinics_api.dart';
 import 'package:proklinik_one/core/api/forms_api.dart';
 import 'package:proklinik_one/core/api/patients_api.dart';
 import 'package:proklinik_one/pages/loading_page/pages/error_page/error_page.dart';
@@ -8,7 +9,7 @@ import 'package:proklinik_one/pages/loading_page/loading_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/login_page/login_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/register_page/register_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/app_page.dart';
-import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/appointment_organizer_page/appointment_organizer_page.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/clinics_page/clinics_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/bookkeeping_page/bookkeeping_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/forms_page/forms_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/visits_page/visits_page.dart';
@@ -18,6 +19,7 @@ import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_pag
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/shell_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/thankyou_page/thankyou_screen.dart';
 import 'package:proklinik_one/providers/px_auth.dart';
+import 'package:proklinik_one/providers/px_clinics.dart';
 import 'package:proklinik_one/providers/px_doctor.dart';
 import 'package:proklinik_one/providers/px_forms.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
@@ -49,7 +51,7 @@ class AppRouter {
   static const String todayvisits = "todayvisits";
   static const String visits = "visits";
   static const String patients = "patients";
-  static const String organizer = "organizer";
+  static const String clinics = "clinics";
   static const String forms = "forms";
   static const String bookkeeping = "bookkeeping";
   static const String settings = "settings";
@@ -195,11 +197,19 @@ class AppRouter {
                         },
                       ),
                       GoRoute(
-                        path: organizer,
-                        name: organizer,
+                        path: clinics,
+                        name: clinics,
                         builder: (context, state) {
-                          return AppointmentOrganizerPage(
-                            key: state.pageKey,
+                          return ChangeNotifierProvider(
+                            create: (context) => PxClinics(
+                              api: ClinicsApi(
+                                doc_id:
+                                    context.read<PxDoctor>().doctor?.id ?? '',
+                              ),
+                            ),
+                            child: ClinicsPage(
+                              key: state.pageKey,
+                            ),
                           );
                         },
                       ),

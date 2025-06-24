@@ -75,10 +75,10 @@ class EndDrawer extends StatelessWidget {
               ),
               const ThinDivider(),
               DrawerNavBtn(
-                title: context.loc.organizer,
+                title: context.loc.myClinics,
                 icondata: Icons.calendar_month,
-                routePath: AppRouter.organizer,
-                selected: selected(AppRouter.organizer),
+                routePath: AppRouter.clinics,
+                selected: selected(AppRouter.clinics),
               ),
               const ThinDivider(),
               DrawerNavBtn(

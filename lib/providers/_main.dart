@@ -1,5 +1,5 @@
 import 'package:proklinik_one/core/api/auth/api_auth.dart';
-import 'package:proklinik_one/core/api/constants_api/constants_api.dart';
+import 'package:proklinik_one/core/api/constants_api.dart';
 import 'package:proklinik_one/core/api/doctor_api.dart';
 import 'package:proklinik_one/providers/px_app_constants.dart';
 import 'package:proklinik_one/providers/px_auth.dart';

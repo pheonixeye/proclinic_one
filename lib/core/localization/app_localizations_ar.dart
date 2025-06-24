@@ -237,6 +237,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get organizer => 'المواعيد';
 
   @override
+  String get myClinics => 'عياداتي';
+
+  @override
   String get forms => 'النماذج';
 
   @override
@@ -333,4 +336,59 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get logoutPrompt => 'هل تريد تسجيل الخروج ؟';
+
+  @override
+  String get addNewClinic => 'اضافة عيادة جديدة';
+
+  @override
+  String get editClinic => 'تعديل بيانات العيادة';
+
+  @override
+  String get englishClinicName => 'اسم العيادة بالانجليزية';
+
+  @override
+  String get enterEnglishClinicName => 'ادخل اسم العيادة بالانجليزية';
+
+  @override
+  String get arabicClinicName => 'اسم العيادة بالعربية';
+
+  @override
+  String get enterArabicClinicName => 'ادخل اسم العيادة بالعربية';
+
+  @override
+  String get consultationFees => 'سعر الكشف';
+
+  @override
+  String get enterConsultationFees => 'ادخل سعر الكشف';
+
+  @override
+  String get followupFees => 'سعر الاستشارة';
+
+  @override
+  String get enterFollowupFees => 'ادخل سعر الاستشارة';
+
+  @override
+  String get followupDuration => 'مدة الاستشارة بالايام';
+
+  @override
+  String get enterFollowupDuration => 'ادخل مدة الاستشارة بالايام';
+
+  @override
+  String get isMain => 'العيادة الرئيسية';
+
+  @override
+  String get noClinicsFound => 'لم يتم العثور علي عيادات';
+
+  @override
+  String get toogleClinicActivity => 'تغيير نشاط العيادة';
+
+  @override
+  String get clinicSchedule => 'مواعيد العيادة';
+
+  @override
+  String get deleteClinic => 'الغاء العيادة';
+
+  @override
+  String get deleteClinicPrompt =>
+      'الغاء هذه العيادة سيقوم ايضا بالغاء كافة البيانات المتصلة بالعيادة من زيارات و مواعيد و تقارير - لا يمكن الرجوع في هذا الفعل - هل انت متأكد؟';
 }

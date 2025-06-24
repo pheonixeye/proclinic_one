@@ -530,6 +530,12 @@ abstract class AppLocalizations {
   /// **'Organizer'**
   String get organizer;
 
+  /// No description provided for @myClinics.
+  ///
+  /// In en, this message translates to:
+  /// **'My Clinics'**
+  String get myClinics;
+
   /// No description provided for @forms.
   ///
   /// In en, this message translates to:
@@ -721,6 +727,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Leaving So Soon ? Are You Sure ?'**
   String get logoutPrompt;
+
+  /// No description provided for @addNewClinic.
+  ///
+  /// In en, this message translates to:
+  /// **'Add New Clinic'**
+  String get addNewClinic;
+
+  /// No description provided for @editClinic.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Clinic Info'**
+  String get editClinic;
+
+  /// No description provided for @englishClinicName.
+  ///
+  /// In en, this message translates to:
+  /// **'English Clinic Name'**
+  String get englishClinicName;
+
+  /// No description provided for @enterEnglishClinicName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter English Clinic Name'**
+  String get enterEnglishClinicName;
+
+  /// No description provided for @arabicClinicName.
+  ///
+  /// In en, this message translates to:
+  /// **'Arabic Clinic Name'**
+  String get arabicClinicName;
+
+  /// No description provided for @enterArabicClinicName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Arabic Clinic Name'**
+  String get enterArabicClinicName;
+
+  /// No description provided for @consultationFees.
+  ///
+  /// In en, this message translates to:
+  /// **'Consultation Fees'**
+  String get consultationFees;
+
+  /// No description provided for @enterConsultationFees.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Consultation Fees'**
+  String get enterConsultationFees;
+
+  /// No description provided for @followupFees.
+  ///
+  /// In en, this message translates to:
+  /// **'Followup Fees'**
+  String get followupFees;
+
+  /// No description provided for @enterFollowupFees.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Followup Fees'**
+  String get enterFollowupFees;
+
+  /// No description provided for @followupDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'Followup Duration (Days)'**
+  String get followupDuration;
+
+  /// No description provided for @enterFollowupDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Followup Duration In (Days)'**
+  String get enterFollowupDuration;
+
+  /// No description provided for @isMain.
+  ///
+  /// In en, this message translates to:
+  /// **'Is Primary Clinic'**
+  String get isMain;
+
+  /// No description provided for @noClinicsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No Clinics Found.'**
+  String get noClinicsFound;
+
+  /// No description provided for @toogleClinicActivity.
+  ///
+  /// In en, this message translates to:
+  /// **'Toogle Clinic Activity'**
+  String get toogleClinicActivity;
+
+  /// No description provided for @clinicSchedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Clinic Schedule'**
+  String get clinicSchedule;
+
+  /// No description provided for @deleteClinic.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Clinic'**
+  String get deleteClinic;
+
+  /// No description provided for @deleteClinicPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleting This Clinic Will Remove All The Clinic Information And All Visits/Schedules Related To This Clinic In Different Parts Of The Application, This Action Is Irreversible, Are You Sure?'**
+  String get deleteClinicPrompt;
 }
 
 class _AppLocalizationsDelegate
