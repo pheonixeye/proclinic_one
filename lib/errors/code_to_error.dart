@@ -2,7 +2,8 @@
 import 'package:equatable/equatable.dart';
 
 enum AppErrorCode {
-  clientException(1);
+  clientException(1),
+  authException(2);
 
   final int code;
 
@@ -32,6 +33,11 @@ class CodeToError {
     AppErrorCode.clientException.code: TranslatedError(
       en: 'Something Went Wrong While Fetching Data.',
       ar: 'حدث خطا اثناء تنزيل البيانات المطلوبة',
+    ),
+    //authentication_exception_code
+    AppErrorCode.authException.code: TranslatedError(
+      en: 'Something Went Wrong While Authenticating, check Email / Password combination.',
+      ar: 'حدث خطا اثناء تسجبل الدخول - برجاء مراجعة البريد الالكتروني و كلمة السر.',
     ),
   };
 

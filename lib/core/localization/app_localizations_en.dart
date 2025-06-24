@@ -322,4 +322,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noFormIsSelected => 'No Form Is Selected.';
+
+  @override
+  String get errorDialog => 'Error Dialog';
+
+  @override
+  String get appLanguage => 'Application Language';
+
+  @override
+  String get logout => 'Logout';
+
+  @override
+  String get logoutPrompt => 'Leaving So Soon ? Are You Sure ?';
 }

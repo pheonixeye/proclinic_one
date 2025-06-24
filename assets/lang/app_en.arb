@@ -105,6 +105,12 @@
     "confirmDeleteFormField" : "This Action Will Delete This Field From This Form And All Data Related To It's Entries, This Action Is Irreversible, Are You Sure ?",
     "@@patient_forms_dialog": "",
     "fillForm" : "Fill Form",
-    "noFormIsSelected" : "No Form Is Selected."
+    "noFormIsSelected" : "No Form Is Selected.",
+    "@@error_dialog": "",
+    "errorDialog" : "Error Dialog",
+    "@@settings_page": "",
+    "appLanguage" : "Application Language",
+    "logout" : "Logout",
+    "logoutPrompt" : "Leaving So Soon ? Are You Sure ?"
 
 }

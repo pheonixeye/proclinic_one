@@ -321,4 +321,16 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get noFormIsSelected => 'لم يتم اختيار نموذج';
+
+  @override
+  String get errorDialog => 'نافذة خطأ';
+
+  @override
+  String get appLanguage => 'لغة البرنامج';
+
+  @override
+  String get logout => 'تسجيل الخروج';
+
+  @override
+  String get logoutPrompt => 'هل تريد تسجيل الخروج ؟';
 }

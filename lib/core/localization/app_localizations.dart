@@ -697,6 +697,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No Form Is Selected.'**
   String get noFormIsSelected;
+
+  /// No description provided for @errorDialog.
+  ///
+  /// In en, this message translates to:
+  /// **'Error Dialog'**
+  String get errorDialog;
+
+  /// No description provided for @appLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Application Language'**
+  String get appLanguage;
+
+  /// No description provided for @logout.
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get logout;
+
+  /// No description provided for @logoutPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Leaving So Soon ? Are You Sure ?'**
+  String get logoutPrompt;
 }
 
 class _AppLocalizationsDelegate

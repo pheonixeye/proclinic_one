@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:proklinik_one/assets/assets.dart';
 import 'package:proklinik_one/core/api/auth/api_auth.dart';
+import 'package:proklinik_one/errors/code_to_error.dart';
 import 'package:proklinik_one/extensions/is_mobile_context.dart';
 import 'package:proklinik_one/extensions/loc_ext.dart';
+import 'package:proklinik_one/functions/shell_function.dart';
 import 'package:proklinik_one/providers/px_auth.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:proklinik_one/router/router.dart';
-import 'package:proklinik_one/widgets/central_loading.dart';
+import 'package:proklinik_one/widgets/error_dialog.dart';
 import 'package:proklinik_one/widgets/login_register_avatar.dart';
 import 'package:proklinik_one/widgets/snackbar_.dart';
 import 'package:provider/provider.dart';
@@ -219,18 +221,10 @@ class _LoginPageState extends State<LoginPage> {
                                   child: ElevatedButton(
                                     onPressed: () async {
                                       //todo: validate credentials
-                                      late BuildContext _loadingContext;
                                       if (formKey.currentState!.validate()) {
-                                        //todo: navigate to app
-                                        showDialog(
-                                          context: context,
-                                          builder: (loadingContext) {
-                                            _loadingContext = loadingContext;
-                                            return const CentralLoading();
-                                          },
-                                        );
-                                        if (context.mounted) {
-                                          try {
+                                        await shellFunction(
+                                          context,
+                                          toExecute: () async {
                                             await context
                                                 .read<PxAuth>()
                                                 .loginWithEmailAndPassword(
@@ -238,26 +232,28 @@ class _LoginPageState extends State<LoginPage> {
                                                   _passwordController.text,
                                                   _rememberMe,
                                                 );
-                                          } catch (e) {
-                                            if (_loadingContext.mounted) {
-                                              Navigator.pop(_loadingContext);
-                                            }
                                             if (context.mounted) {
-                                              showIsnackbar(e.toString());
+                                              GoRouter.of(context).goNamed(
+                                                AppRouter.app,
+                                                pathParameters:
+                                                    defaultPathParameters(
+                                                        context),
+                                              );
                                             }
-                                            return;
-                                          }
-                                        }
-                                        if (_loadingContext.mounted) {
-                                          Navigator.pop(_loadingContext);
-                                        }
-                                        if (context.mounted) {
-                                          GoRouter.of(context).goNamed(
-                                            AppRouter.app,
-                                            pathParameters:
-                                                defaultPathParameters(context),
-                                          );
-                                        }
+                                          },
+                                          onCatch: () {
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return ErrorDialog(
+                                                  message: CodeToError(2)
+                                                      .errorMessage(
+                                                          l.isEnglish),
+                                                );
+                                              },
+                                            );
+                                          },
+                                        );
                                       }
                                     },
                                     child: Text(context.loc.login),

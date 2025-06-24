@@ -1,5 +1,5 @@
 import 'package:pocketbase/pocketbase.dart';
-import 'package:proklinik_one/core/api/auth/api_error_handler.dart';
+import 'package:proklinik_one/core/api/auth/auth_exception.dart';
 import 'package:proklinik_one/core/api/constants/pocketbase_helper.dart';
 import 'package:proklinik_one/functions/dprint.dart';
 import 'package:proklinik_one/models/dto_create_doctor_account.dart';
@@ -32,7 +32,7 @@ class AuthApi {
       return result;
     } on ClientException catch (e) {
       dprint(e.toString());
-      throw AuthApiErrorHandler(e);
+      throw AuthException(e);
     }
   }
 
@@ -53,7 +53,7 @@ class AuthApi {
       return result;
     } on ClientException catch (e) {
       dprint(e.toString());
-      throw AuthApiErrorHandler(e);
+      throw AuthException(e);
     }
   }
 
@@ -69,7 +69,7 @@ class AuthApi {
       return result;
     } on ClientException catch (e) {
       dprint(e.toString());
-      throw AuthApiErrorHandler(e);
+      throw AuthException(e);
     }
   }
 
@@ -78,7 +78,13 @@ class AuthApi {
       await PocketbaseHelper.pb.collection('users').requestPasswordReset(email);
     } on ClientException catch (e) {
       dprint(e.toString());
-      throw AuthApiErrorHandler(e);
+      throw AuthException(e);
     }
+  }
+
+  Future<void> logout() async {
+    final _token = await asyncPrefs?.getString('token');
+    PocketbaseHelper.pb.authStore.save(_token!, null);
+    await asyncPrefs?.remove('token');
   }
 }

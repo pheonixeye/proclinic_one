@@ -31,6 +31,7 @@ class PxAuth extends ChangeNotifier {
     } catch (e) {
       _auth = null;
       notifyListeners();
+      rethrow;
     }
   }
 
@@ -43,6 +44,15 @@ class PxAuth extends ChangeNotifier {
     } catch (e) {
       _auth = null;
       notifyListeners();
+    }
+  }
+
+  Future<void> logout() async {
+    try {
+      await api.logout();
+      _auth = null;
+    } catch (e) {
+      dprint(e.toString());
     }
   }
 }
