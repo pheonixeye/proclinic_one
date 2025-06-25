@@ -10,6 +10,7 @@ class Clinic extends Equatable {
   final int followup_duration;
   final bool is_main;
   final bool is_active;
+  //TODO: final String prescription_file
 
   const Clinic({
     required this.id,
