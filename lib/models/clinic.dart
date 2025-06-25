@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:proklinik_one/models/prescription_details.dart';
 
 class Clinic extends Equatable {
   final String id;
@@ -10,7 +11,8 @@ class Clinic extends Equatable {
   final int followup_duration;
   final bool is_main;
   final bool is_active;
-  //TODO: final String prescription_file
+  final String prescription_file;
+  final PrescriptionDetails prescription_details;
 
   const Clinic({
     required this.id,
@@ -22,6 +24,8 @@ class Clinic extends Equatable {
     required this.followup_duration,
     required this.is_main,
     required this.is_active,
+    required this.prescription_file,
+    required this.prescription_details,
   });
 
   Clinic copyWith({
@@ -34,6 +38,8 @@ class Clinic extends Equatable {
     int? followup_duration,
     bool? is_main,
     bool? is_active,
+    String? prescription_file,
+    PrescriptionDetails? prescription_details,
   }) {
     return Clinic(
       id: id ?? this.id,
@@ -45,6 +51,8 @@ class Clinic extends Equatable {
       followup_duration: followup_duration ?? this.followup_duration,
       is_main: is_main ?? this.is_main,
       is_active: is_active ?? this.is_active,
+      prescription_file: prescription_file ?? this.prescription_file,
+      prescription_details: prescription_details ?? this.prescription_details,
     );
   }
 
@@ -59,6 +67,8 @@ class Clinic extends Equatable {
       'followup_duration': followup_duration,
       'is_main': is_main,
       'is_active': is_active,
+      'prescription_file': prescription_file,
+      'prescription_details': prescription_details.toJson(),
     };
   }
 
@@ -73,6 +83,9 @@ class Clinic extends Equatable {
       followup_duration: map['followup_duration'] as int,
       is_main: map['is_main'] as bool,
       is_active: map['is_active'] as bool,
+      prescription_file: map['prescription_file'] as String,
+      prescription_details:
+          PrescriptionDetails.fromJson(map['prescription_details']),
     );
   }
 
@@ -91,6 +104,8 @@ class Clinic extends Equatable {
       followup_duration,
       is_main,
       is_active,
+      prescription_file,
+      prescription_details,
     ];
   }
 }

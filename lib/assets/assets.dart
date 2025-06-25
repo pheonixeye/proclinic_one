@@ -12,4 +12,8 @@ class AppAssets {
 
   ///json files
   static const String specialities = "assets/json/specialities.json";
+
+  ///font_files
+  static const String ibm_base = 'assets/fonts/IBM/font-Regular-400.ttf';
+  static const String ibm_bold = 'assets/fonts/IBM/font-Bold-700.ttf';
 }

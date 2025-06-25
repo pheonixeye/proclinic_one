@@ -907,6 +907,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Visits Per Shift'**
   String get visitsPerShift;
+
+  /// No description provided for @update.
+  ///
+  /// In en, this message translates to:
+  /// **'Update'**
+  String get update;
+
+  /// No description provided for @deleteShift.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Shift'**
+  String get deleteShift;
+
+  /// No description provided for @deleteSchedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Schedule'**
+  String get deleteSchedule;
+
+  /// No description provided for @deleteSchedulePrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleting This Working Clinic Day Will Also Delete it\'s Shifts - This Action Is Irreversible - Are You Sure?'**
+  String get deleteSchedulePrompt;
+
+  /// No description provided for @clinicPrescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Clinic Prescription'**
+  String get clinicPrescription;
+
+  /// No description provided for @noPrescriptionFileFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No Prescription File Found'**
+  String get noPrescriptionFileFound;
+
+  /// No description provided for @addPrescriptionFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Prescription File'**
+  String get addPrescriptionFile;
+
+  /// No description provided for @deletePrescriptionFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Prescription File'**
+  String get deletePrescriptionFile;
+
+  /// No description provided for @prescriptionMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'Prescription Menu'**
+  String get prescriptionMenu;
+
+  /// No description provided for @deletePrescriptionFilePrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Are You Sure About Deleting This Image File - All Prescription Related Settings Will Be Affected - Are You Sure ?'**
+  String get deletePrescriptionFilePrompt;
+
+  /// No description provided for @viewPdfPrescription.
+  ///
+  /// In en, this message translates to:
+  /// **'View Pdf Version'**
+  String get viewPdfPrescription;
 }
 
 class _AppLocalizationsDelegate

@@ -1,7 +1,11 @@
+import 'dart:typed_data';
+
 import 'package:proklinik_one/core/api/_api_result.dart';
 import 'package:proklinik_one/core/api/constants/pocketbase_helper.dart';
 import 'package:proklinik_one/errors/code_to_error.dart';
 import 'package:proklinik_one/models/clinic.dart';
+import 'package:http/http.dart' as http;
+import 'package:proklinik_one/models/prescription_details.dart';
 
 class ClinicsApi {
   final String doc_id;
@@ -40,6 +44,32 @@ class ClinicsApi {
         );
   }
 
+  Future<void> addPrescriptionImageFileToClinic(
+    Clinic clinic, {
+    required Uint8List file_bytes,
+    required String filename,
+  }) async {
+    await PocketbaseHelper.pb.collection(collection).update(
+      clinic.id,
+      files: [
+        http.MultipartFile.fromBytes(
+          'prescription_file',
+          file_bytes,
+          filename: filename,
+        ),
+      ],
+    );
+  }
+
+  Future<void> deletePrescriptionFile(Clinic clinic) async {
+    await PocketbaseHelper.pb.collection(collection).update(
+      clinic.id,
+      body: {
+        'prescription_file': '',
+      },
+    );
+  }
+
   Future<void> deleteClinic(Clinic clinic) async {
     await PocketbaseHelper.pb.collection(collection).delete(
           clinic.id,
@@ -51,6 +81,18 @@ class ClinicsApi {
       clinic.id,
       body: {
         'is_active': !clinic.is_active,
+      },
+    );
+  }
+
+  Future<void> updatePrescriptionDetails(
+    Clinic clinic,
+    PrescriptionDetails details,
+  ) async {
+    await PocketbaseHelper.pb.collection(collection).update(
+      clinic.id,
+      body: {
+        'prescription_details': details.toJson(),
       },
     );
   }

@@ -430,4 +430,39 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get visitsPerShift => 'Visits Per Shift';
+
+  @override
+  String get update => 'Update';
+
+  @override
+  String get deleteShift => 'Delete Shift';
+
+  @override
+  String get deleteSchedule => 'Delete Schedule';
+
+  @override
+  String get deleteSchedulePrompt =>
+      'Deleting This Working Clinic Day Will Also Delete it\'s Shifts - This Action Is Irreversible - Are You Sure?';
+
+  @override
+  String get clinicPrescription => 'Clinic Prescription';
+
+  @override
+  String get noPrescriptionFileFound => 'No Prescription File Found';
+
+  @override
+  String get addPrescriptionFile => 'Add Prescription File';
+
+  @override
+  String get deletePrescriptionFile => 'Delete Prescription File';
+
+  @override
+  String get prescriptionMenu => 'Prescription Menu';
+
+  @override
+  String get deletePrescriptionFilePrompt =>
+      'Are You Sure About Deleting This Image File - All Prescription Related Settings Will Be Affected - Are You Sure ?';
+
+  @override
+  String get viewPdfPrescription => 'View Pdf Version';
 }

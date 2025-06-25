@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:proklinik_one/extensions/loc_ext.dart';
 import 'package:proklinik_one/models/clinic.dart';
+import 'package:proklinik_one/models/prescription_details.dart';
 
 class CreateEditClinicDialog extends StatefulWidget {
   const CreateEditClinicDialog({
@@ -250,6 +251,8 @@ class _CreateEditClinicDialogState extends State<CreateEditClinicDialog> {
                 followup_duration: int.parse(_followupDurationController.text),
                 is_main: _is_main!,
                 is_active: true,
+                prescription_file: '',
+                prescription_details: PrescriptionDetails.initial(),
               );
               Navigator.pop(context, _clinic);
             }

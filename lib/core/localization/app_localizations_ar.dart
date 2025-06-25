@@ -428,4 +428,39 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get visitsPerShift => 'عدد الزيارات';
+
+  @override
+  String get update => 'تعديل';
+
+  @override
+  String get deleteShift => 'الغاء الفترة';
+
+  @override
+  String get deleteSchedule => 'الغاء يوم العمل';
+
+  @override
+  String get deleteSchedulePrompt =>
+      'الغاء يوم العمل سيقوم ايضا بالغاء كافة الفترات المعينة لهذا اليوم - لا يمكن الرجوع في هذا الفعل - هل انت متأكد؟';
+
+  @override
+  String get clinicPrescription => 'روشتة العيادة';
+
+  @override
+  String get noPrescriptionFileFound => 'لا يوجد صورة للروشتة';
+
+  @override
+  String get addPrescriptionFile => 'اضافة صورة للروشتة';
+
+  @override
+  String get deletePrescriptionFile => 'الغاء صورة الروشتة';
+
+  @override
+  String get prescriptionMenu => 'قائمة ادارة الروشتة';
+
+  @override
+  String get deletePrescriptionFilePrompt =>
+      'الغاء صورة الروشتة سوف يؤثر في كافة الاعدادات المرتبطة بالروشتة - هل انت متأكد؟';
+
+  @override
+  String get viewPdfPrescription => 'مناظرة نسخة الطباعة';
 }

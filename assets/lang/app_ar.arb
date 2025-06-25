@@ -145,6 +145,18 @@
     "shiftEndingTime": "وقت انتهاء العيادة",
     "noDayShiftsFound": "لم يتم اضافة مواعيد لهذا اليوم",
     "allowedNumberOfVisits": "عدد الزيارات المسموح للفترة",
-    "visitsPerShift": "عدد الزيارات"
+    "visitsPerShift": "عدد الزيارات",
+    "update": "تعديل",
+    "deleteShift": "الغاء الفترة",
+    "deleteSchedule": "الغاء يوم العمل",
+    "deleteSchedulePrompt": "الغاء يوم العمل سيقوم ايضا بالغاء كافة الفترات المعينة لهذا اليوم - لا يمكن الرجوع في هذا الفعل - هل انت متأكد؟",
+    "@@clinics_prescription_dialog": "",
+    "clinicPrescription" : "روشتة العيادة",
+    "noPrescriptionFileFound" : "لا يوجد صورة للروشتة",
+    "addPrescriptionFile" : "اضافة صورة للروشتة",
+    "deletePrescriptionFile" : "الغاء صورة الروشتة",
+    "prescriptionMenu" : "قائمة ادارة الروشتة",
+    "deletePrescriptionFilePrompt" : "الغاء صورة الروشتة سوف يؤثر في كافة الاعدادات المرتبطة بالروشتة - هل انت متأكد؟",
+    "viewPdfPrescription" : "مناظرة نسخة الطباعة"
 
 }

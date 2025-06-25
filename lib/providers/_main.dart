@@ -1,8 +1,10 @@
 import 'package:proklinik_one/core/api/auth/api_auth.dart';
 import 'package:proklinik_one/core/api/constants_api.dart';
 import 'package:proklinik_one/core/api/doctor_api.dart';
+import 'package:proklinik_one/core/api/doctor_subscription_info_api.dart';
 import 'package:proklinik_one/providers/px_app_constants.dart';
 import 'package:proklinik_one/providers/px_auth.dart';
+import 'package:proklinik_one/providers/px_doc_subscription_info.dart';
 import 'package:proklinik_one/providers/px_doctor.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:proklinik_one/router/router.dart';
@@ -32,6 +34,12 @@ final List<SingleChildWidget> providers = [
   ChangeNotifierProvider(
     create: (context) => PxDoctor(
       api: DoctorApi(doc_id: context.read<PxAuth>().authModel?.record.id ?? ''),
+    ),
+  ),
+  ChangeNotifierProvider(
+    create: (context) => PxDocSubscriptionInfo(
+      api: DoctorSubscriptionInfoApi(
+          doc_id: context.read<PxAuth>().authModel?.record.id ?? ''),
     ),
   ),
 ];

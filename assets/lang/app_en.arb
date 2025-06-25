@@ -145,7 +145,17 @@
     "shiftEndingTime": "Shift Ending Time",
     "noDayShiftsFound": "No Shifts Added Yet",
     "allowedNumberOfVisits": "Allowed Number Of Visits Per Shift",
-    "visitsPerShift": "Visits Per Shift"
-
-
+    "visitsPerShift": "Visits Per Shift",
+    "update": "Update",
+    "deleteShift": "Delete Shift",
+    "deleteSchedule": "Delete Schedule",
+    "deleteSchedulePrompt": "Deleting This Working Clinic Day Will Also Delete it's Shifts - This Action Is Irreversible - Are You Sure?",
+    "@@clinics_prescription_dialog": "",
+    "clinicPrescription" : "Clinic Prescription",
+    "noPrescriptionFileFound" : "No Prescription File Found",
+    "addPrescriptionFile" : "Add Prescription File",
+    "deletePrescriptionFile" : "Delete Prescription File",
+    "prescriptionMenu" : "Prescription Menu",
+    "deletePrescriptionFilePrompt" : "Are You Sure About Deleting This Image File - All Prescription Related Settings Will Be Affected - Are You Sure ?",
+    "viewPdfPrescription" : "View Pdf Version"
 }

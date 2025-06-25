@@ -13,6 +13,7 @@ import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:proklinik_one/widgets/central_error.dart';
 import 'package:proklinik_one/widgets/central_loading.dart';
 import 'package:proklinik_one/widgets/central_no_items.dart';
+import 'package:proklinik_one/widgets/prompt_dialog.dart';
 import 'package:provider/provider.dart';
 
 class ClinicScheduleDialog extends StatefulWidget {
@@ -204,6 +205,44 @@ class _ClinicScheduleDialogState extends State<ClinicScheduleDialog>
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 8.0),
                                         child: FloatingActionButton.small(
+                                          tooltip: context.loc.deleteSchedule,
+                                          heroTag:
+                                              'delete_${_schedule.clinic_id}${_schedule.id}',
+                                          onPressed: () async {
+                                            final _toDeleteSchedule =
+                                                await showDialog<bool?>(
+                                              context: context,
+                                              builder: (context) {
+                                                return PromptDialog(
+                                                  message: context
+                                                      .loc.deleteSchedulePrompt,
+                                                );
+                                              },
+                                            );
+                                            if (_toDeleteSchedule == null ||
+                                                _toDeleteSchedule == false) {
+                                              return;
+                                            }
+                                            if (context.mounted) {
+                                              await shellFunction(
+                                                context,
+                                                toExecute: () async {
+                                                  await cs.deleteClinicSchedule(
+                                                    _schedule,
+                                                  );
+                                                },
+                                              );
+                                            }
+                                          },
+                                          backgroundColor: Colors.red.shade300,
+                                          child:
+                                              const Icon(Icons.delete_forever),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8.0),
+                                        child: FloatingActionButton.small(
                                           heroTag: _schedule.clinic_id +
                                               _schedule.id,
                                           onPressed: () {
@@ -269,6 +308,7 @@ class _ClinicScheduleDialogState extends State<ClinicScheduleDialog>
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 8.0),
                                         child: FloatingActionButton.small(
+                                          tooltip: context.loc.deleteShift,
                                           heroTag: 'del$_item',
                                           backgroundColor: Colors.red.shade300,
                                           onPressed: () async {
@@ -300,23 +340,33 @@ class _ClinicScheduleDialogState extends State<ClinicScheduleDialog>
                                         ),
                                         Row(
                                           children: [
-                                            Text(context.loc.shiftStartingTime),
-                                            Text(' '),
-                                            Text(
-                                              DateFormat.jm(l.lang).format(
-                                                DateTime.now().copyWith(
-                                                  hour: _item.start_hour,
-                                                  minute: _item.start_min,
-                                                ),
-                                              ),
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
+                                            Expanded(
+                                              child: Row(
+                                                children: [
+                                                  Text(context
+                                                      .loc.shiftStartingTime),
+                                                  Text(' '),
+                                                  Text(
+                                                    DateFormat.jm(l.lang)
+                                                        .format(
+                                                      DateTime.now().copyWith(
+                                                        hour: _item.start_hour,
+                                                        minute: _item.start_min,
+                                                      ),
+                                                    ),
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                             Padding(
                                               padding:
                                                   const EdgeInsets.all(8.0),
                                               child: FloatingActionButton.small(
+                                                tooltip: context.loc.update,
                                                 heroTag:
                                                     '${_item.id}starting-time-picker',
                                                 child: const Icon(
@@ -360,23 +410,33 @@ class _ClinicScheduleDialogState extends State<ClinicScheduleDialog>
                                         ),
                                         Row(
                                           children: [
-                                            Text(context.loc.shiftEndingTime),
-                                            Text(' '),
-                                            Text(
-                                              DateFormat.jm(l.lang).format(
-                                                DateTime.now().copyWith(
-                                                  hour: _item.end_hour,
-                                                  minute: _item.end_min,
-                                                ),
-                                              ),
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
+                                            Expanded(
+                                              child: Row(
+                                                children: [
+                                                  Text(context
+                                                      .loc.shiftEndingTime),
+                                                  Text(' '),
+                                                  Text(
+                                                    DateFormat.jm(l.lang)
+                                                        .format(
+                                                      DateTime.now().copyWith(
+                                                        hour: _item.end_hour,
+                                                        minute: _item.end_min,
+                                                      ),
+                                                    ),
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                             Padding(
                                               padding:
                                                   const EdgeInsets.all(8.0),
                                               child: FloatingActionButton.small(
+                                                tooltip: context.loc.update,
                                                 heroTag:
                                                     '${_item.id}end-time-picker',
                                                 child: const Icon(
@@ -420,19 +480,27 @@ class _ClinicScheduleDialogState extends State<ClinicScheduleDialog>
                                         ),
                                         Row(
                                           children: [
-                                            Text(context
-                                                .loc.allowedNumberOfVisits),
-                                            Text(' '),
-                                            Text(
-                                              ' - ${_item.visit_count} - ',
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
+                                            Expanded(
+                                              child: Row(
+                                                children: [
+                                                  Text(context.loc
+                                                      .allowedNumberOfVisits),
+                                                  Text(' '),
+                                                  Text(
+                                                    ' - ${_item.visit_count} - ',
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                             Padding(
                                               padding:
                                                   const EdgeInsets.all(8.0),
                                               child: FloatingActionButton.small(
+                                                tooltip: context.loc.update,
                                                 heroTag:
                                                     '${_item.id}visit-count-picker',
                                                 child:
