@@ -157,6 +157,6 @@
     "deletePrescriptionFile" : "الغاء صورة الروشتة",
     "prescriptionMenu" : "قائمة ادارة الروشتة",
     "deletePrescriptionFilePrompt" : "الغاء صورة الروشتة سوف يؤثر في كافة الاعدادات المرتبطة بالروشتة - هل انت متأكد؟",
-    "viewPdfPrescription" : "مناظرة نسخة الطباعة"
-
+    "viewPdfPrescription" : "مناظرة نسخة الطباعة",
+    "back" : "عودة"
 }

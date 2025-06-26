@@ -463,4 +463,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get viewPdfPrescription => 'مناظرة نسخة الطباعة';
+
+  @override
+  String get back => 'عودة';
 }

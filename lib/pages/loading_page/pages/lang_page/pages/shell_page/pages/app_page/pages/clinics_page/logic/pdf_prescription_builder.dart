@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
 import 'package:proklinik_one/assets/assets.dart';
 import 'package:proklinik_one/extensions/model_ext.dart';
 import 'package:proklinik_one/models/clinic.dart';
@@ -129,4 +130,17 @@ class PrescriptionPdfBuilder {
 
     return _doc.save();
   }
+
+  late final PdfPreview _preview = PdfPreview(
+    pageFormats: PrescriptionPdfBuilder.formats,
+    initialPageFormat: PrescriptionPdfBuilder.formats['a5'],
+    build: build,
+    allowPrinting: true,
+    allowSharing: false,
+    canChangeOrientation: false,
+    canChangePageFormat: false,
+    canDebug: false,
+  );
+
+  PdfPreview get widget => _preview;
 }

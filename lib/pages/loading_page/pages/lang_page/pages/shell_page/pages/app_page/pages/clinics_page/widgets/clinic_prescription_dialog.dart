@@ -1,7 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:printing/printing.dart';
 import 'package:proklinik_one/extensions/loc_ext.dart';
 import 'package:proklinik_one/extensions/model_ext.dart';
 import 'package:proklinik_one/functions/dprint.dart';
@@ -37,8 +36,10 @@ class _ClinicPrescriptionDialogState extends State<ClinicPrescriptionDialog>
   void initState() {
     super.initState();
     _controller = TabController(
+      initialIndex: 0,
       length: 2,
       vsync: this,
+      animationDuration: Duration(milliseconds: 260),
     );
     _animationController = AnimationController(
       vsync: this,
@@ -49,6 +50,8 @@ class _ClinicPrescriptionDialogState extends State<ClinicPrescriptionDialog>
         CurvedAnimation(curve: Curves.easeInOut, parent: _animationController);
     _animation = Tween<double>(begin: 0, end: 1).animate(curvedAnimation);
   }
+
+  int _currentIndex = 0;
 
   @override
   void dispose() {
@@ -76,7 +79,7 @@ class _ClinicPrescriptionDialogState extends State<ClinicPrescriptionDialog>
               Expanded(
                 child: Text(context.loc.clinicPrescription),
               ),
-              if (_controller.index == 0)
+              if (_currentIndex == 0)
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: IconButton.outlined(
@@ -110,6 +113,20 @@ class _ClinicPrescriptionDialogState extends State<ClinicPrescriptionDialog>
                       Icons.delete_forever,
                       color: Colors.red,
                     ),
+                  ),
+                ),
+              if (_currentIndex == 1)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: IconButton.outlined(
+                    tooltip: context.loc.back,
+                    onPressed: () {
+                      _controller.animateTo(0);
+                      setState(() {
+                        _currentIndex = 0;
+                      });
+                    },
+                    icon: const Icon(Icons.arrow_back),
                   ),
                 ),
               Padding(
@@ -338,6 +355,9 @@ class _ClinicPrescriptionDialogState extends State<ClinicPrescriptionDialog>
                               onPress: () async {
                                 _animationController.reverse();
                                 _controller.animateTo(1);
+                                setState(() {
+                                  _currentIndex = 1;
+                                });
                               },
                             ),
                           ],
@@ -352,18 +372,13 @@ class _ClinicPrescriptionDialogState extends State<ClinicPrescriptionDialog>
                     border: Border.all(),
                   ),
                   child: Scaffold(
-                    body: PdfPreview(
-                      pageFormats: PrescriptionPdfBuilder.formats,
-                      initialPageFormat: PrescriptionPdfBuilder.formats['a5'],
-                      build: PrescriptionPdfBuilder(
+                    body: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: PrescriptionPdfBuilder(
                         doc_id: c.api.doc_id,
                         clinic: c.clinic!,
                         app_locale: l.lang,
-                      ).build,
-                      allowPrinting: true,
-                      allowSharing: false,
-                      canChangeOrientation: false,
-                      canChangePageFormat: false,
+                      ).widget,
                     ),
                   ),
                 ),
