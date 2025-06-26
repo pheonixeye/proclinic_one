@@ -466,4 +466,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get back => 'عودة';
+
+  @override
+  String get egp => 'جنيه';
+
+  @override
+  String get days => 'يوم';
 }

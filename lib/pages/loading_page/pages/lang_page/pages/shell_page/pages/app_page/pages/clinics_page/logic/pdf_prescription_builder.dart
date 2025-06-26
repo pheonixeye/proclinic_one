@@ -13,7 +13,7 @@ class PrescriptionPdfBuilder {
   final Clinic clinic;
   final String doc_id;
   final double dpi = 72;
-  final String app_locale; //TODO: check implementation
+  final String app_locale; //todo: check implementation
 
   static final Map<String, Uint8List> _imageBytesCache = {};
 

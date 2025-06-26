@@ -158,5 +158,7 @@
     "prescriptionMenu" : "Prescription Menu",
     "deletePrescriptionFilePrompt" : "Are You Sure About Deleting This Image File - All Prescription Related Settings Will Be Affected - Are You Sure ?",
     "viewPdfPrescription" : "View Pdf Version",
-    "back" : "Back"
+    "back" : "Back",
+    "egp" : "EGP",
+    "days" : "Days"
 }

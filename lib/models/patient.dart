@@ -5,12 +5,14 @@ class Patient extends Equatable {
   final String name;
   final String phone;
   final String dob;
+  final String email;
 
   const Patient({
     required this.id,
     required this.name,
     required this.phone,
     required this.dob,
+    required this.email,
   });
 
   Patient copyWith({
@@ -18,12 +20,14 @@ class Patient extends Equatable {
     String? name,
     String? phone,
     String? dob,
+    String? email,
   }) {
     return Patient(
       id: id ?? this.id,
       name: name ?? this.name,
       phone: phone ?? this.phone,
       dob: dob ?? this.dob,
+      email: email ?? this.email,
     );
   }
 
@@ -33,6 +37,7 @@ class Patient extends Equatable {
       'name': name,
       'phone': phone,
       'dob': dob,
+      'email': email,
     };
   }
 
@@ -42,6 +47,7 @@ class Patient extends Equatable {
       name: map['name'] as String,
       phone: map['phone'] as String,
       dob: map['dob'] as String,
+      email: map['email'] as String,
     );
   }
 
@@ -49,5 +55,11 @@ class Patient extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object> get props => [id, name, phone, dob];
+  List<Object> get props => [
+        id,
+        name,
+        phone,
+        dob,
+        email,
+      ];
 }

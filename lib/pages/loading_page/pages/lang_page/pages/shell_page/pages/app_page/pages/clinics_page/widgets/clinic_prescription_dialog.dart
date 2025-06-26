@@ -249,8 +249,8 @@ class _ClinicPrescriptionDialogState extends State<ClinicPrescriptionDialog>
                                         setState(() {
                                           _state = _state!.updateItemDetail(
                                             key: e.key,
-                                            x_coord: details.globalPosition.dx,
-                                            y_coord: details.globalPosition.dy,
+                                            x_coord: details.localPosition.dx,
+                                            y_coord: details.localPosition.dy,
                                           );
                                         });
                                       },

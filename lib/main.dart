@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
       builder: (context, l, _) {
         return MaterialApp.router(
           scaffoldMessengerKey: UtilsKeys.scaffoldMessengerKey,
-          title: "ProCliniC One",
+          title: "ProKliniK-One",
           routerConfig: AppRouter.router,
           debugShowCheckedModeBanner: false,
           locale: l.locale,
@@ -49,4 +49,6 @@ class MyApp extends StatelessWidget {
       },
     );
   }
+  //TODO: add caching for pdf.min.js via cdn "https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.min.js"
+  //TODO: add doctor initialization script on create doctor accout
 }

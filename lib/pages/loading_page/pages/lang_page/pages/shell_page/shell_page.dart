@@ -19,7 +19,7 @@ class ShellPage extends StatelessWidget {
               child: EndDrawer(),
             ),
           Expanded(
-            flex: 5,
+            flex: 3,
             child: child,
           ),
         ],

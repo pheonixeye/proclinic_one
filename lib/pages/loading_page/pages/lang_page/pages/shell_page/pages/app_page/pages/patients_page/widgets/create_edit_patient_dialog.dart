@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:proklinik_one/extensions/loc_ext.dart';
@@ -19,6 +20,7 @@ class _CreateEditPatientDialogState extends State<CreateEditPatientDialog> {
   late final TextEditingController _nameController;
   late final TextEditingController _phoneController;
   late final TextEditingController _dobController;
+  late final TextEditingController _emailController;
 
   @override
   void initState() {
@@ -30,6 +32,7 @@ class _CreateEditPatientDialogState extends State<CreateEditPatientDialog> {
       'dd-MM-yyyy',
       context.read<PxLocale>().lang,
     ).format(DateTime.tryParse(widget.patient?.dob ?? '') ?? DateTime.now()));
+    _emailController = TextEditingController(text: widget.patient?.email ?? '');
   }
 
   @override
@@ -37,6 +40,7 @@ class _CreateEditPatientDialogState extends State<CreateEditPatientDialog> {
     _nameController.dispose();
     _phoneController.dispose();
     _dobController.dispose();
+    _emailController.dispose();
     super.dispose();
   }
 
@@ -168,6 +172,31 @@ class _CreateEditPatientDialogState extends State<CreateEditPatientDialog> {
                 ),
               ),
             ),
+            ListTile(
+              title: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(context.loc.email),
+              ),
+              subtitle: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  controller: _emailController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'test@example.com',
+                  ),
+                  validator: _emailController.text.trim().isEmpty
+                      ? null
+                      : (value) {
+                          if (value != null &&
+                              !EmailValidator.validate(value)) {
+                            return context.loc.invalidEmailAddress;
+                          }
+                          return null;
+                        },
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -182,6 +211,7 @@ class _CreateEditPatientDialogState extends State<CreateEditPatientDialog> {
                 name: _nameController.text,
                 phone: _phoneController.text,
                 dob: _dob!.toIso8601String(),
+                email: _emailController.text,
               );
               Navigator.pop(context, _patient);
             }

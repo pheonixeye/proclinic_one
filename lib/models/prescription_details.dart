@@ -144,7 +144,7 @@ class PrescriptionDetails extends Equatable {
     Map<String, ItemDetail>? item_details,
   }) {
     return PrescriptionDetails(
-      details: item_details ?? this.details,
+      details: item_details ?? details,
     );
   }
 

@@ -186,14 +186,76 @@ class ClinicsPage extends StatelessWidget {
                                             CrossAxisAlignment.start,
                                         spacing: 8,
                                         children: [
-                                          Text(
-                                              "${context.loc.phone} : ${_clinic.phone_number}"),
-                                          Text(
-                                              "${context.loc.consultationFees} : ${_clinic.consultation_fees}"),
-                                          Text(
-                                              "${context.loc.followupFees} : ${_clinic.followup_fees}"),
-                                          Text(
-                                              "${context.loc.followupDuration} : ${_clinic.followup_duration}"),
+                                          Text.rich(
+                                            TextSpan(
+                                              text: context.loc.phone,
+                                              children: [
+                                                TextSpan(text: ' : '),
+                                                TextSpan(
+                                                  text: _clinic.phone_number,
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Text.rich(
+                                            TextSpan(
+                                              text:
+                                                  context.loc.consultationFees,
+                                              children: [
+                                                TextSpan(text: ' : '),
+                                                TextSpan(
+                                                  text: _clinic
+                                                      .consultation_fees
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                TextSpan(text: ' '),
+                                                TextSpan(text: context.loc.egp),
+                                              ],
+                                            ),
+                                          ),
+                                          Text.rich(
+                                            TextSpan(
+                                              text: context.loc.followupFees,
+                                              children: [
+                                                TextSpan(text: ' : '),
+                                                TextSpan(
+                                                  text: _clinic.followup_fees
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                TextSpan(text: ' '),
+                                                TextSpan(text: context.loc.egp),
+                                              ],
+                                            ),
+                                          ),
+                                          Text.rich(
+                                            TextSpan(
+                                              text:
+                                                  context.loc.followupDuration,
+                                              children: [
+                                                TextSpan(text: ' : '),
+                                                TextSpan(
+                                                  text: _clinic
+                                                      .followup_duration
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                TextSpan(text: ' '),
+                                                TextSpan(
+                                                    text: context.loc.days),
+                                              ],
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ),

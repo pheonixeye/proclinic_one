@@ -158,5 +158,7 @@
     "prescriptionMenu" : "قائمة ادارة الروشتة",
     "deletePrescriptionFilePrompt" : "الغاء صورة الروشتة سوف يؤثر في كافة الاعدادات المرتبطة بالروشتة - هل انت متأكد؟",
     "viewPdfPrescription" : "مناظرة نسخة الطباعة",
-    "back" : "عودة"
+    "back" : "عودة",
+    "egp" : "جنيه",
+    "days" : "يوم"
 }

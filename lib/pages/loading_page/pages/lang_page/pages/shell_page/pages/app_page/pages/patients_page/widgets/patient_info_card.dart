@@ -91,29 +91,65 @@ class _PatientInfoCardState extends State<PatientInfoCard> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         spacing: 8,
                         children: [
-                          Text(
-                            DateFormat(
-                              'dd / MM / yyyy',
-                              context.read<PxLocale>().lang,
-                            ).format(
-                              DateTime.parse(widget.patient.dob),
+                          Text.rich(
+                            TextSpan(
+                              text: context.loc.dateOfBirth,
+                              children: [
+                                TextSpan(text: ' : '),
+                                TextSpan(
+                                  text: DateFormat(
+                                    'dd / MM / yyyy',
+                                    context.read<PxLocale>().lang,
+                                  ).format(
+                                    DateTime.parse(widget.patient.dob),
+                                  ),
+                                )
+                              ],
                             ),
                           ),
                           Text.rich(
                             TextSpan(
-                              text: widget.patient.phone,
-                              style: TextStyle(
-                                decoration: TextDecoration.underline,
-                              ),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  web.window.open(
-                                    'tel://+2${widget.patient.phone}',
-                                    '_blank',
-                                  );
-                                },
+                              text: context.loc.phone,
+                              children: [
+                                TextSpan(text: ' : '),
+                                TextSpan(
+                                  text: widget.patient.phone,
+                                  style: TextStyle(
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      web.window.open(
+                                        'tel://+2${widget.patient.phone}',
+                                        '_blank',
+                                      );
+                                    },
+                                ),
+                              ],
                             ),
                           ),
+                          if (widget.patient.email.isNotEmpty)
+                            Text.rich(
+                              TextSpan(
+                                text: context.loc.email,
+                                children: [
+                                  TextSpan(text: ' : '),
+                                  TextSpan(
+                                    text: widget.patient.email,
+                                    style: TextStyle(
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        web.window.open(
+                                          'mailto://${widget.patient.email}',
+                                          '_blank',
+                                        );
+                                      },
+                                  ),
+                                ],
+                              ),
+                            ),
                         ],
                       ),
                     ),
