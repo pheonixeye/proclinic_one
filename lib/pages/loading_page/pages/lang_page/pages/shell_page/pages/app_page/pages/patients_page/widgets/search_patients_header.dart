@@ -98,7 +98,7 @@ class _SearchPatientsHeaderState extends State<SearchPatientsHeader> {
                           },
                         );
                       },
-                      child: const Icon(Icons.clear),
+                      child: const Icon(Icons.refresh),
                     ),
                   ),
                 ],

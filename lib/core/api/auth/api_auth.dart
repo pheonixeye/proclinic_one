@@ -46,7 +46,10 @@ class AuthApi {
       final result = await PocketbaseHelper.pb
           .collection('users')
           .authWithPassword(email, password);
-      if (rememberMe) {
+
+      /// runtimeType check is for avoiding type error when the request does
+      /// not return a token i.e. failed request, ==>> (dont save)
+      if (rememberMe && result.token.runtimeType == String) {
         await asyncPrefs?.setString('token', result.token);
         PocketbaseHelper.pb.authStore.save(result.token, result.record);
       }

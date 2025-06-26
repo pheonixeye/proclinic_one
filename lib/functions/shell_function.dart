@@ -81,6 +81,81 @@ class _BaseOverlayEntryState extends State<BaseOverlayEntry>
   }
 }
 
+// ignore: must_be_immutable
+class RetryButton extends StatefulWidget {
+  RetryButton({
+    super.key,
+    required this.toRetry,
+    this.toClose,
+  });
+  final Function toRetry;
+  VoidCallback? toClose;
+
+  @override
+  State<RetryButton> createState() => _RetryButtonState();
+}
+
+class _RetryButtonState extends State<RetryButton>
+    with SingleTickerProviderStateMixin {
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton.small(
+      tooltip: context.loc.retry,
+      heroTag: UniqueKey(),
+      onPressed: () {
+        widget.toRetry();
+        if (widget.toClose != null) {
+          widget.toClose!();
+        }
+      },
+      child: const Icon(Icons.refresh),
+    );
+  }
+}
+
+OverlayEntry _retryOverlayEntry(Function toRetry) {
+  final _overlay = RetryButton(toRetry: toRetry);
+
+  final _entry = OverlayEntry(
+    builder: (context) {
+      return Draggable(
+        hitTestBehavior: HitTestBehavior.opaque,
+        dragAnchorStrategy: pointerDragAnchorStrategy,
+        onDragUpdate: (details) {
+          if (details.delta.distance * 100 > 250 &&
+              // ignore: unnecessary_null_comparison
+              _overlay != null &&
+              _overlay.toClose != null) {
+            //close
+            _overlay.toClose!();
+          }
+        },
+        feedback: _overlay,
+        child: Align(
+          alignment: Alignment.center,
+          child: SizedBox(
+            height: 60,
+            width: 60,
+            child: Card.outlined(
+              color: Colors.red.withValues(alpha: 0.3),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: _overlay,
+              ),
+            ),
+          ),
+        ),
+      );
+    },
+  );
+
+  _overlay.toClose = () {
+    _entry.remove();
+  };
+
+  return _entry;
+}
+
 OverlayEntry _overlay(
   String message, [
   Color? color,
@@ -142,14 +217,13 @@ Future<void> shellFunction(
       Navigator.pop(loadingContext);
     }
     if (context.mounted) {
-      final _overlay1 = _overlay(sucessMsg);
-      Overlay.of(context).insert(_overlay1);
+      final _successOverlay = _overlay(sucessMsg);
+
+      Overlay.of(context).insert(_successOverlay);
+
       await Future.delayed(duration);
-      // ignore: unnecessary_null_comparison
-      try {
-        _overlay1.remove();
-      } catch (e) {
-        return;
+      if (_successOverlay.mounted) {
+        _successOverlay.remove();
       }
     }
   } catch (e) {
@@ -157,14 +231,25 @@ Future<void> shellFunction(
       Navigator.pop(loadingContext);
     }
     if (context.mounted) {
-      final _overlay2 = _overlay(e.toString(), Colors.red);
-      Overlay.of(context).insert(_overlay2);
+      print('error-overlay-init');
+      final _errorOverlay = _overlay(e.toString(), Colors.red);
+      Overlay.of(context).insert(_errorOverlay);
       await Future.delayed(duration);
-      // ignore: unnecessary_null_comparison
-      try {
-        _overlay2.remove();
-      } catch (e) {
-        return;
+      if (_errorOverlay.mounted) {
+        _errorOverlay.remove();
+        print('error-overlay-dispose');
+      }
+
+      await Future.delayed(const Duration(milliseconds: 500));
+      if (context.mounted) {
+        print('retry-overlay-init');
+        final _retryOverlay = _retryOverlayEntry(() async {
+          await shellFunction(
+            context,
+            toExecute: toExecute,
+          );
+        });
+        Overlay.of(context).insert(_retryOverlay);
       }
 
       debugPrint(e.toString());

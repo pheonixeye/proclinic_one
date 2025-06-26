@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_web_plugins/url_strategy.dart' show usePathUrlStrategy;
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:proklinik_one/core/localization/app_localizations.dart';
 import 'package:proklinik_one/providers/_main.dart';
@@ -10,6 +11,7 @@ import 'package:proklinik_one/utils/utils_keys.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
+  usePathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting('ar');
   await initializeDateFormatting('en');

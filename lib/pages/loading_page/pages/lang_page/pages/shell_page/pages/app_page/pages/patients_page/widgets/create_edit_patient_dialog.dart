@@ -213,7 +213,12 @@ class _CreateEditPatientDialogState extends State<CreateEditPatientDialog> {
                 dob: _dob!.toIso8601String(),
                 email: _emailController.text,
               );
-              Navigator.pop(context, _patient);
+              //pop with null to avoid an extra useless request
+              if (_patient == widget.patient) {
+                Navigator.pop(context, null);
+              } else {
+                Navigator.pop(context, _patient);
+              }
             }
           },
           label: Text(context.loc.confirm),
