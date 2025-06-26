@@ -64,7 +64,9 @@ class AuthApi {
   Future<RecordAuth?> loginWithToken() async {
     try {
       final _token = await asyncPrefs?.getString('token');
-      PocketbaseHelper.pb.authStore.save(_token!, null);
+      if (_token != null) {
+        PocketbaseHelper.pb.authStore.save(_token, null);
+      }
       final result =
           await PocketbaseHelper.pb.collection('users').authRefresh();
       PocketbaseHelper.pb.authStore.save(result.token, result.record);
