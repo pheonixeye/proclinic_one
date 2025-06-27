@@ -1,5 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:proklinik_one/extensions/loc_ext.dart';
 import 'package:proklinik_one/models/patient.dart';
@@ -103,7 +104,7 @@ class _CreateEditPatientDialogState extends State<CreateEditPatientDialog> {
                   controller: _phoneController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: '01XX-XXXX-XXX',
+                    hintText: '01##-####-###',
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -114,6 +115,9 @@ class _CreateEditPatientDialogState extends State<CreateEditPatientDialog> {
                     }
                     return null;
                   },
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  keyboardType: TextInputType.phone,
+                  maxLength: 11,
                 ),
               ),
             ),

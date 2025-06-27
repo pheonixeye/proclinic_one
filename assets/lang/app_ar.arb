@@ -160,5 +160,13 @@
     "viewPdfPrescription" : "مناظرة نسخة الطباعة",
     "back" : "عودة",
     "egp" : "جنيه",
-    "days" : "يوم"
+    "days" : "يوم",
+    "@@app_profile_setup": "",
+    "profileSetup" : "اعدادات الحساب",
+    "doctorDrugs" : "ادوية الروشتة",
+    "manage" : "تفاصيل",
+    "laboratoryRequests" : "التحاليل",
+    "radiology" : "الاشاعات",
+    "procedures" : "اجرائات العيادات",
+    "supplies" : "المستلزمات"
 }

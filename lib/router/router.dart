@@ -9,6 +9,7 @@ import 'package:proklinik_one/pages/loading_page/loading_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/login_page/login_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/register_page/register_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/app_page.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/app_profile_setup/pages/drugs_page/dr_drugs_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/clinics_page/clinics_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/bookkeeping_page/bookkeeping_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/forms_page/forms_page.dart';
@@ -52,6 +53,14 @@ class AppRouter {
   static const String register = "register";
   static const String thankyou = "thankyou";
   static const String app = "app";
+  //profile_setup_routes
+  static const _profile_setup = 'profile_setup_';
+  static const String drugs = "${_profile_setup}drugs";
+  static const String labs = "${_profile_setup}labs";
+  static const String rads = "${_profile_setup}rads";
+  static const String procedures = "${_profile_setup}procedures";
+  static const String supplies = "${_profile_setup}supplies";
+  //main_routes
   static const String todayvisits = "todayvisits";
   static const String visits = "visits";
   static const String patients = "patients";
@@ -166,6 +175,18 @@ class AppRouter {
                       );
                     },
                     routes: [
+                      //profile_setup_routes
+                      GoRoute(
+                        path: drugs,
+                        name: drugs,
+                        builder: (context, state) {
+                          return DrDrugsPage(
+                            key: state.pageKey,
+                          );
+                        },
+                      ),
+
+                      //main_routes
                       GoRoute(
                         path: todayvisits,
                         name: todayvisits,

@@ -472,4 +472,25 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get days => 'يوم';
+
+  @override
+  String get profileSetup => 'اعدادات الحساب';
+
+  @override
+  String get doctorDrugs => 'ادوية الروشتة';
+
+  @override
+  String get manage => 'تفاصيل';
+
+  @override
+  String get laboratoryRequests => 'التحاليل';
+
+  @override
+  String get radiology => 'الاشاعات';
+
+  @override
+  String get procedures => 'اجرائات العيادات';
+
+  @override
+  String get supplies => 'المستلزمات';
 }

@@ -991,6 +991,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Days'**
   String get days;
+
+  /// No description provided for @profileSetup.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile Setup'**
+  String get profileSetup;
+
+  /// No description provided for @doctorDrugs.
+  ///
+  /// In en, this message translates to:
+  /// **'Prescription Drugs'**
+  String get doctorDrugs;
+
+  /// No description provided for @manage.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage'**
+  String get manage;
+
+  /// No description provided for @laboratoryRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'Laboratory Requests'**
+  String get laboratoryRequests;
+
+  /// No description provided for @radiology.
+  ///
+  /// In en, this message translates to:
+  /// **'Radiology'**
+  String get radiology;
+
+  /// No description provided for @procedures.
+  ///
+  /// In en, this message translates to:
+  /// **'Doctor Procedures'**
+  String get procedures;
+
+  /// No description provided for @supplies.
+  ///
+  /// In en, this message translates to:
+  /// **'Supplies'**
+  String get supplies;
 }
 
 class _AppLocalizationsDelegate

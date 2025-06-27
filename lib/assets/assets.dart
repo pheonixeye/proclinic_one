@@ -16,4 +16,11 @@ class AppAssets {
   ///font_files
   static const String ibm_base = 'assets/fonts/IBM/font-Regular-400.ttf';
   static const String ibm_bold = 'assets/fonts/IBM/font-Bold-700.ttf';
+
+  ///doctor_profile_setup
+  static const String drugs = 'assets/images/profile_setup/drugs.png';
+  static const String labs = 'assets/images/profile_setup/labs.png';
+  static const String procedures = 'assets/images/profile_setup/procedures.png';
+  static const String radiology = 'assets/images/profile_setup/radiology.png';
+  static const String supplies = 'assets/images/profile_setup/supplies.png';
 }

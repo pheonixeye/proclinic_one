@@ -474,4 +474,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get days => 'Days';
+
+  @override
+  String get profileSetup => 'Profile Setup';
+
+  @override
+  String get doctorDrugs => 'Prescription Drugs';
+
+  @override
+  String get manage => 'Manage';
+
+  @override
+  String get laboratoryRequests => 'Laboratory Requests';
+
+  @override
+  String get radiology => 'Radiology';
+
+  @override
+  String get procedures => 'Doctor Procedures';
+
+  @override
+  String get supplies => 'Supplies';
 }

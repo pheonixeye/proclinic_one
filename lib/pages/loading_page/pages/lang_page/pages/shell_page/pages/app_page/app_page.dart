@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:proklinik_one/extensions/loc_ext.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/app_profile_setup/app_profile_setup.dart';
 import 'package:proklinik_one/providers/px_doctor.dart';
 import 'package:provider/provider.dart';
 
@@ -12,30 +13,13 @@ class AppPage extends StatefulWidget {
 }
 
 class _AppPageState extends State<AppPage> with SingleTickerProviderStateMixin {
-  late final TabController _controller;
-  @override
-  void initState() {
-    super.initState();
-    _controller = TabController(
-      length: 4,
-      vsync: this,
-      initialIndex: 0,
-      animationDuration: const Duration(milliseconds: 260),
-    );
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
+  int _index = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: TabBarView(
-        physics: NeverScrollableScrollPhysics(),
-        controller: _controller,
+      body: IndexedStack(
+        alignment: Alignment.center,
+        index: _index,
         children: <Widget>[
           Center(
             child: Consumer<PxDoctor>(
@@ -62,21 +46,19 @@ class _AppPageState extends State<AppPage> with SingleTickerProviderStateMixin {
           const Center(
             child: Text("Profile"),
           ),
-          const Center(
-            child: Text("Settings"),
-          ),
+          AppProfileSetup(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         useLegacyColorScheme: false,
-        currentIndex: _controller.index,
+        currentIndex: _index,
         type: BottomNavigationBarType.shifting,
         elevation: 6,
         mouseCursor: SystemMouseCursors.click,
         showSelectedLabels: true,
         onTap: (value) {
           setState(() {
-            _controller.animateTo(value);
+            _index = value;
           });
         },
         items: [
@@ -96,9 +78,10 @@ class _AppPageState extends State<AppPage> with SingleTickerProviderStateMixin {
             label: 'Profile',
           ),
           BottomNavigationBarItem(
+            tooltip: context.loc.profileSetup,
             icon: const Icon(Icons.settings),
             activeIcon: const Icon(Icons.settings_suggest),
-            label: 'Settings',
+            label: context.loc.profileSetup,
           ),
         ],
       ),

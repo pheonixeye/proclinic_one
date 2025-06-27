@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:proklinik_one/assets/assets.dart';
 import 'package:proklinik_one/extensions/is_mobile_context.dart';
@@ -171,7 +172,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               subtitle: TextFormField(
                                 controller: _phoneController,
                                 decoration: const InputDecoration(
-                                  hintText: '01XX-XXXX-XXX',
+                                  hintText: '01##-####-###',
                                 ),
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
@@ -182,6 +183,11 @@ class _RegisterPageState extends State<RegisterPage> {
                                   }
                                   return null;
                                 },
+                                keyboardType: TextInputType.phone,
+                                maxLength: 11,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.digitsOnly
+                                ],
                               ),
                             ),
                             ListTile(

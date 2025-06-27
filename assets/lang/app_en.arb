@@ -160,5 +160,14 @@
     "viewPdfPrescription" : "View Pdf Version",
     "back" : "Back",
     "egp" : "EGP",
-    "days" : "Days"
+    "days" : "Days",
+    "@@app_profile_setup": "",
+    "profileSetup" : "Profile Setup",
+    "doctorDrugs" : "Prescription Drugs",
+    "manage" : "Manage",
+    "laboratoryRequests" : "Laboratory Requests",
+    "radiology" : "Radiology",
+    "procedures" : "Doctor Procedures",
+    "supplies" : "Supplies"
+
 }
