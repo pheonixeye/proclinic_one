@@ -168,5 +168,10 @@
     "laboratoryRequests" : "التحاليل",
     "radiology" : "الاشاعات",
     "procedures" : "اجرائات العيادات",
-    "supplies" : "المستلزمات"
+    "supplies" : "المستلزمات",
+    "add" : "اضافة",
+    "@@profile_item_setup": "",
+    "search" : "بحث",
+    "searchByEnglishOrArabicItemName" : "بحث باسم العنصر بالعربية او بالانجليزية",
+    "noItemsFound" : "لم يتم العثور على عناصر"
 }

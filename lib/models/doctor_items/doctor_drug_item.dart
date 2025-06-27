@@ -1,40 +1,45 @@
 import 'package:equatable/equatable.dart';
+import 'package:proklinik_one/models/doctor_items/_doctor_item.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/app_profile_setup/pages/profile_item_page/logic/profile_setup_item_enum.dart';
 
-class DoctorDrug extends Equatable {
-  final String id;
-  final String name_en;
-  final String name_ar;
+class DoctorDrugItem extends DoctorItem implements Equatable {
   final double concentration;
   final String unit;
   final String form;
+  final List<String> default_doses;
 
-  const DoctorDrug({
-    required this.id,
-    required this.name_en,
-    required this.name_ar,
+  const DoctorDrugItem({
+    required super.id,
+    required super.name_en,
+    required super.name_ar,
     required this.concentration,
     required this.unit,
+    required this.default_doses,
     required this.form,
+    super.item = ProfileSetupItem.drugs,
   });
 
-  DoctorDrug copyWith({
+  DoctorDrugItem copyWith({
     String? id,
     String? name_en,
     String? name_ar,
     double? concentration,
     String? unit,
     String? form,
+    List<String>? default_doses,
   }) {
-    return DoctorDrug(
+    return DoctorDrugItem(
       id: id ?? this.id,
       name_en: name_en ?? this.name_en,
       name_ar: name_ar ?? this.name_ar,
       concentration: concentration ?? this.concentration,
       unit: unit ?? this.unit,
       form: form ?? this.form,
+      default_doses: default_doses ?? this.default_doses,
     );
   }
 
+  @override
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'id': id,
@@ -43,17 +48,21 @@ class DoctorDrug extends Equatable {
       'concentration': concentration,
       'unit': unit,
       'form': form,
+      'default_doses': default_doses.map((e) => e.toString()).toList(),
     };
   }
 
-  factory DoctorDrug.fromJson(Map<String, dynamic> map) {
-    return DoctorDrug(
+  factory DoctorDrugItem.fromJson(Map<String, dynamic> map) {
+    return DoctorDrugItem(
       id: map['id'] as String,
       name_en: map['name_en'] as String,
       name_ar: map['name_ar'] as String,
       concentration: map['concentration'] as double,
       unit: map['unit'] as String,
       form: map['form'] as String,
+      default_doses: (map['default_doses'] as List<dynamic>)
+          .map((e) => e.toString())
+          .toList(),
     );
   }
 
@@ -69,6 +78,8 @@ class DoctorDrug extends Equatable {
       concentration,
       unit,
       form,
+      item,
+      default_doses,
     ];
   }
 }

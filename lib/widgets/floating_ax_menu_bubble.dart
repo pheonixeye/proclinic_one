@@ -68,6 +68,7 @@ class FloatingActionMenuBubble extends AnimatedWidget {
   final Color iconColor;
   final Color backGroundColor;
 
+  // ignore: strict_top_level_inference
   get _animation => listenable;
 
   Widget buildItem(BuildContext context, int index) {

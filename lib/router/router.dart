@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:proklinik_one/core/api/clinics_api.dart';
+import 'package:proklinik_one/core/api/doctor_profile_items_api.dart';
 import 'package:proklinik_one/core/api/forms_api.dart';
 import 'package:proklinik_one/core/api/patients_api.dart';
 import 'package:proklinik_one/pages/loading_page/pages/error_page/error_page.dart';
@@ -9,7 +10,8 @@ import 'package:proklinik_one/pages/loading_page/loading_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/login_page/login_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/register_page/register_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/app_page.dart';
-import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/app_profile_setup/pages/drugs_page/dr_drugs_page.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/app_profile_setup/pages/profile_item_page/logic/profile_setup_item_enum.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/app_profile_setup/pages/profile_item_page/profile_item_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/clinics_page/clinics_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/bookkeeping_page/bookkeeping_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/forms_page/forms_page.dart';
@@ -22,6 +24,7 @@ import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/thankyou_
 import 'package:proklinik_one/providers/px_auth.dart';
 import 'package:proklinik_one/providers/px_clinics.dart';
 import 'package:proklinik_one/providers/px_doctor.dart';
+import 'package:proklinik_one/providers/px_doctor_profile_items.dart';
 import 'package:proklinik_one/providers/px_forms.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:proklinik_one/providers/px_patients.dart';
@@ -176,15 +179,27 @@ class AppRouter {
                     },
                     routes: [
                       //profile_setup_routes
-                      GoRoute(
-                        path: drugs,
-                        name: drugs,
-                        builder: (context, state) {
-                          return DrDrugsPage(
-                            key: state.pageKey,
-                          );
-                        },
-                      ),
+                      ...ProfileSetupItem.values.map((e) {
+                        return GoRoute(
+                          path: e.route,
+                          name: e.route,
+                          builder: (context, state) {
+                            return ChangeNotifierProvider(
+                              create: (context) => PxDoctorProfileItems(
+                                api: DoctorProfileItemsApi(
+                                  doc_id:
+                                      context.read<PxDoctor>().doctor?.id ?? '',
+                                  item: e,
+                                ),
+                              ),
+                              child: ProfileItemPage(
+                                key: state.pageKey,
+                                profileSetupItem: e,
+                              ),
+                            );
+                          },
+                        );
+                      }),
 
                       //main_routes
                       GoRoute(

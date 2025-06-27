@@ -43,7 +43,7 @@ class AppProfileSetup extends StatelessWidget {
                     child: InkWell(
                       onTap: () {
                         GoRouter.of(context).goNamed(
-                          'profile_setup_${e.path}',
+                          e.path,
                           pathParameters: defaultPathParameters(context),
                         );
                       },

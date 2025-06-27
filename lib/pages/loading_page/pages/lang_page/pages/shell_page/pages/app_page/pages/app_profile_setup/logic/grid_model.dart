@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:proklinik_one/assets/assets.dart';
 import 'package:proklinik_one/extensions/loc_ext.dart';
+import 'package:proklinik_one/router/router.dart';
 
 class GridModel extends Equatable {
   final String asset;
@@ -24,26 +25,26 @@ List<GridModel> gridModelList(BuildContext context) => [
       GridModel(
         asset: AppAssets.drugs,
         title: context.loc.doctorDrugs,
-        path: 'drugs',
+        path: AppRouter.drugs,
       ),
       GridModel(
         asset: AppAssets.labs,
         title: context.loc.laboratoryRequests,
-        path: 'labs',
+        path: AppRouter.labs,
       ),
       GridModel(
         asset: AppAssets.radiology,
         title: context.loc.radiology,
-        path: 'rads',
+        path: AppRouter.rads,
       ),
       GridModel(
         asset: AppAssets.procedures,
         title: context.loc.procedures,
-        path: 'procedures',
+        path: AppRouter.procedures,
       ),
       GridModel(
         asset: AppAssets.supplies,
         title: context.loc.supplies,
-        path: 'supplies',
+        path: AppRouter.supplies,
       ),
     ];

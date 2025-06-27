@@ -493,4 +493,17 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get supplies => 'المستلزمات';
+
+  @override
+  String get add => 'اضافة';
+
+  @override
+  String get search => 'بحث';
+
+  @override
+  String get searchByEnglishOrArabicItemName =>
+      'بحث باسم العنصر بالعربية او بالانجليزية';
+
+  @override
+  String get noItemsFound => 'لم يتم العثور على عناصر';
 }

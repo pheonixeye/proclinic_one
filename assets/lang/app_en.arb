@@ -168,6 +168,11 @@
     "laboratoryRequests" : "Laboratory Requests",
     "radiology" : "Radiology",
     "procedures" : "Doctor Procedures",
-    "supplies" : "Supplies"
+    "supplies" : "Supplies",
+    "add" : "Add",
+    "@@profile_item_setup": "",
+    "search" : "Search",
+    "searchByEnglishOrArabicItemName" : "Search By English Or Arabic Item Name",
+    "noItemsFound" : "No Items Found."
 
 }

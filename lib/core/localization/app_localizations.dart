@@ -1033,6 +1033,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Supplies'**
   String get supplies;
+
+  /// No description provided for @add.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get add;
+
+  /// No description provided for @search.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get search;
+
+  /// No description provided for @searchByEnglishOrArabicItemName.
+  ///
+  /// In en, this message translates to:
+  /// **'Search By English Or Arabic Item Name'**
+  String get searchByEnglishOrArabicItemName;
+
+  /// No description provided for @noItemsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No Items Found.'**
+  String get noItemsFound;
 }
 
 class _AppLocalizationsDelegate

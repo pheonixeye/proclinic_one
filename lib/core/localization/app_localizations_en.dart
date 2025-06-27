@@ -495,4 +495,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get supplies => 'Supplies';
+
+  @override
+  String get add => 'Add';
+
+  @override
+  String get search => 'Search';
+
+  @override
+  String get searchByEnglishOrArabicItemName =>
+      'Search By English Or Arabic Item Name';
+
+  @override
+  String get noItemsFound => 'No Items Found.';
 }

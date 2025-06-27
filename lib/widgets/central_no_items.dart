@@ -9,7 +9,10 @@ class CentralNoItems extends StatelessWidget {
       child: Card.outlined(
         child: Padding(
           padding: EdgeInsets.all(8.0),
-          child: Text(message),
+          child: Text(
+            message,
+            textAlign: TextAlign.center,
+          ),
         ),
       ),
     );

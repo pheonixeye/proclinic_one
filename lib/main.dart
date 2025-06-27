@@ -53,4 +53,5 @@ class MyApp extends StatelessWidget {
   }
   //TODO: add caching for pdf.min.js via cdn "https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.min.js"
   //TODO: add doctor initialization script on create doctor accout
+  //TODO: implement api cache over the whole app
 }
