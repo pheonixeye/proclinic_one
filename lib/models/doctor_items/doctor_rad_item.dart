@@ -33,6 +33,11 @@ enum RadiologyType {
     db_value: 'inter',
     type_en: 'Interventional',
     type_ar: 'اشعة تداخلية',
+  ),
+  other(
+    db_value: 'other',
+    type_en: 'Others',
+    type_ar: 'اخري',
   );
 
   final String db_value;
@@ -45,10 +50,10 @@ enum RadiologyType {
     required this.type_ar,
   });
 
-  factory RadiologyType.fromString(String db_value) {
+  factory RadiologyType.fromString(String? db_value) {
     return RadiologyType.values.firstWhere(
       (e) => e.name == db_value,
-      orElse: () => throw UnimplementedError(),
+      orElse: () => RadiologyType.other,
     );
   }
 }

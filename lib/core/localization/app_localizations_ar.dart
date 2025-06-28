@@ -563,4 +563,19 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get discountPercentage => 'نسبة الخصم';
+
+  @override
+  String get drugConcentration => 'تركيز الدواء';
+
+  @override
+  String get drugForm => 'صورة الدواء';
+
+  @override
+  String get drugUnit => 'وحدة تركيز الدواء';
+
+  @override
+  String get supplyItemUnitEn => 'وحدة تخزين المستلزمات بالانجليزية';
+
+  @override
+  String get supplyItemUnitAr => 'وحدة تخزين المستلزمات بالعربية';
 }

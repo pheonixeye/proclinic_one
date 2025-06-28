@@ -14,8 +14,8 @@ class DoctorDrugItem extends DoctorItem implements Equatable {
     required super.name_ar,
     required this.concentration,
     required this.unit,
-    required this.default_doses,
     required this.form,
+    required this.default_doses,
     super.item = ProfileSetupItem.drugs,
   });
 

@@ -566,4 +566,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get discountPercentage => 'Discount Percentage';
+
+  @override
+  String get drugConcentration => 'Drug Concentration';
+
+  @override
+  String get drugForm => 'Drug Form';
+
+  @override
+  String get drugUnit => 'Drug Unit';
+
+  @override
+  String get supplyItemUnitEn => 'English Supply Storage Unit';
+
+  @override
+  String get supplyItemUnitAr => 'Arabic Supply Storage Unit';
 }

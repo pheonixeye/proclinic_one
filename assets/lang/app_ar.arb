@@ -194,5 +194,10 @@
     "sellingPrice" : "سعر البيع",
     "notifyOnReorder" : "تنببه عند كمية اعادة الطلب",
     "price" : "السعر",
-    "discountPercentage" : "نسبة الخصم"
-}
+    "discountPercentage" : "نسبة الخصم",
+    "drugConcentration" : "تركيز الدواء",
+    "drugForm" : "صورة الدواء",
+    "drugUnit" : "وحدة تركيز الدواء",
+    "supplyItemUnitEn" : "وحدة تخزين المستلزمات بالانجليزية",
+    "supplyItemUnitAr" : "وحدة تخزين المستلزمات بالعربية"
+    }

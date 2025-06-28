@@ -194,6 +194,10 @@
     "sellingPrice" : "Selling Price",
     "notifyOnReorder" : "Notify On Reorder",
     "price" : "Price",
-    "discountPercentage" : "Discount Percentage"
-
+    "discountPercentage" : "Discount Percentage",
+    "drugConcentration" : "Drug Concentration",
+    "drugForm" : "Drug Form",
+    "drugUnit" : "Drug Unit",
+    "supplyItemUnitEn" : "English Supply Storage Unit",
+    "supplyItemUnitAr" : "Arabic Supply Storage Unit"
 }

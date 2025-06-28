@@ -1171,6 +1171,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Discount Percentage'**
   String get discountPercentage;
+
+  /// No description provided for @drugConcentration.
+  ///
+  /// In en, this message translates to:
+  /// **'Drug Concentration'**
+  String get drugConcentration;
+
+  /// No description provided for @drugForm.
+  ///
+  /// In en, this message translates to:
+  /// **'Drug Form'**
+  String get drugForm;
+
+  /// No description provided for @drugUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'Drug Unit'**
+  String get drugUnit;
+
+  /// No description provided for @supplyItemUnitEn.
+  ///
+  /// In en, this message translates to:
+  /// **'English Supply Storage Unit'**
+  String get supplyItemUnitEn;
+
+  /// No description provided for @supplyItemUnitAr.
+  ///
+  /// In en, this message translates to:
+  /// **'Arabic Supply Storage Unit'**
+  String get supplyItemUnitAr;
 }
 
 class _AppLocalizationsDelegate

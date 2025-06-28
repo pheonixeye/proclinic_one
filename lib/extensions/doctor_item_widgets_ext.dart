@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 
 extension WxDoctorDrugItem on DoctorDrugItem {
   ///item view card extention to display items in a column
-  Widget viewWidget(BuildContext context) {
+  Widget viewWidgets(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -67,7 +67,7 @@ extension WxDoctorDrugItem on DoctorDrugItem {
 }
 
 extension WxDoctorLabItem on DoctorLabItem {
-  Widget viewWidget(BuildContext context) {
+  Widget viewWidgets(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -112,7 +112,7 @@ extension LocalizedString on RadiologyType {
 }
 
 extension WxDoctorRadItem on DoctorRadItem {
-  Widget viewWidget(BuildContext context) {
+  Widget viewWidgets(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -167,7 +167,7 @@ extension WxDoctorRadItem on DoctorRadItem {
 }
 
 extension WxDoctorSupplyItem on DoctorSupplyItem {
-  Widget viewWidget(BuildContext context) {
+  Widget viewWidgets(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -273,8 +273,8 @@ extension WxDoctorSupplyItem on DoctorSupplyItem {
   }
 }
 
-extension WdDoctorProcedureItem on DoctorProcedureItem {
-  Widget viewWidget(BuildContext context) {
+extension WxDoctorProcedureItem on DoctorProcedureItem {
+  Widget viewWidgets(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(

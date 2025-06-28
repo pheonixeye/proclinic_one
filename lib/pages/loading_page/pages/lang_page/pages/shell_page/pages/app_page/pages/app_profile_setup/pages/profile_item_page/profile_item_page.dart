@@ -46,101 +46,63 @@ class _ProfileItemPageState extends State<ProfileItemPage> {
     return Consumer2<PxDoctorProfileItems, PxLocale>(
       builder: (context, i, l, _) {
         return Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            shadowColor: Colors.transparent,
-            foregroundColor: Colors.transparent,
-            surfaceTintColor: Colors.transparent,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadiusGeometry.circular(12),
-              side: BorderSide(),
-            ),
-            leading: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: FloatingActionButton.small(
-                tooltip: context.loc.back,
-                heroTag: '${widget.profileSetupItem.name}pop',
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Icon(Icons.arrow_back),
-              ),
-            ),
-            title: Form(
-              key: formKey,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: context.loc.searchByEnglishOrArabicItemName,
-                      ),
-                      controller: _controller,
-                      onChanged: (value) {
-                        if (value.isEmpty) {
-                          i.clearSearch();
-                        }
-                        i.searchForItems(value);
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: FloatingActionButton.small(
-                      tooltip: context.loc.clearSearch,
-                      heroTag: '${widget.profileSetupItem.name}clear-search',
-                      onPressed: () {
-                        i.clearSearch();
-                        _controller.clear();
-                      },
-                      backgroundColor: Colors.red.shade300,
-                      child: const Icon(Icons.close),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          floatingActionButton: FloatingActionButton.small(
-            heroTag:
-                'add${widget.profileSetupItem.actionButtonTooltip(context)}',
-            tooltip: widget.profileSetupItem.actionButtonTooltip(context),
-            onPressed: () async {
-              final _doctorItemJson = await showDialog<Map<String, dynamic>?>(
-                context: context,
-                builder: (context) {
-                  return DoctorItemCreateEditDialog(
-                    type: widget.profileSetupItem,
-                    item: null,
-                  );
-                },
-              );
-              if (_doctorItemJson == null) {
-                return;
-              }
-
-              if (context.mounted) {
-                await shellFunction(
-                  context,
-                  toExecute: () async {
-                    await i.addNewItem(_doctorItemJson);
-                  },
-                );
-              }
-            },
-            child: const Icon(Icons.add),
-          ),
           body: Center(
             child: Column(
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ListTile(
-                    title: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child:
-                          Text(widget.profileSetupItem.pageTitleName(context)),
+                    title: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: FloatingActionButton.small(
+                            tooltip: context.loc.back,
+                            heroTag: '${widget.profileSetupItem.name}pop',
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Icon(Icons.arrow_back),
+                          ),
+                        ),
+                        Text(widget.profileSetupItem.pageTitleName(context)),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        Expanded(
+                          child: Form(
+                            key: formKey,
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                hintText:
+                                    context.loc.searchByEnglishOrArabicItemName,
+                              ),
+                              controller: _controller,
+                              onChanged: (value) {
+                                if (value.isEmpty) {
+                                  i.clearSearch();
+                                }
+                                i.searchForItems(value);
+                              },
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: FloatingActionButton.small(
+                            tooltip: context.loc.clearSearch,
+                            heroTag:
+                                '${widget.profileSetupItem.name}clear-search',
+                            onPressed: () {
+                              i.clearSearch();
+                              _controller.clear();
+                            },
+                            backgroundColor: Colors.red.shade300,
+                            child: const Icon(Icons.close),
+                          ),
+                        ),
+                      ],
                     ),
                     subtitle: const Divider(),
                   ),
@@ -188,6 +150,35 @@ class _ProfileItemPageState extends State<ProfileItemPage> {
                 ),
               ],
             ),
+          ),
+          floatingActionButton: FloatingActionButton.small(
+            heroTag:
+                'add${widget.profileSetupItem.actionButtonTooltip(context)}',
+            tooltip: widget.profileSetupItem.actionButtonTooltip(context),
+            onPressed: () async {
+              final _doctorItemJson = await showDialog<Map<String, dynamic>?>(
+                context: context,
+                builder: (context) {
+                  return DoctorItemCreateEditDialog(
+                    type: widget.profileSetupItem,
+                    item: null,
+                  );
+                },
+              );
+              if (_doctorItemJson == null) {
+                return;
+              }
+
+              if (context.mounted) {
+                await shellFunction(
+                  context,
+                  toExecute: () async {
+                    await i.addNewItem(_doctorItemJson);
+                  },
+                );
+              }
+            },
+            child: const Icon(Icons.add),
           ),
         );
       },

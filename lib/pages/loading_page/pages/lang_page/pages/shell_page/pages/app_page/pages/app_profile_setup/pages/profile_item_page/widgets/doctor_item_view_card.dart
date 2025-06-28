@@ -67,7 +67,7 @@ class DoctorItemViewCard extends StatelessWidget {
                           builder: (context) {
                             return DoctorItemCreateEditDialog(
                               type: item.item,
-                              item: item,
+                              item: item.toJson(),
                             );
                           },
                         );
@@ -126,15 +126,15 @@ class DoctorItemViewCard extends StatelessWidget {
               children: [
                 switch (i.api.item) {
                   ProfileSetupItem.drugs =>
-                    (item as DoctorDrugItem).viewWidget(context),
+                    (item as DoctorDrugItem).viewWidgets(context),
                   ProfileSetupItem.labs =>
-                    (item as DoctorLabItem).viewWidget(context),
+                    (item as DoctorLabItem).viewWidgets(context),
                   ProfileSetupItem.rads =>
-                    (item as DoctorRadItem).viewWidget(context),
+                    (item as DoctorRadItem).viewWidgets(context),
                   ProfileSetupItem.procedures =>
-                    (item as DoctorProcedureItem).viewWidget(context),
+                    (item as DoctorProcedureItem).viewWidgets(context),
                   ProfileSetupItem.supplies =>
-                    (item as DoctorSupplyItem).viewWidget(context),
+                    (item as DoctorSupplyItem).viewWidgets(context),
                 }
               ],
             ),
