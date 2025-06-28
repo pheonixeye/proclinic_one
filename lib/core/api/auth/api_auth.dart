@@ -21,6 +21,7 @@ class AuthApi {
           'name_en': dto.name_en,
           'name_ar': dto.name_ar,
           'phone': dto.phone,
+          'email': dto.email,
         },
       );
 
@@ -40,40 +41,45 @@ class AuthApi {
     String password, [
     bool rememberMe = false,
   ]) async {
+    RecordAuth? _result;
     try {
-      final result = await PocketbaseHelper.pb
+      _result = await PocketbaseHelper.pb
           .collection('users')
           .authWithPassword(email, password);
-
-      /// runtimeType check is for avoiding type error when the request does
-      /// not return a token i.e. failed request, ==>> (dont save)
-      if (rememberMe && result.token.runtimeType == String) {
-        await asyncPrefs.setString('token', result.token);
-        PocketbaseHelper.pb.authStore.save(result.token, result.record);
-      }
-      return result;
     } on ClientException catch (e) {
       dprint(e.toString());
       throw AuthException(e);
     }
+
+    if (rememberMe) {
+      try {
+        await asyncPrefs.setString('token', _result.token);
+      } catch (e) {
+        dprint("couldn't save token => ${e.toString()}");
+      }
+    }
+    return _result;
   }
 
   //# remember me login flow
   Future<RecordAuth?> loginWithToken() async {
+    RecordAuth? result;
+    String? _token;
     try {
-      final _token = await asyncPrefs.getString('token');
-      if (_token != null) {
-        PocketbaseHelper.pb.authStore.save(_token, null);
-      }
-      final result =
-          await PocketbaseHelper.pb.collection('users').authRefresh();
-      PocketbaseHelper.pb.authStore.save(result.token, result.record);
-      await asyncPrefs.setString('token', result.token);
-      return result;
+      _token = await asyncPrefs.getString('token');
+    } catch (e) {
+      dprint("couldn't fetch token => ${e.toString()}");
+      return null;
+    }
+    PocketbaseHelper.pb.authStore.save(_token!, null);
+    try {
+      result = await PocketbaseHelper.pb.collection('users').authRefresh();
     } on ClientException catch (e) {
       dprint(e.toString());
       throw AuthException(e);
     }
+
+    return result;
   }
 
   Future<void> requestResetPassword(String email) async {
@@ -85,9 +91,8 @@ class AuthApi {
     }
   }
 
-  Future<void> logout() async {
-    final _token = await asyncPrefs.getString('token');
-    PocketbaseHelper.pb.authStore.save(_token!, null);
-    await asyncPrefs.remove('token');
+  void logout() {
+    PocketbaseHelper.pb.authStore.clear();
+    asyncPrefs.remove('token');
   }
 }

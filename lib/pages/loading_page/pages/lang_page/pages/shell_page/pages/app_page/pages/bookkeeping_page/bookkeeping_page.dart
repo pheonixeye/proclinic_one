@@ -79,13 +79,14 @@ class _BookkeepingPageState extends State<BookkeepingPage> {
                           TextSpan(
                             text: 'Payment Url',
                             children: [
+                              TextSpan(text: '\n'),
                               TextSpan(
                                 text: _url,
                                 style: TextStyle(
                                     decoration: TextDecoration.underline),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
-                                    web.window.open(_url, '_blank');
+                                    web.window.open(_url, '_self');
                                   },
                               ),
                             ],

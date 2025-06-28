@@ -26,7 +26,7 @@ class LogoutBtn extends StatelessWidget {
             if (_toLogout == null || !_toLogout) {
               return;
             }
-            await a.logout();
+            a.logout();
             if (context.mounted) {
               GoRouter.of(context).goNamed(
                 AppRouter.login,

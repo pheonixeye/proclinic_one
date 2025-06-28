@@ -37,22 +37,24 @@ class PxAuth extends ChangeNotifier {
 
   Future<void> loginWithToken() async {
     try {
-      final result = await api.loginWithToken();
-      _auth = result;
+      _auth = await api.loginWithToken();
       notifyListeners();
-      dprint('token from api: ${result?.token.substring(0, 5)}');
+      dprint('token from api: ${_auth?.token.substring(20, 25)}');
     } catch (e) {
       _auth = null;
       notifyListeners();
+      rethrow;
     }
   }
 
-  Future<void> logout() async {
+  void logout() {
     try {
-      await api.logout();
+      api.logout();
       _auth = null;
     } catch (e) {
       dprint(e.toString());
     }
   }
+
+  bool get isLoggedIn => _auth != null;
 }

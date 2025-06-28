@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart' show ChangeNotifier, Locale;
 import 'package:proklinik_one/functions/dprint.dart';
+import 'package:proklinik_one/utils/shared_prefs.dart';
 
 class PxLocale extends ChangeNotifier {
   static Locale _locale = const Locale("en");
@@ -16,6 +17,8 @@ class PxLocale extends ChangeNotifier {
 
   void setLang(String value) {
     _lang = value;
+    asyncPrefs.setString('lang', _lang);
+    notifyListeners();
   }
 
   bool get isEnglish => lang == 'en' && locale == const Locale("en");

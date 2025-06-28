@@ -20,6 +20,7 @@ class EndDrawer extends StatelessWidget {
       child: Consumer<GoRouteInformationProvider>(
         builder: (context, r, _) {
           bool selected(String path) => r.value.uri.path.endsWith('/$path');
+          // print(r.value.uri.path);
           return ListView(
             children: [
               if (context.isMobile)

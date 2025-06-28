@@ -30,6 +30,7 @@ import 'package:proklinik_one/providers/px_forms.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:proklinik_one/providers/px_patients.dart';
 import 'package:proklinik_one/providers/px_speciality.dart';
+import 'package:proklinik_one/utils/shared_prefs.dart';
 import 'package:proklinik_one/utils/utils_keys.dart';
 import 'package:provider/provider.dart';
 
@@ -74,16 +75,11 @@ class AppRouter {
   static const String settings = "settings";
   static const String transaction = "transaction";
 
-  static String? get currentRouteName =>
+  String? get currentRouteName =>
       router.routerDelegate.currentConfiguration.last.route.name;
 
-  static final router = GoRouter(
+  static final GoRouter router = GoRouter(
     debugLogDiagnostics: true,
-    // refreshListenable: Listenable.merge(
-    //   [
-    //     PxLocale(),
-    //   ],
-    // ),
     navigatorKey: UtilsKeys.navigatorKey,
     initialLocation: loading,
     errorPageBuilder: (context, state) {
@@ -94,6 +90,16 @@ class AppRouter {
         ),
       );
     },
+    redirect: (context, state) {
+      final _locale = context.read<PxLocale>();
+      final _urlLang = state.pathParameters['lang'];
+      if (_urlLang != null && _urlLang != _locale.lang) {
+        print('PxLocale.setLocale($_urlLang)(from router-redirect)');
+        _locale.setLang(_urlLang);
+        _locale.setLocale();
+      }
+      return null;
+    },
     routes: [
       GoRoute(
         path: loading,
@@ -103,14 +109,14 @@ class AppRouter {
             key: state.pageKey,
           );
         },
-        redirect: (context, state) {
-          if (state.pathParameters['lang'] == null ||
-              state.pathParameters['lang']!.isEmpty) {
-            print(
-                'loading screen redirect fired with (if), path => ${state.fullPath}');
-            state.pathParameters['lang'] = 'en';
-            context.read<PxLocale>().setLang('en');
-            return '/en';
+        redirect: (context, state) async {
+          if (state.fullPath == loading) {
+            final _storedLanguage = await asyncPrefs.getString('lang');
+            if (_storedLanguage != null) {
+              return '/$_storedLanguage';
+            } else {
+              return '/en';
+            }
           }
           return null;
         },
@@ -123,6 +129,26 @@ class AppRouter {
                 key: state.pageKey,
               );
             },
+            redirect: (context, state) async {
+              final _auth = context.read<PxAuth>();
+              if (_auth.isLoggedIn && state.fullPath == '/:lang') {
+                return '/${state.pathParameters['lang']}/$app';
+              }
+              if (!_auth.isLoggedIn && state.fullPath == '/:lang') {
+                try {
+                  await _auth.loginWithToken();
+                  print(
+                      'authWithToken(LangPage-Redirect)(isLoggedIn=${_auth.isLoggedIn})');
+                  return '/${state.pathParameters['lang']}/$app';
+                } catch (e) {
+                  return '/${state.pathParameters['lang']}/$login';
+                }
+              }
+              if (_auth.isLoggedIn && state.fullPath != '/:lang') {
+                return null;
+              }
+              return null;
+            },
             routes: [
               GoRoute(
                 path: login,
@@ -132,6 +158,12 @@ class AppRouter {
                     key: state.pageKey,
                   );
                 },
+                redirect: (context, state) {
+                  if (context.read<PxAuth>().isLoggedIn) {
+                    return '/${state.pathParameters['lang']}/$app';
+                  }
+                  return null;
+                },
               ),
               GoRoute(
                 path: register,
@@ -139,11 +171,17 @@ class AppRouter {
                 builder: (context, state) {
                   return ChangeNotifierProvider.value(
                     key: state.pageKey,
-                    value: PxSpec.instance(),
+                    value: PxSpec(),
                     child: RegisterPage(
                       key: state.pageKey,
                     ),
                   );
+                },
+                redirect: (context, state) {
+                  if (context.read<PxAuth>().isLoggedIn) {
+                    return '/${state.pathParameters['lang']}/$app';
+                  }
+                  return null;
                 },
               ),
               GoRoute(
@@ -162,19 +200,6 @@ class AppRouter {
                     child: child,
                   );
                 },
-                redirect: (context, state) async {
-                  final lang = state.pathParameters['lang']!;
-                  final _pxAuth = context.read<PxAuth>();
-                  try {
-                    await _pxAuth.loginWithToken();
-                    return null;
-                  } catch (e) {
-                    return '/$lang/$login';
-                  }
-                  // if (_pxAuth.authModel != null) {
-                  //   return null;
-                  // } else {}
-                },
                 routes: [
                   GoRoute(
                     path: app,
@@ -183,6 +208,23 @@ class AppRouter {
                       return AppPage(
                         key: state.pageKey,
                       );
+                    },
+                    redirect: (context, state) async {
+                      final _auth = context.read<PxAuth>();
+                      if (_auth.isLoggedIn) {
+                        return null;
+                      }
+                      if (!_auth.isLoggedIn) {
+                        try {
+                          await _auth.loginWithToken();
+                          print(
+                              'authWithToken(AppPage-Redirect)(isLoggedIn=${_auth.isLoggedIn})');
+                          return null;
+                        } catch (e) {
+                          return '/${state.pathParameters['lang']}/$login';
+                        }
+                      }
+                      return null;
                     },
                     routes: [
                       //transaction_result page

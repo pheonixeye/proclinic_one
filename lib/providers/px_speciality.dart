@@ -4,23 +4,19 @@ import 'package:proklinik_one/functions/dprint.dart';
 import 'package:proklinik_one/models/speciality.dart';
 
 class PxSpec extends ChangeNotifier {
-  PxSpec._() {
+  PxSpec() {
     _init();
   }
 
-  factory PxSpec.instance() {
-    return PxSpec._instance;
-  }
-
-  static final PxSpec _instance = PxSpec._();
-
   Future<void> _init() async {
-    _specialities = await SpecialitiesApi.fetchSpecialities();
-    notifyListeners();
-    dprint('PxSpec._init()');
+    if (_specialities == null) {
+      _specialities = await SpecialitiesApi.fetchSpecialities();
+      notifyListeners();
+      dprint('PxSpec._init()');
+    }
   }
 
-  List<Speciality>? _specialities;
+  static List<Speciality>? _specialities;
   List<Speciality>? get specialities => _specialities;
 
   Speciality? _speciality;

@@ -174,6 +174,14 @@ class _LoginPageState extends State<LoginPage> {
                             CheckboxListTile(
                               controlAffinity: ListTileControlAffinity.leading,
                               contentPadding: EdgeInsets.zero,
+                              value: _rememberMe,
+                              onChanged: (val) {
+                                setState(() {
+                                  if (val != null) {
+                                    _rememberMe = val;
+                                  }
+                                });
+                              },
                               title: Row(
                                 children: [
                                   Text(context.loc.rememberMe),
@@ -204,14 +212,6 @@ class _LoginPageState extends State<LoginPage> {
                                   ),
                                 ],
                               ),
-                              value: _rememberMe,
-                              onChanged: (val) {
-                                setState(() {
-                                  if (val != null) {
-                                    _rememberMe = val;
-                                  }
-                                });
-                              },
                               mouseCursor: SystemMouseCursors.click,
                             ),
                             const SizedBox(height: 10),

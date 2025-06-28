@@ -324,6 +324,13 @@ class _RegisterPageState extends State<RegisterPage> {
                                                 imageUrl: e.imageUrl,
                                                 height: 50,
                                                 width: 50,
+                                                progressIndicatorBuilder:
+                                                    (context, url, progress) {
+                                                  return CircularProgressIndicator
+                                                      .adaptive(
+                                                    value: progress.progress,
+                                                  );
+                                                },
                                               ),
                                               const SizedBox(
                                                 width: 10,
