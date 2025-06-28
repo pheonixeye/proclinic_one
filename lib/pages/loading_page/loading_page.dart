@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:proklinik_one/assets/assets.dart';
-import 'package:proklinik_one/extensions/after_layout.dart';
-import 'package:proklinik_one/providers/px_locale.dart';
-import 'package:provider/provider.dart';
 
 class LoadingPage extends StatefulWidget {
   const LoadingPage({super.key});
@@ -12,7 +9,7 @@ class LoadingPage extends StatefulWidget {
 }
 
 class _LoadingPageState extends State<LoadingPage>
-    with SingleTickerProviderStateMixin, AfterLayoutMixin {
+    with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<double> _animation;
 
@@ -26,12 +23,6 @@ class _LoadingPageState extends State<LoadingPage>
     )..repeat(reverse: true);
 
     _animation = Tween<double>(begin: 1.0, end: 0.95).animate(_controller);
-  }
-
-  @override
-  void afterFirstLayout(BuildContext context) {
-    //! IMPORTANT
-    context.read<PxLocale>().setLocale();
   }
 
   @override

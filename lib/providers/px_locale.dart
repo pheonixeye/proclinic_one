@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart' show ChangeNotifier, Locale;
 import 'package:proklinik_one/functions/dprint.dart';
 
 class PxLocale extends ChangeNotifier {
-  Locale _locale = const Locale("en");
+  static Locale _locale = const Locale("en");
   Locale get locale => _locale;
 
   void setLocale() {
@@ -11,7 +11,7 @@ class PxLocale extends ChangeNotifier {
     dprint("PxLocale().setLocale($_locale)");
   }
 
-  String _lang = 'en';
+  static String _lang = 'en';
   String get lang => _lang;
 
   void setLang(String value) {

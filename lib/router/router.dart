@@ -15,6 +15,7 @@ import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_pag
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/clinics_page/clinics_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/bookkeeping_page/bookkeeping_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/forms_page/forms_page.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/transaction/transaction_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/visits_page/visits_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/patients_page/patients_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/settings_page/settings_page.dart';
@@ -71,29 +72,20 @@ class AppRouter {
   static const String forms = "forms";
   static const String bookkeeping = "bookkeeping";
   static const String settings = "settings";
+  static const String transaction = "transaction";
 
   static String? get currentRouteName =>
       router.routerDelegate.currentConfiguration.last.route.name;
 
   static final router = GoRouter(
     debugLogDiagnostics: true,
-    refreshListenable: Listenable.merge(
-      [
-        PxLocale(),
-      ],
-    ),
+    // refreshListenable: Listenable.merge(
+    //   [
+    //     PxLocale(),
+    //   ],
+    // ),
     navigatorKey: UtilsKeys.navigatorKey,
     initialLocation: loading,
-    redirect: (context, state) {
-      if (state.fullPath == '/') {
-        context.read<PxLocale>().setLang('en');
-        return '/en';
-      } else {
-        final lang = state.pathParameters['lang']!;
-        context.read<PxLocale>().setLang(lang);
-        return null;
-      }
-    },
     errorPageBuilder: (context, state) {
       return MaterialPage(
         key: state.pageKey,
@@ -110,6 +102,17 @@ class AppRouter {
           return LoadingPage(
             key: state.pageKey,
           );
+        },
+        redirect: (context, state) {
+          if (state.pathParameters['lang'] == null ||
+              state.pathParameters['lang']!.isEmpty) {
+            print(
+                'loading screen redirect fired with (if), path => ${state.fullPath}');
+            state.pathParameters['lang'] = 'en';
+            context.read<PxLocale>().setLang('en');
+            return '/en';
+          }
+          return null;
         },
         routes: [
           GoRoute(
@@ -159,14 +162,18 @@ class AppRouter {
                     child: child,
                   );
                 },
-                redirect: (context, state) {
+                redirect: (context, state) async {
                   final lang = state.pathParameters['lang']!;
                   final _pxAuth = context.read<PxAuth>();
-                  if (_pxAuth.authModel != null) {
+                  try {
+                    await _pxAuth.loginWithToken();
                     return null;
-                  } else {
+                  } catch (e) {
                     return '/$lang/$login';
                   }
+                  // if (_pxAuth.authModel != null) {
+                  //   return null;
+                  // } else {}
                 },
                 routes: [
                   GoRoute(
@@ -178,6 +185,18 @@ class AppRouter {
                       );
                     },
                     routes: [
+                      //transaction_result page
+                      GoRoute(
+                        path: transaction,
+                        name: transaction,
+                        builder: (context, state) {
+                          final _query = state.uri.queryParameters;
+                          return TransactionPage(
+                            key: state.pageKey,
+                            transactionResult: _query,
+                          );
+                        },
+                      ),
                       //profile_setup_routes
                       ...ProfileSetupItem.values.map((e) {
                         return GoRoute(

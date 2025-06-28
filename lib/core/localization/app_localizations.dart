@@ -314,11 +314,23 @@ abstract class AppLocalizations {
   /// **'Enter English Name'**
   String get enterEnglishName;
 
+  /// No description provided for @enterValidEnglishNameOfTwoUnits.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Your First, Middle & Last Names in English'**
+  String get enterValidEnglishNameOfTwoUnits;
+
   /// No description provided for @enterArabicName.
   ///
   /// In en, this message translates to:
   /// **'Enter Arabic Name'**
   String get enterArabicName;
+
+  /// No description provided for @enterValidArabicNameOfTwoUnits.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Your First, Middle & Last Names in Arabic'**
+  String get enterValidArabicNameOfTwoUnits;
 
   /// No description provided for @phone.
   ///
@@ -457,6 +469,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Edit Patient Data'**
   String get editPatientData;
+
+  /// No description provided for @previousPatientVisits.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous Patient Visits'**
+  String get previousPatientVisits;
 
   /// No description provided for @patientActions.
   ///

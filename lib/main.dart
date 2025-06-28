@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_web_plugins/url_strategy.dart' show usePathUrlStrategy;
+// import 'package:flutter_web_plugins/url_strategy.dart' show usePathUrlStrategy;
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:proklinik_one/core/localization/app_localizations.dart';
 import 'package:proklinik_one/providers/_main.dart';
@@ -11,11 +11,10 @@ import 'package:proklinik_one/utils/utils_keys.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
-  usePathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
+  initAsyncPrefs();
   await initializeDateFormatting('ar');
   await initializeDateFormatting('en');
-  AsyncPrefs.instance;
   runApp(const AppProvider());
 }
 
@@ -53,6 +52,8 @@ class MyApp extends StatelessWidget {
   }
   //TODO: add caching for pdf.min.js via cdn "https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.min.js"
   //TODO: add doctor initialization script on create doctor accout
-  //TODO: implement api cache over the whole app
-  //TODO: formulate ready made templates drugs / labs / rads / supplies / procedures per speciality
+  //TODO: implement api cache over the whole app*(only in patients && clinics apis yet)
+  //TODO: add initialization logic / workflow for newly registered doctors => could be replaced by a follow up team
+  //TODO: add ios safari logic script in index.html
+  //TODO: add validation that the doctor inputs atleast 2 names in the registeration form
 }

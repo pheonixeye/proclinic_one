@@ -185,6 +185,14 @@ class _PatientInfoCardState extends State<PatientInfoCard> {
                           PopupMenuItem(
                             child: Row(
                               children: [
+                                const Icon(Icons.sick_sharp),
+                                Text(context.loc.previousPatientVisits),
+                              ],
+                            ),
+                          ),
+                          PopupMenuItem(
+                            child: Row(
+                              children: [
                                 const Icon(Icons.attach_file),
                                 Text(context.loc.patientForms),
                               ],

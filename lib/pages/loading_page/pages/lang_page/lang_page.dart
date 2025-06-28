@@ -35,7 +35,7 @@ class _LangPageState extends State<LangPage> {
   FutureOr<void> _matchNavigation(BuildContext context) async {
     ///todo: check saved token logic
     final _pxAuth = context.read<PxAuth>();
-    final _token = await AsyncPrefs.instance.prefs.getString('token');
+    final _token = await asyncPrefs.getString('token');
 
     dprint('_token in langPage: ${_token?.substring(0, 5)}');
     if (_token != null) {

@@ -28,7 +28,12 @@ class _AppPageState extends State<AppPage> with SingleTickerProviderStateMixin {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(context.loc.homepage),
-                    if (d.doctor != null) ...[
+                    if (d.doctor == null)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 12.0),
+                        child: CircularProgressIndicator(),
+                      )
+                    else if (d.doctor != null) ...[
                       Text('${d.doctor?.name_en}'),
                       Text('${d.doctor?.name_ar}'),
                       Text('${d.doctor?.phone}'),

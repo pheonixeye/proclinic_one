@@ -127,7 +127,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get enterEnglishName => 'Enter English Name';
 
   @override
+  String get enterValidEnglishNameOfTwoUnits =>
+      'Enter Your First, Middle & Last Names in English';
+
+  @override
   String get enterArabicName => 'Enter Arabic Name';
+
+  @override
+  String get enterValidArabicNameOfTwoUnits =>
+      'Enter Your First, Middle & Last Names in Arabic';
 
   @override
   String get phone => 'Mobile Number';
@@ -200,6 +208,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get editPatientData => 'Edit Patient Data';
+
+  @override
+  String get previousPatientVisits => 'Previous Patient Visits';
 
   @override
   String get patientActions => 'Patient Actions';

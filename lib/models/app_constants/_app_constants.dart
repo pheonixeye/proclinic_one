@@ -1,28 +1,33 @@
 import 'package:equatable/equatable.dart';
 
-import 'package:proklinik_one/models/account_type.dart';
-import 'package:proklinik_one/models/visit_status.dart';
-import 'package:proklinik_one/models/visit_type.dart';
+import 'package:proklinik_one/models/app_constants/account_type.dart';
+import 'package:proklinik_one/models/app_constants/subscription_plan.dart';
+import 'package:proklinik_one/models/app_constants/visit_status.dart';
+import 'package:proklinik_one/models/app_constants/visit_type.dart';
 
 class AppConstants extends Equatable {
   final List<AccountType> accountTypes;
   final List<VisitStatus> visitStatus;
   final List<VisitType> visitType;
+  final List<SubscriptionPlan> subscriptionPlan;
   const AppConstants({
     required this.accountTypes,
     required this.visitStatus,
     required this.visitType,
+    required this.subscriptionPlan,
   });
 
   AppConstants copyWith({
     List<AccountType>? accountTypes,
     List<VisitStatus>? visitStatus,
     List<VisitType>? visitType,
+    List<SubscriptionPlan>? subscriptionPlan,
   }) {
     return AppConstants(
       accountTypes: accountTypes ?? this.accountTypes,
       visitStatus: visitStatus ?? this.visitStatus,
       visitType: visitType ?? this.visitType,
+      subscriptionPlan: subscriptionPlan ?? this.subscriptionPlan,
     );
   }
 
@@ -31,6 +36,7 @@ class AppConstants extends Equatable {
       'accountTypes': accountTypes.map((x) => x.toJson()).toList(),
       'visitStatus': visitStatus.map((x) => x.toJson()).toList(),
       'visitType': visitType.map((x) => x.toJson()).toList(),
+      'subscriptionPlan': subscriptionPlan.map((x) => x.toJson()).toList(),
     };
   }
 
@@ -51,6 +57,11 @@ class AppConstants extends Equatable {
           (x) => VisitType.fromJson(x as Map<String, dynamic>),
         ),
       ),
+      subscriptionPlan: List<SubscriptionPlan>.from(
+        (map['subscriptionPlan'] as List<dynamic>).map<SubscriptionPlan>(
+          (x) => SubscriptionPlan.fromJson(x as Map<String, dynamic>),
+        ),
+      ),
     );
   }
 
@@ -61,5 +72,7 @@ class AppConstants extends Equatable {
   List<Object> get props => [
         accountTypes,
         visitStatus,
+        visitType,
+        subscriptionPlan,
       ];
 }

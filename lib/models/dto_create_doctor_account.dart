@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, non_constant_identifier_names
 
 import 'package:equatable/equatable.dart';
-import 'package:proklinik_one/models/account_type.dart';
+import 'package:proklinik_one/models/app_constants/account_type.dart';
 import 'package:proklinik_one/models/speciality.dart';
 
 class DtoCreateDoctorAccount extends Equatable {

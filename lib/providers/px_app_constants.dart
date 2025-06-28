@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:proklinik_one/core/api/constants_api.dart';
-import 'package:proklinik_one/models/account_type.dart';
-import 'package:proklinik_one/models/app_constants.dart';
-import 'package:proklinik_one/models/visit_status.dart';
-import 'package:proklinik_one/models/visit_type.dart';
+import 'package:proklinik_one/models/app_constants/account_type.dart';
+import 'package:proklinik_one/models/app_constants/_app_constants.dart';
+import 'package:proklinik_one/models/app_constants/subscription_plan.dart';
+import 'package:proklinik_one/models/app_constants/visit_status.dart';
+import 'package:proklinik_one/models/app_constants/visit_type.dart';
 
 class PxAppConstants extends ChangeNotifier {
   final ConstantsApi api;
@@ -12,7 +13,7 @@ class PxAppConstants extends ChangeNotifier {
     _init();
   }
 
-  AppConstants? _constants;
+  static AppConstants? _constants;
   AppConstants? get constants => _constants;
 
   Future<void> _init() async {
@@ -43,4 +44,16 @@ class PxAppConstants extends ChangeNotifier {
 
   VisitType get procedure =>
       _constants!.visitType.firstWhere((vt) => vt.name_en == 'Procedure');
+
+  SubscriptionPlan? get trial =>
+      _constants?.subscriptionPlan.firstWhere((sp) => sp.name_en == 'Trial');
+
+  SubscriptionPlan? get monthly =>
+      _constants?.subscriptionPlan.firstWhere((sp) => sp.name_en == 'Monthly');
+
+  SubscriptionPlan? get halfAnnual => _constants?.subscriptionPlan
+      .firstWhere((sp) => sp.name_en == 'Half Annual');
+
+  SubscriptionPlan? get annual =>
+      _constants?.subscriptionPlan.firstWhere((sp) => sp.name_en == 'Annual');
 }

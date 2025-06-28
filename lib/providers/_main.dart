@@ -8,7 +8,6 @@ import 'package:proklinik_one/providers/px_doc_subscription_info.dart';
 import 'package:proklinik_one/providers/px_doctor.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:proklinik_one/router/router.dart';
-import 'package:proklinik_one/utils/shared_prefs.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
@@ -26,9 +25,7 @@ final List<SingleChildWidget> providers = [
   ),
   ChangeNotifierProvider(
     create: (context) => PxAuth(
-      api: AuthApi(
-        asyncPrefs: AsyncPrefs.instance.prefs,
-      ),
+      api: const AuthApi(),
     ),
   ),
   ChangeNotifierProvider(

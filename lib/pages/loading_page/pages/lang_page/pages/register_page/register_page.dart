@@ -134,11 +134,15 @@ class _RegisterPageState extends State<RegisterPage> {
                               subtitle: TextFormField(
                                 controller: _nameEnController,
                                 decoration: const InputDecoration(
-                                  hintText: 'Mohammed Ali',
+                                  hintText: 'Mohammed - Ali - Ahmed',
                                 ),
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return context.loc.enterEnglishName;
+                                  }
+                                  if (value.split(' ').length < 3) {
+                                    return context
+                                        .loc.enterValidEnglishNameOfTwoUnits;
                                   }
                                   return null;
                                 },
@@ -153,11 +157,15 @@ class _RegisterPageState extends State<RegisterPage> {
                               subtitle: TextFormField(
                                 controller: _nameArController,
                                 decoration: const InputDecoration(
-                                  hintText: 'محمد على',
+                                  hintText: 'محمد - على - احمد',
                                 ),
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return context.loc.enterArabicName;
+                                  }
+                                  if (value.split(' ').length < 2) {
+                                    return context
+                                        .loc.enterValidArabicNameOfTwoUnits;
                                   }
                                   return null;
                                 },

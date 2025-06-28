@@ -3,12 +3,10 @@ import 'package:proklinik_one/core/api/auth/auth_exception.dart';
 import 'package:proklinik_one/core/api/constants/pocketbase_helper.dart';
 import 'package:proklinik_one/functions/dprint.dart';
 import 'package:proklinik_one/models/dto_create_doctor_account.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:proklinik_one/utils/shared_prefs.dart';
 
 class AuthApi {
-  final SharedPreferencesAsync? asyncPrefs;
-
-  AuthApi({this.asyncPrefs});
+  const AuthApi();
 
   Future<RecordModel?> createAccount(DtoCreateDoctorAccount dto) async {
     try {
@@ -50,7 +48,7 @@ class AuthApi {
       /// runtimeType check is for avoiding type error when the request does
       /// not return a token i.e. failed request, ==>> (dont save)
       if (rememberMe && result.token.runtimeType == String) {
-        await asyncPrefs?.setString('token', result.token);
+        await asyncPrefs.setString('token', result.token);
         PocketbaseHelper.pb.authStore.save(result.token, result.record);
       }
       return result;
@@ -63,14 +61,14 @@ class AuthApi {
   //# remember me login flow
   Future<RecordAuth?> loginWithToken() async {
     try {
-      final _token = await asyncPrefs?.getString('token');
+      final _token = await asyncPrefs.getString('token');
       if (_token != null) {
         PocketbaseHelper.pb.authStore.save(_token, null);
       }
       final result =
           await PocketbaseHelper.pb.collection('users').authRefresh();
       PocketbaseHelper.pb.authStore.save(result.token, result.record);
-      await asyncPrefs?.setString('token', result.token);
+      await asyncPrefs.setString('token', result.token);
       return result;
     } on ClientException catch (e) {
       dprint(e.toString());
@@ -88,8 +86,8 @@ class AuthApi {
   }
 
   Future<void> logout() async {
-    final _token = await asyncPrefs?.getString('token');
+    final _token = await asyncPrefs.getString('token');
     PocketbaseHelper.pb.authStore.save(_token!, null);
-    await asyncPrefs?.remove('token');
+    await asyncPrefs.remove('token');
   }
 }
