@@ -508,4 +508,62 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noItemsFound => 'No Items Found.';
+
+  @override
+  String get addNewItem => 'Add New Item';
+
+  @override
+  String get updateItem => 'Update Item';
+
+  @override
+  String get englishItemName => 'English Item Name';
+
+  @override
+  String get arabicItemName => 'Arabic Item Name';
+
+  @override
+  String get enter => 'Enter';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get deleteItemPrompt =>
+      'Delete This Item From Your Collection, Are You Sure ?';
+
+  @override
+  String get drugFormAndConcentration => 'Drug Form And Concentration';
+
+  @override
+  String get drugDefaultDoses => 'Drug Default Doses';
+
+  @override
+  String get labSpecialInstructions => 'Lab Special Instructions';
+
+  @override
+  String get radiologyType => 'Radiology Type';
+
+  @override
+  String get radSpecialInstructions => 'Rad Special Instructions';
+
+  @override
+  String get supplyItemUnit => 'Supply Item Unit';
+
+  @override
+  String get reorderQuantity => 'Reorder Quantity';
+
+  @override
+  String get buyingPrice => 'Buying Price';
+
+  @override
+  String get sellingPrice => 'Selling Price';
+
+  @override
+  String get notifyOnReorder => 'Notify On Reorder';
+
+  @override
+  String get price => 'Price';
+
+  @override
+  String get discountPercentage => 'Discount Percentage';
 }

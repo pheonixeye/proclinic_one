@@ -1,18 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:proklinik_one/extensions/loc_ext.dart';
-import 'package:proklinik_one/router/router.dart';
-
-enum ProfileSetupItem {
-  drugs(AppRouter.drugs),
-  labs(AppRouter.labs),
-  rads(AppRouter.rads),
-  procedures(AppRouter.procedures),
-  supplies(AppRouter.supplies);
-
-  final String route;
-
-  const ProfileSetupItem(this.route);
-}
+import 'package:proklinik_one/models/doctor_items/profile_setup_item.dart';
 
 extension WidgetExt on ProfileSetupItem {
   String actionButtonTooltip(BuildContext context) {

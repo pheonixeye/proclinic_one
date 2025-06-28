@@ -1,4 +1,4 @@
-import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/app_profile_setup/pages/profile_item_page/logic/profile_setup_item_enum.dart';
+import 'package:proklinik_one/models/doctor_items/profile_setup_item.dart';
 
 ///[DoctorDrugItem] - [DoctorLabItem] - [DoctorRadItem] - [DoctorProcedureItem] - [DoctorSupplyItem]
 abstract class DoctorItem {

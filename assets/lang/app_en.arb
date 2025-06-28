@@ -173,6 +173,27 @@
     "@@profile_item_setup": "",
     "search" : "Search",
     "searchByEnglishOrArabicItemName" : "Search By English Or Arabic Item Name",
-    "noItemsFound" : "No Items Found."
+    "noItemsFound" : "No Items Found.",
+    "@@create_edit_doctor_item_dialog": "",
+    "addNewItem" : "Add New Item",
+    "updateItem" : "Update Item",
+    "englishItemName" : "English Item Name",
+    "arabicItemName" : "Arabic Item Name",
+    "enter" : "Enter",
+    "delete" : "Delete",
+    "deleteItemPrompt" : "Delete This Item From Your Collection, Are You Sure ?",
+    "@@view_doctor_item_card": "",
+    "drugFormAndConcentration" : "Drug Form And Concentration",
+    "drugDefaultDoses" : "Drug Default Doses",
+    "labSpecialInstructions" : "Lab Special Instructions",
+    "radiologyType" : "Radiology Type",
+    "radSpecialInstructions" : "Rad Special Instructions",
+    "supplyItemUnit" : "Supply Item Unit",
+    "reorderQuantity" : "Reorder Quantity",
+    "buyingPrice" : "Buying Price",
+    "sellingPrice" : "Selling Price",
+    "notifyOnReorder" : "Notify On Reorder",
+    "price" : "Price",
+    "discountPercentage" : "Discount Percentage"
 
 }

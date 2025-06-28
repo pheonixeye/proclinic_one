@@ -1,3 +1,4 @@
+import 'package:proklinik_one/annotations/unused.dart';
 import 'package:proklinik_one/core/api/_api_result.dart';
 import 'package:proklinik_one/core/api/constants/pocketbase_helper.dart';
 import 'package:proklinik_one/errors/code_to_error.dart';
@@ -9,7 +10,7 @@ import 'package:proklinik_one/models/doctor_items/doctor_lab_item.dart';
 import 'package:proklinik_one/models/doctor_items/doctor_procedure_item.dart';
 import 'package:proklinik_one/models/doctor_items/doctor_rad_item.dart';
 import 'package:proklinik_one/models/doctor_items/doctor_supply_item.dart';
-import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/app_profile_setup/pages/profile_item_page/logic/profile_setup_item_enum.dart';
+import 'package:proklinik_one/models/doctor_items/profile_setup_item.dart';
 
 class DoctorProfileItemsApi {
   DoctorProfileItemsApi({
@@ -52,16 +53,16 @@ class DoctorProfileItemsApi {
     }
   }
 
-  Future<void> createItem(DoctorItem item) async {
+  Future<void> createItem(Map<String, dynamic> item) async {
     await PocketbaseHelper.pb.collection(collection).create(
-          body: item.toJson(),
+          body: item,
         );
   }
 
-  Future<void> updateItem(DoctorItem item) async {
+  Future<void> updateItem(Map<String, dynamic> item) async {
     await PocketbaseHelper.pb.collection(collection).update(
-          item.id,
-          body: item.toJson(),
+          item['id'],
+          body: item,
         );
   }
 
@@ -71,6 +72,7 @@ class DoctorProfileItemsApi {
         );
   }
 
+  @Unused()
   Future<ApiResult<List<DoctorItem>>> searchForItems(
     String item_name,
   ) async {

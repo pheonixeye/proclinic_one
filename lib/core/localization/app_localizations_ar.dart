@@ -506,4 +506,61 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get noItemsFound => 'لم يتم العثور على عناصر';
+
+  @override
+  String get addNewItem => 'اضافة عنصر جديد';
+
+  @override
+  String get updateItem => 'تعديل العنصر';
+
+  @override
+  String get englishItemName => 'اسم العنصر بالانجليزية';
+
+  @override
+  String get arabicItemName => 'اسم العنصر بالعربية';
+
+  @override
+  String get enter => 'ادخل';
+
+  @override
+  String get delete => 'الغاء';
+
+  @override
+  String get deleteItemPrompt => 'برجاء تاكيد الغاء هذا العنصر ؟';
+
+  @override
+  String get drugFormAndConcentration => 'تركيز الدواء و هيئته';
+
+  @override
+  String get drugDefaultDoses => 'جرعات الدواء المعتادة';
+
+  @override
+  String get labSpecialInstructions => 'تعليمات التحليل الخاصة';
+
+  @override
+  String get radiologyType => 'نوع الاشعة';
+
+  @override
+  String get radSpecialInstructions => 'تعليمات الاشعة الخاصة';
+
+  @override
+  String get supplyItemUnit => 'وحدة التخزين';
+
+  @override
+  String get reorderQuantity => 'كمية اعادة الطلب';
+
+  @override
+  String get buyingPrice => 'سعر الشراء';
+
+  @override
+  String get sellingPrice => 'سعر البيع';
+
+  @override
+  String get notifyOnReorder => 'تنببه عند كمية اعادة الطلب';
+
+  @override
+  String get price => 'السعر';
+
+  @override
+  String get discountPercentage => 'نسبة الخصم';
 }

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:proklinik_one/core/api/_api_result.dart';
 import 'package:proklinik_one/extensions/loc_ext.dart';
+import 'package:proklinik_one/functions/shell_function.dart';
 import 'package:proklinik_one/models/doctor_items/_doctor_item.dart';
-import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/app_profile_setup/pages/profile_item_page/logic/profile_setup_item_enum.dart';
+import 'package:proklinik_one/models/doctor_items/profile_setup_item.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/app_profile_setup/pages/dialogs/doctor_item_create_edit_dialog.dart';
+import 'package:proklinik_one/extensions/profile_setup_item_ext.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/app_profile_setup/pages/profile_item_page/widgets/doctor_item_view_card.dart';
 import 'package:proklinik_one/providers/px_doctor_profile_items.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:proklinik_one/widgets/central_error.dart';
@@ -103,7 +107,27 @@ class _ProfileItemPageState extends State<ProfileItemPage> {
                 'add${widget.profileSetupItem.actionButtonTooltip(context)}',
             tooltip: widget.profileSetupItem.actionButtonTooltip(context),
             onPressed: () async {
-              //TODO: navigate to approproiate dialog
+              final _doctorItemJson = await showDialog<Map<String, dynamic>?>(
+                context: context,
+                builder: (context) {
+                  return DoctorItemCreateEditDialog(
+                    type: widget.profileSetupItem,
+                    item: null,
+                  );
+                },
+              );
+              if (_doctorItemJson == null) {
+                return;
+              }
+
+              if (context.mounted) {
+                await shellFunction(
+                  context,
+                  toExecute: () async {
+                    await i.addNewItem(_doctorItemJson);
+                  },
+                );
+              }
             },
             child: const Icon(Icons.add),
           ),
@@ -153,26 +177,9 @@ class _ProfileItemPageState extends State<ProfileItemPage> {
                         cacheExtent: 3000,
                         itemBuilder: (context, index) {
                           final _profileItem = _items[index];
-                          return Card.outlined(
-                            elevation: 6,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: ListTile(
-                                titleAlignment: ListTileTitleAlignment.center,
-                                leading: FloatingActionButton.small(
-                                  heroTag: _profileItem.id,
-                                  onPressed: null,
-                                ),
-                                title: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    l.isEnglish
-                                        ? _profileItem.name_en
-                                        : _profileItem.name_ar,
-                                  ),
-                                ),
-                              ),
-                            ),
+                          return DoctorItemViewCard(
+                            item: _profileItem,
+                            index: index,
                           );
                         },
                       );

@@ -25,12 +25,12 @@ class PxDoctorProfileItems extends ChangeNotifier {
 
   Future<void> retry() async => await _fetchItems();
 
-  Future<void> addNewItem(DoctorItem item) async {
-    await api.createItem(item);
+  Future<void> addNewItem(Map<String, dynamic> itemJson) async {
+    await api.createItem(itemJson);
     await api.fetchDoctorProfileItems();
   }
 
-  Future<void> updateItem(DoctorItem item) async {
+  Future<void> updateItem(Map<String, dynamic> item) async {
     await api.updateItem(item);
     await api.fetchDoctorProfileItems();
   }

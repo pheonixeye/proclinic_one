@@ -1057,6 +1057,120 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No Items Found.'**
   String get noItemsFound;
+
+  /// No description provided for @addNewItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Add New Item'**
+  String get addNewItem;
+
+  /// No description provided for @updateItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Item'**
+  String get updateItem;
+
+  /// No description provided for @englishItemName.
+  ///
+  /// In en, this message translates to:
+  /// **'English Item Name'**
+  String get englishItemName;
+
+  /// No description provided for @arabicItemName.
+  ///
+  /// In en, this message translates to:
+  /// **'Arabic Item Name'**
+  String get arabicItemName;
+
+  /// No description provided for @enter.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter'**
+  String get enter;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// No description provided for @deleteItemPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete This Item From Your Collection, Are You Sure ?'**
+  String get deleteItemPrompt;
+
+  /// No description provided for @drugFormAndConcentration.
+  ///
+  /// In en, this message translates to:
+  /// **'Drug Form And Concentration'**
+  String get drugFormAndConcentration;
+
+  /// No description provided for @drugDefaultDoses.
+  ///
+  /// In en, this message translates to:
+  /// **'Drug Default Doses'**
+  String get drugDefaultDoses;
+
+  /// No description provided for @labSpecialInstructions.
+  ///
+  /// In en, this message translates to:
+  /// **'Lab Special Instructions'**
+  String get labSpecialInstructions;
+
+  /// No description provided for @radiologyType.
+  ///
+  /// In en, this message translates to:
+  /// **'Radiology Type'**
+  String get radiologyType;
+
+  /// No description provided for @radSpecialInstructions.
+  ///
+  /// In en, this message translates to:
+  /// **'Rad Special Instructions'**
+  String get radSpecialInstructions;
+
+  /// No description provided for @supplyItemUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'Supply Item Unit'**
+  String get supplyItemUnit;
+
+  /// No description provided for @reorderQuantity.
+  ///
+  /// In en, this message translates to:
+  /// **'Reorder Quantity'**
+  String get reorderQuantity;
+
+  /// No description provided for @buyingPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Buying Price'**
+  String get buyingPrice;
+
+  /// No description provided for @sellingPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Selling Price'**
+  String get sellingPrice;
+
+  /// No description provided for @notifyOnReorder.
+  ///
+  /// In en, this message translates to:
+  /// **'Notify On Reorder'**
+  String get notifyOnReorder;
+
+  /// No description provided for @price.
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get price;
+
+  /// No description provided for @discountPercentage.
+  ///
+  /// In en, this message translates to:
+  /// **'Discount Percentage'**
+  String get discountPercentage;
 }
 
 class _AppLocalizationsDelegate
