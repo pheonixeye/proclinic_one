@@ -1,16 +1,24 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:proklinik_one/core/api/_api_result.dart';
 import 'package:proklinik_one/extensions/loc_ext.dart';
+import 'package:proklinik_one/models/app_constants/subscription_plan.dart';
 import 'package:proklinik_one/models/doctor_subscription.dart';
+import 'package:proklinik_one/models/x_pay/x_pay_direct_order_request.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/my_subscription_page/widgets/billing_address_input_dialog.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/my_subscription_page/widgets/select_subscription_dialog.dart';
 import 'package:proklinik_one/providers/px_app_constants.dart';
 import 'package:proklinik_one/providers/px_doc_subscription_info.dart';
+import 'package:proklinik_one/providers/px_doctor.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
+import 'package:proklinik_one/router/router.dart';
 import 'package:proklinik_one/widgets/central_error.dart';
 import 'package:proklinik_one/widgets/central_loading.dart';
 import 'package:proklinik_one/widgets/central_no_items.dart';
+import 'package:proklinik_one/widgets/error_dialog.dart';
 import 'package:provider/provider.dart';
 
 class MySubscriptionPage extends StatelessWidget {
@@ -18,8 +26,8 @@ class MySubscriptionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer3<PxDocSubscriptionInfo, PxAppConstants, PxLocale>(
-      builder: (context, s, a, l, _) {
+    return Consumer4<PxDocSubscriptionInfo, PxAppConstants, PxDoctor, PxLocale>(
+      builder: (context, s, a, d, l, _) {
         return Scaffold(
           body: Column(
             children: [
@@ -73,7 +81,56 @@ class MySubscriptionPage extends StatelessWidget {
                             child: FloatingActionButton.small(
                               heroTag: 'purchase-subscription',
                               tooltip: context.loc.purchaseSubscription,
-                              onPressed: () async {},
+                              onPressed: () async {
+                                if (s.hasAciveSubscriptions) {
+                                  showDialog<void>(
+                                    context: context,
+                                    builder: (context) {
+                                      return ErrorDialog(
+                                        message: context
+                                            .loc.errorOneSubscriptionIsActive,
+                                      );
+                                    },
+                                  );
+                                  return;
+                                }
+                                final _plan =
+                                    await showDialog<SubscriptionPlan?>(
+                                  context: context,
+                                  builder: (context) {
+                                    return SelectSubscriptionDialog();
+                                  },
+                                );
+                                if (_plan == null) {
+                                  return;
+                                }
+                                if (context.mounted) {
+                                  final billing_address =
+                                      await showDialog<String?>(
+                                    context: context,
+                                    builder: (context) {
+                                      return const BillingAddressInputDialog();
+                                    },
+                                  );
+                                  if (billing_address == null) {
+                                    return;
+                                  }
+                                  final _xPayRequest = XPayDirectOrderRequest
+                                      .fromApplicationData(
+                                    doctor: d.doctor!,
+                                    plan: _plan,
+                                    billing_address: billing_address,
+                                  );
+                                  if (context.mounted) {
+                                    GoRouter.of(context).goNamed(
+                                      AppRouter.orderdetails,
+                                      pathParameters:
+                                          defaultPathParameters(context),
+                                      extra: _xPayRequest,
+                                    );
+                                  }
+                                }
+                              },
                               child: const Icon(Icons.battery_saver_rounded),
                             ),
                           ),
@@ -81,7 +138,6 @@ class MySubscriptionPage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  isThreeLine: true,
                   subtitle: const Divider(),
                 ),
               ),

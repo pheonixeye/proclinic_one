@@ -616,4 +616,18 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get inGracePeriod => 'في فترة السماح';
+
+  @override
+  String get errorOneSubscriptionIsActive =>
+      'يوجد اشتراك مفعل - لا يمكن الاستمرار';
+
+  @override
+  String get billingAddress => 'عنوان إرسال الفواتير';
+
+  @override
+  String get enterBillingAddress =>
+      ' ادخل عنوان ارسال الفواتير او عنوان العيادة';
+
+  @override
+  String get enterBillingAddressInArabic => 'ادخل العنوان بالعربية';
 }

@@ -1273,6 +1273,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'In Grace Period'**
   String get inGracePeriod;
+
+  /// No description provided for @errorOneSubscriptionIsActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Atleast One Subscription Is Active, Cannot Proceed.'**
+  String get errorOneSubscriptionIsActive;
+
+  /// No description provided for @billingAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Billing Address'**
+  String get billingAddress;
+
+  /// No description provided for @enterBillingAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Billing Address'**
+  String get enterBillingAddress;
+
+  /// No description provided for @enterBillingAddressInArabic.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Billing Address In Arabic'**
+  String get enterBillingAddressInArabic;
 }
 
 class _AppLocalizationsDelegate

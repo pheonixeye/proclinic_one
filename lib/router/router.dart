@@ -5,6 +5,7 @@ import 'package:proklinik_one/core/api/doctor_profile_items_api.dart';
 import 'package:proklinik_one/core/api/forms_api.dart';
 import 'package:proklinik_one/core/api/patients_api.dart';
 import 'package:proklinik_one/models/doctor_items/profile_setup_item.dart';
+import 'package:proklinik_one/models/x_pay/x_pay_direct_order_request.dart';
 import 'package:proklinik_one/pages/loading_page/pages/error_page/error_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/lang_page.dart';
 import 'package:proklinik_one/pages/loading_page/loading_page.dart';
@@ -15,6 +16,7 @@ import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_pag
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/clinics_page/clinics_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/bookkeeping_page/bookkeeping_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/forms_page/forms_page.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/my_subscription_page/pages/order_details_page/order_details_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/transaction/transaction_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/visits_page/visits_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/patients_page/patients_page.dart';
@@ -66,6 +68,7 @@ class AppRouter {
   static const String supplies = "${_profile_setup}supplies";
   //main_routes
   static const String mysubscription = "subscription";
+  static const String orderdetails = "orderdetails";
   static const String visits = "visits";
   static const String patients = "patients";
   static const String clinics = "clinics";
@@ -269,6 +272,24 @@ class AppRouter {
                             key: state.pageKey,
                           );
                         },
+                        routes: [
+                          GoRoute(
+                            path: orderdetails,
+                            name: orderdetails,
+                            builder: (context, state) {
+                              try {
+                                final _request =
+                                    state.extra as XPayDirectOrderRequest;
+                                return OrderDetailsPage(
+                                  key: state.pageKey,
+                                  request: _request,
+                                );
+                              } catch (e) {
+                                rethrow;
+                              }
+                            },
+                          ),
+                        ],
                       ),
                       GoRoute(
                         path: visits,

@@ -619,4 +619,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get inGracePeriod => 'In Grace Period';
+
+  @override
+  String get errorOneSubscriptionIsActive =>
+      'Atleast One Subscription Is Active, Cannot Proceed.';
+
+  @override
+  String get billingAddress => 'Billing Address';
+
+  @override
+  String get enterBillingAddress => 'Enter Billing Address';
+
+  @override
+  String get enterBillingAddressInArabic => 'Enter Billing Address In Arabic';
 }

@@ -212,5 +212,10 @@
     "subscriptionStatus" : "حالة الاشتراك",
     "noActiveSubscriptions" : "لا يوجد اشتراك ساري",
     "purchaseSubscription" : "اعادة تفعيل الاشتراك",
-    "inGracePeriod" : "في فترة السماح"
+    "inGracePeriod" : "في فترة السماح",
+    "errorOneSubscriptionIsActive" : "يوجد اشتراك مفعل - لا يمكن الاستمرار",
+    "@@billing_address_dialog": "",
+    "billingAddress": "عنوان إرسال الفواتير",
+    "enterBillingAddress": " ادخل عنوان ارسال الفواتير او عنوان العيادة",
+    "enterBillingAddressInArabic": "ادخل العنوان بالعربية"
     }

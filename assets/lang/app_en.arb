@@ -212,5 +212,10 @@
     "subscriptionStatus" : "Subscription Status",
     "noActiveSubscriptions" : "No Active Subscription",
     "purchaseSubscription" : "Purchase Subscription",
-    "inGracePeriod" : "In Grace Period"
+    "inGracePeriod" : "In Grace Period",
+    "errorOneSubscriptionIsActive" : "Atleast One Subscription Is Active, Cannot Proceed.",
+    "@@billing_address_dialog": "",
+    "billingAddress": "Billing Address",
+    "enterBillingAddress": "Enter Billing Address",
+    "enterBillingAddressInArabic": "Enter Billing Address In Arabic"
 }

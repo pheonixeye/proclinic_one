@@ -287,7 +287,7 @@ class XPayDirectOrderRequest extends Equatable {
       expiry_date: _one_month_expiary,
       minimum_days_between_payments: plan.duration_in_days,
       redirect_url: const String.fromEnvironment('REDIRECT_URL'),
-      callback_url: '',
+      callback_url: '', //TODO:
     );
   }
 }
