@@ -269,9 +269,10 @@ class XPayDirectOrderRequest extends Equatable {
           month: DateTime.now().month + 1,
         ),
     );
-
+    final _planExpDate =
+        DateTime.now().add(Duration(days: plan.duration_in_days));
     final _order_description =
-        'Dr. ${doctor.name_en} ProKliniK-One Subscription\n(${plan.name_en} Plan)\nStarting Date: ${DateFormat('dd / MM / yyyy', 'en').format(DateTime.now())}\nExpiry Date: ${DateFormat('dd / MM / yyyy', 'en').format(DateTime.now()..add(Duration(days: plan.duration_in_days)))}';
+        'Dr. ${doctor.name_en} ProKliniK-One Subscription\n(${plan.name_en} Plan)\nStarting Date: ${DateFormat('dd / MM / yyyy', 'en').format(DateTime.now())}\nExpiry Date: ${DateFormat('dd / MM / yyyy', 'en').format(_planExpDate)}';
 
     return XPayDirectOrderRequest(
       name: 'ProKliniK-One ${plan.name_en} Plan',

@@ -3,7 +3,8 @@ import 'package:equatable/equatable.dart';
 
 enum AppErrorCode {
   clientException(1),
-  authException(2);
+  authException(2),
+  orderDetailsException(3);
 
   final int code;
 
@@ -38,6 +39,11 @@ class CodeToError {
     AppErrorCode.authException.code: TranslatedError(
       en: 'Something Went Wrong While Authenticating, check Email / Password combination.',
       ar: 'حدث خطا اثناء تسجبل الدخول - برجاء مراجعة البريد الالكتروني و كلمة السر.',
+    ),
+    //order_details_exception
+    AppErrorCode.orderDetailsException.code: TranslatedError(
+      en: 'Your Order Has Expired.',
+      ar: 'لقد انتهت صلاحية طلبك',
     ),
   };
 

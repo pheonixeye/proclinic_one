@@ -7,7 +7,8 @@ typedef ApiClassName = String;
 typedef ParametrizedQueryName = String;
 
 class _CacheDataStore {
-  //TODO: check feasability of this implementation on long term
+  //todo: check feasability of this implementation on long term
+  //TODO: remove && use static implementation of the provider
   const _CacheDataStore();
 
   static final Map<ApiClassName, Cachable> _dataCache = {};

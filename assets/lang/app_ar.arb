@@ -217,5 +217,18 @@
     "@@billing_address_dialog": "",
     "billingAddress": "عنوان إرسال الفواتير",
     "enterBillingAddress": " ادخل عنوان ارسال الفواتير او عنوان العيادة",
-    "enterBillingAddressInArabic": "ادخل العنوان بالعربية"
+    "enterBillingAddressInArabic": "ادخل العنوان بالعربية",
+    "@@select_subscription_dialog": "",
+    "selectSubscription": "اختر الاشتراك",
+    "@@order_details_page": "",
+    "orderSummary": "تفاصيل الطلب",
+    "generatePaymentLink": "ارسال طلب الدفع",
+    "orderDescription": "وصف الاشتراك",
+    "subscriptionPrice": "سعر الاشتراك",
+    "taxPercentage": "نسبة الضريبة",
+    "orderTotal": "اجمالي الطلب",
+    "taxTotal": "قيمة الضريبة",
+    "youSave": "وفر",
+    "vatExclusive": "الاسعار لا تشمل نسبة ضريبة القيمة المضافة",
+    "paymentLink": "رابط الدفع"
     }

@@ -54,6 +54,7 @@ class _DoctorItemCreateEditDialogState
   ///final double concentration;
   ///final String unit;
   ///final String form;
+  // ignore: unintended_html_in_doc_comment
   ///final List<String> default_doses;
   ///
   ///[LAB]

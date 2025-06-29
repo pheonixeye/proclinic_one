@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:proklinik_one/core/api/_api_result.dart';
+import 'package:proklinik_one/extensions/is_mobile_context.dart';
 import 'package:proklinik_one/extensions/loc_ext.dart';
 import 'package:proklinik_one/models/app_constants/subscription_plan.dart';
 import 'package:proklinik_one/models/doctor_subscription.dart';
@@ -44,7 +45,7 @@ class MySubscriptionPage extends StatelessWidget {
                         if (s.hasNoAciveSubscriptions ||
                             s.hasGracePeriodSubscription) ...[
                           Expanded(
-                            flex: 2,
+                            flex: context.isMobile ? 2 : 1,
                             child: Card(
                               elevation: 6,
                               child: Padding(
@@ -75,6 +76,7 @@ class MySubscriptionPage extends StatelessWidget {
                               ),
                             ),
                           ),
+                          if (!context.isMobile) const Spacer(),
                           Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 8.0),
@@ -126,7 +128,11 @@ class MySubscriptionPage extends StatelessWidget {
                                       AppRouter.orderdetails,
                                       pathParameters:
                                           defaultPathParameters(context),
-                                      extra: _xPayRequest,
+                                      extra: {
+                                        'request': _xPayRequest,
+                                        'doctor': d.doctor,
+                                        'plan': _plan,
+                                      },
                                     );
                                   }
                                 }

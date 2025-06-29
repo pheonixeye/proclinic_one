@@ -632,4 +632,37 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get enterBillingAddressInArabic => 'Enter Billing Address In Arabic';
+
+  @override
+  String get selectSubscription => 'Select Subscription';
+
+  @override
+  String get orderSummary => 'Order Summary';
+
+  @override
+  String get generatePaymentLink => 'Generate Payment Link';
+
+  @override
+  String get orderDescription => 'Order Description';
+
+  @override
+  String get subscriptionPrice => 'Subscription Price';
+
+  @override
+  String get taxPercentage => 'Tax Percentage';
+
+  @override
+  String get orderTotal => 'Order Total';
+
+  @override
+  String get taxTotal => 'Tax Total';
+
+  @override
+  String get youSave => 'You Save';
+
+  @override
+  String get vatExclusive => 'All Prices Are VAT% Exclusive';
+
+  @override
+  String get paymentLink => 'Payment Link';
 }

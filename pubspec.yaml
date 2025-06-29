@@ -51,6 +51,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/profile_setup/
+    - assets/images/subscription_icons/
     - assets/fonts/
     - assets/fonts/IBM/
     - assets/lang/

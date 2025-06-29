@@ -1,14 +1,314 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:proklinik_one/core/api/x-pay/x_pay_api.dart';
+import 'package:proklinik_one/errors/code_to_error.dart';
+import 'package:proklinik_one/extensions/is_mobile_context.dart';
+import 'package:proklinik_one/extensions/loc_ext.dart';
+import 'package:proklinik_one/extensions/number_translator.dart';
+import 'package:proklinik_one/models/app_constants/subscription_plan.dart';
+import 'package:proklinik_one/models/doctor.dart';
 import 'package:proklinik_one/models/x_pay/x_pay_direct_order_request.dart';
+import 'package:proklinik_one/models/x_pay/x_pay_response.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/my_subscription_page/pages/order_details_page/widgets/bottom_result_sheet.dart';
+import 'package:proklinik_one/router/router.dart';
+import 'package:proklinik_one/widgets/central_error.dart';
+import 'package:proklinik_one/widgets/snackbar_.dart';
 
-class OrderDetailsPage extends StatelessWidget {
-  const OrderDetailsPage({super.key, required this.request});
-  final XPayDirectOrderRequest request;
+enum DetailsPageState {
+  initial,
+  processing,
+  hasResult,
+  hasError;
+}
+
+class OrderDetailsPage extends StatefulWidget {
+  const OrderDetailsPage({super.key, required this.data});
+  final Map<String, dynamic>? data;
+
+  @override
+  State<OrderDetailsPage> createState() => _OrderDetailsPageState();
+}
+
+class _OrderDetailsPageState extends State<OrderDetailsPage> {
+  late final Doctor? _doctor = widget.data?['doctor'];
+
+  late final XPayDirectOrderRequest? _request = widget.data?['request'];
+
+  late final SubscriptionPlan? _plan = widget.data?['plan'];
+
+  XPayResponse? _xPayResponse;
+
+  DetailsPageState _state = DetailsPageState.initial;
+
+  double get _orderCardWidth => context.isMobile
+      ? MediaQuery.sizeOf(context).width
+      : MediaQuery.sizeOf(context).width / 2;
+
+  double get _resultModalHeight => context.isMobile
+      ? MediaQuery.sizeOf(context).height / 3
+      : MediaQuery.sizeOf(context).height / 2;
+
+  void _updateState(DetailsPageState _s) {
+    setState(() {
+      _state = _s;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    while (widget.data == null ||
+        _doctor == null ||
+        _request == null ||
+        _plan == null) {
+      //handle navigating from an unknown location
+      //with request not being initialized
+      return Scaffold(
+        body: CentralError(
+          code: AppErrorCode.orderDetailsException.code,
+          toExecute: () async {
+            GoRouter.of(context).goNamed(
+              AppRouter.mysubscription,
+              pathParameters: defaultPathParameters(context),
+            );
+          },
+        ),
+      );
+    }
+
     return Scaffold(
       body: Center(
-        child: Text(request.toString()),
+        child: SizedBox(
+          width: _orderCardWidth,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Card.outlined(
+              elevation: 6,
+              child: ListView(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ListTile(
+                      title: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(context.loc.orderSummary),
+                      ),
+                      subtitle: const Divider(
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                  ListTile(
+                    leading: const SizedBox(),
+                    title: Row(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(context.loc.orderDescription),
+                          ),
+                        ),
+                      ],
+                    ),
+                    subtitle: Padding(
+                      padding: const EdgeInsetsDirectional.only(end: 16.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              _request.order_description
+                                  .toArabicNumber(context),
+                              textAlign: TextAlign.end,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  ListTile(
+                    leading: const SizedBox(),
+                    title: Row(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(context.loc.subscriptionPrice),
+                          ),
+                        ),
+                      ],
+                    ),
+                    subtitle: Padding(
+                      padding: const EdgeInsetsDirectional.only(end: 16.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              '${_request.amount.amount} ${context.loc.egp}'
+                                  .toArabicNumber(context),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  ListTile(
+                    leading: const SizedBox(),
+                    title: Row(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(context.loc.taxPercentage),
+                          ),
+                        ),
+                      ],
+                    ),
+                    subtitle: Padding(
+                      padding: const EdgeInsetsDirectional.only(end: 16.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              '${_request.vat_percentage} %'
+                                  .toArabicNumber(context),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  ListTile(
+                    leading: const SizedBox(),
+                    title: Row(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(context.loc.taxTotal),
+                          ),
+                        ),
+                      ],
+                    ),
+                    subtitle: Padding(
+                      padding: const EdgeInsetsDirectional.only(end: 16.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              '${(_plan.price * (_request.vat_percentage / 100)).round()} ${context.loc.egp}'
+                                  .toArabicNumber(context),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  ListTile(
+                    leading: const SizedBox(),
+                    title: Row(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(context.loc.orderTotal),
+                          ),
+                        ),
+                      ],
+                    ),
+                    subtitle: Padding(
+                      padding: const EdgeInsetsDirectional.only(end: 16.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              '${(_plan.price + (_plan.price * (_request.vat_percentage / 100)).round())} ${context.loc.egp}'
+                                  .toArabicNumber(context),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Divider(
+                      color: Colors.grey,
+                    ),
+                  ),
+
+                  ///order_details
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: ElevatedButton.icon(
+                      label: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Text(context.loc.generatePaymentLink),
+                      ),
+                      icon: switch (_state) {
+                        DetailsPageState.initial =>
+                          const Icon(Icons.monetization_on),
+                        DetailsPageState.processing =>
+                          CircularProgressIndicator(),
+                        DetailsPageState.hasResult => Icon(
+                            Icons.check,
+                            color: Colors.green.shade100,
+                          ),
+                        DetailsPageState.hasError => const Icon(
+                            Icons.warning_rounded,
+                            color: Colors.red,
+                          ),
+                      },
+                      onPressed: (_state == DetailsPageState.processing ||
+                              _state == DetailsPageState.hasResult)
+                          ? null
+                          : () async {
+                              //todo: Send payment request
+                              XPayResponse _xPayResponseTemplate;
+                              _updateState(DetailsPageState.processing);
+                              try {
+                                _xPayResponseTemplate = await XPayApi()
+                                    .generatePaymentLink(_request);
+                                setState(() {
+                                  _xPayResponse = _xPayResponseTemplate;
+                                });
+                                _updateState(DetailsPageState.hasResult);
+                              } on Exception catch (e) {
+                                //todo: notify user with error
+                                _updateState(DetailsPageState.hasError);
+                                showIsnackbar(e.toString());
+                                return;
+                              }
+
+                              if (context.mounted) {
+                                showModalBottomSheet(
+                                  context: context,
+                                  builder: (context) {
+                                    return BottomResultSheet(
+                                      state: _state,
+                                      xPayResponse: _xPayResponse!,
+                                      modalHeight: _resultModalHeight,
+                                    );
+                                  },
+                                );
+                              }
+                            },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

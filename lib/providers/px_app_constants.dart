@@ -56,4 +56,13 @@ class PxAppConstants extends ChangeNotifier {
 
   SubscriptionPlan? get annual =>
       _constants?.subscriptionPlan.firstWhere((sp) => sp.name_en == 'Annual');
+
+  List<SubscriptionPlan> get validSubscriptions =>
+      _constants?.subscriptionPlan != null
+          ? [
+              monthly!,
+              halfAnnual!,
+              annual!,
+            ]
+          : [];
 }

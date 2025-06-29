@@ -4,6 +4,7 @@ import 'package:proklinik_one/core/api/x-pay/x_pay_api.dart';
 import 'package:proklinik_one/models/app_constants/subscription_plan.dart';
 import 'package:proklinik_one/models/doctor.dart';
 import 'package:proklinik_one/models/x_pay/x_pay_direct_order_request.dart';
+import 'package:proklinik_one/models/x_pay/x_pay_response.dart';
 import 'package:proklinik_one/providers/px_app_constants.dart';
 import 'package:proklinik_one/providers/px_doctor.dart';
 import 'package:proklinik_one/widgets/central_loading.dart';
@@ -55,8 +56,8 @@ class _BookkeepingPageState extends State<BookkeepingPage> {
                     plan: _plan!,
                     billing_address: 'Zahraa El-Maadi, El Nada Tower',
                   );
-                  return FutureBuilder<Map<String, dynamic>>(
-                    future: _api.pay(_request!),
+                  return FutureBuilder<XPayResponse>(
+                    future: _api.generatePaymentLink(_request!),
                     builder: (context, asyncSnapshot) {
                       while (asyncSnapshot.connectionState ==
                               ConnectionState.waiting ||
@@ -65,8 +66,7 @@ class _BookkeepingPageState extends State<BookkeepingPage> {
                           asyncSnapshot.data == null) {
                         return CentralLoading();
                       }
-                      final _url =
-                          asyncSnapshot.requireData['data']['payment_url'];
+                      final _url = asyncSnapshot.requireData.data.payment_url;
                       return Center(
                         child: Text.rich(
                           TextSpan(

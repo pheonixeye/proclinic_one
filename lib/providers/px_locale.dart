@@ -15,9 +15,9 @@ class PxLocale extends ChangeNotifier {
   static String _lang = 'en';
   String get lang => _lang;
 
-  void setLang(String value) {
+  Future<void> setLang(String value) async {
     _lang = value;
-    asyncPrefs.setString('lang', _lang);
+    await asyncPrefs.setString('lang', _lang);
     notifyListeners();
   }
 

@@ -4,8 +4,8 @@ import 'package:proklinik_one/core/api/clinics_api.dart';
 import 'package:proklinik_one/core/api/doctor_profile_items_api.dart';
 import 'package:proklinik_one/core/api/forms_api.dart';
 import 'package:proklinik_one/core/api/patients_api.dart';
+import 'package:proklinik_one/functions/dprint.dart';
 import 'package:proklinik_one/models/doctor_items/profile_setup_item.dart';
-import 'package:proklinik_one/models/x_pay/x_pay_direct_order_request.dart';
 import 'package:proklinik_one/pages/loading_page/pages/error_page/error_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/lang_page.dart';
 import 'package:proklinik_one/pages/loading_page/loading_page.dart';
@@ -92,13 +92,20 @@ class AppRouter {
         ),
       );
     },
-    redirect: (context, state) {
+    redirect: (context, state) async {
       final _locale = context.read<PxLocale>();
       final _urlLang = state.pathParameters['lang'];
       if (_urlLang != null && _urlLang != _locale.lang) {
-        print('PxLocale.setLocale($_urlLang)(from router-redirect)');
-        _locale.setLang(_urlLang);
-        _locale.setLocale();
+        dprint('PxLocale.setLocale($_urlLang)(from router-redirect)');
+        try {
+          await _locale.setLang(_urlLang);
+          _locale.setLocale();
+          return null;
+        } catch (e) {
+          dprint(
+              'PxLocale.setLocale($_urlLang)(from router-redirect)(couldnnot set locale correctly)');
+          return null;
+        }
       }
       return null;
     },
@@ -139,7 +146,7 @@ class AppRouter {
               if (!_auth.isLoggedIn && state.fullPath == '/:lang') {
                 try {
                   await _auth.loginWithToken();
-                  print(
+                  dprint(
                       'authWithToken(LangPage-Redirect)(isLoggedIn=${_auth.isLoggedIn})');
                   return '/${state.pathParameters['lang']}/$app';
                 } catch (e) {
@@ -219,7 +226,7 @@ class AppRouter {
                       if (!_auth.isLoggedIn) {
                         try {
                           await _auth.loginWithToken();
-                          print(
+                          dprint(
                               'authWithToken(AppPage-Redirect)(isLoggedIn=${_auth.isLoggedIn})');
                           return null;
                         } catch (e) {
@@ -278,11 +285,11 @@ class AppRouter {
                             name: orderdetails,
                             builder: (context, state) {
                               try {
-                                final _request =
-                                    state.extra as XPayDirectOrderRequest;
+                                final _data =
+                                    state.extra as Map<String, dynamic>?;
                                 return OrderDetailsPage(
                                   key: state.pageKey,
-                                  request: _request,
+                                  data: _data,
                                 );
                               } catch (e) {
                                 rethrow;

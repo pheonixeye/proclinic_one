@@ -630,4 +630,37 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get enterBillingAddressInArabic => 'ادخل العنوان بالعربية';
+
+  @override
+  String get selectSubscription => 'اختر الاشتراك';
+
+  @override
+  String get orderSummary => 'تفاصيل الطلب';
+
+  @override
+  String get generatePaymentLink => 'ارسال طلب الدفع';
+
+  @override
+  String get orderDescription => 'وصف الاشتراك';
+
+  @override
+  String get subscriptionPrice => 'سعر الاشتراك';
+
+  @override
+  String get taxPercentage => 'نسبة الضريبة';
+
+  @override
+  String get orderTotal => 'اجمالي الطلب';
+
+  @override
+  String get taxTotal => 'قيمة الضريبة';
+
+  @override
+  String get youSave => 'وفر';
+
+  @override
+  String get vatExclusive => 'الاسعار لا تشمل نسبة ضريبة القيمة المضافة';
+
+  @override
+  String get paymentLink => 'رابط الدفع';
 }

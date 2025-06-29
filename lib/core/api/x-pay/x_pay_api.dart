@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:proklinik_one/functions/dprint.dart';
 import 'package:proklinik_one/models/x_pay/x_pay_direct_order_request.dart';
 import 'package:http/http.dart' as http;
+import 'package:proklinik_one/models/x_pay/x_pay_response.dart';
 
 class XPayApi {
   const XPayApi();
@@ -13,7 +14,9 @@ class XPayApi {
     'accept': 'application/json',
   };
 
-  Future<Map<String, dynamic>> pay(XPayDirectOrderRequest x_request) async {
+  Future<XPayResponse> generatePaymentLink(
+    XPayDirectOrderRequest x_request,
+  ) async {
     final _uri = Uri.parse(const String.fromEnvironment('X_PAY_URL'));
     try {
       final _response = await http.post(
@@ -26,7 +29,7 @@ class XPayApi {
       prettyPrint(_response.body);
       prettyPrint(_result);
 
-      return _result as Map<String, dynamic>;
+      return XPayResponse.fromJson(_result);
     } catch (e) {
       prettyPrint(e.toString());
       rethrow;

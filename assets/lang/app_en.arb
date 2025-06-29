@@ -217,5 +217,19 @@
     "@@billing_address_dialog": "",
     "billingAddress": "Billing Address",
     "enterBillingAddress": "Enter Billing Address",
-    "enterBillingAddressInArabic": "Enter Billing Address In Arabic"
+    "enterBillingAddressInArabic": "Enter Billing Address In Arabic",
+    "@@select_subscription_dialog": "",
+    "selectSubscription": "Select Subscription",
+    "@@order_details_page": "",
+    "orderSummary": "Order Summary",
+    "generatePaymentLink": "Generate Payment Link",
+    "orderDescription": "Order Description",
+    "subscriptionPrice": "Subscription Price",
+    "taxPercentage": "Tax Percentage",
+    "orderTotal": "Order Total",
+    "taxTotal": "Tax Total",
+    "youSave": "You Save",
+    "vatExclusive": "All Prices Are VAT% Exclusive",
+    "paymentLink": "Payment Link"
+
 }

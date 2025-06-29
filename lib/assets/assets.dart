@@ -23,4 +23,10 @@ class AppAssets {
   static const String procedures = 'assets/images/profile_setup/procedures.png';
   static const String radiology = 'assets/images/profile_setup/radiology.png';
   static const String supplies = 'assets/images/profile_setup/supplies.png';
+
+  ///subscription_icons
+  static const String monthly = 'assets/images/subscription_icons/monthly.svg';
+  static const String halfAnnual =
+      'assets/images/subscription_icons/half annual.svg';
+  static const String annual = 'assets/images/subscription_icons/annual.svg';
 }

@@ -1297,6 +1297,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Enter Billing Address In Arabic'**
   String get enterBillingAddressInArabic;
+
+  /// No description provided for @selectSubscription.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Subscription'**
+  String get selectSubscription;
+
+  /// No description provided for @orderSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Order Summary'**
+  String get orderSummary;
+
+  /// No description provided for @generatePaymentLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate Payment Link'**
+  String get generatePaymentLink;
+
+  /// No description provided for @orderDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Order Description'**
+  String get orderDescription;
+
+  /// No description provided for @subscriptionPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription Price'**
+  String get subscriptionPrice;
+
+  /// No description provided for @taxPercentage.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax Percentage'**
+  String get taxPercentage;
+
+  /// No description provided for @orderTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Order Total'**
+  String get orderTotal;
+
+  /// No description provided for @taxTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax Total'**
+  String get taxTotal;
+
+  /// No description provided for @youSave.
+  ///
+  /// In en, this message translates to:
+  /// **'You Save'**
+  String get youSave;
+
+  /// No description provided for @vatExclusive.
+  ///
+  /// In en, this message translates to:
+  /// **'All Prices Are VAT% Exclusive'**
+  String get vatExclusive;
+
+  /// No description provided for @paymentLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Link'**
+  String get paymentLink;
 }
 
 class _AppLocalizationsDelegate

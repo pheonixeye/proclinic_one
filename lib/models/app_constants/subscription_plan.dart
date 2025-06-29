@@ -87,4 +87,11 @@ class SubscriptionPlan extends Equatable {
       offer_end_date,
     ];
   }
+
+  int savingPercent(int monthlyCost) {
+    final int packageDurationInMonths = (duration_in_days / 30).round();
+    final undiscountedCost = monthlyCost * packageDurationInMonths;
+    final discountPercent = (price * 100) / undiscountedCost;
+    return 100 - discountPercent.round();
+  }
 }
