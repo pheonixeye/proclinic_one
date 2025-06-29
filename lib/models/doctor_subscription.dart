@@ -56,6 +56,21 @@ class DoctorSubscription extends Equatable {
       end_date: DateTime.parse(map['end_date'] as String),
     );
   }
+  final _graceDuration = const Duration(days: 7);
+
+  bool get passedExpirationTime {
+    return subscription_status == 'active' && DateTime.now().isAfter(end_date);
+  }
+
+  bool get inGracePeriod {
+    return subscription_status == 'expired' &&
+        DateTime.now().isBefore(end_date.add(_graceDuration));
+  }
+
+  int get gracePeriodRemaining {
+    final _durationAfterEnd = end_date.add(_graceDuration);
+    return _durationAfterEnd.difference(DateTime.now()).inDays;
+  }
 
   @override
   bool get stringify => true;

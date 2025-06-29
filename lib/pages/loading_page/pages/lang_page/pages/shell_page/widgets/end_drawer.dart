@@ -48,13 +48,6 @@ class EndDrawer extends StatelessWidget {
               const SizedBox(height: 20),
               const ThinDivider(),
               DrawerNavBtn(
-                title: context.loc.todayVisits,
-                icondata: Icons.today,
-                routePath: AppRouter.todayvisits,
-                selected: selected(AppRouter.todayvisits),
-              ),
-              const ThinDivider(),
-              DrawerNavBtn(
                 title: context.loc.dashboard,
                 icondata: FontAwesomeIcons.houseMedical,
                 routePath: AppRouter.app,
@@ -87,6 +80,13 @@ class EndDrawer extends StatelessWidget {
                 icondata: Icons.edit_document,
                 routePath: AppRouter.forms,
                 selected: selected(AppRouter.forms),
+              ),
+              const ThinDivider(),
+              DrawerNavBtn(
+                title: context.loc.mySubscription,
+                icondata: Icons.receipt_long,
+                routePath: AppRouter.mysubscription,
+                selected: selected(AppRouter.mysubscription),
               ),
               const ThinDivider(),
               DrawerNavBtn(

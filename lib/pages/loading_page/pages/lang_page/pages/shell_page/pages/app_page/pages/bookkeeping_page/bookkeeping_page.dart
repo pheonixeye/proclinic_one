@@ -5,7 +5,6 @@ import 'package:proklinik_one/models/app_constants/subscription_plan.dart';
 import 'package:proklinik_one/models/doctor.dart';
 import 'package:proklinik_one/models/x_pay/x_pay_direct_order_request.dart';
 import 'package:proklinik_one/providers/px_app_constants.dart';
-import 'package:proklinik_one/providers/px_auth.dart';
 import 'package:proklinik_one/providers/px_doctor.dart';
 import 'package:proklinik_one/widgets/central_loading.dart';
 import 'package:provider/provider.dart';
@@ -51,16 +50,10 @@ class _BookkeepingPageState extends State<BookkeepingPage> {
                   }
                   _doctor = context.read<PxDoctor>().doctor;
                   _plan = context.read<PxAppConstants>().annual;
-                  final _email = context
-                      .read<PxAuth>()
-                      .authModel!
-                      .record
-                      .toJson()['email'] as String;
                   _request = XPayDirectOrderRequest.fromApplicationData(
                     doctor: _doctor!,
                     plan: _plan!,
                     billing_address: 'Zahraa El-Maadi, El Nada Tower',
-                    doctor_email: _email,
                   );
                   return FutureBuilder<Map<String, dynamic>>(
                     future: _api.pay(_request!),

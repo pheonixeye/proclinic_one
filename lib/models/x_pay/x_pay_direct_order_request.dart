@@ -255,7 +255,6 @@ class XPayDirectOrderRequest extends Equatable {
     required Doctor doctor,
     required SubscriptionPlan plan,
     required String billing_address,
-    required String doctor_email,
   }) {
     final _amount = XpayAmount(amount: plan.price.toDouble());
     final _discount_in_currency = plan.has_offer
@@ -271,14 +270,16 @@ class XPayDirectOrderRequest extends Equatable {
         ),
     );
 
+    final _order_description =
+        'Dr. ${doctor.name_en} ProKliniK-One Subscription\n(${plan.name_en} Plan)\nStarting Date: ${DateFormat('dd / MM / yyyy', 'en').format(DateTime.now())}\nExpiry Date: ${DateFormat('dd / MM / yyyy', 'en').format(DateTime.now()..add(Duration(days: plan.duration_in_days)))}';
+
     return XPayDirectOrderRequest(
-      name: doctor.name_en + doctor.speciality.name_en,
+      name: 'ProKliniK-One ${plan.name_en} Plan',
       address: billing_address,
-      order_description:
-          'Dr. ${doctor.name_en} - ${doctor.speciality.name_en} ProKliniK-One Subscription - ${plan.name_en}',
+      order_description: _order_description,
       customer_title: 'Dr.',
       customer_name: doctor.name_en,
-      customer_email: doctor_email,
+      customer_email: doctor.email,
       customer_mobile: '+2${doctor.phone}',
       amount: _amount,
       discount_amount: _discount_amount,

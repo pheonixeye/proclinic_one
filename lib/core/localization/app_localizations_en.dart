@@ -252,6 +252,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get myClinics => 'My Clinics';
 
   @override
+  String get mySubscription => 'My Subscriptions';
+
+  @override
   String get forms => 'Forms';
 
   @override
@@ -592,4 +595,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get supplyItemUnitAr => 'Arabic Supply Storage Unit';
+
+  @override
+  String get noSubscriptionsFound => 'No Subscriptions Found';
+
+  @override
+  String get currentPlan => 'Current Active Plan';
+
+  @override
+  String get activationDate => 'Activation Date';
+
+  @override
+  String get expiryDate => 'Expiry Date';
+
+  @override
+  String get subscriptionStatus => 'Subscription Status';
+
+  @override
+  String get noActiveSubscriptions => 'No Active Subscription';
+
+  @override
+  String get purchaseSubscription => 'Purchase Subscription';
+
+  @override
+  String get inGracePeriod => 'In Grace Period';
 }

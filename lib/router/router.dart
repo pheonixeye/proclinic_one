@@ -19,12 +19,11 @@ import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_pag
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/visits_page/visits_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/patients_page/patients_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/settings_page/settings_page.dart';
-import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/today_visits/today_visits.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/my_subscription_page/my_subscription_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/shell_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/thankyou_page/thankyou_screen.dart';
 import 'package:proklinik_one/providers/px_auth.dart';
 import 'package:proklinik_one/providers/px_clinics.dart';
-import 'package:proklinik_one/providers/px_doctor.dart';
 import 'package:proklinik_one/providers/px_doctor_profile_items.dart';
 import 'package:proklinik_one/providers/px_forms.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
@@ -66,7 +65,7 @@ class AppRouter {
   static const String procedures = "${_profile_setup}procedures";
   static const String supplies = "${_profile_setup}supplies";
   //main_routes
-  static const String todayvisits = "todayvisits";
+  static const String mysubscription = "subscription";
   static const String visits = "visits";
   static const String patients = "patients";
   static const String clinics = "clinics";
@@ -248,8 +247,7 @@ class AppRouter {
                             return ChangeNotifierProvider(
                               create: (context) => PxDoctorProfileItems(
                                 api: DoctorProfileItemsApi(
-                                  doc_id:
-                                      context.read<PxDoctor>().doctor?.id ?? '',
+                                  doc_id: context.read<PxAuth>().doc_id,
                                   item: e,
                                 ),
                               ),
@@ -264,10 +262,10 @@ class AppRouter {
 
                       //main_routes
                       GoRoute(
-                        path: todayvisits,
-                        name: todayvisits,
+                        path: mysubscription,
+                        name: mysubscription,
                         builder: (context, state) {
-                          return TodayVisits(
+                          return MySubscriptionPage(
                             key: state.pageKey,
                           );
                         },
@@ -288,8 +286,8 @@ class AppRouter {
                           return ChangeNotifierProvider(
                             create: (context) => PxPatients(
                               api: PatientsApi(
-                                  doc_id: context.read<PxDoctor>().doctor?.id ??
-                                      ''),
+                                doc_id: context.read<PxAuth>().doc_id,
+                              ),
                             ),
                             child: PatientsPage(
                               key: state.pageKey,
@@ -304,8 +302,7 @@ class AppRouter {
                           return ChangeNotifierProvider(
                             create: (context) => PxClinics(
                               api: ClinicsApi(
-                                doc_id:
-                                    context.read<PxDoctor>().doctor?.id ?? '',
+                                doc_id: context.read<PxAuth>().doc_id,
                               ),
                             ),
                             child: ClinicsPage(
@@ -321,8 +318,7 @@ class AppRouter {
                           return ChangeNotifierProvider(
                             create: (context) => PxForms(
                               api: FormsApi(
-                                doc_id:
-                                    context.read<PxDoctor>().doctor?.id ?? '',
+                                doc_id: context.read<PxAuth>().doc_id,
                               ),
                             ),
                             child: FormsPage(

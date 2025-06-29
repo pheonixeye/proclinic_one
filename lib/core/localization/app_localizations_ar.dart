@@ -251,6 +251,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get myClinics => 'عياداتي';
 
   @override
+  String get mySubscription => 'الاشتراكات';
+
+  @override
   String get forms => 'النماذج';
 
   @override
@@ -589,4 +592,28 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get supplyItemUnitAr => 'وحدة تخزين المستلزمات بالعربية';
+
+  @override
+  String get noSubscriptionsFound => 'لا يوجد اشتراك';
+
+  @override
+  String get currentPlan => 'خطة الاشتراك الحالية';
+
+  @override
+  String get activationDate => 'تاريخ التفعبل';
+
+  @override
+  String get expiryDate => 'تاريخ الانتهاء';
+
+  @override
+  String get subscriptionStatus => 'حالة الاشتراك';
+
+  @override
+  String get noActiveSubscriptions => 'لا يوجد اشتراك ساري';
+
+  @override
+  String get purchaseSubscription => 'اعادة تفعيل الاشتراك';
+
+  @override
+  String get inGracePeriod => 'في فترة السماح';
 }

@@ -554,6 +554,12 @@ abstract class AppLocalizations {
   /// **'My Clinics'**
   String get myClinics;
 
+  /// No description provided for @mySubscription.
+  ///
+  /// In en, this message translates to:
+  /// **'My Subscriptions'**
+  String get mySubscription;
+
   /// No description provided for @forms.
   ///
   /// In en, this message translates to:
@@ -1219,6 +1225,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Arabic Supply Storage Unit'**
   String get supplyItemUnitAr;
+
+  /// No description provided for @noSubscriptionsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No Subscriptions Found'**
+  String get noSubscriptionsFound;
+
+  /// No description provided for @currentPlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Active Plan'**
+  String get currentPlan;
+
+  /// No description provided for @activationDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Activation Date'**
+  String get activationDate;
+
+  /// No description provided for @expiryDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Expiry Date'**
+  String get expiryDate;
+
+  /// No description provided for @subscriptionStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription Status'**
+  String get subscriptionStatus;
+
+  /// No description provided for @noActiveSubscriptions.
+  ///
+  /// In en, this message translates to:
+  /// **'No Active Subscription'**
+  String get noActiveSubscriptions;
+
+  /// No description provided for @purchaseSubscription.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase Subscription'**
+  String get purchaseSubscription;
+
+  /// No description provided for @inGracePeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'In Grace Period'**
+  String get inGracePeriod;
 }
 
 class _AppLocalizationsDelegate

@@ -8,6 +8,7 @@ class Doctor extends Equatable {
   final String name_ar;
   final String phone;
   final Speciality speciality;
+  final String email;
 
   const Doctor({
     required this.id,
@@ -15,6 +16,7 @@ class Doctor extends Equatable {
     required this.name_ar,
     required this.phone,
     required this.speciality,
+    required this.email,
   });
 
   Doctor copyWith({
@@ -23,6 +25,7 @@ class Doctor extends Equatable {
     String? name_ar,
     String? phone,
     Speciality? speciality,
+    String? email,
   }) {
     return Doctor(
       id: id ?? this.id,
@@ -30,6 +33,7 @@ class Doctor extends Equatable {
       name_ar: name_ar ?? this.name_ar,
       phone: phone ?? this.phone,
       speciality: speciality ?? this.speciality,
+      email: email ?? this.email,
     );
   }
 
@@ -40,6 +44,7 @@ class Doctor extends Equatable {
       'name_ar': name_ar,
       'phone': phone,
       'speciality': speciality.toJson(),
+      'email': email,
     };
   }
 
@@ -51,6 +56,7 @@ class Doctor extends Equatable {
       phone: map['phone'] as String,
       speciality:
           Speciality.fromJson(map['speciality'] as Map<String, dynamic>),
+      email: map['email'] as String,
     );
   }
 
@@ -65,6 +71,7 @@ class Doctor extends Equatable {
       name_ar,
       phone,
       speciality,
+      email,
     ];
   }
 }

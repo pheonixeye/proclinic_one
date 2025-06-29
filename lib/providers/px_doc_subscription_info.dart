@@ -10,8 +10,10 @@ class PxDocSubscriptionInfo extends ChangeNotifier {
     _fetchDoctorSubscriptionInfo();
   }
 
-  ApiResult<DoctorSubscription>? _result;
-  ApiResult<DoctorSubscription>? get result => _result;
+  ApiResult<List<DoctorSubscription>>? _result;
+  ApiResult<List<DoctorSubscription>>? get result => _result;
+
+  Future<void> retry() async => await _fetchDoctorSubscriptionInfo();
 
   Future<void> _fetchDoctorSubscriptionInfo() async {
     _result = await api.fetchDoctorSubscriptionInfo();
@@ -22,4 +24,22 @@ class PxDocSubscriptionInfo extends ChangeNotifier {
     await api.subscribe(info);
     await _fetchDoctorSubscriptionInfo();
   }
+
+  bool get hasAciveSubscriptions =>
+      _result != null &&
+      (_result as ApiDataResult<List<DoctorSubscription>>)
+          .data
+          .any((e) => e.subscription_status == 'active');
+
+  bool get hasNoAciveSubscriptions =>
+      _result != null &&
+      (_result as ApiDataResult<List<DoctorSubscription>>)
+          .data
+          .any((e) => e.subscription_status != 'active');
+
+  bool get hasGracePeriodSubscription =>
+      _result != null &&
+      (_result as ApiDataResult<List<DoctorSubscription>>)
+          .data
+          .any((e) => e.inGracePeriod);
 }

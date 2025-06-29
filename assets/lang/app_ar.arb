@@ -80,6 +80,7 @@
     "organizer" : "المواعيد",
     "myClinics" : "عياداتي",
     "forms" : "النماذج",
+    "mySubscription" : "الاشتراكات",
     "bookkeeping" : "الحسابات",
     "settings" : "الاعدادات",
     "@@create_edit_form_dialog": "",
@@ -202,5 +203,14 @@
     "drugForm" : "صورة الدواء",
     "drugUnit" : "وحدة تركيز الدواء",
     "supplyItemUnitEn" : "وحدة تخزين المستلزمات بالانجليزية",
-    "supplyItemUnitAr" : "وحدة تخزين المستلزمات بالعربية"
+    "supplyItemUnitAr" : "وحدة تخزين المستلزمات بالعربية",
+    "@@my_subscriptions_page": "",
+    "noSubscriptionsFound" : "لا يوجد اشتراك",
+    "currentPlan" : "خطة الاشتراك الحالية",
+    "activationDate" : "تاريخ التفعبل",
+    "expiryDate" : "تاريخ الانتهاء",
+    "subscriptionStatus" : "حالة الاشتراك",
+    "noActiveSubscriptions" : "لا يوجد اشتراك ساري",
+    "purchaseSubscription" : "اعادة تفعيل الاشتراك",
+    "inGracePeriod" : "في فترة السماح"
     }

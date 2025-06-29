@@ -30,13 +30,12 @@ final List<SingleChildWidget> providers = [
   ),
   ChangeNotifierProvider(
     create: (context) => PxDoctor(
-      api: DoctorApi(doc_id: context.read<PxAuth>().authModel?.record.id ?? ''),
+      api: DoctorApi(doc_id: context.read<PxAuth>().doc_id),
     ),
   ),
   ChangeNotifierProvider(
     create: (context) => PxDocSubscriptionInfo(
-      api: DoctorSubscriptionInfoApi(
-          doc_id: context.read<PxAuth>().authModel?.record.id ?? ''),
+      api: DoctorSubscriptionInfoApi(doc_id: context.read<PxAuth>().doc_id),
     ),
   ),
 ];

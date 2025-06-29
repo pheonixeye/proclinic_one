@@ -1,6 +1,7 @@
 import 'package:proklinik_one/core/api/_api_result.dart';
 import 'package:proklinik_one/core/api/constants/pocketbase_helper.dart';
 import 'package:proklinik_one/errors/code_to_error.dart';
+import 'package:proklinik_one/functions/dprint.dart';
 import 'package:proklinik_one/models/doctor_subscription.dart';
 
 class DoctorSubscriptionInfoApi {
@@ -10,18 +11,51 @@ class DoctorSubscriptionInfoApi {
 
   static const String collection = 'doctor_subscriptions';
 
-  Future<ApiResult<DoctorSubscription>> fetchDoctorSubscriptionInfo() async {
+  static bool _activeSubscriptionsChecked = false;
+
+  Future<void> _checkDoctorSubscriptionStatus() async {
+    if (_activeSubscriptionsChecked == false) {
+      final _response =
+          await PocketbaseHelper.pb.collection(collection).getFullList(
+                filter: "doc_id = '$doc_id' && subscription_status = 'active'",
+              );
+
+      final _items = _response
+          .map((e) => DoctorSubscription.fromJson(e.toJson()))
+          .toList();
+
+      _items.map((e) async {
+        if (e.passedExpirationTime) {
+          final _toExpire = e.copyWith(subscription_status: 'expired');
+          await PocketbaseHelper.pb.collection(collection).update(
+                e.id,
+                body: _toExpire.toJson(),
+              );
+        }
+      }).toList();
+    }
+
+    _activeSubscriptionsChecked = true;
+    dprint(
+        'DoctorSubscriptionInfoApi($doc_id).__checkDoctorSubscriptionStatus($_activeSubscriptionsChecked))');
+  }
+
+  Future<ApiResult<List<DoctorSubscription>>>
+      fetchDoctorSubscriptionInfo() async {
+    await _checkDoctorSubscriptionStatus();
     try {
       final _response = await PocketbaseHelper.pb
           .collection(collection)
-          .getFirstListItem("doc_id = '$doc_id'");
-      final _result = DoctorSubscription.fromJson(_response.toJson());
-
-      return ApiDataResult<DoctorSubscription>(
+          .getFullList(filter: "doc_id = '$doc_id'");
+      final _result = _response
+          .map((e) => DoctorSubscription.fromJson(e.toJson()))
+          .toList();
+      // prettyPrint(_result);
+      return ApiDataResult<List<DoctorSubscription>>(
         data: _result,
       );
     } catch (e) {
-      return ApiErrorResult<DoctorSubscription>(
+      return ApiErrorResult<List<DoctorSubscription>>(
         errorCode: AppErrorCode.clientException.code,
         originalErrorMessage: e.toString(),
       );
@@ -31,7 +65,6 @@ class DoctorSubscriptionInfoApi {
   Future<void> subscribe(
     DoctorSubscription doctorSubscription,
   ) async {
-    //TODO: on payment
     await PocketbaseHelper.pb.collection(collection).create(
           body: doctorSubscription.toJson(),
         );

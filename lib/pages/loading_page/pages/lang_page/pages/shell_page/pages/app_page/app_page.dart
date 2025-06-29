@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 
 class AppPage extends StatefulWidget {
   const AppPage({super.key});
-  //TODO: convert this page into a shellRoute
 
   @override
   State<AppPage> createState() => _AppPageState();
@@ -39,6 +38,7 @@ class _AppPageState extends State<AppPage> with SingleTickerProviderStateMixin {
                       Text('${d.doctor?.phone}'),
                       Text('${d.doctor?.speciality.name_en}'),
                       Text('${d.doctor?.speciality.name_ar}'),
+                      Text('${d.doctor?.email}'),
                     ]
                   ],
                 );
@@ -68,9 +68,9 @@ class _AppPageState extends State<AppPage> with SingleTickerProviderStateMixin {
         },
         items: [
           BottomNavigationBarItem(
-            icon: const Icon(Icons.dashboard),
-            activeIcon: const Icon(Icons.dashboard_customize),
-            label: 'Dashboard',
+            icon: const Icon(Icons.perm_contact_calendar_outlined),
+            activeIcon: const Icon(Icons.perm_contact_calendar),
+            label: context.loc.todayVisits,
           ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.home),
