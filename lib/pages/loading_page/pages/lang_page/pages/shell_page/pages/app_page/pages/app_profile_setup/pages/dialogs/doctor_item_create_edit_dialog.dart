@@ -221,6 +221,7 @@ class _DoctorItemCreateEditDialogState
                     hintText: context.loc.englishItemName,
                   ),
                   controller: _nameEnController,
+                  maxLines: 2,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return '${context.loc.enter} ${context.loc.englishItemName}';
@@ -243,6 +244,7 @@ class _DoctorItemCreateEditDialogState
                     hintText: context.loc.arabicItemName,
                   ),
                   controller: _nameArController,
+                  maxLines: 2,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return '${context.loc.enter} ${context.loc.arabicItemName}';
@@ -393,7 +395,7 @@ class _DoctorItemCreateEditDialogState
                           border: OutlineInputBorder(),
                           hintText: context.loc.radSpecialInstructions,
                         ),
-                        controller: _labSpecialInstructionController,
+                        controller: _radSpecialInstructionController,
                       ),
                     ),
                   ),
@@ -548,8 +550,10 @@ class _DoctorItemCreateEditDialogState
                 'form': _drugFormController.text,
                 'default_doses': _drugDefaultDosesController.text.split('-'),
                 'special_instructions': switch (widget.type) {
-                  ProfileSetupItem.labs => _labSpecialInstructionController,
-                  ProfileSetupItem.rads => _radSpecialInstructionController,
+                  ProfileSetupItem.labs =>
+                    _labSpecialInstructionController.text,
+                  ProfileSetupItem.rads =>
+                    _radSpecialInstructionController.text,
                   _ => '',
                 },
                 'type': _radiologyTypeController?.db_value,
@@ -567,6 +571,7 @@ class _DoctorItemCreateEditDialogState
                 'discount_percentage':
                     int.tryParse(_procedureDiscountController.text),
               };
+              // prettyPrint(_itemJson);
               Navigator.pop(context, _itemJson);
             }
           },

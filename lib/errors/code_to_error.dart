@@ -1,16 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
 
-enum AppErrorCode {
-  clientException(1),
-  authException(2),
-  orderDetailsException(3);
-
-  final int code;
-
-  const AppErrorCode(this.code);
-}
-
 class TranslatedError extends Equatable {
   final String en;
   final String ar;
@@ -22,6 +12,23 @@ class TranslatedError extends Equatable {
 
   @override
   List<Object> get props => [en, ar];
+
+  factory TranslatedError.unknown() {
+    return TranslatedError(
+      en: 'Unknown Error',
+      ar: 'خطأ غير معلوم',
+    );
+  }
+}
+
+enum AppErrorCode {
+  clientException(1),
+  authException(2),
+  orderDetailsException(3);
+
+  final int code;
+
+  const AppErrorCode(this.code);
 }
 
 class CodeToError {
@@ -29,7 +36,7 @@ class CodeToError {
 
   final int? code;
 
-  static Map<int, TranslatedError> errors = {
+  static final Map<int, TranslatedError> _errors = {
     ///client_exception_code
     AppErrorCode.clientException.code: TranslatedError(
       en: 'Something Went Wrong While Fetching Data.',
@@ -49,6 +56,7 @@ class CodeToError {
     ),
 
     ///subscription_payment_api_errors
+    //TODO: error messages need to be less generic
     10: TranslatedError(
       en: 'No Payment Reference Found.',
       ar: 'No Payment Reference Found.', //TODO
@@ -84,11 +92,11 @@ class CodeToError {
     ),
   };
 
-  String errorMessage(bool isEnglish) => errors[code] == null
+  String errorMessage(bool isEnglish) => _errors[code] == null
       ? isEnglish
-          ? 'Unknown Error'
-          : 'خطأ غير معلوم'
+          ? TranslatedError.unknown().en
+          : TranslatedError.unknown().ar
       : isEnglish
-          ? errors[code]!.en
-          : errors[code]!.ar;
+          ? _errors[code]!.en
+          : _errors[code]!.ar;
 }

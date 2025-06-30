@@ -254,8 +254,8 @@ class AppRouter {
                           path: e.route,
                           name: e.route,
                           builder: (context, state) {
-                            return ChangeNotifierProvider(
-                              create: (context) => PxDoctorProfileItems(
+                            return ChangeNotifierProvider.value(
+                              value: PxDoctorProfileItems(
                                 api: DoctorProfileItemsApi(
                                   doc_id: context.read<PxAuth>().doc_id,
                                   item: e,

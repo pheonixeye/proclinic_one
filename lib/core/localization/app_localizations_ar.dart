@@ -191,13 +191,13 @@ class AppLocalizationsAr extends AppLocalizations {
       'بحث باسم المريض او رقم الموبايل';
 
   @override
-  String get confirm => 'تاكيد';
+  String get confirm => 'تأكيد';
 
   @override
   String get cancel => 'الغاء';
 
   @override
-  String get retry => 'اعادة المحاولة';
+  String get retry => 'إعادة المحاولة';
 
   @override
   String get findPatient => 'بحث عن مريض';
@@ -314,7 +314,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get enterFieldName => 'ادخل اسم الحقل';
 
   @override
-  String get promptDialog => 'نافذة تاكيدية';
+  String get promptDialog => 'نافذة تأكيد';
 
   @override
   String get save => 'حفظ';
