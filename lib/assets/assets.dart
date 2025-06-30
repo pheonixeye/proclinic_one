@@ -29,4 +29,7 @@ class AppAssets {
   static const String halfAnnual =
       'assets/images/subscription_icons/half annual.svg';
   static const String annual = 'assets/images/subscription_icons/annual.svg';
+
+  ///after purchase thankyou
+  static const String after_purchase = 'assets/images/after_purchase.svg';
 }

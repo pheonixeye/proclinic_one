@@ -13,6 +13,7 @@ import 'package:proklinik_one/models/x_pay/x_pay_response.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/my_subscription_page/pages/order_details_page/widgets/bottom_result_sheet.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/my_subscription_page/widgets/billing_address_input_dialog.dart';
 import 'package:proklinik_one/providers/px_app_constants.dart';
+import 'package:proklinik_one/providers/px_doc_subscription_info.dart';
 import 'package:proklinik_one/providers/px_doctor.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:proklinik_one/widgets/snackbar_.dart';
@@ -41,8 +42,8 @@ class _SubscriptionDetailsCardState extends State<SubscriptionDetailsCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer2<PxAppConstants, PxLocale>(
-      builder: (context, a, l, _) {
+    return Consumer3<PxAppConstants, PxDocSubscriptionInfo, PxLocale>(
+      builder: (context, a, s, l, _) {
         while (a.constants == null) {
           return Card.outlined(
             elevation: 6,
@@ -117,6 +118,29 @@ class _SubscriptionDetailsCardState extends State<SubscriptionDetailsCard> {
                                       style: TextStyle(
                                         fontWeight: FontWeight.w700,
                                       ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Text.rich(
+                                TextSpan(
+                                  text: context.loc.paymentStatus,
+                                  children: [
+                                    TextSpan(text: ' : '),
+                                    WidgetSpan(
+                                      child: (widget.sub.payment != null &&
+                                              widget.sub.payment!
+                                                      .x_pay_transaction_status ==
+                                                  XpayPaymentStatus
+                                                      .SUCCESSFUL.name)
+                                          ? Icon(
+                                              Icons.check,
+                                              color: Colors.green.shade100,
+                                            )
+                                          : Icon(
+                                              Icons.close,
+                                              color: Colors.red,
+                                            ),
                                     ),
                                   ],
                                 ),
@@ -252,107 +276,112 @@ class _SubscriptionDetailsCardState extends State<SubscriptionDetailsCard> {
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Center(
-                        child: ElevatedButton.icon(
-                          label: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Text(switch (_state) {
+                    if (DateTime.now().isAfter(widget.sub.end_date) ||
+                        widget.sub.subscription_status == 'expired')
+                      const SizedBox()
+                    else
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Center(
+                          child: ElevatedButton.icon(
+                            label: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Text(switch (_state) {
+                                PageState.initial =>
+                                  context.loc.generatePaymentLink,
+                                PageState.processing => context.loc.loading,
+                                PageState.hasResult =>
+                                  context.loc.paymentLinkGenerated,
+                                PageState.hasError => context.loc.error,
+                              }),
+                            ),
+                            icon: switch (_state) {
                               PageState.initial =>
-                                context.loc.generatePaymentLink,
-                              PageState.processing => context.loc.loading,
-                              PageState.hasResult =>
-                                context.loc.paymentLinkGenerated,
-                              PageState.hasError => context.loc.error,
-                            }),
+                                const Icon(Icons.monetization_on),
+                              PageState.processing => CircularProgressIndicator(
+                                  backgroundColor: Colors.green.shade100,
+                                ),
+                              PageState.hasResult => Icon(
+                                  Icons.check,
+                                  color: Colors.green.shade100,
+                                ),
+                              PageState.hasError => const Icon(
+                                  Icons.warning_rounded,
+                                  color: Colors.red,
+                                ),
+                            },
+                            onPressed: (_state == PageState.processing ||
+                                    _state == PageState.hasResult)
+                                ? null
+                                : () async {
+                                    XPayResponse _xPayResponseTemplate;
+                                    _updateState(PageState.processing);
+                                    try {
+                                      final _billingAddress =
+                                          await showDialog<String>(
+                                        context: context,
+                                        builder: (context) {
+                                          return const BillingAddressInputDialog();
+                                        },
+                                      );
+                                      if (_billingAddress == null) {
+                                        return;
+                                      }
+                                      if (!context.mounted) {
+                                        return;
+                                      }
+                                      final XPayDirectOrderRequest _request =
+                                          XPayDirectOrderRequest
+                                              .fromApplicationData(
+                                        doctor:
+                                            context.read<PxDoctor>().doctor!,
+                                        plan: a.constants!.subscriptionPlan
+                                            .firstWhere(
+                                          (e) => e.id == widget.sub.plan_id,
+                                        ),
+                                        billing_address: _billingAddress,
+                                      );
+                                      //todo: Send payment link generation request
+                                      _xPayResponseTemplate = await XPayApi()
+                                          .generatePaymentLink(_request);
+                                      //todo: add doc_sb && sub_pay references
+                                      await DocSubPayApi
+                                          .updateSubPayXpayPaymentReference(
+                                        sub_pay_id: widget.sub.payment!.id,
+                                        x_pay_payment_id: _xPayResponseTemplate
+                                            .data.payment_id,
+                                      );
+
+                                      _updateState(PageState.hasResult);
+                                    } on Exception catch (e) {
+                                      //todo: notify user with error
+                                      _updateState(PageState.hasError);
+                                      showIsnackbar(e.toString());
+                                      return;
+                                    }
+
+                                    if (context.mounted) {
+                                      showModalBottomSheet(
+                                        context: context,
+                                        builder: (context) {
+                                          return BottomResultSheet(
+                                            state: _state,
+                                            xPayResponse: _xPayResponseTemplate,
+                                            modalHeight: context.isMobile
+                                                ? MediaQuery.sizeOf(context)
+                                                        .height /
+                                                    3
+                                                : MediaQuery.sizeOf(context)
+                                                        .height /
+                                                    2,
+                                          );
+                                        },
+                                      );
+                                    }
+                                  },
                           ),
-                          icon: switch (_state) {
-                            PageState.initial =>
-                              const Icon(Icons.monetization_on),
-                            PageState.processing => CircularProgressIndicator(
-                                backgroundColor: Colors.green.shade100,
-                              ),
-                            PageState.hasResult => Icon(
-                                Icons.check,
-                                color: Colors.green.shade100,
-                              ),
-                            PageState.hasError => const Icon(
-                                Icons.warning_rounded,
-                                color: Colors.red,
-                              ),
-                          },
-                          onPressed: (_state == PageState.processing ||
-                                  _state == PageState.hasResult)
-                              ? null
-                              : () async {
-                                  XPayResponse _xPayResponseTemplate;
-                                  _updateState(PageState.processing);
-                                  try {
-                                    final _billingAddress =
-                                        await showDialog<String>(
-                                      context: context,
-                                      builder: (context) {
-                                        return const BillingAddressInputDialog();
-                                      },
-                                    );
-                                    if (_billingAddress == null) {
-                                      return;
-                                    }
-                                    if (!context.mounted) {
-                                      return;
-                                    }
-                                    final XPayDirectOrderRequest _request =
-                                        XPayDirectOrderRequest
-                                            .fromApplicationData(
-                                      doctor: context.read<PxDoctor>().doctor!,
-                                      plan: a.constants!.subscriptionPlan
-                                          .firstWhere(
-                                        (e) => e.id == widget.sub.plan_id,
-                                      ),
-                                      billing_address: _billingAddress,
-                                    );
-                                    //todo: Send payment link generation request
-                                    _xPayResponseTemplate = await XPayApi()
-                                        .generatePaymentLink(_request);
-                                    //todo: add doc_sb && sub_pay references
-                                    await DocSubPayApi
-                                        .updateSubPayXpayPaymentReference(
-                                      sub_pay_id: widget.sub.payment!.id,
-                                      x_pay_payment_id:
-                                          _xPayResponseTemplate.data.payment_id,
-                                    );
-
-                                    _updateState(PageState.hasResult);
-                                  } on Exception catch (e) {
-                                    //todo: notify user with error
-                                    _updateState(PageState.hasError);
-                                    showIsnackbar(e.toString());
-                                    return;
-                                  }
-
-                                  if (context.mounted) {
-                                    showModalBottomSheet(
-                                      context: context,
-                                      builder: (context) {
-                                        return BottomResultSheet(
-                                          state: _state,
-                                          xPayResponse: _xPayResponseTemplate,
-                                          modalHeight: context.isMobile
-                                              ? MediaQuery.sizeOf(context)
-                                                      .height /
-                                                  3
-                                              : MediaQuery.sizeOf(context)
-                                                      .height /
-                                                  2,
-                                        );
-                                      },
-                                    );
-                                  }
-                                },
                         ),
                       ),
-                    ),
                   ],
                 ),
               ),

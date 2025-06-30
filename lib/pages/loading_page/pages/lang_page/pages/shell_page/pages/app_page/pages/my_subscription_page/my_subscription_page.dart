@@ -41,7 +41,8 @@ class MySubscriptionPage extends StatelessWidget {
                         Expanded(
                           child: Text(context.loc.mySubscription),
                         ),
-                        if (s.hasNoAciveSubscriptions ||
+                        if ((s.hasNoAciveSubscriptions &&
+                                !s.hasAciveSubscriptions) ||
                             s.hasGracePeriodSubscription) ...[
                           Expanded(
                             flex: context.isMobile ? 2 : 1,
@@ -174,9 +175,9 @@ class MySubscriptionPage extends StatelessWidget {
                     final _items =
                         (s.result as ApiDataResult<List<DoctorSubscription>>)
                             .data;
+                    _items.sort((a, b) => a.inGracePeriod ? 0 : 1);
                     _items.sort(
                         (a, b) => a.subscription_status == 'active' ? 0 : 1);
-                    _items.sort((a, b) => a.inGracePeriod ? 0 : 1);
                     return ListView.builder(
                       itemCount: _items.length,
                       itemBuilder: (context, index) {

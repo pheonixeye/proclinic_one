@@ -104,7 +104,7 @@ class _TransactionPageState extends State<TransactionPage>
                   alignment: Alignment.center,
                   children: [
                     SvgPicture.asset(
-                      AppAssets.bgSvg,
+                      AppAssets.after_purchase,
                       fit: BoxFit.cover,
                     ),
                     Align(
