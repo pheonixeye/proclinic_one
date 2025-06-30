@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:proklinik_one/assets/assets.dart';
 import 'package:proklinik_one/extensions/loc_ext.dart';
+import 'package:proklinik_one/models/page_states_enum.dart';
 import 'package:proklinik_one/models/x_pay/x_pay_response.dart';
-import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/my_subscription_page/pages/order_details_page/order_details_page.dart';
 import 'package:proklinik_one/router/router.dart';
 import 'package:web/web.dart' as web;
 
@@ -14,7 +14,7 @@ class BottomResultSheet extends StatelessWidget {
     required this.xPayResponse,
     required this.modalHeight,
   });
-  final DetailsPageState state;
+  final PageState state;
   final XPayResponse xPayResponse;
   final double modalHeight;
 
@@ -58,13 +58,13 @@ class BottomResultSheet extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     spacing: 8,
                     children: [
-                      if (state == DetailsPageState.hasError)
+                      if (state == PageState.hasError)
                         Image.asset(
                           AppAssets.errorIcon,
                           width: 50,
                           height: 50,
                         ),
-                      if (state == DetailsPageState.hasResult)
+                      if (state == PageState.hasResult)
                         CircleAvatar(
                           radius: 40,
                           backgroundColor: Colors.blue,

@@ -665,4 +665,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get paymentLink => 'Payment Link';
+
+  @override
+  String get paymentStatus => 'Payment Status';
+
+  @override
+  String get paymentLinkGenerated => 'Payment Link Generated';
+
+  @override
+  String get error => 'Error!';
 }

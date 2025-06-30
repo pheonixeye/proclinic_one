@@ -128,7 +128,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get enterValidEnglishNameOfTwoUnits =>
-      'Enter Your First, Middle & Last Names in English';
+      'برجاء ادخال الاسم الثلاثي بالانجليزية';
 
   @override
   String get enterArabicName => 'ادخل الاسم بالعربية';
@@ -663,4 +663,13 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get paymentLink => 'رابط الدفع';
+
+  @override
+  String get paymentStatus => 'حالة الدفع';
+
+  @override
+  String get paymentLinkGenerated => 'تم ارسال رابط الدفع';
+
+  @override
+  String get error => 'خطا !';
 }

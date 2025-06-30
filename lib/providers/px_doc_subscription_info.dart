@@ -20,25 +20,23 @@ class PxDocSubscriptionInfo extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> subscribe(DoctorSubscription info) async {
-    await api.subscribe(info);
-    await _fetchDoctorSubscriptionInfo();
-  }
-
   bool get hasAciveSubscriptions =>
       _result != null &&
+      _result is ApiDataResult<List<DoctorSubscription>> &&
       (_result as ApiDataResult<List<DoctorSubscription>>)
           .data
           .any((e) => e.subscription_status == 'active');
 
   bool get hasNoAciveSubscriptions =>
       _result != null &&
+      _result is ApiDataResult<List<DoctorSubscription>> &&
       (_result as ApiDataResult<List<DoctorSubscription>>)
           .data
           .any((e) => e.subscription_status != 'active');
 
   bool get hasGracePeriodSubscription =>
       _result != null &&
+      _result is ApiDataResult<List<DoctorSubscription>> &&
       (_result as ApiDataResult<List<DoctorSubscription>>)
           .data
           .any((e) => e.inGracePeriod);

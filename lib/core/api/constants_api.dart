@@ -14,30 +14,41 @@ class ConstantsApi {
   static const String subscription_plan = 'subscription_plans';
 
   Future<AppConstants> fetchConstants() async {
-    final _accountTypesRequest =
-        await PocketbaseHelper.pb.collection(account_types).getFullList();
+    late final List<AccountType> accountTypes;
+    late final List<VisitStatus> visitStatus;
+    late final List<VisitType> visitType;
+    late final List<SubscriptionPlan> subscriptionPlan;
 
-    final accountTypes = _accountTypesRequest
-        .map((e) => AccountType.fromJson(e.toJson()))
-        .toList();
+    final _accountTypesRequest =
+        PocketbaseHelper.pb.collection(account_types).getList();
 
     final _visitStatusRequest =
-        await PocketbaseHelper.pb.collection(visit_status).getFullList();
-
-    final visitStatus = _visitStatusRequest
-        .map((e) => VisitStatus.fromJson(e.toJson()))
-        .toList();
+        PocketbaseHelper.pb.collection(visit_status).getList();
 
     final _visitTypeRequest =
-        await PocketbaseHelper.pb.collection(visit_type).getFullList();
-
-    final visitType =
-        _visitTypeRequest.map((e) => VisitType.fromJson(e.toJson())).toList();
+        PocketbaseHelper.pb.collection(visit_type).getList();
 
     final _subscriptionPlanRequest =
-        await PocketbaseHelper.pb.collection(subscription_plan).getFullList();
+        PocketbaseHelper.pb.collection(subscription_plan).getList();
 
-    final subscriptionPlan = _subscriptionPlanRequest
+    final _result = await Future.wait([
+      _accountTypesRequest,
+      _visitStatusRequest,
+      _visitTypeRequest,
+      _subscriptionPlanRequest
+    ]);
+
+    accountTypes =
+        _result[0].items.map((e) => AccountType.fromJson(e.toJson())).toList();
+
+    visitStatus =
+        _result[1].items.map((e) => VisitStatus.fromJson(e.toJson())).toList();
+
+    visitType =
+        _result[2].items.map((e) => VisitType.fromJson(e.toJson())).toList();
+
+    subscriptionPlan = _result[3]
+        .items
         .map((e) => SubscriptionPlan.fromJson(e.toJson()))
         .toList();
 

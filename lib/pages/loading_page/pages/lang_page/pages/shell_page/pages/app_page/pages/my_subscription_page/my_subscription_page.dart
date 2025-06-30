@@ -1,8 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import 'package:proklinik_one/core/api/_api_result.dart';
 import 'package:proklinik_one/extensions/is_mobile_context.dart';
 import 'package:proklinik_one/extensions/loc_ext.dart';
@@ -11,6 +9,7 @@ import 'package:proklinik_one/models/doctor_subscription.dart';
 import 'package:proklinik_one/models/x_pay/x_pay_direct_order_request.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/my_subscription_page/widgets/billing_address_input_dialog.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/my_subscription_page/widgets/select_subscription_dialog.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/my_subscription_page/widgets/subscription_details_card.dart';
 import 'package:proklinik_one/providers/px_app_constants.dart';
 import 'package:proklinik_one/providers/px_doc_subscription_info.dart';
 import 'package:proklinik_one/providers/px_doctor.dart';
@@ -156,7 +155,9 @@ class MySubscriptionPage extends StatelessWidget {
 
                     while (s.result is ApiErrorResult) {
                       return CentralError(
-                        code: (s.result as ApiErrorResult).errorCode,
+                        code: (s.result
+                                as ApiErrorResult<List<DoctorSubscription>>)
+                            .errorCode,
                         toExecute: s.retry,
                       );
                     }
@@ -180,204 +181,9 @@ class MySubscriptionPage extends StatelessWidget {
                       itemCount: _items.length,
                       itemBuilder: (context, index) {
                         final _sub = _items[index];
-                        if (_sub.subscription_status == 'active') {
-                          return Card.filled(
-                            elevation: 6,
-                            color: Colors.amber.shade50,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: ListTile(
-                                titleAlignment: ListTileTitleAlignment.top,
-                                title: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    context.loc.currentPlan,
-                                  ),
-                                ),
-                                subtitle: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Card(
-                                    elevation: 2,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: ListTile(
-                                        leading: FloatingActionButton.small(
-                                          heroTag: _sub,
-                                          onPressed: null,
-                                        ),
-                                        titleAlignment:
-                                            ListTileTitleAlignment.top,
-                                        title: Builder(
-                                          builder: (context) {
-                                            final _plan = a
-                                                .constants?.subscriptionPlan
-                                                .firstWhereOrNull((e) =>
-                                                    _sub.plan_id == e.id);
-                                            if (_plan == null) {
-                                              return const SizedBox();
-                                            }
-                                            return Text(
-                                              l.isEnglish
-                                                  ? _plan.name_en
-                                                  : _plan.name_ar,
-                                              style: TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.w700,
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                        subtitle: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Column(
-                                            spacing: 8,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text.rich(
-                                                TextSpan(
-                                                  text: context
-                                                      .loc.subscriptionStatus,
-                                                  children: [
-                                                    TextSpan(text: ' : '),
-                                                    TextSpan(
-                                                      text:
-                                                          '(${_sub.subscription_status.toUpperCase()})',
-                                                      style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              Text.rich(
-                                                TextSpan(
-                                                  text: context
-                                                      .loc.activationDate,
-                                                  children: [
-                                                    TextSpan(text: ' : '),
-                                                    TextSpan(
-                                                      text: DateFormat(
-                                                              'dd / MM / yyyy',
-                                                              l.lang)
-                                                          .format(
-                                                              _sub.start_date),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              Text.rich(
-                                                TextSpan(
-                                                  text: context.loc.expiryDate,
-                                                  children: [
-                                                    TextSpan(text: ' : '),
-                                                    TextSpan(
-                                                      text: DateFormat(
-                                                              'dd / MM / yyyy',
-                                                              l.lang)
-                                                          .format(
-                                                              _sub.end_date),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          );
-                        } else {
-                          final _plan =
-                              a.constants!.subscriptionPlan.firstWhere(
-                            (e) => e.id == _sub.plan_id,
-                          );
-                          return Card.outlined(
-                            elevation: 6,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: ListTile(
-                                titleAlignment: ListTileTitleAlignment.top,
-                                leading: FloatingActionButton.small(
-                                  heroTag: _sub,
-                                  onPressed: null,
-                                ),
-                                title: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          l.isEnglish
-                                              ? _plan.name_en
-                                              : _plan.name_ar,
-                                        ),
-                                      ),
-                                      if (_sub.inGracePeriod)
-                                        Text(
-                                          '${context.loc.inGracePeriod} (${_sub.gracePeriodRemaining}) ${context.loc.days}',
-                                        ),
-                                    ],
-                                  ),
-                                ),
-                                subtitle: Column(
-                                  spacing: 8,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text.rich(
-                                      TextSpan(
-                                        text: context.loc.subscriptionStatus,
-                                        children: [
-                                          TextSpan(text: ' : '),
-                                          TextSpan(
-                                            text:
-                                                '(${_sub.subscription_status.toUpperCase()})',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w700,
-                                              decoration:
-                                                  TextDecoration.lineThrough,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Text.rich(
-                                      TextSpan(
-                                        text: context.loc.activationDate,
-                                        children: [
-                                          TextSpan(text: ' : '),
-                                          TextSpan(
-                                            text: DateFormat(
-                                                    'dd / MM / yyyy', l.lang)
-                                                .format(_sub.start_date),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Text.rich(
-                                      TextSpan(
-                                        text: context.loc.expiryDate,
-                                        children: [
-                                          TextSpan(text: ' : '),
-                                          TextSpan(
-                                            text: DateFormat(
-                                                    'dd / MM / yyyy', l.lang)
-                                                .format(_sub.end_date),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          );
-                        }
+                        return SubscriptionDetailsCard(
+                          sub: _sub,
+                        );
                       },
                     );
                   },

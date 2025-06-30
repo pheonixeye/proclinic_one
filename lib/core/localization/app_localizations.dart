@@ -1363,6 +1363,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Payment Link'**
   String get paymentLink;
+
+  /// No description provided for @paymentStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Status'**
+  String get paymentStatus;
+
+  /// No description provided for @paymentLinkGenerated.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Link Generated'**
+  String get paymentLinkGenerated;
+
+  /// No description provided for @error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error!'**
+  String get error;
 }
 
 class _AppLocalizationsDelegate

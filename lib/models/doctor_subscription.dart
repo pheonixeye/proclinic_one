@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:proklinik_one/models/payment.dart';
 
 class DoctorSubscription extends Equatable {
   final String id;
@@ -7,6 +8,8 @@ class DoctorSubscription extends Equatable {
   final String subscription_status;
   final DateTime start_date;
   final DateTime end_date;
+  final String payment_id;
+  final Payment? payment;
 
   const DoctorSubscription({
     required this.id,
@@ -15,6 +18,8 @@ class DoctorSubscription extends Equatable {
     required this.subscription_status,
     required this.start_date,
     required this.end_date,
+    required this.payment_id,
+    this.payment,
   });
 
   DoctorSubscription copyWith({
@@ -24,6 +29,8 @@ class DoctorSubscription extends Equatable {
     String? subscription_status,
     DateTime? start_date,
     DateTime? end_date,
+    String? payment_id,
+    Payment? payment,
   }) {
     return DoctorSubscription(
       id: id ?? this.id,
@@ -32,6 +39,8 @@ class DoctorSubscription extends Equatable {
       subscription_status: subscription_status ?? this.subscription_status,
       start_date: start_date ?? this.start_date,
       end_date: end_date ?? this.end_date,
+      payment_id: payment_id ?? this.payment_id,
+      payment: payment ?? this.payment,
     );
   }
 
@@ -43,6 +52,8 @@ class DoctorSubscription extends Equatable {
       'subscription_status': subscription_status,
       'start_date': start_date.toIso8601String(),
       'end_date': end_date.toIso8601String(),
+      'payment_id': payment_id,
+      'payment': payment?.toJson(),
     };
   }
 
@@ -54,6 +65,10 @@ class DoctorSubscription extends Equatable {
       subscription_status: map['subscription_status'] as String,
       start_date: DateTime.parse(map['start_date'] as String),
       end_date: DateTime.parse(map['end_date'] as String),
+      payment_id: map['payment_id'] as String,
+      payment: map['payment'] == null
+          ? null
+          : Payment.fromJson(map['payment'] as Map<String, dynamic>),
     );
   }
   final _graceDuration = const Duration(days: 7);
@@ -76,7 +91,7 @@ class DoctorSubscription extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object> get props {
+  List<Object?> get props {
     return [
       id,
       doc_id,
@@ -84,6 +99,8 @@ class DoctorSubscription extends Equatable {
       subscription_status,
       start_date,
       end_date,
+      payment_id,
+      payment,
     ];
   }
 }

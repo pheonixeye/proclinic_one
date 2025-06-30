@@ -1,3 +1,4 @@
+import 'package:pocketbase/pocketbase.dart';
 import 'package:proklinik_one/core/api/_api_result.dart';
 import 'package:proklinik_one/core/api/constants/pocketbase_helper.dart';
 import 'package:proklinik_one/errors/code_to_error.dart';
@@ -12,6 +13,8 @@ class DoctorSubscriptionInfoApi {
   static const String collection = 'doctor_subscriptions';
 
   static bool _activeSubscriptionsChecked = false;
+
+  static const String _expand = 'payment_id';
 
   Future<void> _checkDoctorSubscriptionStatus() async {
     if (_activeSubscriptionsChecked == false) {
@@ -44,11 +47,19 @@ class DoctorSubscriptionInfoApi {
       fetchDoctorSubscriptionInfo() async {
     await _checkDoctorSubscriptionStatus();
     try {
-      final _response = await PocketbaseHelper.pb
-          .collection(collection)
-          .getFullList(filter: "doc_id = '$doc_id'");
+      final _response =
+          await PocketbaseHelper.pb.collection(collection).getFullList(
+                filter: "doc_id = '$doc_id'",
+                sort: '-created',
+                expand: _expand,
+              );
       final _result = _response
-          .map((e) => DoctorSubscription.fromJson(e.toJson()))
+          .map(
+            (e) => DoctorSubscription.fromJson({
+              ...e.toJson(),
+              'payment': e.get<RecordModel?>('expand.payment_id')?.toJson(),
+            }),
+          )
           .toList();
       // prettyPrint(_result);
       return ApiDataResult<List<DoctorSubscription>>(
@@ -60,13 +71,5 @@ class DoctorSubscriptionInfoApi {
         originalErrorMessage: e.toString(),
       );
     }
-  }
-
-  Future<void> subscribe(
-    DoctorSubscription doctorSubscription,
-  ) async {
-    await PocketbaseHelper.pb.collection(collection).create(
-          body: doctorSubscription.toJson(),
-        );
   }
 }

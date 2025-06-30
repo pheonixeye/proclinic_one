@@ -244,7 +244,7 @@ class AppRouter {
                           final _query = state.uri.queryParameters;
                           return TransactionPage(
                             key: state.pageKey,
-                            transactionResult: _query,
+                            query: _query,
                           );
                         },
                       ),

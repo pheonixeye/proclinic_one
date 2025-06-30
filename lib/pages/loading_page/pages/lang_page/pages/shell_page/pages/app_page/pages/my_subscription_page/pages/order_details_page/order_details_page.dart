@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:proklinik_one/core/api/doc_sub_pay_api.dart';
 import 'package:proklinik_one/core/api/x-pay/x_pay_api.dart';
 import 'package:proklinik_one/errors/code_to_error.dart';
 import 'package:proklinik_one/extensions/is_mobile_context.dart';
@@ -7,19 +8,14 @@ import 'package:proklinik_one/extensions/loc_ext.dart';
 import 'package:proklinik_one/extensions/number_translator.dart';
 import 'package:proklinik_one/models/app_constants/subscription_plan.dart';
 import 'package:proklinik_one/models/doctor.dart';
+import 'package:proklinik_one/models/doctor_subscription.dart';
+import 'package:proklinik_one/models/page_states_enum.dart';
 import 'package:proklinik_one/models/x_pay/x_pay_direct_order_request.dart';
 import 'package:proklinik_one/models/x_pay/x_pay_response.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/my_subscription_page/pages/order_details_page/widgets/bottom_result_sheet.dart';
 import 'package:proklinik_one/router/router.dart';
 import 'package:proklinik_one/widgets/central_error.dart';
 import 'package:proklinik_one/widgets/snackbar_.dart';
-
-enum DetailsPageState {
-  initial,
-  processing,
-  hasResult,
-  hasError;
-}
 
 class OrderDetailsPage extends StatefulWidget {
   const OrderDetailsPage({super.key, required this.data});
@@ -38,7 +34,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
 
   XPayResponse? _xPayResponse;
 
-  DetailsPageState _state = DetailsPageState.initial;
+  PageState _state = PageState.initial;
 
   double get _orderCardWidth => context.isMobile
       ? MediaQuery.sizeOf(context).width
@@ -48,7 +44,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
       ? MediaQuery.sizeOf(context).height / 3
       : MediaQuery.sizeOf(context).height / 2;
 
-  void _updateState(DetailsPageState _s) {
+  void _updateState(PageState _s) {
     setState(() {
       _state = _s;
     });
@@ -252,39 +248,65 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                     child: ElevatedButton.icon(
                       label: Padding(
                         padding: const EdgeInsets.all(16.0),
-                        child: Text(context.loc.generatePaymentLink),
+                        child: Text(switch (_state) {
+                          PageState.initial => context.loc.generatePaymentLink,
+                          PageState.processing => context.loc.loading,
+                          PageState.hasResult =>
+                            context.loc.paymentLinkGenerated,
+                          PageState.hasError => context.loc.error,
+                        }),
                       ),
                       icon: switch (_state) {
-                        DetailsPageState.initial =>
-                          const Icon(Icons.monetization_on),
-                        DetailsPageState.processing =>
-                          CircularProgressIndicator(),
-                        DetailsPageState.hasResult => Icon(
+                        PageState.initial => const Icon(Icons.monetization_on),
+                        PageState.processing => CircularProgressIndicator(
+                            backgroundColor: Colors.green.shade100,
+                          ),
+                        PageState.hasResult => Icon(
                             Icons.check,
                             color: Colors.green.shade100,
                           ),
-                        DetailsPageState.hasError => const Icon(
+                        PageState.hasError => const Icon(
                             Icons.warning_rounded,
                             color: Colors.red,
                           ),
                       },
-                      onPressed: (_state == DetailsPageState.processing ||
-                              _state == DetailsPageState.hasResult)
+                      onPressed: (_state == PageState.processing ||
+                              _state == PageState.hasResult)
                           ? null
                           : () async {
-                              //todo: Send payment request
                               XPayResponse _xPayResponseTemplate;
-                              _updateState(DetailsPageState.processing);
+                              _updateState(PageState.processing);
                               try {
+                                //todo: Send payment link generation request
                                 _xPayResponseTemplate = await XPayApi()
                                     .generatePaymentLink(_request);
+                                //todo: add doc_sb && sub_pay references
+                                await DocSubPayApi
+                                    .createDoctorSubscriptionAndSubscriptionPaymentRefrences(
+                                  doctorSubscription: DoctorSubscription(
+                                    id: '',
+                                    doc_id: _doctor.id,
+                                    plan_id: _plan.id,
+                                    subscription_status: 'inactive',
+                                    start_date: DateTime.now(),
+                                    end_date: DateTime.now().add(
+                                      Duration(days: _plan.duration_in_days),
+                                    ),
+                                    payment: null,
+                                    payment_id: '',
+                                  ),
+                                  amount: _request.amount.amount,
+                                  x_pay_payment_id:
+                                      _xPayResponseTemplate.data.payment_id,
+                                );
+
                                 setState(() {
                                   _xPayResponse = _xPayResponseTemplate;
                                 });
-                                _updateState(DetailsPageState.hasResult);
+                                _updateState(PageState.hasResult);
                               } on Exception catch (e) {
                                 //todo: notify user with error
-                                _updateState(DetailsPageState.hasError);
+                                _updateState(PageState.hasError);
                                 showIsnackbar(e.toString());
                                 return;
                               }

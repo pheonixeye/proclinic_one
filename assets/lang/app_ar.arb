@@ -36,7 +36,7 @@
     "englishName": "الاسم بالانجليزية",
     "arabicName": "الاسم بالعربية",
     "enterEnglishName": "ادخل الاسم بالانجليزية",
-    "enterValidArabicNameOfTwoUnits": "برجاء ادخال الاسم الثلاثي بالانجليزية",
+    "enterValidEnglishNameOfTwoUnits": "برجاء ادخال الاسم الثلاثي بالانجليزية",
     "enterArabicName": "ادخل الاسم بالعربية",
     "enterValidArabicNameOfTwoUnits": "برجاء ادخال الاسم الثلاثي بالعربية",
     "phone": "رقم الموبايل",
@@ -230,5 +230,8 @@
     "taxTotal": "قيمة الضريبة",
     "youSave": "وفر",
     "vatExclusive": "الاسعار لا تشمل نسبة ضريبة القيمة المضافة",
-    "paymentLink": "رابط الدفع"
+    "paymentLink": "رابط الدفع",
+    "paymentStatus": "حالة الدفع",
+    "paymentLinkGenerated": "تم ارسال رابط الدفع",
+    "error": "خطا !"
     }

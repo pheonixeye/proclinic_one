@@ -230,6 +230,8 @@
     "taxTotal": "Tax Total",
     "youSave": "You Save",
     "vatExclusive": "All Prices Are VAT% Exclusive",
-    "paymentLink": "Payment Link"
-
+    "paymentLink": "Payment Link",
+    "paymentStatus": "Payment Status",
+    "paymentLinkGenerated": "Payment Link Generated",
+    "error": "Error!"
 }
