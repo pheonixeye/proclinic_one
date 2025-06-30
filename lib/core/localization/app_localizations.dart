@@ -1381,6 +1381,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Error!'**
   String get error;
+
+  /// No description provided for @thankyouForYourPurchase.
+  ///
+  /// In en, this message translates to:
+  /// **'Your subscription has been successfully activated. You now have full access to all the features designed to help you manage appointments, patient records, billing, and more — all in one place.'**
+  String get thankyouForYourPurchase;
 }
 
 class _AppLocalizationsDelegate

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:proklinik_one/core/api/doc_sub_pay_api.dart';
+import 'package:proklinik_one/core/api/subscription_payment_api/doc_sub_pay_api.dart';
 import 'package:proklinik_one/core/api/x-pay/x_pay_api.dart';
 import 'package:proklinik_one/extensions/is_mobile_context.dart';
 import 'package:proklinik_one/extensions/loc_ext.dart';

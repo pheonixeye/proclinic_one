@@ -41,7 +41,7 @@ class ThankyouPage extends StatelessWidget {
                       ),
                       const SizedBox(width: 10),
                       const Text(
-                        'ProKliniK',
+                        'ProKliniK-One',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,

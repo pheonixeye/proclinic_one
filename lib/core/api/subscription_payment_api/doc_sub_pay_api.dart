@@ -1,6 +1,9 @@
+import 'package:pocketbase/pocketbase.dart';
 import 'package:proklinik_one/core/api/constants/pocketbase_helper.dart';
+import 'package:proklinik_one/core/api/subscription_payment_api/sub_payment_exp.dart';
 import 'package:proklinik_one/functions/dprint.dart';
 import 'package:proklinik_one/models/doctor_subscription.dart';
+import 'package:proklinik_one/models/payment.dart';
 
 class DocSubPayApi {
   const DocSubPayApi();
@@ -16,49 +19,67 @@ class DocSubPayApi {
     required String x_pay_transaction_status,
     required double amount,
   }) async {
-    late final String _subPaymentId;
-    late final String _docSubId;
+    late final RecordModel _subPaymentGetQuery;
 
     try {
-      final _paymentQuery = await PocketbaseHelper.pb
+      _subPaymentGetQuery = await PocketbaseHelper.pb
           .collection(subscription_payment_collection)
           .getFirstListItem(
-              "x_pay_payment_id = $x_pay_payment_id && doc_id = $doc_id");
-      _subPaymentId = _paymentQuery.id;
+              "x_pay_payment_id = '$x_pay_payment_id' && doc_id = '$doc_id'");
     } catch (e) {
       //TODO:
       dprint(e);
-      return;
+      throw CodedException(
+        message: 'No Payment Reference Found.',
+        code: 10,
+      );
     }
+    final _payment = Payment.fromJson(_subPaymentGetQuery.toJson());
+
+    if (_payment.x_pay_transaction_id != '') {
+      //TODO:
+      throw CodedException(
+        message: 'Transaction Has Already Been Processed.',
+        code: 11,
+      );
+    }
+
     try {
-      final _docSubQuery = await PocketbaseHelper.pb
+      await PocketbaseHelper.pb
           .collection(subscription_payment_collection)
           .update(
-        _subPaymentId,
+        _payment.id,
         body: {
           'x_pay_transaction_id': x_pay_transaction_id,
           'x_pay_transaction_status': x_pay_transaction_status,
           'amount': amount,
         },
       );
-      _docSubId = _docSubQuery.id;
     } catch (e) {
       //TODO:
       dprint(e);
-      return;
+      throw CodedException(
+        message:
+            'Unable To Update Payment Reference, Kindly Contact Our Support Team.',
+        code: 12,
+      );
     }
 
     try {
       await PocketbaseHelper.pb
           .collection(doctor_subscription_collection)
           .update(
-        _docSubId,
+        _payment.doctor_subscription_id,
         body: {'subscription_status': 'active'},
       );
     } catch (e) {
       //TODO:
       dprint(e);
-      return;
+      throw CodedException(
+        code: 13,
+        message:
+            'Unable To Activate Subscription, Kindly Contact Our Support Team.',
+      );
     }
   }
 
@@ -66,14 +87,23 @@ class DocSubPayApi {
     required String sub_pay_id,
     required String x_pay_payment_id,
   }) async {
-    await PocketbaseHelper.pb
-        .collection(subscription_payment_collection)
-        .update(
-      sub_pay_id,
-      body: {
-        'x_pay_payment_id': x_pay_payment_id,
-      },
-    );
+    try {
+      await PocketbaseHelper.pb
+          .collection(subscription_payment_collection)
+          .update(
+        sub_pay_id,
+        body: {
+          'x_pay_payment_id': x_pay_payment_id,
+        },
+      );
+    } catch (e) {
+      dprint(e);
+      throw CodedException(
+        code: 14,
+        message:
+            'Unable To Update Subscription Payment Reference, Kindly Contact Our Support Team.',
+      );
+    }
   }
 
   static Future<void> createDoctorSubscriptionAndSubscriptionPaymentRefrences({
@@ -93,7 +123,11 @@ class DocSubPayApi {
     } catch (e) {
       //TODO: handle
       dprint(e);
-      return;
+      throw CodedException(
+        code: 150,
+        message:
+            'Unable To Update Subscription & Payment References, Kindly Contact Our Support Team.',
+      );
     }
 
     try {
@@ -110,7 +144,11 @@ class DocSubPayApi {
     } catch (e) {
       //TODO: handle
       dprint(e);
-      return;
+      throw CodedException(
+        code: 151,
+        message:
+            'Unable To Update Subscription & Payment References, Kindly Contact Our Support Team.',
+      );
     }
 
     try {
@@ -125,7 +163,11 @@ class DocSubPayApi {
     } catch (e) {
       //TODO: handle
       dprint(e);
-      return;
+      throw CodedException(
+        code: 152,
+        message:
+            'Unable To Update Subscription & Payment References, Kindly Contact Our Support Team.',
+      );
     }
 
     try {
@@ -140,7 +182,11 @@ class DocSubPayApi {
     } catch (e) {
       //TODO: handle
       dprint(e);
-      return;
+      throw CodedException(
+        code: 153,
+        message:
+            'Unable To Update Subscription & Payment References, Kindly Contact Our Support Team.',
+      );
     }
   }
 }

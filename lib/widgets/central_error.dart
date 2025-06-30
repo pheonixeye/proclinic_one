@@ -12,7 +12,7 @@ class CentralError extends StatelessWidget {
     required this.code,
     required this.toExecute,
   });
-  final int code;
+  final int? code;
   final Future<void> Function() toExecute;
 
   @override
@@ -30,10 +30,13 @@ class CentralError extends StatelessWidget {
                 width: 75,
                 height: 75,
               ),
-              Text(
-                CodeToError(code)
-                    .errorMessage(context.read<PxLocale>().isEnglish),
-                textAlign: TextAlign.center,
+              Consumer<PxLocale>(
+                builder: (context, l, _) {
+                  return Text(
+                    CodeToError(code).errorMessage(l.isEnglish),
+                    textAlign: TextAlign.center,
+                  );
+                },
               ),
               ElevatedButton.icon(
                 onPressed: () async {

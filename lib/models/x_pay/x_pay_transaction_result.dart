@@ -51,10 +51,11 @@ class XPayTransactionResult extends Equatable {
     return XPayTransactionResult(
       member_id: map['member_id'] as String,
       payment_id: map['payment_id'] as String,
-      total_amount: map['total_amount'] as double,
+      total_amount: double.parse(map['total_amount'] as String),
       transaction_id: map['transaction_id'] as String,
       transaction_status: map['transaction_status'] as String,
-      total_amount_piasters: map['total_amount_piasters'] as double,
+      total_amount_piasters:
+          double.parse(map['total_amount_piasters'] as String),
     );
   }
 

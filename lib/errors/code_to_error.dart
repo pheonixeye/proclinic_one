@@ -27,26 +27,68 @@ class TranslatedError extends Equatable {
 class CodeToError {
   const CodeToError(this.code);
 
-  final int code;
+  final int? code;
 
   static Map<int, TranslatedError> errors = {
-    //client_exception_code
+    ///client_exception_code
     AppErrorCode.clientException.code: TranslatedError(
       en: 'Something Went Wrong While Fetching Data.',
       ar: 'حدث خطا اثناء تنزيل البيانات المطلوبة',
     ),
-    //authentication_exception_code
+
+    ///authentication_exception_code
     AppErrorCode.authException.code: TranslatedError(
       en: 'Something Went Wrong While Authenticating, check Email / Password combination.',
       ar: 'حدث خطا اثناء تسجبل الدخول - برجاء مراجعة البريد الالكتروني و كلمة السر.',
     ),
-    //order_details_exception
+
+    ///order_details_exception
     AppErrorCode.orderDetailsException.code: TranslatedError(
       en: 'Your Order Has Expired.',
       ar: 'لقد انتهت صلاحية طلبك',
     ),
+
+    ///subscription_payment_api_errors
+    10: TranslatedError(
+      en: 'No Payment Reference Found.',
+      ar: 'No Payment Reference Found.', //TODO
+    ),
+    11: TranslatedError(
+      en: 'Transaction Has Already Been Processed.',
+      ar: 'Transaction Has Already Been Processed.', //TODO
+    ),
+    12: TranslatedError(
+      en: 'Unable To Update Payment Reference, Kindly Contact Our Support Team.',
+      ar: 'Unable To Update Payment Reference, Kindly Contact Our Support Team.', //TODO
+    ),
+    13: TranslatedError(
+      en: 'Unable To Activate Subscription, Kindly Contact Our Support Team.',
+      ar: 'Unable To Activate Subscription, Kindly Contact Our Support Team.', //TODO
+    ),
+    14: TranslatedError(
+      en: 'Unable To Update Subscription Payment Reference, Kindly Contact Our Support Team.',
+      ar: 'Unable To Update Subscription Payment Reference, Kindly Contact Our Support Team.', //TODO
+    ),
+
+    ///createDoctorSubscriptionAndSubscriptionPaymentRefrences
+    ...Map.fromEntries(
+      [150, 151, 152, 153].map((e) {
+        return MapEntry(
+          e,
+          TranslatedError(
+            en: 'Unable To Update Subscription & Payment Reference, Kindly Contact Our Support Team.',
+            ar: 'Unable To Update Subscription & Payment Reference, Kindly Contact Our Support Team.', //TODO
+          ),
+        );
+      }),
+    ),
   };
 
-  String errorMessage(bool isEnglish) =>
-      isEnglish ? errors[code]!.en : errors[code]!.ar;
+  String errorMessage(bool isEnglish) => errors[code] == null
+      ? isEnglish
+          ? 'Unknown Error'
+          : 'خطأ غير معلوم'
+      : isEnglish
+          ? errors[code]!.en
+          : errors[code]!.ar;
 }

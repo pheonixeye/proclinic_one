@@ -233,5 +233,6 @@
     "paymentLink": "Payment Link",
     "paymentStatus": "Payment Status",
     "paymentLinkGenerated": "Payment Link Generated",
-    "error": "Error!"
+    "error": "Error!",
+    "thankyouForYourPurchase": "Your subscription has been successfully activated. You now have full access to all the features designed to help you manage appointments, patient records, billing, and more — all in one place."
 }

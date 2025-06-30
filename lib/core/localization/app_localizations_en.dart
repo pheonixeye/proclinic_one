@@ -674,4 +674,8 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get error => 'Error!';
+
+  @override
+  String get thankyouForYourPurchase =>
+      'Your subscription has been successfully activated. You now have full access to all the features designed to help you manage appointments, patient records, billing, and more — all in one place.';
 }

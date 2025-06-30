@@ -672,4 +672,8 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get error => 'خطا !';
+
+  @override
+  String get thankyouForYourPurchase =>
+      'تم تفعيل اشتراكك بنجاح. لديك الآن وصول كامل إلى جميع الميزات المصممة لمساعدتك في إدارة المواعيد، وملفات المرضى، والفواتير، وغير ذلك — كل ذلك في مكان واحد.';
 }
