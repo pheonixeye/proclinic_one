@@ -234,5 +234,14 @@
     "paymentStatus": "Payment Status",
     "paymentLinkGenerated": "Payment Link Generated",
     "error": "Error!",
-    "thankyouForYourPurchase": "Your subscription has been successfully activated. You now have full access to all the features designed to help you manage appointments, patient records, billing, and more — all in one place."
+    "thankyouForYourPurchase": "Your subscription has been successfully activated. You now have full access to all the features designed to help you manage appointments, patient records, billing, and more — all in one place.",
+    "@@add_visit_dialog": "",
+    "pickClinic" : "Pick Clinic",
+    "pickClinicSchedule" : "Pick Visit Day",
+    "pickClinicScheduleShift" : "Pick Clinic Shift",
+    "pickVisitDate" : "Pick Visit Date",
+    "pickVisitType" : "Pick Visit Type",
+    "pickVisitStatus" : "Pick Visit Status",
+    "pickPatientProgressStatus" : "Pick Patient Progress"
+
 }

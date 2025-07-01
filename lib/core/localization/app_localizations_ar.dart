@@ -676,4 +676,25 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get thankyouForYourPurchase =>
       'تم تفعيل اشتراكك بنجاح. لديك الآن وصول كامل إلى جميع الميزات المصممة لمساعدتك في إدارة المواعيد، وملفات المرضى، والفواتير، وغير ذلك — كل ذلك في مكان واحد.';
+
+  @override
+  String get pickClinic => 'اختر العيادة';
+
+  @override
+  String get pickClinicSchedule => 'اختر اليوم';
+
+  @override
+  String get pickClinicScheduleShift => 'اختر موعد الزيارة';
+
+  @override
+  String get pickVisitDate => 'اختر تاريخ الزيارة';
+
+  @override
+  String get pickVisitType => 'اختر نوع الزيارة';
+
+  @override
+  String get pickVisitStatus => 'حالة الزيارة';
+
+  @override
+  String get pickPatientProgressStatus => 'حالة الكشف';
 }

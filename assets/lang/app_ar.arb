@@ -234,5 +234,13 @@
     "paymentStatus": "حالة الدفع",
     "paymentLinkGenerated": "تم ارسال رابط الدفع",
     "error": "خطا !",
-    "thankyouForYourPurchase": "تم تفعيل اشتراكك بنجاح. لديك الآن وصول كامل إلى جميع الميزات المصممة لمساعدتك في إدارة المواعيد، وملفات المرضى، والفواتير، وغير ذلك — كل ذلك في مكان واحد."
+    "thankyouForYourPurchase": "تم تفعيل اشتراكك بنجاح. لديك الآن وصول كامل إلى جميع الميزات المصممة لمساعدتك في إدارة المواعيد، وملفات المرضى، والفواتير، وغير ذلك — كل ذلك في مكان واحد.",
+    "@@add_visit_dialog": "",
+    "pickClinic" : "اختر العيادة",
+    "pickClinicSchedule" : "اختر اليوم",
+    "pickClinicScheduleShift" : "اختر موعد الزيارة",
+    "pickVisitDate" : "اختر تاريخ الزيارة",
+    "pickVisitType" : "اختر نوع الزيارة",
+    "pickVisitStatus" : "حالة الزيارة",
+    "pickPatientProgressStatus" : "حالة الكشف"
     }

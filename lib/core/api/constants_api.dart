@@ -1,6 +1,7 @@
 import 'package:proklinik_one/core/api/constants/pocketbase_helper.dart';
 import 'package:proklinik_one/models/app_constants/account_type.dart';
 import 'package:proklinik_one/models/app_constants/_app_constants.dart';
+import 'package:proklinik_one/models/app_constants/patient_progress_status.dart';
 import 'package:proklinik_one/models/app_constants/subscription_plan.dart';
 import 'package:proklinik_one/models/app_constants/visit_status.dart';
 import 'package:proklinik_one/models/app_constants/visit_type.dart';
@@ -12,12 +13,14 @@ class ConstantsApi {
   static const String visit_status = 'visit_status';
   static const String visit_type = 'visit_type';
   static const String subscription_plan = 'subscription_plans';
+  static const String patient_progress_status = 'patient_progress_status';
 
   Future<AppConstants> fetchConstants() async {
     late final List<AccountType> accountTypes;
     late final List<VisitStatus> visitStatus;
     late final List<VisitType> visitType;
     late final List<SubscriptionPlan> subscriptionPlan;
+    late final List<PatientProgressStatus> patientProgressStatus;
 
     final _accountTypesRequest =
         PocketbaseHelper.pb.collection(account_types).getList();
@@ -31,11 +34,15 @@ class ConstantsApi {
     final _subscriptionPlanRequest =
         PocketbaseHelper.pb.collection(subscription_plan).getList();
 
+    final _patientProgressStatusRequest =
+        PocketbaseHelper.pb.collection(patient_progress_status).getList();
+
     final _result = await Future.wait([
       _accountTypesRequest,
       _visitStatusRequest,
       _visitTypeRequest,
-      _subscriptionPlanRequest
+      _subscriptionPlanRequest,
+      _patientProgressStatusRequest
     ]);
 
     accountTypes =
@@ -52,11 +59,17 @@ class ConstantsApi {
         .map((e) => SubscriptionPlan.fromJson(e.toJson()))
         .toList();
 
+    patientProgressStatus = _result[4]
+        .items
+        .map((e) => PatientProgressStatus.fromJson(e.toJson()))
+        .toList();
+
     return AppConstants(
       accountTypes: accountTypes,
       visitStatus: visitStatus,
       visitType: visitType,
       subscriptionPlan: subscriptionPlan,
+      patientProgressStatus: patientProgressStatus,
     );
   }
 }

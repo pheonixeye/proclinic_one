@@ -678,4 +678,25 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get thankyouForYourPurchase =>
       'Your subscription has been successfully activated. You now have full access to all the features designed to help you manage appointments, patient records, billing, and more — all in one place.';
+
+  @override
+  String get pickClinic => 'Pick Clinic';
+
+  @override
+  String get pickClinicSchedule => 'Pick Visit Day';
+
+  @override
+  String get pickClinicScheduleShift => 'Pick Clinic Shift';
+
+  @override
+  String get pickVisitDate => 'Pick Visit Date';
+
+  @override
+  String get pickVisitType => 'Pick Visit Type';
+
+  @override
+  String get pickVisitStatus => 'Pick Visit Status';
+
+  @override
+  String get pickPatientProgressStatus => 'Pick Patient Progress';
 }

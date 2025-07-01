@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 import 'package:proklinik_one/models/app_constants/account_type.dart';
+import 'package:proklinik_one/models/app_constants/patient_progress_status.dart';
 import 'package:proklinik_one/models/app_constants/subscription_plan.dart';
 import 'package:proklinik_one/models/app_constants/visit_status.dart';
 import 'package:proklinik_one/models/app_constants/visit_type.dart';
@@ -10,11 +11,13 @@ class AppConstants extends Equatable {
   final List<VisitStatus> visitStatus;
   final List<VisitType> visitType;
   final List<SubscriptionPlan> subscriptionPlan;
+  final List<PatientProgressStatus> patientProgressStatus;
   const AppConstants({
     required this.accountTypes,
     required this.visitStatus,
     required this.visitType,
     required this.subscriptionPlan,
+    required this.patientProgressStatus,
   });
 
   AppConstants copyWith({
@@ -22,12 +25,15 @@ class AppConstants extends Equatable {
     List<VisitStatus>? visitStatus,
     List<VisitType>? visitType,
     List<SubscriptionPlan>? subscriptionPlan,
+    List<PatientProgressStatus>? patientProgressStatus,
   }) {
     return AppConstants(
       accountTypes: accountTypes ?? this.accountTypes,
       visitStatus: visitStatus ?? this.visitStatus,
       visitType: visitType ?? this.visitType,
       subscriptionPlan: subscriptionPlan ?? this.subscriptionPlan,
+      patientProgressStatus:
+          patientProgressStatus ?? this.patientProgressStatus,
     );
   }
 
@@ -37,6 +43,8 @@ class AppConstants extends Equatable {
       'visitStatus': visitStatus.map((x) => x.toJson()).toList(),
       'visitType': visitType.map((x) => x.toJson()).toList(),
       'subscriptionPlan': subscriptionPlan.map((x) => x.toJson()).toList(),
+      'patientProgressStatus':
+          patientProgressStatus.map((x) => x.toJson()).toList(),
     };
   }
 
@@ -60,6 +68,12 @@ class AppConstants extends Equatable {
       subscriptionPlan: List<SubscriptionPlan>.from(
         (map['subscriptionPlan'] as List<dynamic>).map<SubscriptionPlan>(
           (x) => SubscriptionPlan.fromJson(x as Map<String, dynamic>),
+        ),
+      ),
+      patientProgressStatus: List<PatientProgressStatus>.from(
+        (map['patientProgressStatus'] as List<dynamic>)
+            .map<PatientProgressStatus>(
+          (x) => PatientProgressStatus.fromJson(x as Map<String, dynamic>),
         ),
       ),
     );

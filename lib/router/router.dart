@@ -311,8 +311,8 @@ class AppRouter {
                         path: patients,
                         name: patients,
                         builder: (context, state) {
-                          return ChangeNotifierProvider(
-                            create: (context) => PxPatients(
+                          return ChangeNotifierProvider.value(
+                            value: PxPatients(
                               api: PatientsApi(
                                 doc_id: context.read<PxAuth>().doc_id,
                               ),
@@ -327,8 +327,8 @@ class AppRouter {
                         path: clinics,
                         name: clinics,
                         builder: (context, state) {
-                          return ChangeNotifierProvider(
-                            create: (context) => PxClinics(
+                          return ChangeNotifierProvider.value(
+                            value: PxClinics(
                               api: ClinicsApi(
                                 doc_id: context.read<PxAuth>().doc_id,
                               ),
@@ -343,8 +343,8 @@ class AppRouter {
                         path: forms,
                         name: forms,
                         builder: (context, state) {
-                          return ChangeNotifierProvider(
-                            create: (context) => PxForms(
+                          return ChangeNotifierProvider.value(
+                            value: PxForms(
                               api: FormsApi(
                                 doc_id: context.read<PxAuth>().doc_id,
                               ),

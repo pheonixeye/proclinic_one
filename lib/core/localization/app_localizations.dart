@@ -1387,6 +1387,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your subscription has been successfully activated. You now have full access to all the features designed to help you manage appointments, patient records, billing, and more — all in one place.'**
   String get thankyouForYourPurchase;
+
+  /// No description provided for @pickClinic.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick Clinic'**
+  String get pickClinic;
+
+  /// No description provided for @pickClinicSchedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick Visit Day'**
+  String get pickClinicSchedule;
+
+  /// No description provided for @pickClinicScheduleShift.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick Clinic Shift'**
+  String get pickClinicScheduleShift;
+
+  /// No description provided for @pickVisitDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick Visit Date'**
+  String get pickVisitDate;
+
+  /// No description provided for @pickVisitType.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick Visit Type'**
+  String get pickVisitType;
+
+  /// No description provided for @pickVisitStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick Visit Status'**
+  String get pickVisitStatus;
+
+  /// No description provided for @pickPatientProgressStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick Patient Progress'**
+  String get pickPatientProgressStatus;
 }
 
 class _AppLocalizationsDelegate

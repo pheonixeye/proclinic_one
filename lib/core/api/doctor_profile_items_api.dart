@@ -1,6 +1,6 @@
 import 'package:proklinik_one/annotations/unused.dart';
 import 'package:proklinik_one/core/api/_api_result.dart';
-import 'package:proklinik_one/core/api/cache/api_caching_service.dart';
+// import 'package:proklinik_one/core/api/cache/api_caching_service.dart';
 import 'package:proklinik_one/core/api/constants/pocketbase_helper.dart';
 import 'package:proklinik_one/errors/code_to_error.dart';
 import 'package:proklinik_one/functions/contains_arabic.dart';
@@ -22,18 +22,18 @@ class DoctorProfileItemsApi {
   final String doc_id;
   final ProfileSetupItem item;
 
-  final _cacheService = ApiCachingService<List<DoctorItem>>();
+  // static final _cacheService = ApiCachingService<List<DoctorItem>>();
 
   late final String collection = '${doc_id}__${item.name}';
 
-  String get key => collection;
+  // String get key => collection;
 
-  static const String _fetch = 'fetchDoctorProfileItems';
+  // static const String _fetch = 'fetchDoctorProfileItems';
 
   Future<ApiResult<List<DoctorItem>>> fetchDoctorProfileItems() async {
-    if (_cacheService.operationIsCached(key, _fetch)) {
-      return _cacheService.getDataByKeys(key, _fetch)!;
-    }
+    // if (_cacheService.operationIsCached(key, _fetch)) {
+    //   return _cacheService.getDataByKeys(key, _fetch)!;
+    // }
     try {
       final _result = await PocketbaseHelper.pb.collection(collection).getList(
             perPage: 500,
@@ -53,13 +53,13 @@ class DoctorProfileItemsApi {
           .toList();
 
       // prettyPrint(_items);
-      _cacheService.addToCache(
-        key,
-        Cachable(
-          parametrizedQueryName: _fetch,
-          data: ApiDataResult<List<DoctorItem>>(data: _items),
-        ),
-      );
+      // _cacheService.addToCache(
+      //   key,
+      //   Cachable(
+      //     parametrizedQueryName: _fetch,
+      //     data: ApiDataResult<List<DoctorItem>>(data: _items),
+      //   ),
+      // );
 
       return ApiDataResult<List<DoctorItem>>(data: _items);
     } catch (e) {
@@ -74,10 +74,10 @@ class DoctorProfileItemsApi {
     await PocketbaseHelper.pb.collection(collection).create(
           body: item,
         );
-    _cacheService.invalidateCache(
-      key,
-      _fetch,
-    );
+    // _cacheService.invalidateCache(
+    //   key,
+    //   _fetch,
+    // );
   }
 
   Future<void> updateItem(Map<String, dynamic> item) async {
@@ -85,20 +85,20 @@ class DoctorProfileItemsApi {
           item['id'],
           body: item,
         );
-    _cacheService.invalidateCache(
-      key,
-      _fetch,
-    );
+    // _cacheService.invalidateCache(
+    //   key,
+    //   _fetch,
+    // );
   }
 
   Future<void> deleteItem(DoctorItem item) async {
     await PocketbaseHelper.pb.collection(collection).delete(
           item.id,
         );
-    _cacheService.invalidateCache(
-      key,
-      _fetch,
-    );
+    // _cacheService.invalidateCache(
+    //   key,
+    //   _fetch,
+    // );
   }
 
   @Unused()

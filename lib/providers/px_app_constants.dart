@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:proklinik_one/core/api/constants_api.dart';
 import 'package:proklinik_one/models/app_constants/account_type.dart';
 import 'package:proklinik_one/models/app_constants/_app_constants.dart';
+import 'package:proklinik_one/models/app_constants/patient_progress_status.dart';
 import 'package:proklinik_one/models/app_constants/subscription_plan.dart';
 import 'package:proklinik_one/models/app_constants/visit_status.dart';
 import 'package:proklinik_one/models/app_constants/visit_type.dart';
@@ -65,4 +66,12 @@ class PxAppConstants extends ChangeNotifier {
               annual!,
             ]
           : [];
+
+  PatientProgressStatus get in_waiting => _constants!.patientProgressStatus
+      .firstWhere((e) => e.name_en == 'In Waiting');
+  PatientProgressStatus get in_consultation => _constants!.patientProgressStatus
+      .firstWhere((e) => e.name_en == 'In Consultation');
+  PatientProgressStatus get done_consultation =>
+      _constants!.patientProgressStatus
+          .firstWhere((e) => e.name_en == 'Done Consultatin');
 }

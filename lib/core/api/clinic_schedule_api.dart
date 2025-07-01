@@ -1,4 +1,5 @@
 import 'package:proklinik_one/core/api/_api_result.dart';
+// import 'package:proklinik_one/core/api/cache/api_caching_service.dart';
 import 'package:proklinik_one/core/api/constants/pocketbase_helper.dart';
 import 'package:proklinik_one/errors/code_to_error.dart';
 import 'package:proklinik_one/models/clinic_schedule.dart';
@@ -15,7 +16,17 @@ class ClinicScheduleApi {
 
   late final String collection = '${doc_id}__clinics__schedules';
 
+  // String get key => collection;
+
+  // static final _cacheService = ApiCachingService<List<ClinicSchedule>>();
+
+  // late final String _fetchClinicSchedule =
+  //     'fetchClinicSchedule_${doc_id}_$clinic_id';
+
   Future<ApiResult<List<ClinicSchedule>>> fetchClinicSchedule() async {
+    // if (_cacheService.operationIsCached(key, _fetchClinicSchedule)) {
+    //   return _cacheService.getDataByKeys(key, _fetchClinicSchedule)!;
+    // }
     try {
       final _response =
           await PocketbaseHelper.pb.collection(collection).getList(
@@ -25,7 +36,13 @@ class ClinicScheduleApi {
       final _schedules = _response.items
           .map((e) => ClinicSchedule.fromJson(e.toJson()))
           .toList();
-
+      // _cacheService.addToCache(
+      //   key,
+      //   Cachable(
+      //     parametrizedQueryName: _fetchClinicSchedule,
+      //     data: ApiDataResult<List<ClinicSchedule>>(data: _schedules),
+      //   ),
+      // );
       return ApiDataResult<List<ClinicSchedule>>(data: _schedules);
     } catch (e) {
       return ApiErrorResult<List<ClinicSchedule>>(
@@ -37,12 +54,20 @@ class ClinicScheduleApi {
 
   Future<void> deleteClinicSchedule(ClinicSchedule schedule) async {
     await PocketbaseHelper.pb.collection(collection).delete(schedule.id);
+    // _cacheService.invalidateCache(
+    //   key,
+    //   _fetchClinicSchedule,
+    // );
   }
 
   Future<void> addClinicSchedule(ClinicSchedule schedule) async {
     await PocketbaseHelper.pb.collection(collection).create(
           body: schedule.toJson(),
         );
+    // _cacheService.invalidateCache(
+    //   key,
+    //   _fetchClinicSchedule,
+    // );
   }
 
   Future<void> updateClinicSchedule(ClinicSchedule schedule) async {
@@ -50,6 +75,10 @@ class ClinicScheduleApi {
           schedule.id,
           body: schedule.toJson(),
         );
+    // _cacheService.invalidateCache(
+    //   key,
+    //   _fetchClinicSchedule,
+    // );
   }
 
   //schedule_shifts_api
@@ -63,6 +92,10 @@ class ClinicScheduleApi {
       schedule.id,
       body: {'shifts': _toAddShifts},
     );
+    // _cacheService.invalidateCache(
+    //   key,
+    //   _fetchClinicSchedule,
+    // );
   }
 
   Future<void> deleteScheduleShift(
@@ -75,6 +108,10 @@ class ClinicScheduleApi {
       schedule.id,
       body: {'shifts': _toDeleteShifts},
     );
+    // _cacheService.invalidateCache(
+    //   key,
+    //   _fetchClinicSchedule,
+    // );
   }
 
   Future<void> updateScheduleShift(
@@ -89,5 +126,9 @@ class ClinicScheduleApi {
       schedule.id,
       body: {'shifts': _toUpdateShifts},
     );
+    // _cacheService.invalidateCache(
+    //   key,
+    //   _fetchClinicSchedule,
+    // );
   }
 }

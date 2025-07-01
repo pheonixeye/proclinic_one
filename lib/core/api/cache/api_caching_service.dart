@@ -2,13 +2,13 @@
 import 'package:equatable/equatable.dart';
 
 import 'package:proklinik_one/core/api/_api_result.dart';
+import 'package:proklinik_one/functions/dprint.dart';
 
 typedef ApiClassName = String;
 typedef ParametrizedQueryName = String;
 
 class _CacheDataStore {
-  //todo: check feasability of this implementation on long term
-  //TODO: remove && use static implementation of the provider
+  //TODO: Needs to be simplified - way more that this
   const _CacheDataStore();
 
   static final Map<ApiClassName, Cachable> _dataCache = {};
@@ -54,6 +54,11 @@ class Cachable<T> extends Equatable {
       _data = data;
     }
   }
+
+  @override
+  String toString() {
+    return 'Cachable($parametrizedQueryName : ${_data.runtimeType})';
+  }
 }
 
 class ApiCachingService<T> {
@@ -77,7 +82,7 @@ class ApiCachingService<T> {
   ) {
     final _classIsCached = _cache[key] != null;
     final _operationIsCached = _classIsCached && _cache[key]![query] != null;
-
+    prettyPrint(_cache.toString());
     if (_classIsCached && _operationIsCached) {
       return true;
     }
