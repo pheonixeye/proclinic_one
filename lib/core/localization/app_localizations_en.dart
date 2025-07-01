@@ -380,6 +380,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get followupFees => 'Followup Fees';
 
   @override
+  String get procedureFees => 'Procedure Fees';
+
+  @override
+  String get enterProcedureFees => 'Enter Procedure Fees';
+
+  @override
   String get enterFollowupFees => 'Enter Followup Fees';
 
   @override

@@ -392,6 +392,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                               name_en: _nameEnController.text,
                                               name_ar: _nameArController.text,
                                               phone: _phoneController.text,
+                                              appPermission: app.admin,
                                             );
                                             try {
                                               showDialog(

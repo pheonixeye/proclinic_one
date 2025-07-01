@@ -127,6 +127,8 @@
     "consultationFees" : "Consultation Fees",
     "enterConsultationFees" : "Enter Consultation Fees",
     "followupFees" : "Followup Fees",
+    "procedureFees" : "Procedure Fees",
+    "enterProcedureFees" : "Enter Procedure Fees",
     "enterFollowupFees" : "Enter Followup Fees",
     "followupDuration" : "Followup Duration (Days)",
     "enterFollowupDuration" : "Enter Followup Duration In (Days)",

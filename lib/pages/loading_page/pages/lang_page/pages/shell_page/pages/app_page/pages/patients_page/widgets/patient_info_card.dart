@@ -196,7 +196,6 @@ class _PatientInfoCardState extends State<PatientInfoCard> {
                               ],
                             ),
                             onTap: () async {
-                              //TODO:
                               final _visitDto =
                                   await showDialog<VisitCreateDto?>(
                                 context: context,
@@ -209,15 +208,8 @@ class _PatientInfoCardState extends State<PatientInfoCard> {
                               if (_visitDto == null) {
                                 return;
                               }
+                              //TODO:
                             },
-                          ),
-                          PopupMenuItem(
-                            child: Row(
-                              children: [
-                                const Icon(Icons.watch_later),
-                                Text(context.loc.scheduleAppointment),
-                              ],
-                            ),
                           ),
                           PopupMenuItem(
                             child: Row(

@@ -2,6 +2,7 @@
 
 import 'package:equatable/equatable.dart';
 import 'package:proklinik_one/models/app_constants/account_type.dart';
+import 'package:proklinik_one/models/app_constants/app_permission.dart';
 import 'package:proklinik_one/models/speciality.dart';
 
 class DtoCreateDoctorAccount extends Equatable {
@@ -14,6 +15,7 @@ class DtoCreateDoctorAccount extends Equatable {
   final Speciality speciality;
   final AccountType accountType;
   final bool emailVisibility;
+  final AppPermission appPermission;
 
   const DtoCreateDoctorAccount({
     required this.email,
@@ -25,6 +27,7 @@ class DtoCreateDoctorAccount extends Equatable {
     required this.speciality,
     required this.accountType,
     this.emailVisibility = true,
+    required this.appPermission,
   });
 
   DtoCreateDoctorAccount copyWith({
@@ -36,6 +39,7 @@ class DtoCreateDoctorAccount extends Equatable {
     String? passwordConfirm,
     Speciality? speciality,
     AccountType? accountType,
+    AppPermission? appPermission,
   }) {
     return DtoCreateDoctorAccount(
       email: email ?? this.email,
@@ -46,6 +50,7 @@ class DtoCreateDoctorAccount extends Equatable {
       passwordConfirm: passwordConfirm ?? this.passwordConfirm,
       speciality: speciality ?? this.speciality,
       accountType: accountType ?? this.accountType,
+      appPermission: appPermission ?? this.appPermission,
     );
   }
 
@@ -57,6 +62,7 @@ class DtoCreateDoctorAccount extends Equatable {
       'emailVisibility': emailVisibility,
       // 'speciality_id': speciality.id,
       'account_type_id': accountType.id,
+      'app_permissions_ids': [appPermission.id],
     };
   }
 
@@ -74,5 +80,6 @@ class DtoCreateDoctorAccount extends Equatable {
         speciality,
         accountType,
         emailVisibility,
+        appPermission,
       ];
 }

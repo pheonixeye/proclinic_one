@@ -379,6 +379,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get followupFees => 'سعر الاستشارة';
 
   @override
+  String get procedureFees => 'سعر الاجراء الطبي';
+
+  @override
+  String get enterProcedureFees => 'سعر الاجراء الطبي';
+
+  @override
   String get enterFollowupFees => 'ادخل سعر الاستشارة';
 
   @override

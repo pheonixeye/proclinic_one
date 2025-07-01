@@ -10,6 +10,7 @@ class Clinic extends Equatable {
   final int consultation_fees;
   final int followup_fees;
   final int followup_duration;
+  final int procedure_fees;
   final bool is_main;
   final bool is_active;
   final String prescription_file;
@@ -23,6 +24,7 @@ class Clinic extends Equatable {
     required this.phone_number,
     required this.consultation_fees,
     required this.followup_fees,
+    required this.procedure_fees,
     required this.followup_duration,
     required this.is_main,
     required this.is_active,
@@ -38,6 +40,7 @@ class Clinic extends Equatable {
     String? phone_number,
     int? consultation_fees,
     int? followup_fees,
+    int? procedure_fees,
     int? followup_duration,
     bool? is_main,
     bool? is_active,
@@ -52,6 +55,7 @@ class Clinic extends Equatable {
       phone_number: phone_number ?? this.phone_number,
       consultation_fees: consultation_fees ?? this.consultation_fees,
       followup_fees: followup_fees ?? this.followup_fees,
+      procedure_fees: procedure_fees ?? this.procedure_fees,
       followup_duration: followup_duration ?? this.followup_duration,
       is_main: is_main ?? this.is_main,
       is_active: is_active ?? this.is_active,
@@ -69,6 +73,7 @@ class Clinic extends Equatable {
       'phone_number': phone_number,
       'consultation_fees': consultation_fees,
       'followup_fees': followup_fees,
+      'procedure_fees': procedure_fees,
       'followup_duration': followup_duration,
       'is_main': is_main,
       'is_active': is_active,
@@ -86,6 +91,7 @@ class Clinic extends Equatable {
       phone_number: map['phone_number'] as String,
       consultation_fees: map['consultation_fees'] as int,
       followup_fees: map['followup_fees'] as int,
+      procedure_fees: map['procedure_fees'] as int,
       followup_duration: map['followup_duration'] as int,
       is_main: map['is_main'] as bool,
       is_active: map['is_active'] as bool,
@@ -110,6 +116,7 @@ class Clinic extends Equatable {
       phone_number,
       consultation_fees,
       followup_fees,
+      procedure_fees,
       followup_duration,
       is_main,
       is_active,

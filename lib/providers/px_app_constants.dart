@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:proklinik_one/core/api/constants_api.dart';
 import 'package:proklinik_one/models/app_constants/account_type.dart';
 import 'package:proklinik_one/models/app_constants/_app_constants.dart';
+import 'package:proklinik_one/models/app_constants/app_permission.dart';
 import 'package:proklinik_one/models/app_constants/patient_progress_status.dart';
 import 'package:proklinik_one/models/app_constants/subscription_plan.dart';
 import 'package:proklinik_one/models/app_constants/visit_status.dart';
@@ -25,18 +26,19 @@ class PxAppConstants extends ChangeNotifier {
     notifyListeners();
   }
 
+//account types
   AccountType get doctorAccountType =>
       _constants!.accountTypes.firstWhere((acc) => acc.name_en == 'Doctor');
 
   AccountType get assistantAccountType =>
       _constants!.accountTypes.firstWhere((acc) => acc.name_en == 'Assistant');
-
+//visit statuses
   VisitStatus get attended =>
       _constants!.visitStatus.firstWhere((vs) => vs.name_en == 'Attended');
 
   VisitStatus get notAttended =>
       _constants!.visitStatus.firstWhere((vs) => vs.name_en == 'Not Attended');
-
+//visit Types
   VisitType get consultation =>
       _constants!.visitType.firstWhere((vt) => vt.name_en == 'Consultation');
 
@@ -46,6 +48,8 @@ class PxAppConstants extends ChangeNotifier {
   VisitType get procedure =>
       _constants!.visitType.firstWhere((vt) => vt.name_en == 'Procedure');
 
+  List<VisitType> get visitTypes => [consultation, followup, procedure];
+  //subscription plans
   SubscriptionPlan? get trial =>
       _constants?.subscriptionPlan.firstWhere((sp) => sp.name_en == 'Trial');
 
@@ -66,7 +70,7 @@ class PxAppConstants extends ChangeNotifier {
               annual!,
             ]
           : [];
-
+//patient progress status
   PatientProgressStatus get in_waiting => _constants!.patientProgressStatus
       .firstWhere((e) => e.name_en == 'In Waiting');
   PatientProgressStatus get in_consultation => _constants!.patientProgressStatus
@@ -77,4 +81,9 @@ class PxAppConstants extends ChangeNotifier {
   PatientProgressStatus get has_not_attended_yet =>
       _constants!.patientProgressStatus
           .firstWhere((e) => e.name_en == 'Has Not Attended Yet');
+//app permissions
+  AppPermission get admin =>
+      _constants!.appPermission.firstWhere((e) => e.name_en == 'Admin');
+  AppPermission get user =>
+      _constants!.appPermission.firstWhere((e) => e.name_en == 'User');
 }

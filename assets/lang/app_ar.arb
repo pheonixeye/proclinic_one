@@ -127,6 +127,8 @@
     "consultationFees" : "سعر الكشف",
     "enterConsultationFees" : "ادخل سعر الكشف",
     "followupFees" : "سعر الاستشارة",
+    "procedureFees" : "سعر الاجراء الطبي",
+    "enterProcedureFees" : "سعر الاجراء الطبي",
     "enterFollowupFees" : "ادخل سعر الاستشارة",
     "followupDuration" : "مدة الاستشارة بالايام",
     "enterFollowupDuration" : "ادخل مدة الاستشارة بالايام",

@@ -21,6 +21,7 @@ class _CreateEditClinicDialogState extends State<CreateEditClinicDialog> {
   late final TextEditingController _phoneController;
   late final TextEditingController _consultationFeesController;
   late final TextEditingController _followupFeesController;
+  late final TextEditingController _procedureFeesController;
   late final TextEditingController _followupDurationController;
 
   bool? _is_main;
@@ -38,6 +39,8 @@ class _CreateEditClinicDialogState extends State<CreateEditClinicDialog> {
         text: widget.clinic?.consultation_fees.toString() ?? '');
     _followupFeesController = TextEditingController(
         text: widget.clinic?.followup_fees.toString() ?? '');
+    _procedureFeesController = TextEditingController(
+        text: widget.clinic?.procedure_fees.toString() ?? '');
     _followupDurationController = TextEditingController(
         text: widget.clinic?.followup_duration.toString() ?? '');
     _is_main = widget.clinic?.is_main ?? false;
@@ -50,6 +53,7 @@ class _CreateEditClinicDialogState extends State<CreateEditClinicDialog> {
     _phoneController.dispose();
     _consultationFeesController.dispose();
     _followupFeesController.dispose();
+    _procedureFeesController.dispose();
     _followupDurationController.dispose();
     super.dispose();
   }
@@ -198,6 +202,29 @@ class _CreateEditClinicDialogState extends State<CreateEditClinicDialog> {
             ListTile(
               title: Padding(
                 padding: const EdgeInsets.all(8.0),
+                child: Text(context.loc.procedureFees),
+              ),
+              subtitle: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: context.loc.procedureFees,
+                  ),
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  controller: _procedureFeesController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return context.loc.enterProcedureFees;
+                    }
+                    return null;
+                  },
+                ),
+              ),
+            ),
+            ListTile(
+              title: Padding(
+                padding: const EdgeInsets.all(8.0),
                 child: Text(context.loc.followupDuration),
               ),
               subtitle: Padding(
@@ -248,6 +275,7 @@ class _CreateEditClinicDialogState extends State<CreateEditClinicDialog> {
                 phone_number: _phoneController.text,
                 consultation_fees: int.parse(_consultationFeesController.text),
                 followup_fees: int.parse(_followupFeesController.text),
+                procedure_fees: int.parse(_procedureFeesController.text),
                 followup_duration: int.parse(_followupDurationController.text),
                 is_main: _is_main!,
                 is_active: true,

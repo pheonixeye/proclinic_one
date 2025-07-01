@@ -806,6 +806,18 @@ abstract class AppLocalizations {
   /// **'Followup Fees'**
   String get followupFees;
 
+  /// No description provided for @procedureFees.
+  ///
+  /// In en, this message translates to:
+  /// **'Procedure Fees'**
+  String get procedureFees;
+
+  /// No description provided for @enterProcedureFees.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Procedure Fees'**
+  String get enterProcedureFees;
+
   /// No description provided for @enterFollowupFees.
   ///
   /// In en, this message translates to:
