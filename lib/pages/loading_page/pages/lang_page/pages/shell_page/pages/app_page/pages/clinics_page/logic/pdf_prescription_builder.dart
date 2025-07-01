@@ -6,8 +6,8 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'package:proklinik_one/assets/assets.dart';
 import 'package:proklinik_one/extensions/model_ext.dart';
-import 'package:proklinik_one/models/clinic.dart';
-import 'package:proklinik_one/models/prescription_details.dart';
+import 'package:proklinik_one/models/clinic/clinic.dart';
+import 'package:proklinik_one/models/clinic/prescription_details.dart';
 
 class PrescriptionPdfBuilder {
   final Clinic clinic;

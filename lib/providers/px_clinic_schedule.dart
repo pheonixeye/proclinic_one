@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:proklinik_one/core/api/_api_result.dart';
 import 'package:proklinik_one/core/api/clinic_schedule_api.dart';
-import 'package:proklinik_one/models/clinic_schedule.dart';
-import 'package:proklinik_one/models/schedule_shift.dart';
+import 'package:proklinik_one/models/clinic/clinic_schedule.dart';
+import 'package:proklinik_one/models/clinic/schedule_shift.dart';
 
 class PxClinicSchedule extends ChangeNotifier {
   final ClinicScheduleApi api;

@@ -1,20 +1,15 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:proklinik_one/core/api/_api_result.dart';
-import 'package:proklinik_one/core/api/clinic_schedule_api.dart';
 import 'package:proklinik_one/core/api/forms_api.dart';
 import 'package:proklinik_one/core/api/patient_forms_api.dart';
 import 'package:proklinik_one/extensions/loc_ext.dart';
 import 'package:proklinik_one/functions/shell_function.dart';
-import 'package:proklinik_one/models/clinic.dart';
 import 'package:proklinik_one/models/patient.dart';
 import 'package:proklinik_one/models/visits/visit_create_dto.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/patients_page/widgets/add_new_visit_dialog.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/patients_page/widgets/create_edit_patient_dialog.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/patients_page/widgets/patient_forms_dialog.dart';
-import 'package:proklinik_one/providers/px_auth.dart';
-import 'package:proklinik_one/providers/px_clinic_schedule.dart';
 import 'package:proklinik_one/providers/px_clinics.dart';
 import 'package:proklinik_one/providers/px_forms.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
@@ -193,25 +188,8 @@ class _PatientInfoCardState extends State<PatientInfoCard> {
                                   await showDialog<VisitCreateDto?>(
                                 context: context,
                                 builder: (context) {
-                                  return MultiProvider(
-                                    providers: (c.result
-                                            as ApiDataResult<List<Clinic>>)
-                                        .data
-                                        .map((e) {
-                                      return ChangeNotifierProvider(
-                                        key: ValueKey(e.id),
-                                        create: (context) => PxClinicSchedule(
-                                          api: ClinicScheduleApi(
-                                            doc_id:
-                                                context.read<PxAuth>().doc_id,
-                                            clinic_id: e.id,
-                                          ),
-                                        ),
-                                      );
-                                    }).toList(),
-                                    child: AddNewVisitDialog(
-                                      patient: widget.patient,
-                                    ),
+                                  return AddNewVisitDialog(
+                                    patient: widget.patient,
                                   );
                                 },
                               );

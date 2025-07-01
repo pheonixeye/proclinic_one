@@ -3,8 +3,11 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:proklinik_one/core/api/_api_result.dart';
 import 'package:proklinik_one/core/api/clinics_api.dart';
-import 'package:proklinik_one/models/clinic.dart';
-import 'package:proklinik_one/models/prescription_details.dart';
+import 'package:proklinik_one/functions/first_where_or_null.dart';
+import 'package:proklinik_one/models/clinic/clinic.dart';
+import 'package:proklinik_one/models/clinic/clinic_schedule.dart';
+import 'package:proklinik_one/models/clinic/prescription_details.dart';
+import 'package:proklinik_one/models/clinic/schedule_shift.dart';
 
 class PxClinics extends ChangeNotifier {
   final ClinicsApi api;
@@ -13,7 +16,7 @@ class PxClinics extends ChangeNotifier {
     _fetchDoctorClinics();
   }
 
-  ApiResult<List<Clinic>>? _result;
+  static ApiResult<List<Clinic>>? _result;
   ApiResult<List<Clinic>>? get result => _result;
 
   Future<void> _fetchDoctorClinics() async {
@@ -47,7 +50,11 @@ class PxClinics extends ChangeNotifier {
   Clinic? get clinic => _clinic;
 
   void selectClinic(Clinic? value) {
-    _clinic = value;
+    _clinic = value == null
+        ? null
+        : (_result as ApiDataResult<List<Clinic>>)
+            .data
+            .firstWhereOrNull((e) => e.id == value.id);
     notifyListeners();
   }
 
@@ -64,9 +71,7 @@ class PxClinics extends ChangeNotifier {
       filename: filename,
     );
     await _fetchDoctorClinics();
-    selectClinic((_result as ApiDataResult<List<Clinic>>)
-        .data
-        .firstWhere((e) => e.id == _clinic?.id));
+    selectClinic(_clinic);
   }
 
   Future<void> deletePrescriptionFile() async {
@@ -88,8 +93,77 @@ class PxClinics extends ChangeNotifier {
     }
     await api.updatePrescriptionDetails(_clinic!, details);
     await _fetchDoctorClinics();
-    selectClinic((_result as ApiDataResult<List<Clinic>>)
-        .data
-        .firstWhere((e) => e.id == _clinic?.id));
+    selectClinic(_clinic);
+  }
+
+  Future<void> addClinicSchedule(
+    Clinic clinic,
+    ClinicSchedule schedule,
+  ) async {
+    await api.addClinicSchedule(clinic, schedule);
+    await _fetchDoctorClinics();
+    selectClinic(_clinic);
+  }
+
+  Future<void> removeClinicSchedule(
+    Clinic clinic,
+    ClinicSchedule schedule,
+  ) async {
+    await api.removeClinicSchedule(clinic, schedule);
+    await _fetchDoctorClinics();
+    selectClinic(_clinic);
+  }
+
+  Future<void> updateClinicSchedule(
+    Clinic clinic,
+    ClinicSchedule schedule,
+  ) async {
+    await api.updateClinicSchedule(clinic, schedule);
+    await _fetchDoctorClinics();
+    selectClinic(_clinic);
+  }
+
+  Future<void> addScheduleShift(
+    Clinic clinic,
+    ClinicSchedule schedule,
+    ScheduleShift shift,
+  ) async {
+    await api.addScheduleShift(clinic, schedule, shift);
+    await _fetchDoctorClinics();
+    selectClinic(_clinic);
+    setCliniSchedule(_clinicSchedule);
+  }
+
+  Future<void> removeScheduleShift(
+    Clinic clinic,
+    ClinicSchedule schedule,
+    ScheduleShift shift,
+  ) async {
+    await api.removeScheduleShift(clinic, schedule, shift);
+    await _fetchDoctorClinics();
+    selectClinic(_clinic);
+    setCliniSchedule(_clinicSchedule);
+  }
+
+  Future<void> updateScheduleShift(
+    Clinic clinic,
+    ClinicSchedule schedule,
+    ScheduleShift shift,
+  ) async {
+    await api.updateScheduleShift(clinic, schedule, shift);
+    await _fetchDoctorClinics();
+    selectClinic(_clinic);
+    setCliniSchedule(_clinicSchedule);
+  }
+
+  ClinicSchedule? _clinicSchedule;
+  ClinicSchedule? get clinicSchedule => _clinicSchedule;
+
+  void setCliniSchedule(ClinicSchedule? _sch) {
+    if (_clinic != null) {
+      _clinicSchedule =
+          _clinic!.clinic_schedule.firstWhereOrNull((e) => e.id == _sch?.id);
+      notifyListeners();
+    }
   }
 }

@@ -3,8 +3,8 @@ import 'package:equatable/equatable.dart';
 import 'package:proklinik_one/models/app_constants/patient_progress_status.dart';
 import 'package:proklinik_one/models/app_constants/visit_status.dart';
 import 'package:proklinik_one/models/app_constants/visit_type.dart';
-import 'package:proklinik_one/models/clinic.dart';
-import 'package:proklinik_one/models/clinic_schedule.dart';
+import 'package:proklinik_one/models/clinic/clinic.dart';
+import 'package:proklinik_one/models/clinic/clinic_schedule.dart';
 import 'package:proklinik_one/models/patient.dart';
 import 'package:proklinik_one/models/user.dart';
 

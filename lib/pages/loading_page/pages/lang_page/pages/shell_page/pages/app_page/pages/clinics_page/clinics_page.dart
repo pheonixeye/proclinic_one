@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:proklinik_one/core/api/_api_result.dart';
-import 'package:proklinik_one/core/api/clinic_schedule_api.dart';
 import 'package:proklinik_one/extensions/loc_ext.dart';
 import 'package:proklinik_one/functions/shell_function.dart';
-import 'package:proklinik_one/models/clinic.dart';
+import 'package:proklinik_one/models/clinic/clinic.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/clinics_page/widgets/clinic_prescription_dialog.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/clinics_page/widgets/clinic_schedule_dialog.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/clinics_page/widgets/create_edit_clinic_dialog.dart';
-import 'package:proklinik_one/providers/px_clinic_schedule.dart';
 import 'package:proklinik_one/providers/px_clinics.dart';
-import 'package:proklinik_one/providers/px_doctor.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:proklinik_one/widgets/central_error.dart';
 import 'package:proklinik_one/widgets/central_loading.dart';
@@ -296,26 +293,20 @@ class ClinicsPage extends StatelessWidget {
                                               ],
                                             ),
                                             onTap: () async {
+                                              c.selectClinic(_clinic);
                                               await showDialog(
                                                 context: context,
                                                 builder: (context) {
-                                                  return ChangeNotifierProvider(
-                                                    create: (context) =>
-                                                        PxClinicSchedule(
-                                                      api: ClinicScheduleApi(
-                                                        doc_id: context
-                                                            .read<PxDoctor>()
-                                                            .doctor!
-                                                            .id,
-                                                        clinic_id: _clinic.id,
-                                                      ),
-                                                    ),
-                                                    child: ClinicScheduleDialog(
-                                                      clinic: _clinic,
-                                                    ),
+                                                  return ChangeNotifierProvider
+                                                      .value(
+                                                    value: c,
+                                                    child:
+                                                        ClinicScheduleDialog(),
                                                   );
                                                 },
-                                              );
+                                              ).whenComplete(() {
+                                                c.selectClinic(null);
+                                              });
                                             },
                                           ),
                                           PopupMenuItem(

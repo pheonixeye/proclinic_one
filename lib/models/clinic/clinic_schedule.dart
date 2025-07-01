@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:proklinik_one/models/schedule_shift.dart';
+import 'package:proklinik_one/models/clinic/schedule_shift.dart';
 import 'package:proklinik_one/models/weekdays.dart';
+import 'package:uuid/uuid.dart';
 
 class ClinicSchedule extends Equatable {
   final String id;
@@ -67,7 +68,7 @@ class ClinicSchedule extends Equatable {
     int intday,
   ) {
     return ClinicSchedule(
-      id: '',
+      id: const Uuid().v4(),
       clinic_id: clinic_id,
       intday: intday,
       shifts: const [],

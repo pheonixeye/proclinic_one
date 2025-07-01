@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:proklinik_one/core/api/constants/pocketbase_helper.dart';
-import 'package:proklinik_one/models/clinic.dart';
+import 'package:proklinik_one/models/clinic/clinic.dart';
 import 'package:proklinik_one/models/speciality.dart';
 import 'package:http/http.dart' as http;
 

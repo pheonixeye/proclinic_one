@@ -5,7 +5,7 @@ import 'package:proklinik_one/extensions/loc_ext.dart';
 import 'package:proklinik_one/extensions/model_ext.dart';
 import 'package:proklinik_one/functions/dprint.dart';
 import 'package:proklinik_one/functions/shell_function.dart';
-import 'package:proklinik_one/models/prescription_details.dart';
+import 'package:proklinik_one/models/clinic/prescription_details.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/clinics_page/logic/pdf_prescription_builder.dart';
 import 'package:proklinik_one/providers/px_clinics.dart';
 import 'package:proklinik_one/providers/px_doctor.dart';

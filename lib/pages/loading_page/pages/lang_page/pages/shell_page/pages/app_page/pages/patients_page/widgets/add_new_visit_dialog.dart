@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:proklinik_one/core/api/_api_result.dart';
-import 'package:proklinik_one/core/api/clinic_schedule_api.dart';
 import 'package:proklinik_one/extensions/clinic_schedule_shift_ext.dart';
 import 'package:proklinik_one/extensions/is_mobile_context.dart';
 import 'package:proklinik_one/extensions/loc_ext.dart';
 import 'package:proklinik_one/models/app_constants/patient_progress_status.dart';
 import 'package:proklinik_one/models/app_constants/visit_status.dart';
 import 'package:proklinik_one/models/app_constants/visit_type.dart';
-import 'package:proklinik_one/models/clinic.dart';
-import 'package:proklinik_one/models/clinic_schedule.dart';
+import 'package:proklinik_one/models/clinic/clinic.dart';
+import 'package:proklinik_one/models/clinic/clinic_schedule.dart';
 import 'package:proklinik_one/models/patient.dart';
-import 'package:proklinik_one/models/schedule_shift.dart';
+import 'package:proklinik_one/models/clinic/schedule_shift.dart';
 import 'package:proklinik_one/models/visits/visit_create_dto.dart';
 import 'package:proklinik_one/models/weekdays.dart';
 import 'package:proklinik_one/providers/px_app_constants.dart';
 import 'package:proklinik_one/providers/px_auth.dart';
-import 'package:proklinik_one/providers/px_clinic_schedule.dart';
 import 'package:proklinik_one/providers/px_clinics.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:proklinik_one/widgets/central_loading.dart';
@@ -35,7 +33,9 @@ class AddNewVisitDialog extends StatefulWidget {
 class _AddNewVisitDialogState extends State<AddNewVisitDialog> {
   late final _width = MediaQuery.sizeOf(context).width;
   late final _height = MediaQuery.sizeOf(context).height;
+
   final formKey = GlobalKey<FormState>();
+
   late final TextEditingController _visitDateController;
 
   Clinic? _clinic;
@@ -72,12 +72,16 @@ class _AddNewVisitDialogState extends State<AddNewVisitDialog> {
                 child: Text.rich(
                   TextSpan(
                     text: context.loc.addNewVisit,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
                     children: [
                       TextSpan(text: '\n'),
                       TextSpan(
                         text: '(${widget.patient.name})',
                         style: TextStyle(
                           fontSize: 12,
+                          fontWeight: FontWeight.normal,
                         ),
                       ),
                     ],
@@ -119,6 +123,8 @@ class _AddNewVisitDialogState extends State<AddNewVisitDialog> {
                             onChanged: (value) {
                               setState(() {
                                 _clinic = value;
+                                _clinicSchedule = null;
+                                _scheduleShift = null;
                               });
                             },
                           );
@@ -127,65 +133,29 @@ class _AddNewVisitDialogState extends State<AddNewVisitDialog> {
                     ),
                   ),
                   if (_clinic != null)
-                    ChangeNotifierProvider(
-                      key: ValueKey(_clinic),
-                      create: (context) => PxClinicSchedule(
-                          api: ClinicScheduleApi(
-                        doc_id: context.read<PxAuth>().doc_id,
-                        clinic_id: _clinic!.id,
-                      )),
-                      child: Builder(
-                        builder: (context) {
-                          return Consumer<PxClinicSchedule>(
-                            builder: (context, s, _) {
-                              while (s.result == null) {
-                                return ListTile(
-                                  title: Text(context.loc.pickClinicSchedule),
-                                  subtitle: Row(
-                                    children: [
-                                      Expanded(
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: LinearProgressIndicator(),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }
-                              return ListTile(
-                                title: Text(context.loc.pickClinicSchedule),
-                                subtitle: Column(
-                                  children: [
-                                    ...(s.result as ApiDataResult<
-                                            List<ClinicSchedule>>)
-                                        .data
-                                        .map((e) {
-                                      return RadioListTile<ClinicSchedule>(
-                                        title: Text(
-                                          l.isEnglish
-                                              ? Weekdays.getWeekday(e.intday).en
-                                              : Weekdays.getWeekday(e.intday)
-                                                  .ar,
-                                        ),
-                                        controlAffinity:
-                                            ListTileControlAffinity.leading,
-                                        value: e,
-                                        groupValue: _clinicSchedule,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            _clinicSchedule = value;
-                                            _scheduleShift = null;
-                                          });
-                                        },
-                                      );
-                                    }),
-                                  ],
-                                ),
-                              );
-                            },
-                          );
-                        },
+                    ListTile(
+                      title: Text(context.loc.pickClinicSchedule),
+                      subtitle: Column(
+                        children: [
+                          ..._clinic!.clinic_schedule.map((e) {
+                            return RadioListTile<ClinicSchedule>(
+                              title: Text(
+                                l.isEnglish
+                                    ? Weekdays.getWeekday(e.intday).en
+                                    : Weekdays.getWeekday(e.intday).ar,
+                              ),
+                              controlAffinity: ListTileControlAffinity.leading,
+                              value: e,
+                              groupValue: _clinicSchedule,
+                              onChanged: (value) {
+                                setState(() {
+                                  _clinicSchedule = value;
+                                  _scheduleShift = null;
+                                });
+                              },
+                            );
+                          }),
+                        ],
                       ),
                     ),
                   ListTile(

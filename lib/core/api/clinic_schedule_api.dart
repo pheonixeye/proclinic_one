@@ -2,8 +2,8 @@ import 'package:proklinik_one/core/api/_api_result.dart';
 // import 'package:proklinik_one/core/api/cache/api_caching_service.dart';
 import 'package:proklinik_one/core/api/constants/pocketbase_helper.dart';
 import 'package:proklinik_one/errors/code_to_error.dart';
-import 'package:proklinik_one/models/clinic_schedule.dart';
-import 'package:proklinik_one/models/schedule_shift.dart';
+import 'package:proklinik_one/models/clinic/clinic_schedule.dart';
+import 'package:proklinik_one/models/clinic/schedule_shift.dart';
 
 class ClinicScheduleApi {
   final String doc_id;
