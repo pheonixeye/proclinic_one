@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:proklinik_one/core/api/forms_api.dart';
 import 'package:proklinik_one/core/api/patient_forms_api.dart';
@@ -42,16 +43,13 @@ class _PatientInfoCardState extends State<PatientInfoCard> {
         child: Consumer2<PxPatients, PxClinics>(
           builder: (context, p, c, _) {
             while (c.result == null) {
-              return Card.outlined(
-                elevation: 6,
-                child: ListTile(
-                  title: Row(
-                    children: [
-                      Expanded(
-                        child: LinearProgressIndicator(),
-                      ),
-                    ],
-                  ),
+              return ListTile(
+                title: Row(
+                  children: [
+                    Expanded(
+                      child: LinearProgressIndicator(),
+                    ),
+                  ],
                 ),
               );
             }
@@ -131,16 +129,31 @@ class _PatientInfoCardState extends State<PatientInfoCard> {
                                 TextSpan(text: ' : '),
                                 TextSpan(
                                   text: widget.patient.phone,
-                                  style: TextStyle(
-                                    decoration: TextDecoration.underline,
-                                  ),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
+                                ),
+                                TextSpan(text: '  '),
+                                WidgetSpan(
+                                  child: InkWell(
+                                    child: const Icon(Icons.call),
+                                    onTap: () {
                                       web.window.open(
                                         'tel://+2${widget.patient.phone}',
                                         '_blank',
                                       );
                                     },
+                                  ),
+                                ),
+                                TextSpan(text: '  '),
+                                WidgetSpan(
+                                  child: InkWell(
+                                    child:
+                                        const Icon(FontAwesomeIcons.whatsapp),
+                                    onTap: () {
+                                      web.window.open(
+                                        'https://wa.me/+2${widget.patient.phone}',
+                                        '_blank',
+                                      );
+                                    },
+                                  ),
                                 ),
                               ],
                             ),

@@ -73,5 +73,8 @@ class PxAppConstants extends ChangeNotifier {
       .firstWhere((e) => e.name_en == 'In Consultation');
   PatientProgressStatus get done_consultation =>
       _constants!.patientProgressStatus
-          .firstWhere((e) => e.name_en == 'Done Consultatin');
+          .firstWhere((e) => e.name_en == 'Done Consultation');
+  PatientProgressStatus get has_not_attended_yet =>
+      _constants!.patientProgressStatus
+          .firstWhere((e) => e.name_en == 'Has Not Attended Yet');
 }

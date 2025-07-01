@@ -42,9 +42,10 @@ class _AddNewVisitDialogState extends State<AddNewVisitDialog> {
   ClinicSchedule? _clinicSchedule;
   ScheduleShift? _scheduleShift;
   DateTime? _visitDate;
-  VisitType? _visitType;
-  VisitStatus? _visitStatus;
-  PatientProgressStatus? _patientProgressStatus;
+  late VisitType? _visitType = context.read<PxAppConstants>().consultation;
+  late VisitStatus? _visitStatus = context.read<PxAppConstants>().notAttended;
+  late PatientProgressStatus? _patientProgressStatus =
+      context.read<PxAppConstants>().has_not_attended_yet;
 
   @override
   void initState() {
@@ -58,6 +59,39 @@ class _AddNewVisitDialogState extends State<AddNewVisitDialog> {
     super.dispose();
   }
 
+  final _selectedShape = RoundedRectangleBorder(
+      borderRadius: BorderRadiusGeometry.circular(12), side: BorderSide());
+  final _unselectedShape =
+      RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.circular(12));
+
+  final _selectedColor = Colors.amber.shade50;
+  final _unSelectedColor = Colors.white;
+
+  RoundedRectangleBorder _tileBorder(bool isSelected) {
+    return isSelected ? _selectedShape : _unselectedShape;
+  }
+
+  Widget _validationErrorWidget<T>(FormFieldState<T> field) {
+    if (!field.validate()) {
+      return Align(
+        alignment: AlignmentDirectional.centerStart,
+        child: Padding(
+          padding: const EdgeInsetsDirectional.only(
+            start: 8.0,
+          ),
+          child: Text(
+            field.errorText ?? '',
+            style: TextStyle(
+              fontSize: 12,
+              color: Colors.red,
+            ),
+          ),
+        ),
+      );
+    }
+    return const SizedBox();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer3<PxAppConstants, PxClinics, PxLocale>(
@@ -66,6 +100,7 @@ class _AddNewVisitDialogState extends State<AddNewVisitDialog> {
           return CentralLoading();
         }
         return AlertDialog(
+          backgroundColor: Colors.blue.shade50,
           title: Row(
             children: [
               Expanded(
@@ -107,196 +142,351 @@ class _AddNewVisitDialogState extends State<AddNewVisitDialog> {
                 cacheExtent: 3000,
                 children: [
                   ListTile(
-                    title: Text(context.loc.pickClinic),
-                    subtitle: Column(
-                      children: [
-                        ...(c.result as ApiDataResult<List<Clinic>>)
-                            .data
-                            .map((e) {
-                          return RadioListTile<Clinic>(
-                            title: Text(
-                              l.isEnglish ? e.name_en : e.name_ar,
-                            ),
-                            controlAffinity: ListTileControlAffinity.leading,
-                            value: e,
-                            groupValue: _clinic,
-                            onChanged: (value) {
-                              setState(() {
-                                _clinic = value;
-                                _clinicSchedule = null;
-                                _scheduleShift = null;
-                              });
-                            },
+                    title: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(context.loc.pickClinic),
+                    ),
+                    subtitle: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: FormField<Clinic>(
+                        builder: (field) {
+                          return Column(
+                            spacing: 8,
+                            children: [
+                              ...(c.result as ApiDataResult<List<Clinic>>)
+                                  .data
+                                  .map((e) {
+                                bool _isSelected = e == _clinic;
+                                return RadioListTile<Clinic>(
+                                  shape: _tileBorder(_isSelected),
+                                  selected: _isSelected,
+                                  tileColor: _unSelectedColor,
+                                  selectedTileColor: _selectedColor,
+                                  title: Text(
+                                    l.isEnglish ? e.name_en : e.name_ar,
+                                  ),
+                                  controlAffinity:
+                                      ListTileControlAffinity.leading,
+                                  value: e,
+                                  groupValue: _clinic,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _clinic = value;
+                                      _clinicSchedule = null;
+                                      _scheduleShift = null;
+                                    });
+                                  },
+                                );
+                              }),
+                              _validationErrorWidget<Clinic>(field),
+                            ],
                           );
-                        }),
-                      ],
+                        },
+                        validator: (value) {
+                          if (_clinic == null) {
+                            return context.loc.pickClinic;
+                          }
+                          return null;
+                        },
+                      ),
                     ),
                   ),
                   if (_clinic != null)
                     ListTile(
-                      title: Text(context.loc.pickClinicSchedule),
-                      subtitle: Column(
-                        children: [
-                          ..._clinic!.clinic_schedule.map((e) {
-                            return RadioListTile<ClinicSchedule>(
-                              title: Text(
-                                l.isEnglish
-                                    ? Weekdays.getWeekday(e.intday).en
-                                    : Weekdays.getWeekday(e.intday).ar,
-                              ),
-                              controlAffinity: ListTileControlAffinity.leading,
-                              value: e,
-                              groupValue: _clinicSchedule,
-                              onChanged: (value) {
-                                setState(() {
-                                  _clinicSchedule = value;
-                                  _scheduleShift = null;
-                                });
-                              },
+                      title: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(context.loc.pickClinicSchedule),
+                      ),
+                      subtitle: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: FormField<ClinicSchedule>(
+                          validator: (value) {
+                            if (_clinicSchedule == null) {
+                              return context.loc.pickClinicSchedule;
+                            }
+                            return null;
+                          },
+                          builder: (field) {
+                            return Column(
+                              spacing: 8,
+                              children: [
+                                ..._clinic!.clinic_schedule.map((e) {
+                                  bool _isSelected = e == _clinicSchedule;
+                                  return RadioListTile<ClinicSchedule>(
+                                    shape: _tileBorder(_isSelected),
+                                    selected: _isSelected,
+                                    tileColor: _unSelectedColor,
+                                    selectedTileColor: _selectedColor,
+                                    title: Text(
+                                      l.isEnglish
+                                          ? Weekdays.getWeekday(e.intday).en
+                                          : Weekdays.getWeekday(e.intday).ar,
+                                    ),
+                                    controlAffinity:
+                                        ListTileControlAffinity.leading,
+                                    value: e,
+                                    groupValue: _clinicSchedule,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _clinicSchedule = value;
+                                        _scheduleShift = null;
+                                      });
+                                    },
+                                  );
+                                }),
+                                _validationErrorWidget(field),
+                              ],
                             );
-                          }),
-                        ],
+                          },
+                        ),
                       ),
                     ),
                   ListTile(
-                    title: Text(context.loc.pickClinicScheduleShift),
-                    subtitle: Column(
-                      children: [
-                        if (_clinicSchedule != null)
-                          ..._clinicSchedule!.shifts.map((e) {
-                            return RadioListTile<ScheduleShift>(
-                              title: Text(
-                                e.formattedFromTo(context),
-                              ),
-                              controlAffinity: ListTileControlAffinity.leading,
-                              value: e,
-                              groupValue: _scheduleShift,
-                              onChanged: (value) {
-                                setState(() {
-                                  _scheduleShift = value;
-                                });
-                              },
-                            );
-                          })
-                      ],
+                    title: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(context.loc.pickClinicScheduleShift),
+                    ),
+                    subtitle: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: FormField<ScheduleShift>(
+                        validator: (value) {
+                          if (_scheduleShift == null) {
+                            return context.loc.pickClinicScheduleShift;
+                          }
+                          return null;
+                        },
+                        builder: (field) {
+                          return Column(
+                            spacing: 8,
+                            children: [
+                              if (_clinicSchedule != null)
+                                ..._clinicSchedule!.shifts.map((e) {
+                                  bool _isSelected = e == _scheduleShift;
+                                  return RadioListTile<ScheduleShift>(
+                                    shape: _tileBorder(_isSelected),
+                                    selected: _isSelected,
+                                    tileColor: _unSelectedColor,
+                                    selectedTileColor: _selectedColor,
+                                    title: Text(
+                                      e.formattedFromTo(context),
+                                    ),
+                                    controlAffinity:
+                                        ListTileControlAffinity.leading,
+                                    value: e,
+                                    groupValue: _scheduleShift,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _scheduleShift = value;
+                                      });
+                                    },
+                                  );
+                                }),
+                              _validationErrorWidget(field),
+                            ],
+                          );
+                        },
+                      ),
                     ),
                   ),
                   ListTile(
-                    title: Text(context.loc.pickVisitDate),
-                    subtitle: Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
+                    title: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(context.loc.pickVisitDate),
+                    ),
+                    subtitle: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        spacing: 8,
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
                               ),
-                            ),
-                            enabled: false,
-                            controller: _visitDateController,
-                          ),
-                        ),
-                        FloatingActionButton.small(
-                          heroTag: 'pick-visit-date',
-                          onPressed: () async {
-                            final _vd = await showDatePicker(
-                              context: context,
-                              firstDate: DateTime.now(),
-                              lastDate: DateTime.now().copyWith(
-                                year: DateTime.now().year + 1,
-                              ),
-                              selectableDayPredicate: (day) {
-                                if (day.weekday == _clinicSchedule!.intday) {
-                                  return true;
+                              enabled: false,
+                              controller: _visitDateController,
+                              validator: (value) {
+                                if (value == null || value.trim().isEmpty) {
+                                  return context.loc.pickVisitDate;
                                 }
-                                return false;
+                                return null;
                               },
-                            );
-                            if (_vd == null) {
-                              return;
-                            }
-                            setState(() {
-                              _visitDateController.text =
-                                  DateFormat('dd / MM / yyyy', l.lang)
-                                      .format(_vd);
-                              _visitDate = _vd;
-                            });
-                          },
-                          child: const Icon(Icons.calendar_month),
-                        ),
-                      ],
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: FloatingActionButton.small(
+                              heroTag: 'pick-visit-date',
+                              onPressed: () async {
+                                final _vd = await showDatePicker(
+                                  context: context,
+                                  firstDate: DateTime.now(),
+                                  lastDate: DateTime.now().copyWith(
+                                    year: DateTime.now().year + 1,
+                                  ),
+                                  selectableDayPredicate: (day) {
+                                    if (day.weekday ==
+                                        _clinicSchedule!.intday) {
+                                      return true;
+                                    }
+                                    return false;
+                                  },
+                                );
+                                if (_vd == null) {
+                                  return;
+                                }
+                                setState(() {
+                                  _visitDateController.text =
+                                      DateFormat('dd / MM / yyyy', l.lang)
+                                          .format(_vd);
+                                  _visitDate = _vd;
+                                });
+                              },
+                              child: const Icon(Icons.calendar_month),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   ListTile(
-                    title: Text(context.loc.pickVisitType),
-                    subtitle: Row(
-                      children: [
-                        ...a.constants!.visitType.map((e) {
-                          return Expanded(
-                            child: RadioListTile<VisitType>(
-                              title: Text(
-                                l.isEnglish ? e.name_en : e.name_ar,
-                              ),
-                              controlAffinity: ListTileControlAffinity.leading,
-                              value: e,
-                              groupValue: _visitType,
-                              onChanged: (value) {
-                                setState(() {
-                                  _visitType = value;
-                                });
-                              },
-                            ),
+                    title: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(context.loc.pickVisitType),
+                    ),
+                    subtitle: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: FormField<VisitType>(
+                        validator: (value) {
+                          if (_visitType == null) {
+                            return context.loc.pickVisitType;
+                          }
+                          return null;
+                        },
+                        builder: (field) {
+                          return Column(
+                            spacing: 8,
+                            children: [
+                              ...a.constants!.visitType.map((e) {
+                                bool _isSelected = e == _visitType;
+                                return RadioListTile<VisitType>(
+                                  shape: _tileBorder(_isSelected),
+                                  selected: _isSelected,
+                                  tileColor: _unSelectedColor,
+                                  selectedTileColor: _selectedColor,
+                                  title: Text(
+                                    l.isEnglish ? e.name_en : e.name_ar,
+                                  ),
+                                  controlAffinity:
+                                      ListTileControlAffinity.leading,
+                                  value: e,
+                                  groupValue: _visitType,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _visitType = value;
+                                    });
+                                  },
+                                );
+                              }),
+                              _validationErrorWidget(field),
+                            ],
                           );
-                        })
-                      ],
+                        },
+                      ),
                     ),
                   ),
                   ListTile(
-                    title: Text(context.loc.pickVisitStatus),
-                    subtitle: Row(
-                      children: [
-                        ...a.constants!.visitStatus.map((e) {
-                          return Expanded(
-                            child: RadioListTile<VisitStatus>(
-                              title: Text(
-                                l.isEnglish ? e.name_en : e.name_ar,
-                              ),
-                              controlAffinity: ListTileControlAffinity.leading,
-                              value: e,
-                              groupValue: _visitStatus,
-                              onChanged: (value) {
-                                setState(() {
-                                  _visitStatus = value;
-                                });
-                              },
-                            ),
+                    title: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(context.loc.pickVisitStatus),
+                    ),
+                    subtitle: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: FormField(
+                        validator: (value) {
+                          if (_visitStatus == null) {
+                            return context.loc.pickVisitStatus;
+                          }
+                          return null;
+                        },
+                        builder: (field) {
+                          return Column(
+                            spacing: 8,
+                            children: [
+                              ...a.constants!.visitStatus.map((e) {
+                                bool _isSelected = e == _visitStatus;
+                                return RadioListTile<VisitStatus>(
+                                  shape: _tileBorder(_isSelected),
+                                  selected: _isSelected,
+                                  tileColor: _unSelectedColor,
+                                  selectedTileColor: _selectedColor,
+                                  title: Text(
+                                    l.isEnglish ? e.name_en : e.name_ar,
+                                  ),
+                                  controlAffinity:
+                                      ListTileControlAffinity.leading,
+                                  value: e,
+                                  groupValue: _visitStatus,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _visitStatus = value;
+                                    });
+                                  },
+                                );
+                              }),
+                              _validationErrorWidget(field),
+                            ],
                           );
-                        })
-                      ],
+                        },
+                      ),
                     ),
                   ),
                   ListTile(
-                    title: Text(context.loc.pickPatientProgressStatus),
-                    subtitle: Row(
-                      children: [
-                        ...a.constants!.patientProgressStatus.map((e) {
-                          return Expanded(
-                            child: RadioListTile<PatientProgressStatus>(
-                              title: Text(
-                                l.isEnglish ? e.name_en : e.name_ar,
-                              ),
-                              controlAffinity: ListTileControlAffinity.leading,
-                              value: e,
-                              groupValue: _patientProgressStatus,
-                              onChanged: (value) {
-                                setState(() {
-                                  _patientProgressStatus = value;
-                                });
-                              },
-                            ),
-                          );
-                        })
-                      ],
+                    title: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(context.loc.pickPatientProgressStatus),
+                    ),
+                    subtitle: FormField<PatientProgressStatus>(
+                      builder: (field) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            spacing: 8,
+                            children: [
+                              ...a.constants!.patientProgressStatus.map((e) {
+                                bool _isSelected = e == _patientProgressStatus;
+                                return RadioListTile<PatientProgressStatus>(
+                                  shape: _tileBorder(_isSelected),
+                                  selected: _isSelected,
+                                  tileColor: _unSelectedColor,
+                                  selectedTileColor: _selectedColor,
+                                  title: Text(
+                                    l.isEnglish ? e.name_en : e.name_ar,
+                                  ),
+                                  controlAffinity:
+                                      ListTileControlAffinity.leading,
+                                  value: e,
+                                  groupValue: _patientProgressStatus,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _patientProgressStatus = value;
+                                    });
+                                  },
+                                );
+                              })
+                            ],
+                          ),
+                        );
+                      },
+                      validator: (value) {
+                        if (_patientProgressStatus == null) {
+                          return context.loc.pickPatientProgressStatus;
+                        }
+                        return null;
+                      },
                     ),
                   ),
                 ],
