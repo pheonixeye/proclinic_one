@@ -17,6 +17,7 @@ import 'package:proklinik_one/providers/px_app_constants.dart';
 import 'package:proklinik_one/providers/px_auth.dart';
 import 'package:proklinik_one/providers/px_clinics.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
+import 'package:proklinik_one/providers/px_visits.dart';
 import 'package:proklinik_one/widgets/central_loading.dart';
 import 'package:provider/provider.dart';
 
@@ -92,11 +93,13 @@ class _AddNewVisitDialogState extends State<AddNewVisitDialog> {
     return const SizedBox();
   }
 
+  bool _isLoading = false;
+
   @override
   Widget build(BuildContext context) {
-    return Consumer3<PxAppConstants, PxClinics, PxLocale>(
-      builder: (context, a, c, l, _) {
-        while (a.constants == null || c.result == null) {
+    return Consumer4<PxAppConstants, PxClinics, PxVisits, PxLocale>(
+      builder: (context, a, c, v, l, _) {
+        while (a.constants == null || c.result == null || v.visits == null) {
           return CentralLoading();
         }
         return AlertDialog(
@@ -497,21 +500,30 @@ class _AddNewVisitDialogState extends State<AddNewVisitDialog> {
           actionsPadding: const EdgeInsets.all(8),
           actions: [
             ElevatedButton.icon(
-              onPressed: () {
+              onPressed: () async {
                 if (formKey.currentState!.validate()) {
-                  final _visitDto = VisitCreateDto(
-                    clinic_id: _clinic!.id,
-                    patient_id: widget.patient.id,
-                    added_by_id: context.read<PxAuth>().doc_id,
-                    clinic_schedule_id: _clinicSchedule!.id,
-                    clinic_schedule_shift_id: _scheduleShift!.id,
-                    visit_date: _visitDate!.toIso8601String(),
-                    patient_entry_number: 0, //TODO
-                    visit_status_id: _visitStatus!.id,
-                    visit_type_id: _visitType!.id,
-                    patient_progress_status_id: _patientProgressStatus!.id,
-                  );
-                  Navigator.pop(context, _visitDto);
+                  setState(() {
+                    _isLoading = true;
+                  });
+                  final _nextEntryNumber = await v.nextEntryNumber(_visitDate!);
+                  setState(() {
+                    _isLoading = false;
+                  });
+                  if (context.mounted) {
+                    final _visitDto = VisitCreateDto(
+                      clinic_id: _clinic!.id,
+                      patient_id: widget.patient.id,
+                      added_by_id: context.read<PxAuth>().doc_id,
+                      clinic_schedule_id: _clinicSchedule!.id,
+                      clinic_schedule_shift_id: _scheduleShift!.id,
+                      visit_date: _visitDate!.toIso8601String(),
+                      patient_entry_number: _nextEntryNumber,
+                      visit_status_id: _visitStatus!.id,
+                      visit_type_id: _visitType!.id,
+                      patient_progress_status_id: _patientProgressStatus!.id,
+                    );
+                    Navigator.pop(context, _visitDto);
+                  }
                 }
               },
               label: Text(context.loc.confirm),
@@ -520,6 +532,10 @@ class _AddNewVisitDialogState extends State<AddNewVisitDialog> {
                 color: Colors.green.shade100,
               ),
             ),
+            if (_isLoading)
+              CircularProgressIndicator(
+                backgroundColor: Colors.amber.shade200,
+              ),
             ElevatedButton.icon(
               onPressed: () {
                 Navigator.pop(context, null);

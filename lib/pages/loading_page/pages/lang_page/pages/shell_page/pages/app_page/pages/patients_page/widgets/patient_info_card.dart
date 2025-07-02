@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:proklinik_one/core/api/forms_api.dart';
 import 'package:proklinik_one/core/api/patient_forms_api.dart';
@@ -17,6 +18,7 @@ import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:proklinik_one/providers/px_patient_forms.dart';
 import 'package:proklinik_one/providers/px_patients.dart';
 import 'package:proklinik_one/providers/px_visits.dart';
+import 'package:proklinik_one/router/router.dart';
 import 'package:proklinik_one/widgets/themed_popupmenu_btn.dart';
 import 'package:provider/provider.dart';
 import 'package:web/web.dart' as web;
@@ -218,6 +220,14 @@ class _PatientInfoCardState extends State<PatientInfoCard> {
                                         .read<PxVisits>()
                                         .addNewVisit(_visitDto);
                                   },
+                                  duration: const Duration(milliseconds: 500),
+                                );
+                              }
+                              if (context.mounted) {
+                                GoRouter.of(context).goNamed(
+                                  AppRouter.app,
+                                  pathParameters:
+                                      defaultPathParameters(context),
                                 );
                               }
                             },

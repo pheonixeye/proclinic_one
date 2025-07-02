@@ -1447,6 +1447,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No Visits Found For Today'**
   String get noVisitsFoundForToday;
+
+  /// No description provided for @attendanceStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Attendance Status'**
+  String get attendanceStatus;
+
+  /// No description provided for @progressStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Progress Status'**
+  String get progressStatus;
 }
 
 class _AppLocalizationsDelegate

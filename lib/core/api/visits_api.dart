@@ -3,7 +3,6 @@ import 'package:pocketbase/pocketbase.dart';
 import 'package:proklinik_one/core/api/_api_result.dart';
 import 'package:proklinik_one/core/api/constants/pocketbase_helper.dart';
 import 'package:proklinik_one/errors/code_to_error.dart';
-import 'package:proklinik_one/functions/dprint.dart';
 import 'package:proklinik_one/models/app_constants/account_type.dart';
 import 'package:proklinik_one/models/app_constants/app_permission.dart';
 import 'package:proklinik_one/models/app_constants/patient_progress_status.dart';
@@ -27,24 +26,28 @@ class VisitsApi {
 
   final _now = DateTime.now();
 
-  late final _today = DateTime(_now.year, _now.month, _now.day);
-  late final _tomorrow = DateTime(_now.year, _now.month, _now.day + 1);
-  late final _todayFormatted = DateFormat('yyyy-MM-dd', 'en').format(_today);
-
-  late final _tomorrowFormatted =
-      DateFormat('yyyy-MM-dd', 'en').format(_tomorrow);
-
-  Future<ApiResult<List<Visit>>> fetctVisitsOfToday({
+  Future<ApiResult<List<Visit>>> fetctVisitsOfASpecificDate({
     required int page,
     required int perPage,
+    DateTime? visit_date,
   }) async {
+    visit_date = visit_date ?? _now;
+    final _date_of_visit =
+        DateTime(visit_date.year, visit_date.month, visit_date.day);
+    final _date_after_visit =
+        DateTime(visit_date.year, visit_date.month, visit_date.day + 1);
+
+    final _dateOfVisitFormatted =
+        DateFormat('yyyy-MM-dd', 'en').format(_date_of_visit);
+    final _dateAfterVisitFormatted =
+        DateFormat('yyyy-MM-dd', 'en').format(_date_after_visit);
     try {
-      print(_todayFormatted);
+      // print(_todayFormatted);
       final _result = await PocketbaseHelper.pb.collection(collection).getList(
             page: page,
             perPage: perPage,
             filter:
-                "visit_date >= '$_todayFormatted' && visit_date < '$_tomorrowFormatted'",
+                "visit_date >= '$_dateOfVisitFormatted' && visit_date < '$_dateAfterVisitFormatted'",
             expand: _expand,
             sort: '-created, patient_entry_number',
           );
@@ -110,5 +113,29 @@ class VisitsApi {
         key: value,
       },
     );
+  }
+
+  Future<UnsubscribeFunc> todayVisitsSubscription(
+    void Function(RecordSubscriptionEvent) callback,
+  ) async {
+    final visit_date = _now;
+    final _date_of_visit =
+        DateTime(visit_date.year, visit_date.month, visit_date.day);
+    final _date_after_visit =
+        DateTime(visit_date.year, visit_date.month, visit_date.day + 1);
+
+    final _dateOfVisitFormatted =
+        DateFormat('yyyy-MM-dd', 'en').format(_date_of_visit);
+    final _dateAfterVisitFormatted =
+        DateFormat('yyyy-MM-dd', 'en').format(_date_after_visit);
+
+    final sub = await PocketbaseHelper.pb.collection(collection).subscribe(
+          '*',
+          callback,
+          filter:
+              "visit_date >= '$_dateOfVisitFormatted' && visit_date < '$_dateAfterVisitFormatted'",
+          expand: _expand,
+        );
+    return sub;
   }
 }

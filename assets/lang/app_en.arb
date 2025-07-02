@@ -246,6 +246,8 @@
     "pickVisitStatus" : "Pick Visit Status",
     "pickPatientProgressStatus" : "Pick Patient Progress",
     "@@today_visits_page": "",
-    "noVisitsFoundForToday" : "No Visits Found For Today"
+    "noVisitsFoundForToday" : "No Visits Found For Today",
+    "attendanceStatus" : "Attendance Status",
+    "progressStatus" : "Progress Status"
 
 }

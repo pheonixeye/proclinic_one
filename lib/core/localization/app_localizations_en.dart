@@ -708,4 +708,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noVisitsFoundForToday => 'No Visits Found For Today';
+
+  @override
+  String get attendanceStatus => 'Attendance Status';
+
+  @override
+  String get progressStatus => 'Progress Status';
 }

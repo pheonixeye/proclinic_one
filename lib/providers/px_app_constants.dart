@@ -38,6 +38,8 @@ class PxAppConstants extends ChangeNotifier {
 
   VisitStatus get notAttended =>
       _constants!.visitStatus.firstWhere((vs) => vs.name_en == 'Not Attended');
+
+  List<VisitStatus> get visitStatuses => [attended, notAttended];
 //visit Types
   VisitType get consultation =>
       _constants!.visitType.firstWhere((vt) => vt.name_en == 'Consultation');
@@ -81,6 +83,13 @@ class PxAppConstants extends ChangeNotifier {
   PatientProgressStatus get has_not_attended_yet =>
       _constants!.patientProgressStatus
           .firstWhere((e) => e.name_en == 'Has Not Attended Yet');
+
+  List<PatientProgressStatus> get patientProgressStatuses => [
+        in_waiting,
+        in_consultation,
+        done_consultation,
+        has_not_attended_yet,
+      ];
 //app permissions
   AppPermission get admin =>
       _constants!.appPermission.firstWhere((e) => e.name_en == 'Admin');

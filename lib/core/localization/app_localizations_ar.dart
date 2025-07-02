@@ -707,4 +707,10 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get noVisitsFoundForToday =>
       'لم يتم العثور علي زيارات مسجلة بتاريخ اليوم';
+
+  @override
+  String get attendanceStatus => 'حالة الحضور';
+
+  @override
+  String get progressStatus => 'تقدم الزيارة';
 }
