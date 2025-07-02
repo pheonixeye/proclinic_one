@@ -1,103 +1,50 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:equatable/equatable.dart';
-
 import 'package:proklinik_one/core/api/_api_result.dart';
 import 'package:proklinik_one/functions/dprint.dart';
 
-typedef ApiClassName = String;
 typedef ParametrizedQueryName = String;
 
-class _CacheDataStore {
-  //TODO: Needs to be simplified - way more that this
-  const _CacheDataStore();
+//todo: Needs to be simplified - way more that this
+class _CacheDataStore<T> {
+  _CacheDataStore();
 
-  static final Map<ApiClassName, Cachable> _dataCache = {};
-}
+  final Map<ParametrizedQueryName, ApiDataResult<T>?> _dataCache = {};
 
-// ignore: must_be_immutable
-class Cachable<T> extends Equatable {
-  final ParametrizedQueryName parametrizedQueryName;
-  ApiDataResult<T>? _data;
-
-  Cachable({
-    required this.parametrizedQueryName,
-    required ApiDataResult<T>? data,
-  }) : _data = data;
-
-  Cachable<T> copyWith({
-    ParametrizedQueryName? parametrizedQueryName,
-    ApiDataResult<T>? data,
-  }) {
-    return Cachable<T>(
-      parametrizedQueryName:
-          parametrizedQueryName ?? this.parametrizedQueryName,
-      data: data ?? _data,
-    );
-  }
-
-  @override
-  List<Object?> get props => [
-        parametrizedQueryName,
-        _data,
-      ];
-
-  ApiDataResult<T>? operator [](ParametrizedQueryName query) {
-    if (query == parametrizedQueryName) {
-      return _data;
-    } else {
-      return null;
-    }
-  }
-
-  void operator []=(ParametrizedQueryName query, ApiDataResult<T>? data) {
-    if (query == parametrizedQueryName) {
-      _data = data;
-    }
-  }
-
-  @override
-  String toString() {
-    return 'Cachable($parametrizedQueryName : ${_data.runtimeType})';
-  }
+  Map<ParametrizedQueryName, ApiDataResult<T>?> get dataCache => _dataCache;
 }
 
 class ApiCachingService<T> {
   ApiCachingService();
 
-  static final _cache = _CacheDataStore._dataCache;
+  final _cache = _CacheDataStore<T>().dataCache;
 
-  static Map<ApiClassName, Cachable> get cache => _cache;
+  Map<ParametrizedQueryName, ApiDataResult?> get cache => _cache;
 
-  void addToCache(ApiClassName key, Cachable<T> cachable) {
+  void addToCache(ParametrizedQueryName key, ApiDataResult<T> cachable) {
     _cache[key] = cachable;
   }
 
-  void invalidateCache(ApiClassName key, ParametrizedQueryName query) {
-    _cache[key]?[query] = null;
+  void invalidateCache(ParametrizedQueryName key) {
+    _cache[key] = null;
   }
 
   bool operationIsCached(
-    ApiClassName key,
-    ParametrizedQueryName query,
+    ParametrizedQueryName key,
   ) {
     final _classIsCached = _cache[key] != null;
-    final _operationIsCached = _classIsCached && _cache[key]![query] != null;
     prettyPrint(_cache.toString());
-    if (_classIsCached && _operationIsCached) {
+    if (_classIsCached) {
       return true;
     }
     return false;
   }
 
   ApiDataResult<T>? getDataByKeys(
-    ApiClassName key,
-    ParametrizedQueryName query,
+    ParametrizedQueryName key,
   ) {
     final _classIsCached = _cache[key] != null;
-    final _operationIsCached = _classIsCached && _cache[key]![query] != null;
 
-    if (_classIsCached && _operationIsCached) {
-      return _cache[key]![query]! as ApiDataResult<T>;
+    if (_classIsCached) {
+      return _cache[key]!;
     }
     return null;
   }
