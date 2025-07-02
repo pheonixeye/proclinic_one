@@ -705,4 +705,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pickPatientProgressStatus => 'Pick Patient Progress';
+
+  @override
+  String get noVisitsFoundForToday => 'No Visits Found For Today';
 }

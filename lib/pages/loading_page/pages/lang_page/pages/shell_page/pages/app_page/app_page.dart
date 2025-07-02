@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:proklinik_one/extensions/loc_ext.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/app_profile_setup/app_profile_setup.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/today_visits_page/today_visits_page.dart';
 import 'package:proklinik_one/providers/px_doctor.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +21,10 @@ class _AppPageState extends State<AppPage> with SingleTickerProviderStateMixin {
         alignment: Alignment.center,
         index: _index,
         children: <Widget>[
+          const TodayVisitsPage(),
+          const Center(
+            child: Text("Home"),
+          ),
           Center(
             child: Consumer<PxDoctor>(
               builder: (context, d, _) {
@@ -45,13 +50,7 @@ class _AppPageState extends State<AppPage> with SingleTickerProviderStateMixin {
               },
             ),
           ),
-          const Center(
-            child: Text("Home"),
-          ),
-          const Center(
-            child: Text("Profile"),
-          ),
-          AppProfileSetup(),
+          const AppProfileSetup(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

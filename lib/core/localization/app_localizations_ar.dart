@@ -703,4 +703,8 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get pickPatientProgressStatus => 'حالة الكشف';
+
+  @override
+  String get noVisitsFoundForToday =>
+      'لم يتم العثور علي زيارات مسجلة بتاريخ اليوم';
 }

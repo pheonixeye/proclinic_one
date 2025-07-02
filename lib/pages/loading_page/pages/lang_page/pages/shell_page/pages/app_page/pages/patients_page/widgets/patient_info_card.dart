@@ -16,6 +16,7 @@ import 'package:proklinik_one/providers/px_forms.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:proklinik_one/providers/px_patient_forms.dart';
 import 'package:proklinik_one/providers/px_patients.dart';
+import 'package:proklinik_one/providers/px_visits.dart';
 import 'package:proklinik_one/widgets/themed_popupmenu_btn.dart';
 import 'package:provider/provider.dart';
 import 'package:web/web.dart' as web;
@@ -208,7 +209,17 @@ class _PatientInfoCardState extends State<PatientInfoCard> {
                               if (_visitDto == null) {
                                 return;
                               }
-                              //TODO:
+                              //todo:
+                              if (context.mounted) {
+                                await shellFunction(
+                                  context,
+                                  toExecute: () async {
+                                    await context
+                                        .read<PxVisits>()
+                                        .addNewVisit(_visitDto);
+                                  },
+                                );
+                              }
                             },
                           ),
                           PopupMenuItem(

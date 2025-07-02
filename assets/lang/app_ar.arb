@@ -244,5 +244,7 @@
     "pickVisitDate" : "اختر تاريخ الزيارة",
     "pickVisitType" : "اختر نوع الزيارة",
     "pickVisitStatus" : "حالة الزيارة",
-    "pickPatientProgressStatus" : "حالة الكشف"
+    "pickPatientProgressStatus" : "حالة الكشف",
+    "@@today_visits_page": "",
+    "noVisitsFoundForToday" : "لم يتم العثور علي زيارات مسجلة بتاريخ اليوم"
     }

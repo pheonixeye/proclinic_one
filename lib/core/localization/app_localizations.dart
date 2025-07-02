@@ -1441,6 +1441,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Pick Patient Progress'**
   String get pickPatientProgressStatus;
+
+  /// No description provided for @noVisitsFoundForToday.
+  ///
+  /// In en, this message translates to:
+  /// **'No Visits Found For Today'**
+  String get noVisitsFoundForToday;
 }
 
 class _AppLocalizationsDelegate

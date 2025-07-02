@@ -244,6 +244,8 @@
     "pickVisitDate" : "Pick Visit Date",
     "pickVisitType" : "Pick Visit Type",
     "pickVisitStatus" : "Pick Visit Status",
-    "pickPatientProgressStatus" : "Pick Patient Progress"
+    "pickPatientProgressStatus" : "Pick Patient Progress",
+    "@@today_visits_page": "",
+    "noVisitsFoundForToday" : "No Visits Found For Today"
 
 }
