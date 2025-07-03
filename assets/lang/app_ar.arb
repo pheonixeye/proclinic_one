@@ -248,5 +248,7 @@
     "@@today_visits_page": "",
     "noVisitsFoundForToday" : "لم يتم العثور علي زيارات مسجلة بتاريخ اليوم",
     "attendanceStatus" : "حالة الحضور",
-    "progressStatus" : "تقدم الزيارة"
+    "progressStatus" : "تقدم الزيارة",
+    "from" : "من",
+    "to" : "الى"
     }

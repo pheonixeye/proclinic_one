@@ -248,6 +248,8 @@
     "@@today_visits_page": "",
     "noVisitsFoundForToday" : "No Visits Found For Today",
     "attendanceStatus" : "Attendance Status",
-    "progressStatus" : "Progress Status"
+    "progressStatus" : "Progress Status",
+    "from" : "From",
+    "to" : "To"
 
 }

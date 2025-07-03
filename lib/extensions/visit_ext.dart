@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:proklinik_one/extensions/loc_ext.dart';
 import 'package:proklinik_one/models/app_constants/patient_progress_status.dart';
 import 'package:proklinik_one/models/app_constants/visit_status.dart';
 import 'package:proklinik_one/models/app_constants/visit_type.dart';
 import 'package:proklinik_one/models/visits/_visit.dart';
 import 'package:proklinik_one/providers/px_app_constants.dart';
+import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:provider/provider.dart';
 
 extension CalculateFees on Visit {
@@ -57,5 +60,24 @@ extension WxColorsPatientProgressStatus on PatientProgressStatus {
       'In Waiting' => Colors.amber.shade50,
       _ => Colors.transparent,
     };
+  }
+}
+
+extension FormattedVisitScheduleShift on Visit {
+  String formattedShift(BuildContext context) {
+    final _lx = context.read<PxLocale>();
+    final _now = DateTime.now();
+    final _start_time = _now.copyWith(
+      hour: clinic_schedule_shift.start_hour,
+      minute: clinic_schedule_shift.start_min,
+    );
+    final _end_time = _now.copyWith(
+      hour: clinic_schedule_shift.end_hour,
+      minute: clinic_schedule_shift.end_min,
+    );
+    final _formattedStart = DateFormat.jmv(_lx.lang).format(_start_time);
+    final _formattedEnd = DateFormat.jmv(_lx.lang).format(_end_time);
+
+    return '${context.loc.from} : $_formattedStart - ${context.loc.to} : $_formattedEnd';
   }
 }

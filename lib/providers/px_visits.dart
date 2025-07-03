@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:proklinik_one/core/api/_api_result.dart';
 import 'package:proklinik_one/core/api/visits_api.dart';
+import 'package:proklinik_one/functions/first_where_or_null.dart';
 import 'package:proklinik_one/models/visits/_visit.dart';
 import 'package:proklinik_one/models/visits/visit_create_dto.dart';
 
@@ -60,12 +61,16 @@ class PxVisits extends ChangeNotifier {
     await _fetchVisitsOfToday();
   }
 
-  Future<int> nextEntryNumber(DateTime visit_date) async =>
-      (await _fetchVisitsOfASpecificDate(visit_date)
-              as ApiDataResult<List<Visit>>)
-          .data
-          .length +
-      1;
+  Future<int> nextEntryNumber(DateTime visit_date) async {
+    toggleIsUpdating();
+    final _result = (await _fetchVisitsOfASpecificDate(visit_date)
+                as ApiDataResult<List<Visit>>)
+            .data
+            .length +
+        1;
+    toggleIsUpdating();
+    return _result;
+  }
 
   //TODO:
   // int get remainingVisitsPerClinicShift{}
@@ -81,8 +86,28 @@ class PxVisits extends ChangeNotifier {
   void _subscribe() async {
     await api.todayVisitsSubscription((e) async {
       toggleIsUpdating();
-      await _fetchVisitsOfToday();
+      // await _fetchVisitsOfToday();
+      final _toUpdatedVisit = (_visits as ApiDataResult<List<Visit>>)
+          .data
+          .firstWhereOrNull((x) => e.record?.id == x.id);
+      if (_toUpdatedVisit != null && e.record != null) {
+        final _visitIndex = (_visits as ApiDataResult<List<Visit>>)
+            .data
+            .indexOf(_toUpdatedVisit);
+        (_visits as ApiDataResult<List<Visit>>).data[_visitIndex] =
+            Visit.fromRecordModel(e.record!);
+        notifyListeners();
+      }
       toggleIsUpdating();
     });
+  }
+
+  Future<void> updateVisit({
+    required Visit visit,
+    required String key,
+    required dynamic value,
+  }) async {
+    await api.updateVisit(visit.id, key, value);
+    await _fetchVisitsOfToday();
   }
 }

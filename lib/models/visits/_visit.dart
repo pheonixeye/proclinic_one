@@ -1,4 +1,7 @@
 import 'package:equatable/equatable.dart';
+import 'package:pocketbase/pocketbase.dart';
+import 'package:proklinik_one/models/app_constants/account_type.dart';
+import 'package:proklinik_one/models/app_constants/app_permission.dart';
 
 import 'package:proklinik_one/models/app_constants/patient_progress_status.dart';
 import 'package:proklinik_one/models/app_constants/visit_status.dart';
@@ -127,5 +130,42 @@ class Visit extends Equatable {
       patient_progress_status,
       comments,
     ];
+  }
+
+  factory Visit.fromRecordModel(RecordModel e) {
+    final _clinic =
+        Clinic.fromJson(e.get<RecordModel>('expand.clinic_id').toJson());
+    final _clinic_schedule = _clinic.clinic_schedule
+        .firstWhere((x) => x.id == e.getStringValue('clinic_schedule_id'));
+    final _schedule_shift = _clinic_schedule.shifts.firstWhere(
+        (x) => x.id == e.getStringValue('clinic_schedule_shift_id'));
+    return Visit(
+      id: e.id,
+      patient:
+          Patient.fromJson(e.get<RecordModel>('expand.patient_id').toJson()),
+      clinic: _clinic,
+      added_by: User(
+        id: e.get<RecordModel>('expand.added_by_id').toJson()['id'],
+        email: e.get<RecordModel>('expand.added_by_id').toJson()['email'],
+        account_type: AccountType.fromJson(e
+            .get<RecordModel>('expand.added_by_id.expand.account_type_id')
+            .toJson()),
+        app_permissions: (e.get<List<RecordModel>>(
+                'expand.added_by_id.expand.app_permissions_ids'))
+            .map((e) => AppPermission.fromJson(e.toJson()))
+            .toList(),
+      ),
+      clinic_schedule: _clinic_schedule,
+      clinic_schedule_shift: _schedule_shift,
+      visit_date: DateTime.parse(e.getStringValue('visit_date')),
+      patient_entry_number: e.getIntValue('patient_entry_number'),
+      visit_status: VisitStatus.fromJson(
+          e.get<RecordModel>('expand.visit_status_id').toJson()),
+      visit_type: VisitType.fromJson(
+          e.get<RecordModel>('expand.visit_type_id').toJson()),
+      patient_progress_status: PatientProgressStatus.fromJson(
+          e.get<RecordModel>('expand.patient_progress_status_id').toJson()),
+      comments: e.getStringValue('comments'),
+    );
   }
 }

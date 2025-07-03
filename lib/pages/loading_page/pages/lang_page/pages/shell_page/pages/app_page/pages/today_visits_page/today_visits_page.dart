@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:proklinik_one/core/api/_api_result.dart';
@@ -46,14 +47,26 @@ class _TodayVisitsPageState extends State<TodayVisitsPage>
         return Scaffold(
           body: Column(
             children: [
-              ClinicsTabBar(
-                clinics: _clinics,
-                controller: _tabController,
+              Stack(
+                children: [
+                  ClinicsTabBar(
+                    clinics: _clinics,
+                    controller: _tabController,
+                  ),
+                  if (v.isUpdating)
+                    Align(
+                      alignment: AlignmentDirectional.centerEnd,
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: CupertinoActivityIndicator(),
+                      ),
+                    ),
+                ],
               ),
               Expanded(
                 child: Builder(
                   builder: (context) {
-                    while (v.visits == null || v.visits == null) {
+                    while (v.visits == null) {
                       return const CentralLoading();
                     }
 

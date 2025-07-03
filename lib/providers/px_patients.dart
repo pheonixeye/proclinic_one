@@ -18,8 +18,6 @@ class PxPatients extends ChangeNotifier {
 
   static final int perPage = 10;
 
-  //TODO: implement simple cache
-
   Future<void> fetchPatients() async {
     _data = await api.fetchPatients(
       page: page,

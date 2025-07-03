@@ -714,4 +714,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get progressStatus => 'Progress Status';
+
+  @override
+  String get from => 'From';
+
+  @override
+  String get to => 'To';
 }

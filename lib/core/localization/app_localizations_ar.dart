@@ -713,4 +713,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get progressStatus => 'تقدم الزيارة';
+
+  @override
+  String get from => 'من';
+
+  @override
+  String get to => 'الى';
 }

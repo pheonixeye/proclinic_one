@@ -1459,6 +1459,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Progress Status'**
   String get progressStatus;
+
+  /// No description provided for @from.
+  ///
+  /// In en, this message translates to:
+  /// **'From'**
+  String get from;
+
+  /// No description provided for @to.
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
+  String get to;
 }
 
 class _AppLocalizationsDelegate
