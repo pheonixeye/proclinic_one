@@ -4,6 +4,7 @@ import 'package:proklinik_one/core/api/clinics_api.dart';
 import 'package:proklinik_one/core/api/doctor_profile_items_api.dart';
 import 'package:proklinik_one/core/api/forms_api.dart';
 import 'package:proklinik_one/core/api/patients_api.dart';
+import 'package:proklinik_one/core/api/visit_data_api.dart';
 import 'package:proklinik_one/functions/dprint.dart';
 import 'package:proklinik_one/models/doctor_items/profile_setup_item.dart';
 import 'package:proklinik_one/pages/loading_page/pages/error_page/error_page.dart';
@@ -17,6 +18,7 @@ import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_pag
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/bookkeeping_page/bookkeeping_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/forms_page/forms_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/my_subscription_page/pages/order_details_page/order_details_page.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/today_visits_page/pages/visit_data_page/visit_data_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/transaction/transaction_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/visits_page/visits_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/patients_page/patients_page.dart';
@@ -31,6 +33,7 @@ import 'package:proklinik_one/providers/px_forms.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:proklinik_one/providers/px_patients.dart';
 import 'package:proklinik_one/providers/px_speciality.dart';
+import 'package:proklinik_one/providers/px_visit_data.dart';
 import 'package:proklinik_one/utils/shared_prefs.dart';
 import 'package:proklinik_one/utils/utils_keys.dart';
 import 'package:provider/provider.dart';
@@ -76,6 +79,8 @@ class AppRouter {
   static const String bookkeeping = "bookkeeping";
   static const String settings = "settings";
   static const String transaction = "transaction";
+  //visit_data
+  static const String visit_data = "data/:visit_id";
 
   String? get currentRouteName =>
       router.routerDelegate.currentConfiguration.last.route.name;
@@ -269,7 +274,28 @@ class AppRouter {
                           },
                         );
                       }),
-
+                      GoRoute(
+                        path: visit_data, //:visit_id
+                        name: visit_data,
+                        builder: (context, state) {
+                          final _visit_id = state.pathParameters['visit_id'];
+                          try {
+                            return ChangeNotifierProvider(
+                              create: (context) => PxVisitData(
+                                api: VisitDataApi(
+                                  doc_id: context.read<PxAuth>().doc_id,
+                                  visit_id: _visit_id!,
+                                ),
+                              ),
+                              child: VisitDataPage(
+                                key: state.pageKey,
+                              ),
+                            );
+                          } catch (e) {
+                            rethrow;
+                          }
+                        },
+                      ),
                       //main_routes
                       GoRoute(
                         path: mysubscription,

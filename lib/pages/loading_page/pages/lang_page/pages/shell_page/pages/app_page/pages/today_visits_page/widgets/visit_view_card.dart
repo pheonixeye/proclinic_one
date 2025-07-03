@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:proklinik_one/extensions/loc_ext.dart';
 import 'package:proklinik_one/extensions/visit_ext.dart';
 import 'package:proklinik_one/functions/shell_function.dart';
@@ -6,6 +7,7 @@ import 'package:proklinik_one/models/visits/_visit.dart';
 import 'package:proklinik_one/providers/px_app_constants.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:proklinik_one/providers/px_visits.dart';
+import 'package:proklinik_one/router/router.dart';
 import 'package:provider/provider.dart';
 
 class VisitViewCard extends StatelessWidget {
@@ -385,7 +387,15 @@ class VisitViewCard extends StatelessWidget {
                     children: [
                       FloatingActionButton.small(
                         heroTag: visit.id + visit.patient_progress_status.id,
-                        onPressed: () {},
+                        onPressed: () {
+                          GoRouter.of(context).goNamed(
+                            AppRouter.visit_data,
+                            pathParameters: defaultPathParameters(context)
+                              ..addAll({
+                                'visit_id': visit.id,
+                              }),
+                          );
+                        },
                         child: const Icon(Icons.arrow_forward),
                       ),
                     ],

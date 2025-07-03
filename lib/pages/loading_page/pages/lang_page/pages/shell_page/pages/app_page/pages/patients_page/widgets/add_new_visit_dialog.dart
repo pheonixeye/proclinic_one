@@ -20,6 +20,7 @@ import 'package:proklinik_one/providers/px_clinics.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:proklinik_one/providers/px_visits.dart';
 import 'package:proklinik_one/widgets/central_loading.dart';
+import 'package:proklinik_one/widgets/future_builder_waiter.dart';
 import 'package:provider/provider.dart';
 
 class AddNewVisitDialog extends StatefulWidget {
@@ -39,6 +40,7 @@ class _AddNewVisitDialogState extends State<AddNewVisitDialog> {
   final formKey = GlobalKey<FormState>();
 
   late final TextEditingController _visitDateController;
+  late final TextEditingController _commentsController;
 
   Clinic? _clinic;
   ClinicSchedule? _clinicSchedule;
@@ -53,11 +55,13 @@ class _AddNewVisitDialogState extends State<AddNewVisitDialog> {
   void initState() {
     super.initState();
     _visitDateController = TextEditingController();
+    _commentsController = TextEditingController();
   }
 
   @override
   void dispose() {
     _visitDateController.dispose();
+    _commentsController.dispose();
     super.dispose();
   }
 
@@ -290,17 +294,18 @@ class _AddNewVisitDialogState extends State<AddNewVisitDialog> {
                                                   (context, asyncSnapshot) {
                                                 final _data =
                                                     asyncSnapshot.data;
-                                                return _data == null
-                                                    ? SizedBox()
-                                                    : Tooltip(
-                                                        message: context
-                                                            .loc.dayVisitCount,
-                                                        child: Text(
-                                                          '$_data / ${e.visit_count}'
-                                                              .toArabicNumber(
-                                                                  context),
-                                                        ),
-                                                      );
+                                                return SmallFutureBuilderWaiter(
+                                                  snapshot: asyncSnapshot,
+                                                  child: Tooltip(
+                                                    message: context
+                                                        .loc.dayVisitCount,
+                                                    child: Text(
+                                                      '$_data / ${e.visit_count}'
+                                                          .toArabicNumber(
+                                                              context),
+                                                    ),
+                                                  ),
+                                                );
                                               },
                                             ),
                                           ),
@@ -525,6 +530,30 @@ class _AddNewVisitDialogState extends State<AddNewVisitDialog> {
                       },
                     ),
                   ),
+                  ListTile(
+                    title: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(context.loc.comments),
+                    ),
+                    subtitle: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        spacing: 8,
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                              ),
+                              controller: _commentsController,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -538,7 +567,8 @@ class _AddNewVisitDialogState extends State<AddNewVisitDialog> {
                   setState(() {
                     _isLoading = true;
                   });
-                  final _nextEntryNumber = await v.nextEntryNumber(_visitDate!);
+                  final _nextEntryNumber =
+                      await v.nextEntryNumber(_visitDate!, _clinic!.id);
                   setState(() {
                     _isLoading = false;
                   });
@@ -554,6 +584,7 @@ class _AddNewVisitDialogState extends State<AddNewVisitDialog> {
                       visit_status_id: _visitStatus!.id,
                       visit_type_id: _visitType!.id,
                       patient_progress_status_id: _patientProgressStatus!.id,
+                      comments: _commentsController.text,
                     );
                     Navigator.pop(context, _visitDto);
                   }

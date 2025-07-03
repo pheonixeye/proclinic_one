@@ -1477,6 +1477,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Visit Count'**
   String get dayVisitCount;
+
+  /// No description provided for @comments.
+  ///
+  /// In en, this message translates to:
+  /// **'Comments'**
+  String get comments;
+
+  /// No description provided for @visitForms.
+  ///
+  /// In en, this message translates to:
+  /// **'Visit Forms'**
+  String get visitForms;
+
+  /// No description provided for @visitDrugs.
+  ///
+  /// In en, this message translates to:
+  /// **'Visit Drugs'**
+  String get visitDrugs;
+
+  /// No description provided for @visitLabs.
+  ///
+  /// In en, this message translates to:
+  /// **'Visit Labs'**
+  String get visitLabs;
+
+  /// No description provided for @visitRads.
+  ///
+  /// In en, this message translates to:
+  /// **'Visit Rads'**
+  String get visitRads;
+
+  /// No description provided for @visitProcedures.
+  ///
+  /// In en, this message translates to:
+  /// **'Visit Procedures'**
+  String get visitProcedures;
+
+  /// No description provided for @visitSupplies.
+  ///
+  /// In en, this message translates to:
+  /// **'Visit Supplies'**
+  String get visitSupplies;
 }
 
 class _AppLocalizationsDelegate

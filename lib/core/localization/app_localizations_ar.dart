@@ -722,4 +722,25 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get dayVisitCount => 'عدد زيارات اليوم';
+
+  @override
+  String get comments => 'ملاحظات';
+
+  @override
+  String get visitForms => 'نماذج الزيارة';
+
+  @override
+  String get visitDrugs => 'ادوية الزيارة';
+
+  @override
+  String get visitLabs => 'تحاليل الزيارة';
+
+  @override
+  String get visitRads => 'اشاعات الزيارة';
+
+  @override
+  String get visitProcedures => 'اجرائات الزيارة';
+
+  @override
+  String get visitSupplies => 'مستلزمات الزيارة';
 }

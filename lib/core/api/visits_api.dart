@@ -11,6 +11,7 @@ import 'package:proklinik_one/models/app_constants/visit_type.dart';
 import 'package:proklinik_one/models/clinic/clinic.dart';
 import 'package:proklinik_one/models/patient.dart';
 import 'package:proklinik_one/models/user.dart';
+import 'package:proklinik_one/models/visit_data/visit_data_dto.dart';
 import 'package:proklinik_one/models/visits/_visit.dart';
 import 'package:proklinik_one/models/visits/visit_create_dto.dart';
 
@@ -20,6 +21,8 @@ class VisitsApi {
   VisitsApi({required this.doc_id});
 
   late final String collection = '${doc_id}__visits';
+
+  late final String visit_data_collection = '${doc_id}__visit__data';
 
   static final String _expand =
       'patient_id, clinic_id, added_by_id, added_by_id.account_type_id, added_by_id.app_permissions_ids, visit_status_id, visit_type_id, patient_progress_status_id';
@@ -105,8 +108,15 @@ class VisitsApi {
   }
 
   Future<void> addNewVisit(VisitCreateDto dto) async {
-    await PocketbaseHelper.pb.collection(collection).create(
+    final _result = await PocketbaseHelper.pb.collection(collection).create(
           body: dto.toJson(),
+        );
+    await PocketbaseHelper.pb.collection(visit_data_collection).create(
+          body: VisitDataDto.initial(
+            visit_id: _result.id,
+            patient_id: dto.patient_id,
+            clinic_id: dto.clinic_id,
+          ).toJson(),
         );
   }
 

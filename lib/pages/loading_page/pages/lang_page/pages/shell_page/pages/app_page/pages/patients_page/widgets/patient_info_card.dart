@@ -219,6 +219,7 @@ class _PatientInfoCardState extends State<PatientInfoCard> {
                                     await context
                                         .read<PxVisits>()
                                         .addNewVisit(_visitDto);
+                                    //TODO: notify patient with visit details && entry number
                                   },
                                   duration: const Duration(milliseconds: 500),
                                 );

@@ -251,5 +251,13 @@
     "progressStatus" : "تقدم الزيارة",
     "from" : "من",
     "to" : "الى",
-    "dayVisitCount" : "عدد زيارات اليوم"
+    "dayVisitCount" : "عدد زيارات اليوم",
+    "comments" : "ملاحظات",
+    "@@visit_data_page": "",
+    "visitForms" : "نماذج الزيارة",
+    "visitDrugs" : "ادوية الزيارة",
+    "visitLabs" : "تحاليل الزيارة",
+    "visitRads" : "اشاعات الزيارة",
+    "visitProcedures" : "اجرائات الزيارة",
+    "visitSupplies" : "مستلزمات الزيارة"
     }

@@ -11,6 +11,7 @@ class VisitCreateDto extends Equatable {
   final String visit_status_id;
   final String visit_type_id;
   final String patient_progress_status_id;
+  final String comments;
 
   const VisitCreateDto({
     required this.clinic_id,
@@ -23,6 +24,7 @@ class VisitCreateDto extends Equatable {
     required this.visit_status_id,
     required this.visit_type_id,
     required this.patient_progress_status_id,
+    required this.comments,
   });
 
   VisitCreateDto copyWith({
@@ -36,6 +38,7 @@ class VisitCreateDto extends Equatable {
     String? visit_status_id,
     String? visit_type_id,
     String? patient_progress_status_id,
+    String? comments,
   }) {
     return VisitCreateDto(
       clinic_id: clinic_id ?? this.clinic_id,
@@ -50,6 +53,7 @@ class VisitCreateDto extends Equatable {
       visit_type_id: visit_type_id ?? this.visit_type_id,
       patient_progress_status_id:
           patient_progress_status_id ?? this.patient_progress_status_id,
+      comments: comments ?? this.comments,
     );
   }
 
@@ -65,6 +69,7 @@ class VisitCreateDto extends Equatable {
       'visit_status_id': visit_status_id,
       'visit_type_id': visit_type_id,
       'patient_progress_status_id': patient_progress_status_id,
+      'comments': comments,
     };
   }
 
@@ -80,6 +85,7 @@ class VisitCreateDto extends Equatable {
       visit_status_id: map['visit_status_id'] as String,
       visit_type_id: map['visit_type_id'] as String,
       patient_progress_status_id: map['patient_progress_status_id'] as String,
+      comments: map['comments'] as String,
     );
   }
 
@@ -99,6 +105,7 @@ class VisitCreateDto extends Equatable {
       visit_status_id,
       visit_type_id,
       patient_progress_status_id,
+      comments,
     ];
   }
 }

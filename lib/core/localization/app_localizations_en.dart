@@ -723,4 +723,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dayVisitCount => 'Visit Count';
+
+  @override
+  String get comments => 'Comments';
+
+  @override
+  String get visitForms => 'Visit Forms';
+
+  @override
+  String get visitDrugs => 'Visit Drugs';
+
+  @override
+  String get visitLabs => 'Visit Labs';
+
+  @override
+  String get visitRads => 'Visit Rads';
+
+  @override
+  String get visitProcedures => 'Visit Procedures';
+
+  @override
+  String get visitSupplies => 'Visit Supplies';
 }

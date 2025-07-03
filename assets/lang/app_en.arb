@@ -251,6 +251,15 @@
     "progressStatus" : "Progress Status",
     "from" : "From",
     "to" : "To",
-    "dayVisitCount" : "Visit Count"
+    "dayVisitCount" : "Visit Count",
+    "comments" : "Comments",
+    "@@visit_data_page": "",
+    "visitForms" : "Visit Forms",
+    "visitDrugs" : "Visit Drugs",
+    "visitLabs" : "Visit Labs",
+    "visitRads" : "Visit Rads",
+    "visitProcedures" : "Visit Procedures",
+    "visitSupplies" : "Visit Supplies"
+
 
 }

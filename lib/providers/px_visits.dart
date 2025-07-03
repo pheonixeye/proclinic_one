@@ -62,15 +62,16 @@ class PxVisits extends ChangeNotifier {
     await _fetchVisitsOfToday();
   }
 
-  Future<int> nextEntryNumber(DateTime visit_date) async {
+  Future<int> nextEntryNumber(DateTime visit_date, String clinic_id) async {
     toggleIsUpdating();
     final _result = (await _fetchVisitsOfASpecificDate(visit_date)
-                as ApiDataResult<List<Visit>>)
-            .data
-            .length +
-        1;
+            as ApiDataResult<List<Visit>>)
+        .data;
+    final _clinicVisits =
+        _result.where((e) => e.clinic.id == clinic_id).toList();
+
     toggleIsUpdating();
-    return _result;
+    return _clinicVisits.length + 1;
   }
 
   //TODO:
@@ -95,8 +96,18 @@ class PxVisits extends ChangeNotifier {
 
   void _subscribe() async {
     await api.todayVisitsSubscription((e) {
+      // print(e.action);
+      // print(e.record);
       toggleIsUpdating();
       // await _fetchVisitsOfToday();
+      if (e.action == 'delete') {
+        (_visits as ApiDataResult<List<Visit>>)
+            .data
+            .removeWhere((x) => e.record?.id == x.id);
+        notifyListeners();
+        toggleIsUpdating();
+        return;
+      }
       final _toUpdatedVisit = (_visits as ApiDataResult<List<Visit>>)
           .data
           .firstWhereOrNull((x) => e.record?.id == x.id);
