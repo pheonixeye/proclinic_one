@@ -69,7 +69,7 @@ class VisitFormsPage extends StatelessWidget {
                             FloatingActionButton.small(
                               tooltip: context.loc.deleteForm,
                               backgroundColor: Colors.red.shade200,
-                              heroTag: 'detach$_item',
+                              heroTag: 'detach${_item.name_en}$index',
                               onPressed: () async {
                                 //todo: detach Form
                                 final _toDetach = await showDialog<bool?>(
@@ -86,7 +86,7 @@ class VisitFormsPage extends StatelessWidget {
                                 if (context.mounted) {
                                   await shellFunction(
                                     context,
-                                    toExecute: (context) async {
+                                    toExecute: () async {
                                       await v.detachForm(_item.id);
                                     },
                                   );

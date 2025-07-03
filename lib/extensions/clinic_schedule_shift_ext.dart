@@ -10,8 +10,7 @@ extension WxClinicScheduleSHift on ScheduleShift {
     final isEnglish = l.isEnglish;
     final startTime =
         DateTime.now().copyWith(hour: start_hour, minute: start_min);
-    final endTime =
-        DateTime.now().copyWith(hour: start_hour, minute: start_min);
+    final endTime = DateTime.now().copyWith(hour: end_hour, minute: end_min);
     return isEnglish
         ? 'From : ${DateFormat.jm(l.lang).format(startTime)} - To : ${DateFormat.jm(l.lang).format(endTime)}'
         : 'من : ${DateFormat.jm(l.lang).format(startTime)} - الي : ${DateFormat.jm(l.lang).format(endTime)}';

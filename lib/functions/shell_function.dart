@@ -42,7 +42,7 @@ Future<void> shellFunction(
         _successOverlay.remove();
       }
     }
-  } catch (e) {
+  } catch (e, s) {
     if (loadingContext.mounted) {
       Navigator.pop(loadingContext);
     }
@@ -68,7 +68,7 @@ Future<void> shellFunction(
         Overlay.of(context).insert(_retryOverlay);
       }
 
-      debugPrint(e.toString());
+      debugPrint(s.toString());
       if (onCatch != null) {
         onCatch();
       }

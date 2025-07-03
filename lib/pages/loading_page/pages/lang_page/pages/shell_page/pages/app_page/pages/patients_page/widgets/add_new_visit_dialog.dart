@@ -20,7 +20,7 @@ import 'package:proklinik_one/providers/px_clinics.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:proklinik_one/providers/px_visits.dart';
 import 'package:proklinik_one/widgets/central_loading.dart';
-import 'package:proklinik_one/widgets/future_builder_waiter.dart';
+import 'package:proklinik_one/widgets/small_future_builder_waiter.dart';
 import 'package:provider/provider.dart';
 
 class AddNewVisitDialog extends StatefulWidget {

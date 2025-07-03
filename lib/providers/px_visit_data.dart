@@ -27,17 +27,10 @@ class PxVisitData extends ChangeNotifier {
       await api.subscribe(
         (_result as ApiDataResult<VisitData>).data.id,
         (e) async {
-          if (e.action == 'delete') {
-            await _fetchVisitData();
-          } else {
-            if (e.record != null) {
-              print('e.record != null');
-              _result = ApiDataResult<VisitData>(
-                data: VisitData.fromRecordModel(e.record!),
-              );
-              notifyListeners();
-            }
-          }
+          _result = ApiDataResult<VisitData>(
+            data: VisitData.fromRecordModel(e.record!),
+          );
+          notifyListeners();
         },
       );
       print(
@@ -50,7 +43,6 @@ class PxVisitData extends ChangeNotifier {
       (_result as ApiDataResult<VisitData>).data.id,
       form_id,
     );
-    // await _fetchVisitData();
   }
 
   Future<void> detachForm(String form_id) async {
@@ -58,7 +50,6 @@ class PxVisitData extends ChangeNotifier {
       (_result as ApiDataResult<VisitData>).data.id,
       form_id,
     );
-    // await _fetchVisitData();
   }
 
   @override

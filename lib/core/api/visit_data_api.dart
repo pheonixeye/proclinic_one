@@ -2,6 +2,7 @@ import 'package:pocketbase/pocketbase.dart';
 import 'package:proklinik_one/core/api/_api_result.dart';
 import 'package:proklinik_one/core/api/constants/pocketbase_helper.dart';
 import 'package:proklinik_one/errors/code_to_error.dart';
+import 'package:proklinik_one/functions/dprint.dart';
 import 'package:proklinik_one/models/visit_data/visit_data.dart';
 
 class VisitDataApi {
@@ -68,11 +69,15 @@ class VisitDataApi {
   }
 
   Future<void> detachForm(String visit_data_id, String form_id) async {
-    await PocketbaseHelper.pb.collection(collection).update(
-      visit_data_id,
-      body: {
-        'forms_ids-': form_id,
-      },
-    );
+    try {
+      await PocketbaseHelper.pb.collection(collection).update(
+        visit_data_id,
+        body: {
+          'forms_ids-': form_id,
+        },
+      );
+    } catch (e) {
+      dprint(e);
+    }
   }
 }
