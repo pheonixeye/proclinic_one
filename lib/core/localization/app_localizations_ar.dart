@@ -743,4 +743,8 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get visitSupplies => 'مستلزمات الزيارة';
+
+  @override
+  String get detachFormPrompt =>
+      'برجاء تأكيد فصل هذا النموذج من بيانات الزيارة - سيتم الغاء كل بيانات النموذج المسجلة - هل انت متأكد؟';
 }

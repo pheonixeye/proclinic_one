@@ -744,4 +744,8 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get visitSupplies => 'Visit Supplies';
+
+  @override
+  String get detachFormPrompt =>
+      'This Action Will Detach This Form And All Data Related To It\'s Entries Will Be Deleted, Are You Sure ?';
 }

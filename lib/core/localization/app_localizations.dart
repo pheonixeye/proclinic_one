@@ -1519,6 +1519,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Visit Supplies'**
   String get visitSupplies;
+
+  /// No description provided for @detachFormPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'This Action Will Detach This Form And All Data Related To It\'s Entries Will Be Deleted, Are You Sure ?'**
+  String get detachFormPrompt;
 }
 
 class _AppLocalizationsDelegate
