@@ -250,6 +250,7 @@
     "attendanceStatus" : "Attendance Status",
     "progressStatus" : "Progress Status",
     "from" : "From",
-    "to" : "To"
+    "to" : "To",
+    "dayVisitCount" : "Visit Count"
 
 }

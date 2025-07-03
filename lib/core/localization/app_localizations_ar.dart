@@ -719,4 +719,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get to => 'الى';
+
+  @override
+  String get dayVisitCount => 'عدد زيارات اليوم';
 }

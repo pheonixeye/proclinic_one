@@ -1471,6 +1471,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'To'**
   String get to;
+
+  /// No description provided for @dayVisitCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Visit Count'**
+  String get dayVisitCount;
 }
 
 class _AppLocalizationsDelegate

@@ -4,6 +4,7 @@ import 'package:proklinik_one/core/api/_api_result.dart';
 import 'package:proklinik_one/extensions/clinic_schedule_shift_ext.dart';
 import 'package:proklinik_one/extensions/is_mobile_context.dart';
 import 'package:proklinik_one/extensions/loc_ext.dart';
+import 'package:proklinik_one/extensions/number_translator.dart';
 import 'package:proklinik_one/models/app_constants/patient_progress_status.dart';
 import 'package:proklinik_one/models/app_constants/visit_status.dart';
 import 'package:proklinik_one/models/app_constants/visit_type.dart';
@@ -270,8 +271,40 @@ class _AddNewVisitDialogState extends State<AddNewVisitDialog> {
                                     selected: _isSelected,
                                     tileColor: _unSelectedColor,
                                     selectedTileColor: _selectedColor,
-                                    title: Text(
-                                      e.formattedFromTo(context),
+                                    title: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            e.formattedFromTo(context),
+                                          ),
+                                        ),
+                                        if (_visitDate != null)
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 8.0),
+                                            child: FutureBuilder<int?>(
+                                              future: v
+                                                  .remainingVisitsPerClinicShift(
+                                                      e, _visitDate!),
+                                              builder:
+                                                  (context, asyncSnapshot) {
+                                                final _data =
+                                                    asyncSnapshot.data;
+                                                return _data == null
+                                                    ? SizedBox()
+                                                    : Tooltip(
+                                                        message: context
+                                                            .loc.dayVisitCount,
+                                                        child: Text(
+                                                          '$_data / ${e.visit_count}'
+                                                              .toArabicNumber(
+                                                                  context),
+                                                        ),
+                                                      );
+                                              },
+                                            ),
+                                          ),
+                                      ],
                                     ),
                                     controlAffinity:
                                         ListTileControlAffinity.leading,

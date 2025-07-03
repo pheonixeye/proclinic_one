@@ -250,5 +250,6 @@
     "attendanceStatus" : "حالة الحضور",
     "progressStatus" : "تقدم الزيارة",
     "from" : "من",
-    "to" : "الى"
+    "to" : "الى",
+    "dayVisitCount" : "عدد زيارات اليوم"
     }

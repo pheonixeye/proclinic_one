@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:proklinik_one/core/api/_api_result.dart';
 import 'package:proklinik_one/core/api/visits_api.dart';
 import 'package:proklinik_one/functions/first_where_or_null.dart';
+import 'package:proklinik_one/models/clinic/schedule_shift.dart';
 import 'package:proklinik_one/models/visits/_visit.dart';
 import 'package:proklinik_one/models/visits/visit_create_dto.dart';
 
@@ -73,7 +74,16 @@ class PxVisits extends ChangeNotifier {
   }
 
   //TODO:
-  // int get remainingVisitsPerClinicShift{}
+  Future<int?> remainingVisitsPerClinicShift(
+    ScheduleShift shift,
+    DateTime visit_date,
+  ) async {
+    final _visits = await _fetchVisitsOfASpecificDate(visit_date)
+        as ApiDataResult<List<Visit>>;
+    final _shift_visits =
+        _visits.data.where((e) => e.clinic_schedule_shift == shift).toList();
+    return _shift_visits.length;
+  }
 
   bool _isUpdating = false;
   bool get isUpdating => _isUpdating;
@@ -84,7 +94,7 @@ class PxVisits extends ChangeNotifier {
   }
 
   void _subscribe() async {
-    await api.todayVisitsSubscription((e) async {
+    await api.todayVisitsSubscription((e) {
       toggleIsUpdating();
       // await _fetchVisitsOfToday();
       final _toUpdatedVisit = (_visits as ApiDataResult<List<Visit>>)
