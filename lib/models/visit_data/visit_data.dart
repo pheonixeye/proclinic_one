@@ -6,6 +6,7 @@ import 'package:proklinik_one/models/doctor_items/doctor_lab_item.dart';
 import 'package:proklinik_one/models/doctor_items/doctor_procedure_item.dart';
 import 'package:proklinik_one/models/doctor_items/doctor_rad_item.dart';
 import 'package:proklinik_one/models/doctor_items/doctor_supply_item.dart';
+import 'package:proklinik_one/models/patient.dart';
 import 'package:proklinik_one/models/pc_form.dart';
 import 'package:proklinik_one/models/visit_data/visit_form_item.dart';
 
@@ -13,7 +14,7 @@ class VisitData extends Equatable {
   final String id;
   final String clinic_id;
   final String visit_id;
-  final String patient_id;
+  final Patient patient;
   final List<DoctorDrugItem> drugs;
   final List<DoctorLabItem> labs;
   final List<DoctorRadItem> rads;
@@ -27,7 +28,7 @@ class VisitData extends Equatable {
     required this.id,
     required this.clinic_id,
     required this.visit_id,
-    required this.patient_id,
+    required this.patient,
     required this.drugs,
     required this.labs,
     required this.rads,
@@ -42,7 +43,7 @@ class VisitData extends Equatable {
     String? id,
     String? clinic_id,
     String? visit_id,
-    String? patient_id,
+    Patient? patient,
     List<DoctorDrugItem>? drugs,
     List<DoctorLabItem>? labs,
     List<DoctorRadItem>? rads,
@@ -56,7 +57,7 @@ class VisitData extends Equatable {
       id: id ?? this.id,
       clinic_id: clinic_id ?? this.clinic_id,
       visit_id: visit_id ?? this.visit_id,
-      patient_id: patient_id ?? this.patient_id,
+      patient: patient ?? this.patient,
       drugs: drugs ?? this.drugs,
       labs: labs ?? this.labs,
       rads: rads ?? this.rads,
@@ -73,7 +74,7 @@ class VisitData extends Equatable {
       'id': id,
       'clinic_id': clinic_id,
       'visit_id': visit_id,
-      'patient_id': patient_id,
+      'patient': patient.toJson(),
       'drugs': drugs.map((x) => x.toJson()).toList(),
       'labs': labs.map((x) => x.toJson()).toList(),
       'rads': rads.map((x) => x.toJson()).toList(),
@@ -90,7 +91,7 @@ class VisitData extends Equatable {
       id: map['id'] as String,
       clinic_id: map['clinic_id'] as String,
       visit_id: map['visit_id'] as String,
-      patient_id: map['patient_id'] as String,
+      patient: Patient.fromJson(map['patient_id']),
       drugs: List<DoctorDrugItem>.from(
         (map['drugs'] as List<dynamic>).map<DoctorDrugItem>(
           (x) => DoctorDrugItem.fromJson(x as Map<String, dynamic>),
@@ -137,7 +138,7 @@ class VisitData extends Equatable {
       id,
       clinic_id,
       visit_id,
-      patient_id,
+      patient,
       drugs,
       labs,
       rads,
@@ -154,7 +155,8 @@ class VisitData extends Equatable {
       id: e.id,
       clinic_id: e.data['clinic_id'],
       visit_id: e.data['visit_id'],
-      patient_id: e.data['patient_id'],
+      patient:
+          Patient.fromJson(e.get<RecordModel>('expand.patient_id').toJson()),
       drugs: e
           .get<List<RecordModel>>('expand.drugs_ids')
           .map((x) => DoctorDrugItem.fromJson(x.toJson()))

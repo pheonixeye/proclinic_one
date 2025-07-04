@@ -42,19 +42,45 @@ class VisitFormsPage extends StatelessWidget {
                 );
               }
               final _items = (v.result as ApiDataResult<VisitData>).data.forms;
-              return ListView.builder(
-                itemCount: _items.length,
-                itemBuilder: (context, index) {
-                  final _item = _items[index];
-                  return VisitFormViewEditCard(
-                    form: _item,
-                    index: index,
-                    form_data: (v.result as ApiDataResult<VisitData>)
-                        .data
-                        .forms_data
-                        .firstWhere((x) => x.form_id == _item.id),
-                  );
-                },
+              return Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Hero(
+                      tag: (v.result as ApiDataResult<VisitData>)
+                          .data
+                          .patient
+                          .id,
+                      child: ListTile(
+                        title: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            (v.result as ApiDataResult<VisitData>)
+                                .data
+                                .patient
+                                .name,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: _items.length,
+                      itemBuilder: (context, index) {
+                        final _item = _items[index];
+                        return VisitFormViewEditCard(
+                          form: _item,
+                          index: index,
+                          form_data: (v.result as ApiDataResult<VisitData>)
+                              .data
+                              .forms_data
+                              .firstWhere((x) => x.form_id == _item.id),
+                        );
+                      },
+                    ),
+                  ),
+                ],
               );
             },
           ),
@@ -75,7 +101,7 @@ class VisitFormsPage extends StatelessWidget {
                 id: '',
                 visit_id: (v.result as ApiDataResult<VisitData>).data.visit_id,
                 patient_id:
-                    (v.result as ApiDataResult<VisitData>).data.patient_id,
+                    (v.result as ApiDataResult<VisitData>).data.patient.id,
                 form_id: _form.id,
                 form_data: _form.form_fields
                     .map((x) => SingleFieldData(
