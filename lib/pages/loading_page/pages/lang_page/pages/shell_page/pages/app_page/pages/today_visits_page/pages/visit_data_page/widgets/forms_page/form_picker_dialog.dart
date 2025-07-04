@@ -17,11 +17,11 @@ class FormPickerDialog extends StatefulWidget {
 
 class _FormPickerDialogState extends State<FormPickerDialog> {
   late final _dialogWidth = context.isMobile
-      ? MediaQuery.sizeOf(context).width / 1.5
+      ? MediaQuery.sizeOf(context).width / 1.2
       : MediaQuery.sizeOf(context).width / 3;
   late final _dialogHeight = context.isMobile
-      ? MediaQuery.sizeOf(context).width / 2
-      : MediaQuery.sizeOf(context).width / 3;
+      ? MediaQuery.sizeOf(context).height / 2
+      : MediaQuery.sizeOf(context).height / 3;
 
   PcForm? _form;
   @override
@@ -63,17 +63,26 @@ class _FormPickerDialogState extends State<FormPickerDialog> {
               itemCount: _items.length,
               itemBuilder: (context, index) {
                 final _item = _items[index];
-                return RadioListTile<PcForm>(
-                  title: Text(
-                    l.isEnglish ? _item.name_en : _item.name_ar,
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Card.outlined(
+                    elevation: 6,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: RadioListTile<PcForm>(
+                        title: Text(
+                          l.isEnglish ? _item.name_en : _item.name_ar,
+                        ),
+                        value: _item,
+                        groupValue: _form,
+                        onChanged: (value) {
+                          if (value != null) {
+                            Navigator.pop(context, value);
+                          }
+                        },
+                      ),
+                    ),
                   ),
-                  value: _item,
-                  groupValue: _form,
-                  onChanged: (value) {
-                    if (value != null) {
-                      Navigator.pop(context, value);
-                    }
-                  },
                 );
               },
             ),

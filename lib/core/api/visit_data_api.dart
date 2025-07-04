@@ -3,6 +3,7 @@ import 'package:proklinik_one/core/api/_api_result.dart';
 import 'package:proklinik_one/core/api/constants/pocketbase_helper.dart';
 import 'package:proklinik_one/errors/code_to_error.dart';
 import 'package:proklinik_one/models/visit_data/visit_data.dart';
+import 'package:proklinik_one/models/visit_data/visit_form_item.dart';
 
 class VisitDataApi {
   final String doc_id;
@@ -15,8 +16,10 @@ class VisitDataApi {
 
   late final String collection = '${doc_id}__visit__data';
 
+  late final String forms_data_collection = '${doc_id}__visit__formdata';
+
   final String _expand =
-      'labs_ids, rads_ids, procedures_ids, drugs_ids, supplies_ids, forms_ids';
+      'labs_ids, rads_ids, procedures_ids, drugs_ids, supplies_ids, forms_data_ids, forms_data_ids.form_id';
 
   Future<ApiResult<VisitData>> fetchVisitData() async {
     try {
@@ -39,21 +42,40 @@ class VisitDataApi {
     }
   }
 
-  Future<void> attachForm(String visit_data_id, String form_id) async {
+  Future<void> attachForm(VisitData visit_data, VisitFormItem form_data) async {
+    final _formCreateRequest =
+        await PocketbaseHelper.pb.collection(forms_data_collection).create(
+              body: form_data.toJson(),
+            );
+
     await PocketbaseHelper.pb.collection(collection).update(
-      visit_data_id,
+      visit_data.id,
       body: {
-        'forms_ids+': form_id,
+        'forms_data_ids+': _formCreateRequest.id,
       },
     );
   }
 
-  Future<void> detachForm(String visit_data_id, String form_id) async {
+  Future<void> detachForm(VisitData visit_data, VisitFormItem form_data) async {
+    await PocketbaseHelper.pb.collection(forms_data_collection).delete(
+          form_data.id,
+        );
+
     await PocketbaseHelper.pb.collection(collection).update(
-      visit_data_id,
+      visit_data.id,
       body: {
-        'forms_ids-': form_id,
+        'forms_data_ids-': form_data.id,
       },
     );
+  }
+
+  Future<void> updateFormData(
+    VisitData visit_data,
+    VisitFormItem form_data,
+  ) async {
+    await PocketbaseHelper.pb.collection(forms_data_collection).update(
+          form_data.id,
+          body: form_data.toJson(),
+        );
   }
 }

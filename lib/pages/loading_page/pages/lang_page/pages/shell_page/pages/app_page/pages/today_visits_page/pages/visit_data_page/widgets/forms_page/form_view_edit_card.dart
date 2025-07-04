@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:proklinik_one/extensions/loc_ext.dart';
+import 'package:proklinik_one/functions/first_where_or_null.dart';
 import 'package:proklinik_one/functions/shell_function.dart';
 import 'package:proklinik_one/models/pc_form.dart';
 import 'package:proklinik_one/models/pc_form_field_types.dart';
-import 'package:proklinik_one/models/visit_data/visit_form_data.dart';
+import 'package:proklinik_one/models/visit_data/visit_form_item.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:proklinik_one/providers/px_visit_data.dart';
 import 'package:proklinik_one/widgets/prompt_dialog.dart';
@@ -13,18 +14,26 @@ class VisitFormViewEditCard extends StatefulWidget {
   const VisitFormViewEditCard({
     super.key,
     required this.form,
-    required this.formData,
+    required this.form_data,
     required this.index,
   });
   final PcForm form;
   final int index;
-  final VisitFormData formData;
+  final VisitFormItem form_data;
 
   @override
   State<VisitFormViewEditCard> createState() => _VisitFormViewEditCardState();
 }
 
 class _VisitFormViewEditCardState extends State<VisitFormViewEditCard> {
+  VisitFormItem? _state;
+
+  @override
+  void initState() {
+    super.initState();
+    _state = widget.form_data;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer2<PxVisitData, PxLocale>(
@@ -71,7 +80,7 @@ class _VisitFormViewEditCardState extends State<VisitFormViewEditCard> {
                         await shellFunction(
                           context,
                           toExecute: () async {
-                            await v.detachForm(widget.form.id);
+                            await v.detachForm(widget.form_data);
                           },
                         );
                       }
@@ -82,6 +91,12 @@ class _VisitFormViewEditCardState extends State<VisitFormViewEditCard> {
               ),
               children: [
                 ...widget.form.form_fields.map((e) {
+                  var _form_field =
+                      _state?.form_data.firstWhere((x) => x.id == e.id);
+
+                  var _form_field_index =
+                      _state?.form_data.indexOf(_form_field!);
+
                   return switch (e.field_type) {
                     PcFormFieldType.textfield => ListTile(
                         title: Padding(
@@ -90,9 +105,6 @@ class _VisitFormViewEditCardState extends State<VisitFormViewEditCard> {
                         ),
                         subtitle: Builder(
                           builder: (context) {
-                            final _controller = TextEditingController(
-                                //TODO: change initial value
-                                );
                             return Row(
                               children: [
                                 Expanded(
@@ -102,15 +114,25 @@ class _VisitFormViewEditCardState extends State<VisitFormViewEditCard> {
                                         borderRadius: BorderRadius.circular(8),
                                       ),
                                     ),
-                                    controller: _controller,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: FloatingActionButton.small(
-                                    heroTag: e.id + e.field_type.name,
-                                    onPressed: () async {},
-                                    child: const Icon(Icons.save),
+                                    initialValue: widget.form_data.form_data
+                                        .firstWhere((f) => f.id == e.id)
+                                        .field_value,
+                                    // controller: _controller,
+                                    onChanged: (value) {
+                                      var _updated = _form_field?.copyWith(
+                                          field_value: value);
+
+                                      var _new_fields = _state?.form_data;
+
+                                      _new_fields![_form_field_index!] =
+                                          _updated!;
+
+                                      setState(() {
+                                        _state = _state?.copyWith(
+                                          form_data: _new_fields,
+                                        );
+                                      });
+                                    },
                                   ),
                                 ),
                               ],
@@ -138,10 +160,32 @@ class _VisitFormViewEditCardState extends State<VisitFormViewEditCard> {
                                       ),
                                     );
                                   }).toList(),
-                                  value: null, //TODO
+                                  value: _state?.form_data
+                                              .firstWhereOrNull(
+                                                  (x) => x.id == e.id)
+                                              ?.field_value ==
+                                          ''
+                                      ? null
+                                      : _state?.form_data
+                                          .firstWhereOrNull((x) => x.id == e.id)
+                                          ?.field_value, //TODO
                                   alignment: Alignment.center,
-                                  onChanged: (value) async {
-                                    //TODO: update values in _formItem.formData
+                                  onChanged: (value) {
+                                    //TODO:
+
+                                    var _updated = _form_field?.copyWith(
+                                        field_value: value);
+
+                                    var _new_fields = _state?.form_data;
+
+                                    _new_fields![_form_field_index!] =
+                                        _updated!;
+
+                                    setState(() {
+                                      _state = _state?.copyWith(
+                                        form_data: _new_fields,
+                                      );
+                                    });
                                   },
                                 ),
                               ),
@@ -156,15 +200,59 @@ class _VisitFormViewEditCardState extends State<VisitFormViewEditCard> {
                         ),
                         subtitle: Wrap(
                           children: [
-                            ...e.values.map((e) {
+                            ...e.values.map((f) {
+                              final _visitFormData = _state?.form_data
+                                  .firstWhereOrNull((x) => x.id == e.id);
                               return CheckboxListTile(
                                 controlAffinity:
                                     ListTileControlAffinity.leading,
-                                title: Text(e),
-                                tristate: true,
-                                value: null,
-                                onChanged: (val) async {
+                                title: Text(f),
+                                tristate: false,
+                                value: _state?.form_data
+                                    .firstWhereOrNull((x) => x.id == e.id)
+                                    ?.field_value
+                                    .trim()
+                                    .toLowerCase()
+                                    .contains(f.toLowerCase()),
+                                onChanged: (val) {
                                   //TODO:
+                                  final _updatedStringAdd = _visitFormData!
+                                          .field_value.isEmpty
+                                      ? f
+                                      : '${_visitFormData.field_value} - $f';
+                                  final _updatedStringList =
+                                      _visitFormData.field_value.split('-')
+                                        ..forEach((e) => e.trim());
+                                  _updatedStringList
+                                      .removeWhere((va) => va.trim() == f);
+                                  final _removeBuffer = StringBuffer();
+
+                                  _updatedStringList.map((e) {
+                                    if (e == _updatedStringList.last) {
+                                      _removeBuffer.write(e);
+                                    } else {
+                                      _removeBuffer.write('$e - ');
+                                    }
+                                  }).toList();
+                                  final _toUpdate = _visitFormData.copyWith(
+                                    field_value: _visitFormData.field_value
+                                                .contains(f) ==
+                                            true
+                                        ? _removeBuffer.toString()
+                                        : _updatedStringAdd,
+                                  );
+                                  var _form_field_index =
+                                      _state?.form_data.indexOf(_visitFormData);
+
+                                  var _new_fields = _state?.form_data;
+
+                                  _new_fields![_form_field_index!] = _toUpdate;
+
+                                  setState(() {
+                                    _state = _state?.copyWith(
+                                      form_data: _new_fields,
+                                    );
+                                  });
                                 },
                               );
                             })
@@ -172,7 +260,30 @@ class _VisitFormViewEditCardState extends State<VisitFormViewEditCard> {
                         ),
                       ),
                   };
-                })
+                }),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton.icon(
+                        onPressed: () async {
+                          if (_state == null) {
+                            return;
+                          }
+                          await shellFunction(
+                            context,
+                            toExecute: () async {
+                              await v.updateFormData(_state!);
+                            },
+                          );
+                        },
+                        label: Text(context.loc.save),
+                        icon: const Icon(Icons.save),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

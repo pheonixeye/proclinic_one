@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:proklinik_one/core/api/_api_result.dart';
 import 'package:proklinik_one/core/api/visit_data_api.dart';
 import 'package:proklinik_one/models/visit_data/visit_data.dart';
+import 'package:proklinik_one/models/visit_data/visit_form_item.dart';
 
 class PxVisitData extends ChangeNotifier {
   final VisitDataApi api;
@@ -21,18 +22,26 @@ class PxVisitData extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> attachForm(String form_id) async {
+  Future<void> attachForm(VisitFormItem form_data) async {
     await api.attachForm(
-      (_result as ApiDataResult<VisitData>).data.id,
-      form_id,
+      (_result as ApiDataResult<VisitData>).data,
+      form_data,
     );
     await _fetchVisitData();
   }
 
-  Future<void> detachForm(String form_id) async {
+  Future<void> detachForm(VisitFormItem form_data) async {
     await api.detachForm(
-      (_result as ApiDataResult<VisitData>).data.id,
-      form_id,
+      (_result as ApiDataResult<VisitData>).data,
+      form_data,
+    );
+    await _fetchVisitData();
+  }
+
+  Future<void> updateFormData(VisitFormItem form_data) async {
+    await api.updateFormData(
+      (_result as ApiDataResult<VisitData>).data,
+      form_data,
     );
     await _fetchVisitData();
   }

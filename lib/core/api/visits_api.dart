@@ -129,27 +129,27 @@ class VisitsApi {
     );
   }
 
-  Future<UnsubscribeFunc> todayVisitsSubscription(
-    void Function(RecordSubscriptionEvent) callback,
-  ) async {
-    final visit_date = _now;
-    final _date_of_visit =
-        DateTime(visit_date.year, visit_date.month, visit_date.day);
-    final _date_after_visit =
-        DateTime(visit_date.year, visit_date.month, visit_date.day + 1);
+  // Future<UnsubscribeFunc> todayVisitsSubscription(
+  //   void Function(RecordSubscriptionEvent) callback,
+  // ) async {
+  //   final visit_date = _now;
+  //   final _date_of_visit =
+  //       DateTime(visit_date.year, visit_date.month, visit_date.day);
+  //   final _date_after_visit =
+  //       DateTime(visit_date.year, visit_date.month, visit_date.day + 1);
 
-    final _dateOfVisitFormatted =
-        DateFormat('yyyy-MM-dd', 'en').format(_date_of_visit);
-    final _dateAfterVisitFormatted =
-        DateFormat('yyyy-MM-dd', 'en').format(_date_after_visit);
+  //   final _dateOfVisitFormatted =
+  //       DateFormat('yyyy-MM-dd', 'en').format(_date_of_visit);
+  //   final _dateAfterVisitFormatted =
+  //       DateFormat('yyyy-MM-dd', 'en').format(_date_after_visit);
 
-    final sub = await PocketbaseHelper.pb.collection(collection).subscribe(
-          '*',
-          callback,
-          filter:
-              "visit_date >= '$_dateOfVisitFormatted' && visit_date < '$_dateAfterVisitFormatted'",
-          expand: _expand,
-        );
-    return sub;
-  }
+  //   final sub = await PocketbaseHelper.pb.collection(collection).subscribe(
+  //         '*',
+  //         callback,
+  //         filter:
+  //             "visit_date >= '$_dateOfVisitFormatted' && visit_date < '$_dateAfterVisitFormatted'",
+  //         expand: _expand,
+  //       );
+  //   return sub;
+  // }
 }

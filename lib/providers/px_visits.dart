@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:proklinik_one/core/api/_api_result.dart';
 import 'package:proklinik_one/core/api/visits_api.dart';
-import 'package:proklinik_one/functions/first_where_or_null.dart';
+// import 'package:proklinik_one/functions/first_where_or_null.dart';
 import 'package:proklinik_one/models/clinic/schedule_shift.dart';
 import 'package:proklinik_one/models/visits/_visit.dart';
 import 'package:proklinik_one/models/visits/visit_create_dto.dart';
@@ -11,7 +11,7 @@ class PxVisits extends ChangeNotifier {
 
   PxVisits({required this.api}) {
     _fetchVisitsOfToday();
-    _subscribe();
+    // _subscribe(); //TODO: Find why is erroring
   }
 
   static TabController? _tabController;
@@ -94,34 +94,34 @@ class PxVisits extends ChangeNotifier {
     notifyListeners();
   }
 
-  void _subscribe() async {
-    await api.todayVisitsSubscription((e) {
-      // print(e.action);
-      // print(e.record);
-      toggleIsUpdating();
-      // await _fetchVisitsOfToday();
-      if (e.action == 'delete') {
-        (_visits as ApiDataResult<List<Visit>>)
-            .data
-            .removeWhere((x) => e.record?.id == x.id);
-        notifyListeners();
-        toggleIsUpdating();
-        return;
-      }
-      final _toUpdatedVisit = (_visits as ApiDataResult<List<Visit>>)
-          .data
-          .firstWhereOrNull((x) => e.record?.id == x.id);
-      if (_toUpdatedVisit != null && e.record != null) {
-        final _visitIndex = (_visits as ApiDataResult<List<Visit>>)
-            .data
-            .indexOf(_toUpdatedVisit);
-        (_visits as ApiDataResult<List<Visit>>).data[_visitIndex] =
-            Visit.fromRecordModel(e.record!);
-        notifyListeners();
-      }
-      toggleIsUpdating();
-    });
-  }
+  // void _subscribe() async {
+  //   await api.todayVisitsSubscription((e) {
+  //     // print(e.action);
+  //     // print(e.record);
+  //     toggleIsUpdating();
+  //     // await _fetchVisitsOfToday();
+  //     if (e.action == 'delete') {
+  //       (_visits as ApiDataResult<List<Visit>>)
+  //           .data
+  //           .removeWhere((x) => e.record?.id == x.id);
+  //       notifyListeners();
+  //       toggleIsUpdating();
+  //       return;
+  //     }
+  //     final _toUpdatedVisit = (_visits as ApiDataResult<List<Visit>>)
+  //         .data
+  //         .firstWhereOrNull((x) => e.record?.id == x.id);
+  //     if (_toUpdatedVisit != null && e.record != null) {
+  //       final _visitIndex = (_visits as ApiDataResult<List<Visit>>)
+  //           .data
+  //           .indexOf(_toUpdatedVisit);
+  //       (_visits as ApiDataResult<List<Visit>>).data[_visitIndex] =
+  //           Visit.fromRecordModel(e.record!);
+  //       notifyListeners();
+  //     }
+  //     toggleIsUpdating();
+  //   });
+  // }
 
   Future<void> updateVisit({
     required Visit visit,

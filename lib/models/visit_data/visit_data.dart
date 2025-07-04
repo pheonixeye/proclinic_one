@@ -7,7 +7,7 @@ import 'package:proklinik_one/models/doctor_items/doctor_procedure_item.dart';
 import 'package:proklinik_one/models/doctor_items/doctor_rad_item.dart';
 import 'package:proklinik_one/models/doctor_items/doctor_supply_item.dart';
 import 'package:proklinik_one/models/pc_form.dart';
-import 'package:proklinik_one/models/visit_data/visit_form_data.dart';
+import 'package:proklinik_one/models/visit_data/visit_form_item.dart';
 
 class VisitData extends Equatable {
   final String id;
@@ -20,7 +20,7 @@ class VisitData extends Equatable {
   final List<DoctorProcedureItem> procedures;
   final List<DoctorSupplyItem> supplies;
   final List<PcForm> forms;
-  final VisitFormData forms_data;
+  final List<VisitFormItem> forms_data;
   final Map drug_data;
 
   const VisitData({
@@ -49,7 +49,7 @@ class VisitData extends Equatable {
     List<DoctorProcedureItem>? procedures,
     List<DoctorSupplyItem>? supplies,
     List<PcForm>? forms,
-    VisitFormData? forms_data,
+    List<VisitFormItem>? forms_data,
     Map? drug_data,
   }) {
     return VisitData(
@@ -80,7 +80,7 @@ class VisitData extends Equatable {
       'procedures': procedures.map((x) => x.toJson()).toList(),
       'supplies': supplies.map((x) => x.toJson()).toList(),
       'forms': forms.map((x) => x.toJson()).toList(),
-      'forms_data': forms_data.toJson(),
+      'forms_data': forms_data.map((e) => e.toJson()).toList(),
       'drug_data': drug_data,
     };
   }
@@ -121,7 +121,9 @@ class VisitData extends Equatable {
           (x) => PcForm.fromJson(x as Map<String, dynamic>),
         ),
       ),
-      forms_data: VisitFormData.fromJson(map['forms_data']),
+      forms_data: (map['forms_data'] as List<dynamic>)
+          .map((e) => VisitFormItem.fromJson(e))
+          .toList(),
       drug_data: Map.from((map['drug_data'] as Map)),
     );
   }
@@ -173,11 +175,13 @@ class VisitData extends Equatable {
           .get<List<RecordModel>>('expand.supplies_ids')
           .map((x) => DoctorSupplyItem.fromJson(x.toJson()))
           .toList(),
-      forms: e
-          .get<List<RecordModel>>('expand.forms_ids')
-          .map((x) => PcForm.fromJson(x.toJson()))
+      forms: (e.toJson()['expand']['forms_data_ids'] as List<dynamic>)
+          .map((e) => PcForm.fromJson(e['expand']['form_id']))
           .toList(),
-      forms_data: VisitFormData.fromJson(e.data['forms_data']),
+      forms_data: e
+          .get<List<RecordModel>>('expand.forms_data_ids')
+          .map((x) => VisitFormItem.fromJson(x.toJson()))
+          .toList(),
       drug_data: e.data['drug_data'],
     );
   }

@@ -4,6 +4,7 @@ import 'package:proklinik_one/extensions/loc_ext.dart';
 import 'package:proklinik_one/functions/shell_function.dart';
 import 'package:proklinik_one/models/pc_form.dart';
 import 'package:proklinik_one/models/visit_data/visit_data.dart';
+import 'package:proklinik_one/models/visit_data/visit_form_item.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/today_visits_page/pages/visit_data_page/widgets/forms_page/form_picker_dialog.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/today_visits_page/pages/visit_data_page/widgets/forms_page/form_view_edit_card.dart';
 import 'package:proklinik_one/providers/px_forms.dart';
@@ -48,8 +49,10 @@ class VisitFormsPage extends StatelessWidget {
                   return VisitFormViewEditCard(
                     form: _item,
                     index: index,
-                    formData:
-                        (v.result as ApiDataResult<VisitData>).data.forms_data,
+                    form_data: (v.result as ApiDataResult<VisitData>)
+                        .data
+                        .forms_data
+                        .firstWhere((x) => x.form_id == _item.id),
                   );
                 },
               );
@@ -68,11 +71,25 @@ class VisitFormsPage extends StatelessWidget {
               if (_form == null) {
                 return;
               }
+              final _visit_form_data = VisitFormItem(
+                id: '',
+                visit_id: (v.result as ApiDataResult<VisitData>).data.visit_id,
+                patient_id:
+                    (v.result as ApiDataResult<VisitData>).data.patient_id,
+                form_id: _form.id,
+                form_data: _form.form_fields
+                    .map((x) => SingleFieldData(
+                          id: x.id,
+                          field_name: x.field_name,
+                          field_value: '',
+                        ))
+                    .toList(),
+              );
               if (context.mounted) {
                 await shellFunction(
                   context,
                   toExecute: () async {
-                    await v.attachForm(_form.id);
+                    await v.attachForm(_visit_form_data);
                   },
                 );
               }
