@@ -17,25 +17,8 @@ class PxVisitData extends ChangeNotifier {
 
   Future<void> _fetchVisitData() async {
     _result = await api.fetchVisitData();
-    _subscribe();
+    // _subscribe();
     notifyListeners();
-  }
-
-  Future<void> _subscribe() async {
-    if (_result != null) {
-      print('_result != null');
-      await api.subscribe(
-        (_result as ApiDataResult<VisitData>).data.id,
-        (e) async {
-          _result = ApiDataResult<VisitData>(
-            data: VisitData.fromRecordModel(e.record!),
-          );
-          notifyListeners();
-        },
-      );
-      print(
-          'PxVisitData()._subscribe(${(_result as ApiDataResult<VisitData>).data.id})');
-    }
   }
 
   Future<void> attachForm(String form_id) async {
@@ -43,6 +26,7 @@ class PxVisitData extends ChangeNotifier {
       (_result as ApiDataResult<VisitData>).data.id,
       form_id,
     );
+    await _fetchVisitData();
   }
 
   Future<void> detachForm(String form_id) async {
@@ -50,11 +34,6 @@ class PxVisitData extends ChangeNotifier {
       (_result as ApiDataResult<VisitData>).data.id,
       form_id,
     );
-  }
-
-  @override
-  void dispose() {
-    api.unsubscribe((_result as ApiDataResult<VisitData>).data.id);
-    super.dispose();
+    await _fetchVisitData();
   }
 }

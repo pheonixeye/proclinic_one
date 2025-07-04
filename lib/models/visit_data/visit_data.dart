@@ -7,6 +7,7 @@ import 'package:proklinik_one/models/doctor_items/doctor_procedure_item.dart';
 import 'package:proklinik_one/models/doctor_items/doctor_rad_item.dart';
 import 'package:proklinik_one/models/doctor_items/doctor_supply_item.dart';
 import 'package:proklinik_one/models/pc_form.dart';
+import 'package:proklinik_one/models/visit_data/visit_form_data.dart';
 
 class VisitData extends Equatable {
   final String id;
@@ -19,7 +20,7 @@ class VisitData extends Equatable {
   final List<DoctorProcedureItem> procedures;
   final List<DoctorSupplyItem> supplies;
   final List<PcForm> forms;
-  final Map forms_data;
+  final VisitFormData forms_data;
   final Map drug_data;
 
   const VisitData({
@@ -48,7 +49,7 @@ class VisitData extends Equatable {
     List<DoctorProcedureItem>? procedures,
     List<DoctorSupplyItem>? supplies,
     List<PcForm>? forms,
-    Map? forms_data,
+    VisitFormData? forms_data,
     Map? drug_data,
   }) {
     return VisitData(
@@ -79,7 +80,7 @@ class VisitData extends Equatable {
       'procedures': procedures.map((x) => x.toJson()).toList(),
       'supplies': supplies.map((x) => x.toJson()).toList(),
       'forms': forms.map((x) => x.toJson()).toList(),
-      'forms_data': forms_data,
+      'forms_data': forms_data.toJson(),
       'drug_data': drug_data,
     };
   }
@@ -120,7 +121,7 @@ class VisitData extends Equatable {
           (x) => PcForm.fromJson(x as Map<String, dynamic>),
         ),
       ),
-      forms_data: Map.from((map['forms_data'] as Map)),
+      forms_data: VisitFormData.fromJson(map['forms_data']),
       drug_data: Map.from((map['drug_data'] as Map)),
     );
   }
@@ -176,7 +177,7 @@ class VisitData extends Equatable {
           .get<List<RecordModel>>('expand.forms_ids')
           .map((x) => PcForm.fromJson(x.toJson()))
           .toList(),
-      forms_data: e.data['forms_data'],
+      forms_data: VisitFormData.fromJson(e.data['forms_data']),
       drug_data: e.data['drug_data'],
     );
   }
