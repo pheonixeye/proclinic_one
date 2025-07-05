@@ -2,6 +2,7 @@ import 'package:pocketbase/pocketbase.dart';
 import 'package:proklinik_one/core/api/_api_result.dart';
 import 'package:proklinik_one/core/api/constants/pocketbase_helper.dart';
 import 'package:proklinik_one/errors/code_to_error.dart';
+import 'package:proklinik_one/models/doctor_items/profile_setup_item.dart';
 import 'package:proklinik_one/models/visit_data/visit_data.dart';
 import 'package:proklinik_one/models/visit_data/visit_form_item.dart';
 
@@ -129,5 +130,41 @@ class VisitDataApi {
         },
       },
     );
+  }
+
+  Future<void> addToItemList(
+    VisitData visit_data,
+    String item_id,
+    ProfileSetupItem setupItem,
+  ) async {
+    final Map<String, dynamic> _update = switch (setupItem) {
+      ProfileSetupItem.drugs => {},
+      ProfileSetupItem.labs => {'labs_ids+': item_id},
+      ProfileSetupItem.rads => {'rads_ids+': item_id},
+      ProfileSetupItem.procedures => {'procedures_ids+': item_id},
+      ProfileSetupItem.supplies => {'supplies_ids+': item_id},
+    };
+    await PocketbaseHelper.pb.collection(collection).update(
+          visit_data.id,
+          body: _update,
+        );
+  }
+
+  Future<void> removeFromItemList(
+    VisitData visit_data,
+    String item_id,
+    ProfileSetupItem setupItem,
+  ) async {
+    final Map<String, dynamic> _update = switch (setupItem) {
+      ProfileSetupItem.drugs => {},
+      ProfileSetupItem.labs => {'labs_ids-': item_id},
+      ProfileSetupItem.rads => {'rads_ids-': item_id},
+      ProfileSetupItem.procedures => {'procedures_ids-': item_id},
+      ProfileSetupItem.supplies => {'supplies_ids-': item_id},
+    };
+    await PocketbaseHelper.pb.collection(collection).update(
+          visit_data.id,
+          body: _update,
+        );
   }
 }

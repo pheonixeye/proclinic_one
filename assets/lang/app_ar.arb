@@ -264,6 +264,7 @@
     "detachFormPrompt" : "برجاء تأكيد فصل هذا النموذج من بيانات الزيارة - سيتم الغاء كل بيانات النموذج المسجلة - هل انت متأكد؟",
     "@@visit_data_page__DRUGS": "",
     "drugDose" : "جرعة الدواء",
-    "saveToDefaultDoses" : "اضافة الي الجرعات المفضلة"
-
+    "saveToDefaultDoses" : "اضافة الي الجرعات المفضلة",
+    "noDoseSelected" : "لم يتم تحديد جرعة",
+    "doseSelected" : "تم تحديد الجرعة"
     }

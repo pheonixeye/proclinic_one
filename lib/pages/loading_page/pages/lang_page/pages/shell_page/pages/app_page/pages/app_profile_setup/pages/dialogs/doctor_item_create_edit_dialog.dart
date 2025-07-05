@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:proklinik_one/extensions/loc_ext.dart';
 import 'package:proklinik_one/extensions/profile_setup_item_ext.dart';
 import 'package:proklinik_one/models/doctor_items/doctor_rad_item.dart';
@@ -272,6 +273,9 @@ class _DoctorItemCreateEditDialogState
                           hintText: context.loc.drugConcentration,
                         ),
                         controller: _drugConcentrationController,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                       ),
                     ),
                   ),
@@ -417,6 +421,9 @@ class _DoctorItemCreateEditDialogState
                           hintText: context.loc.price,
                         ),
                         controller: _procedurePriceController,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                       ),
                     ),
                   ),
@@ -433,6 +440,9 @@ class _DoctorItemCreateEditDialogState
                           hintText: context.loc.discountPercentage,
                         ),
                         controller: _procedureDiscountController,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                       ),
                     ),
                   ),
@@ -483,6 +493,9 @@ class _DoctorItemCreateEditDialogState
                           hintText: context.loc.reorderQuantity,
                         ),
                         controller: _supplyReorderQuantityController,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                       ),
                     ),
                   ),
@@ -499,6 +512,9 @@ class _DoctorItemCreateEditDialogState
                           hintText: context.loc.buyingPrice,
                         ),
                         controller: _supplybuyingPriceController,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                       ),
                     ),
                   ),
@@ -549,7 +565,7 @@ class _DoctorItemCreateEditDialogState
                 'name_ar': _nameArController.text,
                 'item': widget.type.name.toString(),
                 'concentration':
-                    double.parse(_drugConcentrationController.text),
+                    double.tryParse(_drugConcentrationController.text) ?? 0,
                 'unit': _drugUnitController.text,
                 'form': _drugFormController.text,
                 'default_doses': _drugDefaultDosesController.text.split('-'),

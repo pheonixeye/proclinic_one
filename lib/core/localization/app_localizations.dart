@@ -1537,6 +1537,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Save To Default Doses'**
   String get saveToDefaultDoses;
+
+  /// No description provided for @noDoseSelected.
+  ///
+  /// In en, this message translates to:
+  /// **'No Dose Selected'**
+  String get noDoseSelected;
+
+  /// No description provided for @doseSelected.
+  ///
+  /// In en, this message translates to:
+  /// **'Dose Selected'**
+  String get doseSelected;
 }
 
 class _AppLocalizationsDelegate

@@ -264,7 +264,10 @@
     "detachFormPrompt" : "This Action Will Detach This Form And All Data Related To It's Entries Will Be Deleted, Are You Sure ?",
     "@@visit_data_page__DRUGS": "",
     "drugDose" : "Drug Dose",
-    "saveToDefaultDoses" : "Save To Default Doses"
+    "saveToDefaultDoses" : "Save To Default Doses",
+    "noDoseSelected" : "No Dose Selected",
+    "doseSelected" : "Dose Selected"
+
 
 
 

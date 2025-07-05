@@ -82,6 +82,15 @@ class _DrugDoseViewEditCardState extends State<DrugDoseViewEditCard> {
                           : widget.item.prescriptionNameAr,
                     ),
                   ),
+                  Tooltip(
+                    message: widget.dose == null
+                        ? context.loc.noDoseSelected
+                        : context.loc.doseSelected,
+                    child: Icon(
+                      widget.dose == null ? Icons.close : Icons.check,
+                      color: widget.dose == null ? Colors.red : Colors.green,
+                    ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: FloatingActionButton.small(

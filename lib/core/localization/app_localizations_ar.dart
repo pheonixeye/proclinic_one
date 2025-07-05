@@ -753,4 +753,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get saveToDefaultDoses => 'اضافة الي الجرعات المفضلة';
+
+  @override
+  String get noDoseSelected => 'لم يتم تحديد جرعة';
+
+  @override
+  String get doseSelected => 'تم تحديد الجرعة';
 }

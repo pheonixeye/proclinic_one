@@ -754,4 +754,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get saveToDefaultDoses => 'Save To Default Doses';
+
+  @override
+  String get noDoseSelected => 'No Dose Selected';
+
+  @override
+  String get doseSelected => 'Dose Selected';
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:proklinik_one/core/api/_api_result.dart';
 import 'package:proklinik_one/core/api/visit_data_api.dart';
+import 'package:proklinik_one/models/doctor_items/profile_setup_item.dart';
 import 'package:proklinik_one/models/visit_data/visit_data.dart';
 import 'package:proklinik_one/models/visit_data/visit_form_item.dart';
 
@@ -75,6 +76,25 @@ class PxVisitData extends ChangeNotifier {
       (_result as ApiDataResult<VisitData>).data,
       drug_id,
       drug_dose,
+    );
+    await _fetchVisitData();
+  }
+
+  Future<void> addToLabList(String item_id, ProfileSetupItem setupItem) async {
+    await api.addToItemList(
+      (_result as ApiDataResult<VisitData>).data,
+      item_id,
+      setupItem,
+    );
+    await _fetchVisitData();
+  }
+
+  Future<void> removeFromLabList(
+      String item_id, ProfileSetupItem setupItem) async {
+    await api.removeFromItemList(
+      (_result as ApiDataResult<VisitData>).data,
+      item_id,
+      setupItem,
     );
     await _fetchVisitData();
   }
