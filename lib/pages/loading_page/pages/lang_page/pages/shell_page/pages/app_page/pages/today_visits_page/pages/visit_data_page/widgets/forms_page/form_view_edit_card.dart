@@ -59,33 +59,36 @@ class _VisitFormViewEditCardState extends State<VisitFormViewEditCard> {
                       l.isEnglish ? widget.form.name_en : widget.form.name_ar,
                     ),
                   ),
-                  FloatingActionButton.small(
-                    tooltip: context.loc.deleteForm,
-                    backgroundColor: Colors.red.shade200,
-                    heroTag: 'detach${widget.form.name_en}${widget.index}',
-                    onPressed: () async {
-                      //todo: detach Form
-                      final _toDetach = await showDialog<bool?>(
-                        context: context,
-                        builder: (context) {
-                          return PromptDialog(
-                            message: context.loc.detachFormPrompt,
-                          );
-                        },
-                      );
-                      if (_toDetach == null || _toDetach == false) {
-                        return;
-                      }
-                      if (context.mounted) {
-                        await shellFunction(
-                          context,
-                          toExecute: () async {
-                            await v.detachForm(widget.form_data);
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: FloatingActionButton.small(
+                      tooltip: context.loc.deleteForm,
+                      backgroundColor: Colors.red.shade200,
+                      heroTag: 'detach${widget.form.name_en}${widget.index}',
+                      onPressed: () async {
+                        //todo: detach Form
+                        final _toDetach = await showDialog<bool?>(
+                          context: context,
+                          builder: (context) {
+                            return PromptDialog(
+                              message: context.loc.detachFormPrompt,
+                            );
                           },
                         );
-                      }
-                    },
-                    child: const Icon(Icons.delete_forever),
+                        if (_toDetach == null || _toDetach == false) {
+                          return;
+                        }
+                        if (context.mounted) {
+                          await shellFunction(
+                            context,
+                            toExecute: () async {
+                              await v.detachForm(widget.form_data);
+                            },
+                          );
+                        }
+                      },
+                      child: const Icon(Icons.delete_forever),
+                    ),
                   ),
                 ],
               ),

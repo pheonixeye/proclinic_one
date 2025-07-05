@@ -1,8 +1,7 @@
-import 'package:equatable/equatable.dart';
 import 'package:proklinik_one/models/doctor_items/_doctor_item.dart';
 import 'package:proklinik_one/models/doctor_items/profile_setup_item.dart';
 
-class DoctorDrugItem extends DoctorItem implements Equatable {
+class DoctorDrugItem extends DoctorItem {
   final double concentration;
   final String unit;
   final String form;
@@ -38,6 +37,10 @@ class DoctorDrugItem extends DoctorItem implements Equatable {
       default_doses: default_doses ?? this.default_doses,
     );
   }
+
+  String get prescriptionNameEn => '$name_en $concentration $unit $form';
+
+  String get prescriptionNameAr => '$name_ar ($unit $concentration)  $form';
 
   @override
   Map<String, dynamic> toJson() {

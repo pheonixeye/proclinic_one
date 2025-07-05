@@ -7,6 +7,7 @@ import 'package:proklinik_one/models/visit_data/visit_data.dart';
 import 'package:proklinik_one/models/visit_data/visit_form_item.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/today_visits_page/pages/visit_data_page/widgets/forms_page/form_picker_dialog.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/today_visits_page/pages/visit_data_page/widgets/forms_page/form_view_edit_card.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/today_visits_page/pages/visit_data_page/widgets/visit_details_page_info_header.dart';
 import 'package:proklinik_one/providers/px_forms.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:proklinik_one/providers/px_visit_data.dart';
@@ -44,25 +45,11 @@ class VisitFormsPage extends StatelessWidget {
               final _items = (v.result as ApiDataResult<VisitData>).data.forms;
               return Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Hero(
-                      tag: (v.result as ApiDataResult<VisitData>)
-                          .data
-                          .patient
-                          .id,
-                      child: ListTile(
-                        title: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            (v.result as ApiDataResult<VisitData>)
-                                .data
-                                .patient
-                                .name,
-                          ),
-                        ),
-                      ),
-                    ),
+                  VisitDetailsPageInfoHeader(
+                    patient:
+                        (v.result as ApiDataResult<VisitData>).data.patient,
+                    title: context.loc.visitForms,
+                    iconData: Icons.edit_document,
                   ),
                   Expanded(
                     child: ListView.builder(

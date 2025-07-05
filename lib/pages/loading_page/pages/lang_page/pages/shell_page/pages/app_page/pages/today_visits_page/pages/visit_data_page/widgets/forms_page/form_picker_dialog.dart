@@ -16,13 +16,6 @@ class FormPickerDialog extends StatefulWidget {
 }
 
 class _FormPickerDialogState extends State<FormPickerDialog> {
-  late final _dialogWidth = context.isMobile
-      ? MediaQuery.sizeOf(context).width / 1.2
-      : MediaQuery.sizeOf(context).width / 3;
-  late final _dialogHeight = context.isMobile
-      ? MediaQuery.sizeOf(context).height / 2
-      : MediaQuery.sizeOf(context).height / 3;
-
   PcForm? _form;
   @override
   Widget build(BuildContext context) {
@@ -57,8 +50,8 @@ class _FormPickerDialogState extends State<FormPickerDialog> {
           contentPadding: const EdgeInsets.all(8),
           insetPadding: const EdgeInsets.all(8),
           content: SizedBox(
-            width: _dialogWidth,
-            height: _dialogHeight,
+            width: context.visitItemDialogWidth,
+            height: context.visitItemDialogHeight,
             child: ListView.builder(
               itemCount: _items.length,
               itemBuilder: (context, index) {

@@ -13,7 +13,7 @@ import 'package:proklinik_one/models/doctor_items/doctor_rad_item.dart';
 import 'package:proklinik_one/models/doctor_items/doctor_supply_item.dart';
 import 'package:proklinik_one/models/doctor_items/profile_setup_item.dart';
 
-class DoctorProfileItemsApi {
+class DoctorProfileItemsApi<T extends DoctorItem> {
   DoctorProfileItemsApi({
     required this.doc_id,
     required this.item,
@@ -30,7 +30,7 @@ class DoctorProfileItemsApi {
 
   // static const String _fetch = 'fetchDoctorProfileItems';
 
-  Future<ApiResult<List<DoctorItem>>> fetchDoctorProfileItems() async {
+  Future<ApiResult<List<T>>> fetchDoctorProfileItems() async {
     // if (_cacheService.operationIsCached(key, _fetch)) {
     //   return _cacheService.getDataByKeys(key, _fetch)!;
     // }
@@ -41,14 +41,17 @@ class DoctorProfileItemsApi {
           );
 
       final _items = _result.items
-          .map<DoctorItem>((e) => switch (item) {
-                ProfileSetupItem.drugs => DoctorDrugItem.fromJson(e.toJson()),
-                ProfileSetupItem.labs => DoctorLabItem.fromJson(e.toJson()),
-                ProfileSetupItem.rads => DoctorRadItem.fromJson(e.toJson()),
+          .map<T>((e) => switch (item) {
+                ProfileSetupItem.drugs =>
+                  DoctorDrugItem.fromJson(e.toJson()) as T,
+                ProfileSetupItem.labs =>
+                  DoctorLabItem.fromJson(e.toJson()) as T,
+                ProfileSetupItem.rads =>
+                  DoctorRadItem.fromJson(e.toJson()) as T,
                 ProfileSetupItem.procedures =>
-                  DoctorProcedureItem.fromJson(e.toJson()),
+                  DoctorProcedureItem.fromJson(e.toJson()) as T,
                 ProfileSetupItem.supplies =>
-                  DoctorSupplyItem.fromJson(e.toJson()),
+                  DoctorSupplyItem.fromJson(e.toJson()) as T,
               })
           .toList();
 
@@ -61,9 +64,9 @@ class DoctorProfileItemsApi {
       //   ),
       // );
 
-      return ApiDataResult<List<DoctorItem>>(data: _items);
+      return ApiDataResult<List<T>>(data: _items);
     } catch (e) {
-      return ApiErrorResult<List<DoctorItem>>(
+      return ApiErrorResult<List<T>>(
         errorCode: AppErrorCode.clientException.code,
         originalErrorMessage: e.toString(),
       );

@@ -45,4 +45,28 @@ class PxVisitData extends ChangeNotifier {
     );
     await _fetchVisitData();
   }
+
+  Future<void> addDrugsToVisit(List<String> drugs_ids) async {
+    await api.addDrugsToVisit(
+      (_result as ApiDataResult<VisitData>).data,
+      drugs_ids,
+    );
+    await _fetchVisitData();
+  }
+
+  Future<void> removeDrugsFromVisit(List<String> drugs_ids) async {
+    await api.removeDrugsFromVisit(
+      (_result as ApiDataResult<VisitData>).data,
+      drugs_ids,
+    );
+    await _fetchVisitData();
+  }
+
+  Future<void> updateDrugsListInVisit(List<String> drugs_ids) async {
+    await api.updateDrugsListInVisit(
+      (_result as ApiDataResult<VisitData>).data,
+      drugs_ids,
+    );
+    await _fetchVisitData();
+  }
 }

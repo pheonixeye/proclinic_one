@@ -4,18 +4,18 @@ import 'package:proklinik_one/core/api/doctor_profile_items_api.dart';
 import 'package:proklinik_one/functions/contains_arabic.dart';
 import 'package:proklinik_one/models/doctor_items/_doctor_item.dart';
 
-class PxDoctorProfileItems extends ChangeNotifier {
-  final DoctorProfileItemsApi api;
+class PxDoctorProfileItems<T extends DoctorItem> extends ChangeNotifier {
+  final DoctorProfileItemsApi<T> api;
 
   PxDoctorProfileItems({required this.api}) {
     _fetchItems();
   }
 
-  ApiResult<List<DoctorItem>>? _data;
-  ApiResult<List<DoctorItem>>? get data => _data;
+  ApiResult<List<T>>? _data;
+  ApiResult<List<T>>? get data => _data;
 
-  ApiResult<List<DoctorItem>>? _filteredData;
-  ApiResult<List<DoctorItem>>? get filteredData => _filteredData;
+  ApiResult<List<T>>? _filteredData;
+  ApiResult<List<T>>? get filteredData => _filteredData;
 
   Future<void> _fetchItems() async {
     _data = await api.fetchDoctorProfileItems();
@@ -42,7 +42,7 @@ class PxDoctorProfileItems extends ChangeNotifier {
 
   void searchForItems(String item_name) {
     _filteredData = ApiDataResult(
-        data: (_data as ApiDataResult<List<DoctorItem>>)
+        data: (_data as ApiDataResult<List<T>>)
             .data
             .where(
               (e) => containsArabic(item_name)

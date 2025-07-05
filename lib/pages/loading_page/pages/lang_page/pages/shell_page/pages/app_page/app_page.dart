@@ -70,7 +70,7 @@ class _AppPageState extends State<AppPage> with SingleTickerProviderStateMixin {
               trailing: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: FloatingActionButton.small(
-                  heroTag: 'nav-rail-exp-btn',
+                  heroTag: 'nav-rail-exp-btn--app',
                   onPressed: () {
                     setState(() {
                       _isExtended = !_isExtended;

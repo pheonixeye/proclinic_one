@@ -78,4 +78,40 @@ class VisitDataApi {
           body: form_data.toJson(),
         );
   }
+
+  Future<void> addDrugsToVisit(
+    VisitData visit_data,
+    List<String> drugs_ids,
+  ) async {
+    await PocketbaseHelper.pb.collection(collection).update(
+      visit_data.id,
+      body: {
+        'drugs_ids+': [...drugs_ids],
+      },
+    );
+  }
+
+  Future<void> removeDrugsFromVisit(
+    VisitData visit_data,
+    List<String> drugs_ids,
+  ) async {
+    await PocketbaseHelper.pb.collection(collection).update(
+      visit_data.id,
+      body: {
+        'drugs_ids-': [...drugs_ids],
+      },
+    );
+  }
+
+  Future<void> updateDrugsListInVisit(
+    VisitData visit_data,
+    List<String> drugs_ids,
+  ) async {
+    await PocketbaseHelper.pb.collection(collection).update(
+      visit_data.id,
+      body: {
+        'drugs_ids': [...drugs_ids],
+      },
+    );
+  }
 }

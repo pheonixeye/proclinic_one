@@ -43,7 +43,7 @@ class _VisitDataPageState extends State<VisitDataPage> {
               trailing: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: FloatingActionButton.small(
-                  heroTag: 'nav-rail-exp-btn-visit-data',
+                  heroTag: 'nav-rail-exp-btn--visit-data',
                   onPressed: () {
                     setState(() {
                       _isExtended = !_isExtended;

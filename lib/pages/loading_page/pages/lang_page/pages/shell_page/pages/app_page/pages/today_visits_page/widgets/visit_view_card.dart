@@ -80,7 +80,8 @@ class VisitViewCard extends StatelessWidget {
                         child: Icon(Icons.arrow_drop_up),
                       ),
                       FloatingActionButton.small(
-                        heroTag: visit.id,
+                        heroTag:
+                            '${visit.id}_${visit.patient_entry_number}_${visit.patient_progress_status}',
                         onPressed: null,
                         child: Text('${visit.patient_entry_number}'),
                       ),
@@ -386,7 +387,9 @@ class VisitViewCard extends StatelessWidget {
                   Column(
                     children: [
                       FloatingActionButton.small(
-                        heroTag: visit.id + visit.patient_progress_status.id,
+                        heroTag: visit.id +
+                            visit.patient_progress_status.id +
+                            visit.patient.id,
                         onPressed: () {
                           GoRouter.of(context).goNamed(
                             AppRouter.visit_data,
