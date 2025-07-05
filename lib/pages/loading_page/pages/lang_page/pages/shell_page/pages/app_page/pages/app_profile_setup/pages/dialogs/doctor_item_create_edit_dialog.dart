@@ -87,14 +87,17 @@ class _DoctorItemCreateEditDialogState
 
     ///[DRUGS]
     ///
-    _drugConcentrationController =
-        TextEditingController(text: widget.item?['concentration'] ?? '');
+    _drugConcentrationController = TextEditingController(
+        text: widget.item?['concentration'] == null
+            ? ''
+            : '${widget.item?['concentration']}');
     _drugUnitController =
         TextEditingController(text: widget.item?['unit'] ?? '');
     _drugFormController =
         TextEditingController(text: widget.item?['form'] ?? '');
-    _drugDefaultDosesController =
-        TextEditingController(text: widget.item?['default_doses'] ?? '');
+    final List<String>? _defaultDoses = widget.item?['default_doses'];
+    _drugDefaultDosesController = TextEditingController(
+        text: _defaultDoses == null ? '' : _defaultDoses.join('-'));
 
     ///[LABS]
     ///
@@ -545,7 +548,8 @@ class _DoctorItemCreateEditDialogState
                 'name_en': _nameEnController.text,
                 'name_ar': _nameArController.text,
                 'item': widget.type.name.toString(),
-                'concentration': _drugConcentrationController.text,
+                'concentration':
+                    double.parse(_drugConcentrationController.text),
                 'unit': _drugUnitController.text,
                 'form': _drugFormController.text,
                 'default_doses': _drugDefaultDosesController.text.split('-'),

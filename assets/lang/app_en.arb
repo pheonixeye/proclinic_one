@@ -261,7 +261,11 @@
     "visitProcedures" : "Visit Procedures",
     "visitSupplies" : "Visit Supplies",
     "@@visit_data_page__FORMS": "",
-    "detachFormPrompt" : "This Action Will Detach This Form And All Data Related To It's Entries Will Be Deleted, Are You Sure ?"
+    "detachFormPrompt" : "This Action Will Detach This Form And All Data Related To It's Entries Will Be Deleted, Are You Sure ?",
+    "@@visit_data_page__DRUGS": "",
+    "drugDose" : "Drug Dose",
+    "saveToDefaultDoses" : "Save To Default Doses"
+
 
 
 }

@@ -114,4 +114,20 @@ class VisitDataApi {
       },
     );
   }
+
+  Future<void> setDrugDose(
+    VisitData visit_data,
+    String drug_id,
+    String drug_dose,
+  ) async {
+    await PocketbaseHelper.pb.collection(collection).update(
+      visit_data.id,
+      body: {
+        'drug_data': {
+          ...visit_data.drug_data,
+          drug_id: drug_dose,
+        },
+      },
+    );
+  }
 }

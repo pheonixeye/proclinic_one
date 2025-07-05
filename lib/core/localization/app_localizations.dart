@@ -1525,6 +1525,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This Action Will Detach This Form And All Data Related To It\'s Entries Will Be Deleted, Are You Sure ?'**
   String get detachFormPrompt;
+
+  /// No description provided for @drugDose.
+  ///
+  /// In en, this message translates to:
+  /// **'Drug Dose'**
+  String get drugDose;
+
+  /// No description provided for @saveToDefaultDoses.
+  ///
+  /// In en, this message translates to:
+  /// **'Save To Default Doses'**
+  String get saveToDefaultDoses;
 }
 
 class _AppLocalizationsDelegate

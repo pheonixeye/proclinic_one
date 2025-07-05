@@ -747,4 +747,10 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get detachFormPrompt =>
       'برجاء تأكيد فصل هذا النموذج من بيانات الزيارة - سيتم الغاء كل بيانات النموذج المسجلة - هل انت متأكد؟';
+
+  @override
+  String get drugDose => 'جرعة الدواء';
+
+  @override
+  String get saveToDefaultDoses => 'اضافة الي الجرعات المفضلة';
 }

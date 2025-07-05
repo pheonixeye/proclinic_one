@@ -69,4 +69,13 @@ class PxVisitData extends ChangeNotifier {
     );
     await _fetchVisitData();
   }
+
+  Future<void> setDrugDose(String drug_id, String drug_dose) async {
+    await api.setDrugDose(
+      (_result as ApiDataResult<VisitData>).data,
+      drug_id,
+      drug_dose,
+    );
+    await _fetchVisitData();
+  }
 }
