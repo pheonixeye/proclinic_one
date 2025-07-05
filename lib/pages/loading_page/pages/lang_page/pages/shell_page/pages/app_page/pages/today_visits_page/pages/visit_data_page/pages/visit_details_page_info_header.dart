@@ -7,10 +7,12 @@ class VisitDetailsPageInfoHeader extends StatelessWidget {
     required this.patient,
     required this.title,
     required this.iconData,
+    this.actionButton,
   });
   final Patient patient;
   final String title;
   final IconData iconData;
+  final Widget? actionButton;
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +26,7 @@ class VisitDetailsPageInfoHeader extends StatelessWidget {
           patient.name,
         ),
         subtitle: Text(title),
+        trailing: actionButton,
       ),
     );
   }

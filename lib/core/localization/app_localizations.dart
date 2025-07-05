@@ -1549,6 +1549,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Dose Selected'**
   String get doseSelected;
+
+  /// No description provided for @attachLabResult.
+  ///
+  /// In en, this message translates to:
+  /// **'Attach Lab Result'**
+  String get attachLabResult;
+
+  /// No description provided for @attachRadResult.
+  ///
+  /// In en, this message translates to:
+  /// **'Attach Radiology Result'**
+  String get attachRadResult;
 }
 
 class _AppLocalizationsDelegate

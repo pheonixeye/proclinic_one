@@ -266,7 +266,10 @@
     "drugDose" : "Drug Dose",
     "saveToDefaultDoses" : "Save To Default Doses",
     "noDoseSelected" : "No Dose Selected",
-    "doseSelected" : "Dose Selected"
+    "doseSelected" : "Dose Selected",
+    "@@visit_data_page__SINGLEITEM": "",
+    "attachLabResult" : "Attach Lab Result",
+    "attachRadResult" : "Attach Radiology Result"
 
 
 

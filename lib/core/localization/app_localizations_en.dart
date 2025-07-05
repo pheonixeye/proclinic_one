@@ -760,4 +760,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get doseSelected => 'Dose Selected';
+
+  @override
+  String get attachLabResult => 'Attach Lab Result';
+
+  @override
+  String get attachRadResult => 'Attach Radiology Result';
 }

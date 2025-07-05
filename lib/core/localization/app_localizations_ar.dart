@@ -759,4 +759,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get doseSelected => 'تم تحديد الجرعة';
+
+  @override
+  String get attachLabResult => 'الحاق نتيجة معامل';
+
+  @override
+  String get attachRadResult => 'الحاق نتيجة اشاعات';
 }

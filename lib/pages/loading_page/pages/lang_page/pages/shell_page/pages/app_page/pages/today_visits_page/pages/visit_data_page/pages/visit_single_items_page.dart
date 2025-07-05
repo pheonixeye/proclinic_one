@@ -79,6 +79,23 @@ class VisitSingleItemsPage<T extends DoctorItem> extends StatelessWidget {
                       ProfileSetupItem.supplies => FontAwesomeIcons.warehouse,
                       _ => Icons.vpn_key_rounded,
                     },
+                    actionButton: switch (setupItem) {
+                      ProfileSetupItem.labs ||
+                      ProfileSetupItem.rads =>
+                        FloatingActionButton.small(
+                          tooltip: switch (setupItem) {
+                            ProfileSetupItem.labs =>
+                              context.loc.attachLabResult,
+                            ProfileSetupItem.rads =>
+                              context.loc.attachRadResult,
+                            _ => ''
+                          },
+                          heroTag: '${setupItem.name}add-documents',
+                          onPressed: null,
+                          child: const Icon(Icons.upload_file),
+                        ),
+                      _ => null,
+                    },
                   ),
                   Card.outlined(
                     elevation: 6,

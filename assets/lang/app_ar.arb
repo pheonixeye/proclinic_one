@@ -266,5 +266,8 @@
     "drugDose" : "جرعة الدواء",
     "saveToDefaultDoses" : "اضافة الي الجرعات المفضلة",
     "noDoseSelected" : "لم يتم تحديد جرعة",
-    "doseSelected" : "تم تحديد الجرعة"
+    "doseSelected" : "تم تحديد الجرعة",
+    "@@visit_data_page__SINGLEITEM": "",
+    "attachLabResult" : "الحاق نتيجة معامل",
+    "attachRadResult" : "الحاق نتيجة اشاعات"
     }
