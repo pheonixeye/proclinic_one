@@ -5,9 +5,9 @@ import 'package:proklinik_one/functions/shell_function.dart';
 import 'package:proklinik_one/models/pc_form.dart';
 import 'package:proklinik_one/models/visit_data/visit_data.dart';
 import 'package:proklinik_one/models/visit_data/visit_form_item.dart';
-import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/today_visits_page/pages/visit_data_page/widgets/forms_page/form_picker_dialog.dart';
-import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/today_visits_page/pages/visit_data_page/widgets/forms_page/form_view_edit_card.dart';
-import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/today_visits_page/pages/visit_data_page/widgets/visit_details_page_info_header.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/today_visits_page/pages/visit_data_page/pages/forms_page/form_picker_dialog.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/today_visits_page/pages/visit_data_page/pages/forms_page/form_view_edit_card.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/today_visits_page/pages/visit_data_page/pages/visit_details_page_info_header.dart';
 import 'package:proklinik_one/providers/px_forms.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:proklinik_one/providers/px_visit_data.dart';
@@ -38,8 +38,20 @@ class VisitFormsPage extends StatelessWidget {
               }
               while (
                   (v.result as ApiDataResult<VisitData>).data.forms.isEmpty) {
-                return CentralNoItems(
-                  message: context.loc.noItemsFound,
+                return Column(
+                  children: [
+                    VisitDetailsPageInfoHeader(
+                      patient:
+                          (v.result as ApiDataResult<VisitData>).data.patient,
+                      title: context.loc.visitForms,
+                      iconData: Icons.edit_document,
+                    ),
+                    Expanded(
+                      child: CentralNoItems(
+                        message: context.loc.noItemsFound,
+                      ),
+                    ),
+                  ],
                 );
               }
               final _items = (v.result as ApiDataResult<VisitData>).data.forms;

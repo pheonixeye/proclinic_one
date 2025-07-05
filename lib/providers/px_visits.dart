@@ -75,16 +75,24 @@ class PxVisits extends ChangeNotifier {
   }
 
   //TODO:
-  Future<int?> remainingVisitsPerClinicShift(
-    ScheduleShift shift,
-    DateTime visit_date,
+  Future<int?> calculateRemainingVisitsPerClinicShift(
+    ScheduleShift? shift,
+    DateTime? visit_date,
   ) async {
+    if (shift == null || visit_date == null) {
+      return null;
+    }
     final _visits = await _fetchVisitsOfASpecificDate(visit_date)
         as ApiDataResult<List<Visit>>;
     final _shift_visits =
         _visits.data.where((e) => e.clinic_schedule_shift == shift).toList();
+    _remainingVisitsPerClinicShift = _shift_visits.length;
+    notifyListeners();
     return _shift_visits.length;
   }
+
+  int? _remainingVisitsPerClinicShift;
+  int? get remainingVisitsPerClinicShiftVar => _remainingVisitsPerClinicShift;
 
   bool _isUpdating = false;
   bool get isUpdating => _isUpdating;
@@ -93,35 +101,6 @@ class PxVisits extends ChangeNotifier {
     _isUpdating = !_isUpdating;
     notifyListeners();
   }
-
-  // void _subscribe() async {
-  //   await api.todayVisitsSubscription((e) {
-  //     // print(e.action);
-  //     // print(e.record);
-  //     toggleIsUpdating();
-  //     // await _fetchVisitsOfToday();
-  //     if (e.action == 'delete') {
-  //       (_visits as ApiDataResult<List<Visit>>)
-  //           .data
-  //           .removeWhere((x) => e.record?.id == x.id);
-  //       notifyListeners();
-  //       toggleIsUpdating();
-  //       return;
-  //     }
-  //     final _toUpdatedVisit = (_visits as ApiDataResult<List<Visit>>)
-  //         .data
-  //         .firstWhereOrNull((x) => e.record?.id == x.id);
-  //     if (_toUpdatedVisit != null && e.record != null) {
-  //       final _visitIndex = (_visits as ApiDataResult<List<Visit>>)
-  //           .data
-  //           .indexOf(_toUpdatedVisit);
-  //       (_visits as ApiDataResult<List<Visit>>).data[_visitIndex] =
-  //           Visit.fromRecordModel(e.record!);
-  //       notifyListeners();
-  //     }
-  //     toggleIsUpdating();
-  //   });
-  // }
 
   Future<void> updateVisit({
     required Visit visit,

@@ -177,9 +177,10 @@ class VisitData extends Equatable {
           .get<List<RecordModel>>('expand.supplies_ids')
           .map((x) => DoctorSupplyItem.fromJson(x.toJson()))
           .toList(),
-      forms: (e.toJson()['expand']['forms_data_ids'] as List<dynamic>)
-          .map((e) => PcForm.fromJson(e['expand']['form_id']))
-          .toList(),
+      forms: (e.toJson()['expand']['forms_data_ids'] as List<dynamic>?)
+              ?.map((e) => PcForm.fromJson(e['expand']['form_id']))
+              .toList() ??
+          [],
       forms_data: e
           .get<List<RecordModel>>('expand.forms_data_ids')
           .map((x) => VisitFormItem.fromJson(x.toJson()))

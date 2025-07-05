@@ -128,6 +128,15 @@ class VisitViewCard extends StatelessWidget {
                                   ),
                                 ),
                               ),
+                              if (visit.comments.isNotEmpty)
+                                Tooltip(
+                                  message: visit.comments,
+                                  child: Icon(
+                                    Icons.info,
+                                    size: 14,
+                                    color: Colors.amber,
+                                  ),
+                                ),
                               //visit type toggle
                               Padding(
                                 padding:

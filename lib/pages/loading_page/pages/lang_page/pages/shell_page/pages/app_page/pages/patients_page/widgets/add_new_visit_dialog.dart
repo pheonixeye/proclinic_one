@@ -20,7 +20,6 @@ import 'package:proklinik_one/providers/px_clinics.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:proklinik_one/providers/px_visits.dart';
 import 'package:proklinik_one/widgets/central_loading.dart';
-import 'package:proklinik_one/widgets/small_future_builder_waiter.dart';
 import 'package:provider/provider.dart';
 
 class AddNewVisitDialog extends StatefulWidget {
@@ -234,11 +233,15 @@ class _AddNewVisitDialogState extends State<AddNewVisitDialog> {
                                         ListTileControlAffinity.leading,
                                     value: e,
                                     groupValue: _clinicSchedule,
-                                    onChanged: (value) {
+                                    onChanged: (value) async {
                                       setState(() {
                                         _clinicSchedule = value;
                                         _scheduleShift = null;
                                       });
+
+                                      await v
+                                          .calculateRemainingVisitsPerClinicShift(
+                                              _scheduleShift, _visitDate);
                                     },
                                   );
                                 }),
@@ -282,31 +285,19 @@ class _AddNewVisitDialogState extends State<AddNewVisitDialog> {
                                             e.formattedFromTo(context),
                                           ),
                                         ),
-                                        if (_visitDate != null)
+                                        if (_visitDate != null &&
+                                            v.remainingVisitsPerClinicShiftVar !=
+                                                null)
                                           Padding(
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 8.0),
-                                            child: FutureBuilder<int?>(
-                                              future: v
-                                                  .remainingVisitsPerClinicShift(
-                                                      e, _visitDate!),
-                                              builder:
-                                                  (context, asyncSnapshot) {
-                                                final _data =
-                                                    asyncSnapshot.data;
-                                                return SmallFutureBuilderWaiter(
-                                                  snapshot: asyncSnapshot,
-                                                  child: Tooltip(
-                                                    message: context
-                                                        .loc.dayVisitCount,
-                                                    child: Text(
-                                                      '$_data / ${e.visit_count}'
-                                                          .toArabicNumber(
-                                                              context),
-                                                    ),
-                                                  ),
-                                                );
-                                              },
+                                            child: Tooltip(
+                                              message:
+                                                  context.loc.dayVisitCount,
+                                              child: Text(
+                                                '${v.remainingVisitsPerClinicShiftVar} / ${e.visit_count}'
+                                                    .toArabicNumber(context),
+                                              ),
                                             ),
                                           ),
                                       ],
@@ -315,10 +306,13 @@ class _AddNewVisitDialogState extends State<AddNewVisitDialog> {
                                         ListTileControlAffinity.leading,
                                     value: e,
                                     groupValue: _scheduleShift,
-                                    onChanged: (value) {
+                                    onChanged: (value) async {
                                       setState(() {
                                         _scheduleShift = value;
                                       });
+                                      await v
+                                          .calculateRemainingVisitsPerClinicShift(
+                                              _scheduleShift, _visitDate);
                                     },
                                   );
                                 }),
@@ -385,6 +379,9 @@ class _AddNewVisitDialogState extends State<AddNewVisitDialog> {
                                           .format(_vd);
                                   _visitDate = _vd;
                                 });
+
+                                await v.calculateRemainingVisitsPerClinicShift(
+                                    _scheduleShift, _visitDate);
                               },
                               child: const Icon(Icons.calendar_month),
                             ),
