@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:proklinik_one/annotations/unused.dart';
 import 'package:proklinik_one/core/api/_api_result.dart';
 import 'package:proklinik_one/extensions/loc_ext.dart';
 import 'package:proklinik_one/widgets/central_error.dart';
 import 'package:proklinik_one/widgets/central_loading.dart';
 
+@Unused()
 class BuildLoadErrorStateWidget<T> extends StatelessWidget {
   const BuildLoadErrorStateWidget({
     super.key,

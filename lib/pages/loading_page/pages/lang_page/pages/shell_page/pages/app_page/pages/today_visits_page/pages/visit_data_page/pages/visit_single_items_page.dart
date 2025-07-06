@@ -91,7 +91,7 @@ class VisitSingleItemsPage<T extends DoctorItem> extends StatelessWidget {
                             _ => ''
                           },
                           heroTag: '${setupItem.name}add-documents',
-                          onPressed: null,
+                          onPressed: () async {},
                           child: const Icon(Icons.upload_file),
                         ),
                       _ => null,

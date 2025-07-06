@@ -34,7 +34,7 @@ class PxVisits extends ChangeNotifier {
   ApiResult<List<Visit>>? _visits;
   ApiResult<List<Visit>>? get visits => _visits;
 
-  static int _page = 1;
+  static const int _page = 1;
   int get page => _page;
 
   static const perPage = 100;

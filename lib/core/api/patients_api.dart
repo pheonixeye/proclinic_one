@@ -6,9 +6,7 @@ import 'package:proklinik_one/errors/code_to_error.dart';
 import 'package:proklinik_one/models/patient.dart';
 
 class PatientsApi {
-  PatientsApi({required this.doc_id}) {
-    _checkIfCollectionExists();
-  }
+  PatientsApi({required this.doc_id});
 
   final String doc_id;
 
@@ -17,10 +15,6 @@ class PatientsApi {
   // String get key => _collection;
 
   // static final _cacheService = ApiCachingService<List<Patient>>();
-
-  Future<void> _checkIfCollectionExists() async {
-    //TODO:
-  }
 
   // final String _fetchPatients = 'fetchPatients';
 

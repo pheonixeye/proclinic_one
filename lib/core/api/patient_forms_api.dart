@@ -14,15 +14,9 @@ class PatientFormsApi {
   PatientFormsApi({
     required this.doc_id,
     required this.patient_id,
-  }) {
-    _checkIfCollectionExists();
-  }
+  });
 
   late final String collection = '${doc_id}__patient__formdata';
-
-  Future<void> _checkIfCollectionExists() async {
-    //TODO
-  }
 
   Future<ApiResult<List<PatientFormItem>>> fetchPatientForms() async {
     try {

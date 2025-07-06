@@ -6,17 +6,11 @@ import 'package:proklinik_one/models/pc_form.dart';
 import 'package:proklinik_one/models/pc_form_field.dart';
 
 class FormsApi {
-  FormsApi({required this.doc_id}) {
-    _checkIfCollectionExists();
-  }
+  FormsApi({required this.doc_id});
 
   final String doc_id;
 
   late final String collection = '${doc_id}__forms';
-
-  Future<void> _checkIfCollectionExists() async {
-    //TODO:
-  }
 
   Future<void> createPcForm(PcForm form) async {
     await PocketbaseHelper.pb.collection(collection).create(

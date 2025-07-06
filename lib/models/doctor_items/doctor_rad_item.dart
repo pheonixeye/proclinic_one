@@ -62,7 +62,7 @@ class DoctorRadItem extends DoctorItem implements Equatable {
   final String special_instructions;
   final RadiologyType type;
 
-  DoctorRadItem({
+  const DoctorRadItem({
     required super.id,
     required super.name_en,
     required super.name_ar,

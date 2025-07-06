@@ -7,7 +7,7 @@ import 'package:proklinik_one/models/doctor_items/profile_setup_item.dart';
 class DoctorLabItem extends DoctorItem implements Equatable {
   final String special_instructions;
 
-  DoctorLabItem({
+  const DoctorLabItem({
     required super.id,
     required super.name_en,
     required super.name_ar,

@@ -7,7 +7,7 @@ class DoctorProcedureItem extends DoctorItem implements Equatable {
   final int price;
   final int discount_percentage;
 
-  DoctorProcedureItem({
+  const DoctorProcedureItem({
     required super.id,
     required super.name_en,
     required super.name_ar,
