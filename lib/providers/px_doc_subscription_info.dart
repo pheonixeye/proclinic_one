@@ -10,7 +10,7 @@ class PxDocSubscriptionInfo extends ChangeNotifier {
     _fetchDoctorSubscriptionInfo();
   }
 
-  ApiResult<List<DoctorSubscription>>? _result;
+  static ApiResult<List<DoctorSubscription>>? _result;
   ApiResult<List<DoctorSubscription>>? get result => _result;
 
   Future<void> retry() async => await _fetchDoctorSubscriptionInfo();

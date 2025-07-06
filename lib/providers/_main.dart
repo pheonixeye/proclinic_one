@@ -55,16 +55,7 @@ final List<SingleChildWidget> providers = [
       api: DoctorSubscriptionInfoApi(doc_id: context.read<PxAuth>().doc_id),
     ),
   ),
-  // ...ProfileSetupItem.values.map((e) {
-  //   return ChangeNotifierProvider(
-  //     create: (context) => PxDoctorProfileItems(
-  //       api: DoctorProfileItemsApi(
-  //         doc_id: context.read<PxAuth>().doc_id,
-  //         item: e,
-  //       ),
-  //     ),
-  //   );
-  // }),
+
   //profile items providers
   ChangeNotifierProvider(
     key: ValueKey(ProfileSetupItem.drugs),
@@ -113,6 +104,13 @@ final List<SingleChildWidget> providers = [
   ),
   //profile items providers##
   ChangeNotifierProvider(
+    create: (context) => PxForms(
+      api: FormsApi(
+        doc_id: context.read<PxAuth>().doc_id,
+      ),
+    ),
+  ),
+  ChangeNotifierProvider(
     create: (context) => PxClinics(
       api: ClinicsApi(
         doc_id: context.read<PxAuth>().doc_id,
@@ -126,13 +124,7 @@ final List<SingleChildWidget> providers = [
       ),
     ),
   ),
-  ChangeNotifierProvider(
-    create: (context) => PxForms(
-      api: FormsApi(
-        doc_id: context.read<PxAuth>().doc_id,
-      ),
-    ),
-  ),
+
   ChangeNotifierProvider(
     create: (context) => PxVisits(
       api: VisitsApi(

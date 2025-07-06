@@ -24,9 +24,8 @@ class _AddDrugsToVisitDialogState extends State<AddDrugsToVisitDialog> {
 
   @override
   void initState() {
-    _state = widget.drugs_ids;
-    // print(_state);
     super.initState();
+    _state = widget.drugs_ids;
   }
 
   @override

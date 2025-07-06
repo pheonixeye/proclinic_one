@@ -9,7 +9,7 @@ class PxDoctor extends ChangeNotifier {
     _init();
   }
 
-  Doctor? _doctor;
+  static Doctor? _doctor;
   Doctor? get doctor => _doctor;
 
   Future<void> _init() async {

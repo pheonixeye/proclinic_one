@@ -108,37 +108,43 @@ class _VisitFormViewEditCardState extends State<VisitFormViewEditCard> {
                         ),
                         subtitle: Builder(
                           builder: (context) {
-                            return Row(
-                              children: [
-                                Expanded(
-                                  child: TextFormField(
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(8),
+                            return IntrinsicHeight(
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: TextFormField(
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
                                       ),
+                                      initialValue: widget.form_data.form_data
+                                          .firstWhere((f) => f.id == e.id)
+                                          .field_value,
+                                      // controller: _controller,
+                                      expands: true,
+                                      maxLines: null,
+                                      minLines: null,
+                                      onChanged: (value) {
+                                        var _updated = _form_field?.copyWith(
+                                            field_value: value);
+
+                                        var _new_fields = _state?.form_data;
+
+                                        _new_fields![_form_field_index!] =
+                                            _updated!;
+
+                                        setState(() {
+                                          _state = _state?.copyWith(
+                                            form_data: _new_fields,
+                                          );
+                                        });
+                                      },
                                     ),
-                                    initialValue: widget.form_data.form_data
-                                        .firstWhere((f) => f.id == e.id)
-                                        .field_value,
-                                    // controller: _controller,
-                                    onChanged: (value) {
-                                      var _updated = _form_field?.copyWith(
-                                          field_value: value);
-
-                                      var _new_fields = _state?.form_data;
-
-                                      _new_fields![_form_field_index!] =
-                                          _updated!;
-
-                                      setState(() {
-                                        _state = _state?.copyWith(
-                                          form_data: _new_fields,
-                                        );
-                                      });
-                                    },
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             );
                           },
                         ),

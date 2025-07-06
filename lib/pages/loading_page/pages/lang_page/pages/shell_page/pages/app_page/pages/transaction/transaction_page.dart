@@ -55,9 +55,15 @@ class _TransactionPageState extends State<TransactionPage>
     try {
       _xPayTransactionResult = XPayTransactionResult.fromJson(widget.query);
       _updateState(PageState.processing);
-    } on Exception catch (e) {
+      if (_xPayTransactionResult.transaction_status != 'SUCCESSFUL') {
+        throw CodedException(
+          message: 'Payment Not Accepted.',
+          code: 22,
+        );
+      }
+    } on CodedException catch (e) {
       _updateState(PageState.hasError);
-      _updateException(CodedException(code: 20, message: e.toString()));
+      _updateException(e);
     }
     _proceed =
         DocSubPayApi.updateSubscriptionPaymentsAndActivateDoctorSubscription(
@@ -72,6 +78,12 @@ class _TransactionPageState extends State<TransactionPage>
   @override
   FutureOr<void> afterFirstLayout(BuildContext context) async {
     try {
+      if (_xPayTransactionResult.transaction_status != 'SUCCESSFUL') {
+        throw CodedException(
+          message: 'Payment Not Accepted.',
+          code: 22,
+        );
+      }
       await _proceed;
       _updateState(PageState.hasResult);
     } on CodedException catch (e) {
@@ -95,7 +107,11 @@ class _TransactionPageState extends State<TransactionPage>
                   child: CentralError(
                     code: _exception?.code,
                     toExecute: () async {
-                      await _proceed;
+                      // await _proceed;
+                      GoRouter.of(context).goNamed(
+                        AppRouter.app,
+                        pathParameters: defaultPathParameters(context),
+                      );
                     },
                   ),
                 ),

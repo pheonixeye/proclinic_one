@@ -11,7 +11,7 @@ class PxAuth extends ChangeNotifier {
     required this.api,
   });
 
-  RecordAuth? _auth;
+  static RecordAuth? _auth;
   RecordAuth? get authModel => _auth;
 
   Future<void> createAccount(DtoCreateDoctorAccount dto) async {
