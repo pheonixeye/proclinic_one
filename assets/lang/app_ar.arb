@@ -269,5 +269,9 @@
     "doseSelected" : "تم تحديد الجرعة",
     "@@visit_data_page__SINGLEITEM": "",
     "attachLabResult" : "الحاق نتيجة معامل",
-    "attachRadResult" : "الحاق نتيجة اشاعات"
+    "attachRadResult" : "الحاق نتيجة اشاعات",
+    "visitPrescription" : "روشتة الزيارة",
+    "print" : "طباعة",
+    "printPrescription" : "طباعة الروشتة",
+    "toggleFormsView" : "النماذج الملحقة"
     }

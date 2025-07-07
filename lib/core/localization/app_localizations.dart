@@ -1561,6 +1561,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Attach Radiology Result'**
   String get attachRadResult;
+
+  /// No description provided for @visitPrescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Visit Prescription'**
+  String get visitPrescription;
+
+  /// No description provided for @print.
+  ///
+  /// In en, this message translates to:
+  /// **'Print'**
+  String get print;
+
+  /// No description provided for @printPrescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Print Prescription'**
+  String get printPrescription;
+
+  /// No description provided for @toggleFormsView.
+  ///
+  /// In en, this message translates to:
+  /// **'Toggle Forms View'**
+  String get toggleFormsView;
 }
 
 class _AppLocalizationsDelegate

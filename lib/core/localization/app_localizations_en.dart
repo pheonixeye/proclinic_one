@@ -766,4 +766,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get attachRadResult => 'Attach Radiology Result';
+
+  @override
+  String get visitPrescription => 'Visit Prescription';
+
+  @override
+  String get print => 'Print';
+
+  @override
+  String get printPrescription => 'Print Prescription';
+
+  @override
+  String get toggleFormsView => 'Toggle Forms View';
 }

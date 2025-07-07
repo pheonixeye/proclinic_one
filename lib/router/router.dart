@@ -18,6 +18,7 @@ import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_pag
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/bookkeeping_page/bookkeeping_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/forms_page/forms_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/my_subscription_page/pages/order_details_page/order_details_page.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/today_visits_page/pages/visit_data_page/pages/visit_prescription_page/visit_prescription_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/today_visits_page/pages/visit_data_page/visit_data_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/transaction/transaction_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/visits_page/visits_page.dart';
@@ -34,6 +35,7 @@ import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:proklinik_one/providers/px_patients.dart';
 import 'package:proklinik_one/providers/px_speciality.dart';
 import 'package:proklinik_one/providers/px_visit_data.dart';
+import 'package:proklinik_one/providers/px_visit_prescription_state.dart';
 import 'package:proklinik_one/utils/shared_prefs.dart';
 import 'package:proklinik_one/utils/utils_keys.dart';
 import 'package:provider/provider.dart';
@@ -81,6 +83,7 @@ class AppRouter {
   static const String transaction = "transaction";
   //visit_data
   static const String visit_data = "data/:visit_id";
+  static const String visit_prescription = "prescription";
 
   String? get currentRouteName =>
       router.routerDelegate.currentConfiguration.last.route.name;
@@ -295,6 +298,35 @@ class AppRouter {
                             rethrow;
                           }
                         },
+                        routes: [
+                          GoRoute(
+                            path: visit_prescription,
+                            name: visit_prescription,
+                            builder: (context, state) {
+                              final _visit_id =
+                                  state.pathParameters['visit_id'];
+                              try {
+                                return ChangeNotifierProvider(
+                                  create: (context) => PxVisitData(
+                                    api: VisitDataApi(
+                                      doc_id: context.read<PxAuth>().doc_id,
+                                      visit_id: _visit_id!,
+                                    ),
+                                  ),
+                                  child: ChangeNotifierProvider(
+                                    create: (context) =>
+                                        PxVisitPrescriptionState(),
+                                    child: VisitPrescriptionPage(
+                                      key: state.pageKey,
+                                    ),
+                                  ),
+                                );
+                              } catch (e) {
+                                rethrow;
+                              }
+                            },
+                          ),
+                        ],
                       ),
                       //main_routes
                       GoRoute(

@@ -6,7 +6,7 @@ import 'package:proklinik_one/functions/shell_function.dart';
 import 'package:proklinik_one/models/doctor_items/_doctor_item.dart';
 import 'package:proklinik_one/models/doctor_items/profile_setup_item.dart';
 import 'package:proklinik_one/models/visit_data/visit_data.dart';
-import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/today_visits_page/pages/visit_data_page/pages/visit_details_page_info_header.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/today_visits_page/pages/visit_data_page/widgets/visit_details_page_info_header.dart';
 import 'package:proklinik_one/providers/px_doctor_profile_items.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:proklinik_one/providers/px_visit_data.dart';
@@ -171,12 +171,12 @@ class VisitSingleItemsPage<T extends DoctorItem> extends StatelessWidget {
                                 context,
                                 toExecute: () async {
                                   if (_visit_items.contains(_item)) {
-                                    await v.removeFromLabList(
+                                    await v.removeFromItemList(
                                       _item.id,
                                       setupItem,
                                     );
                                   } else {
-                                    await v.addToLabList(
+                                    await v.addToItemList(
                                       _item.id,
                                       setupItem,
                                     );

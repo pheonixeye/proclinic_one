@@ -80,7 +80,7 @@ class PxVisitData extends ChangeNotifier {
     await _fetchVisitData();
   }
 
-  Future<void> addToLabList(String item_id, ProfileSetupItem setupItem) async {
+  Future<void> addToItemList(String item_id, ProfileSetupItem setupItem) async {
     await api.addToItemList(
       (_result as ApiDataResult<VisitData>).data,
       item_id,
@@ -89,7 +89,7 @@ class PxVisitData extends ChangeNotifier {
     await _fetchVisitData();
   }
 
-  Future<void> removeFromLabList(
+  Future<void> removeFromItemList(
       String item_id, ProfileSetupItem setupItem) async {
     await api.removeFromItemList(
       (_result as ApiDataResult<VisitData>).data,

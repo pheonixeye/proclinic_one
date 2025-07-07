@@ -37,6 +37,7 @@ dependencies:
   collection: ^1.19.1
   motion_tab_bar: ^2.0.4
   animated_text_kit: ^4.2.3
+  screenshot: ^3.0.0
 
 dev_dependencies:
   flutter_test:

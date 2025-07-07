@@ -269,7 +269,11 @@
     "doseSelected" : "Dose Selected",
     "@@visit_data_page__SINGLEITEM": "",
     "attachLabResult" : "Attach Lab Result",
-    "attachRadResult" : "Attach Radiology Result"
+    "attachRadResult" : "Attach Radiology Result",
+    "visitPrescription" : "Visit Prescription",
+    "print" : "Print",
+    "printPrescription" : "Print Prescription",
+    "toggleFormsView" : "Toggle Forms View"
 
 
 

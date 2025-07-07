@@ -765,4 +765,16 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get attachRadResult => 'الحاق نتيجة اشاعات';
+
+  @override
+  String get visitPrescription => 'روشتة الزيارة';
+
+  @override
+  String get print => 'طباعة';
+
+  @override
+  String get printPrescription => 'طباعة الروشتة';
+
+  @override
+  String get toggleFormsView => 'النماذج الملحقة';
 }
