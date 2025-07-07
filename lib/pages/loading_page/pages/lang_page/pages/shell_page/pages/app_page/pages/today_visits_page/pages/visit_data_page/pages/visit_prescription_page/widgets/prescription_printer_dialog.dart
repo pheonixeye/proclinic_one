@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -104,7 +102,7 @@ class _PrescriptionPrinterDialogState extends State<PrescriptionPrinterDialog> {
         child: Scaffold(
           body: PdfPreview(
             initialPageFormat: PdfPageFormat.a5,
-            dpi: 72,
+            dpi: 300,
             build: _build,
             allowPrinting: true,
             allowSharing: true,

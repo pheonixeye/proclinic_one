@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' as intl;
@@ -85,20 +87,65 @@ class VisitPrescriptionPage extends StatelessWidget {
                                   child: Directionality(
                                     textDirection: TextDirection.ltr,
                                     child: Positioned(
-                                      left: x.value.x_coord,
-                                      top: x.value.y_coord,
-                                      child: switch (x.key) {
-                                        'patient_name' =>
-                                          Text(visit_data.patient.name),
-                                        'visit_date' => Text(intl.DateFormat(
-                                                'dd / MM / yyyy', l.lang)
-                                            .format(visit!.visit_date)),
-                                        'visit_type' => Text(
-                                            ' * '
-                                            '${l.isEnglish ? visit!.visit_type.name_en : visit!.visit_type.name_ar}',
-                                          ),
-                                        _ => SizedBox(),
-                                      },
+                                      left:
+                                          s.visitPrescriptionItemsOffset[x.key]
+                                                  ?.dx ??
+                                              x.value.x_coord,
+                                      top: s.visitPrescriptionItemsOffset[x.key]
+                                              ?.dy ??
+                                          x.value.y_coord,
+                                      child: Draggable(
+                                        onDragUpdate: (details) {
+                                          s.updateItemOffset(
+                                            x.key,
+                                            details.localPosition,
+                                          );
+                                        },
+                                        dragAnchorStrategy:
+                                            (draggable, context, position) {
+                                          return draggable.feedbackOffset;
+                                        },
+                                        feedback: Text(x.key),
+                                        child: InkWell(
+                                          onDoubleTap: () {
+                                            s.increaseItemFontSize(x.key);
+                                          },
+                                          onLongPress: () {
+                                            s.decreaseItemFontSize(x.key);
+                                          },
+                                          child: switch (x.key) {
+                                            'patient_name' => Text(
+                                                visit_data.patient.name,
+                                                style: TextStyle(
+                                                  fontSize:
+                                                      s.visitPrescriptionItemsFontSize[
+                                                          x.key],
+                                                ),
+                                              ),
+                                            'visit_date' => Text(
+                                                intl.DateFormat(
+                                                        'dd / MM / yyyy',
+                                                        l.lang)
+                                                    .format(visit!.visit_date),
+                                                style: TextStyle(
+                                                  fontSize:
+                                                      s.visitPrescriptionItemsFontSize[
+                                                          x.key],
+                                                ),
+                                              ),
+                                            'visit_type' => Text(
+                                                ' * '
+                                                '${l.isEnglish ? visit!.visit_type.name_en : visit!.visit_type.name_ar}',
+                                                style: TextStyle(
+                                                  fontSize:
+                                                      s.visitPrescriptionItemsFontSize[
+                                                          x.key],
+                                                ),
+                                              ),
+                                            _ => SizedBox(),
+                                          },
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 );
@@ -113,110 +160,167 @@ class VisitPrescriptionPage extends StatelessWidget {
                                     child: Directionality(
                                       textDirection: TextDirection.ltr,
                                       child: Positioned(
-                                        left: x.value.x_coord,
-                                        top: x.value.y_coord,
-                                        child: switch (x.key) {
-                                          'visit_labs' => Text.rich(
-                                              TextSpan(
-                                                text: 'التحاليل المطلوبة\n',
-                                                children: [
-                                                  ...visit_data.labs.map((e) {
-                                                    return TextSpan(
-                                                      text: ' * '
-                                                          '${e.name_en}\n',
-                                                      children: [
-                                                        if (e
-                                                            .special_instructions
-                                                            .isNotEmpty)
-                                                          TextSpan(
-                                                            text:
-                                                                '(${e.special_instructions})\n',
-                                                          ),
-                                                      ],
-                                                    );
-                                                  })
-                                                ],
-                                              ),
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.left,
-                                            ),
-                                          'visit_rads' => Text.rich(
-                                              TextSpan(
-                                                text: 'الاشاعات المطلوبة\n',
-                                                children: [
-                                                  ...visit_data.rads.map((e) {
-                                                    return TextSpan(
-                                                      text: ' * '
-                                                          '${e.name_en}\n',
-                                                      children: [
-                                                        if (e
-                                                            .special_instructions
-                                                            .isNotEmpty)
-                                                          TextSpan(
-                                                            text:
-                                                                '(${e.special_instructions})\n',
-                                                          ),
-                                                      ],
-                                                    );
-                                                  }),
-                                                ],
-                                              ),
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.left,
-                                            ),
-                                          'visit_procedures' => Text.rich(
-                                              TextSpan(
-                                                text: '',
-                                                children: [
-                                                  ...visit_data.procedures
-                                                      .map((e) {
-                                                    return TextSpan(
-                                                      text: ' * '
-                                                          '${e.name_en}\n',
-                                                    );
-                                                  })
-                                                ],
-                                              ),
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.left,
-                                            ),
-                                          'visit_drugs' => Text.rich(
-                                              TextSpan(
-                                                text: '',
-                                                children: [
-                                                  ...visit_data.drugs.map((e) {
-                                                    return TextSpan(
-                                                      locale:
-                                                          const Locale('en'),
-                                                      text: '',
-                                                      children: [
-                                                        TextSpan(text: '\n'),
-                                                        TextSpan(
-                                                          text: 'Rx  ',
-                                                          style: TextStyle(
-                                                            fontSize: 16,
-                                                            fontWeight:
-                                                                FontWeight.w700,
-                                                          ),
-                                                        ),
-                                                        TextSpan(
-                                                            text: e
-                                                                .prescriptionNameEn),
-                                                        TextSpan(text: '\n'),
-                                                        TextSpan(
-                                                          text:
-                                                              '${visit_data.drug_data[e.id]}',
-                                                        ),
-                                                      ],
-                                                    );
-                                                  })
-                                                ],
-                                              ),
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.left,
-                                            ),
-                                          _ => Text(''),
-                                        },
+                                        left: s
+                                                .visitPrescriptionItemsOffset[
+                                                    x.key]
+                                                ?.dx ??
+                                            x.value.x_coord,
+                                        top: s
+                                                .visitPrescriptionItemsOffset[
+                                                    x.key]
+                                                ?.dy ??
+                                            x.value.y_coord,
+                                        child: Draggable(
+                                          onDragUpdate: (details) {
+                                            s.updateItemOffset(
+                                                x.key, details.localPosition);
+                                          },
+                                          dragAnchorStrategy:
+                                              (draggable, context, position) {
+                                            return draggable.feedbackOffset;
+                                          },
+                                          feedback: Text(x.key),
+                                          child: InkWell(
+                                            onDoubleTap: () {
+                                              s.increaseItemFontSize(x.key);
+                                            },
+                                            onLongPress: () {
+                                              s.decreaseItemFontSize(x.key);
+                                            },
+                                            child: switch (x.key) {
+                                              'visit_labs' => Text.rich(
+                                                  TextSpan(
+                                                    text: 'التحاليل المطلوبة\n',
+                                                    children: [
+                                                      ...visit_data.labs
+                                                          .map((e) {
+                                                        return TextSpan(
+                                                          text: ' * '
+                                                              '${e.name_en}\n',
+                                                          children: [
+                                                            if (e
+                                                                .special_instructions
+                                                                .isNotEmpty)
+                                                              TextSpan(
+                                                                text:
+                                                                    '(${e.special_instructions})\n',
+                                                              ),
+                                                          ],
+                                                        );
+                                                      })
+                                                    ],
+                                                  ),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  textAlign: TextAlign.left,
+                                                  style: TextStyle(
+                                                    fontSize:
+                                                        s.visitPrescriptionItemsFontSize[
+                                                            x.key],
+                                                  ),
+                                                ),
+                                              'visit_rads' => Text.rich(
+                                                  TextSpan(
+                                                    text: 'الاشاعات المطلوبة\n',
+                                                    children: [
+                                                      ...visit_data.rads
+                                                          .map((e) {
+                                                        return TextSpan(
+                                                          text: ' * '
+                                                              '${e.name_en}\n',
+                                                          children: [
+                                                            if (e
+                                                                .special_instructions
+                                                                .isNotEmpty)
+                                                              TextSpan(
+                                                                text:
+                                                                    '(${e.special_instructions})\n',
+                                                              ),
+                                                          ],
+                                                        );
+                                                      }),
+                                                    ],
+                                                  ),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  textAlign: TextAlign.left,
+                                                  style: TextStyle(
+                                                    fontSize:
+                                                        s.visitPrescriptionItemsFontSize[
+                                                            x.key],
+                                                  ),
+                                                ),
+                                              'visit_procedures' => Text.rich(
+                                                  TextSpan(
+                                                    text: '',
+                                                    children: [
+                                                      ...visit_data.procedures
+                                                          .map((e) {
+                                                        return TextSpan(
+                                                          text: ' * '
+                                                              '${e.name_en}\n',
+                                                        );
+                                                      })
+                                                    ],
+                                                  ),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  textAlign: TextAlign.left,
+                                                  style: TextStyle(
+                                                    fontSize:
+                                                        s.visitPrescriptionItemsFontSize[
+                                                            x.key],
+                                                  ),
+                                                ),
+                                              'visit_drugs' => Text.rich(
+                                                  TextSpan(
+                                                    text: '',
+                                                    children: [
+                                                      ...visit_data.drugs
+                                                          .map((e) {
+                                                        return TextSpan(
+                                                          locale: const Locale(
+                                                              'en'),
+                                                          text: '',
+                                                          children: [
+                                                            TextSpan(
+                                                                text: '\n'),
+                                                            TextSpan(
+                                                              text: 'Rx  ',
+                                                              style: TextStyle(
+                                                                fontSize: 16,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w700,
+                                                              ),
+                                                            ),
+                                                            TextSpan(
+                                                                text: e
+                                                                    .prescriptionNameEn),
+                                                            TextSpan(
+                                                                text: '\n'),
+                                                            TextSpan(
+                                                              text:
+                                                                  '${visit_data.drug_data[e.id]}',
+                                                            ),
+                                                          ],
+                                                        );
+                                                      })
+                                                    ],
+                                                  ),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  textAlign: TextAlign.left,
+                                                  style: TextStyle(
+                                                    fontSize:
+                                                        s.visitPrescriptionItemsFontSize[
+                                                            x.key],
+                                                  ),
+                                                ),
+                                              _ => Text(''),
+                                            },
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   );
@@ -312,31 +416,34 @@ class VisitPrescriptionPage extends StatelessWidget {
                               tooltip: context.loc.printPrescription,
                               heroTag: UniqueKey(),
                               onPressed: () async {
-                                //TODO: Print
+                                //todo: Print
+                                Uint8List? _bytesWithImage;
+                                Uint8List? _bytesWithoutImage;
                                 await shellFunction(
                                   context,
                                   toExecute: () async {
-                                    final _bytesWithImage = await s
+                                    _bytesWithImage = await s
                                         .screenshotControllerWithImage
                                         .capture();
-                                    final _bytesWithoutImage = await s
+                                    _bytesWithoutImage = await s
                                         .screenshotControllerWithoutImage
                                         .capture();
-                                    if (_bytesWithoutImage != null &&
-                                        _bytesWithImage != null &&
-                                        context.mounted) {
-                                      await showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          return PrescriptionPrinterDialog(
-                                            dataBytes: _bytesWithoutImage,
-                                            imageBytes: _bytesWithImage,
-                                          );
-                                        },
-                                      );
-                                    }
                                   },
+                                  duration: const Duration(milliseconds: 500),
                                 );
+                                if (_bytesWithoutImage != null &&
+                                    _bytesWithImage != null &&
+                                    context.mounted) {
+                                  await showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return PrescriptionPrinterDialog(
+                                        dataBytes: _bytesWithoutImage!,
+                                        imageBytes: _bytesWithImage!,
+                                      );
+                                    },
+                                  );
+                                }
                               },
                               child: const Icon(Icons.print),
                             ),
@@ -382,7 +489,8 @@ class VisitPrescriptionPage extends StatelessWidget {
                                             label: Text(f.name_en),
                                             selectedColor:
                                                 Colors.amber.shade200,
-                                            selected: f.id == s.selectedFormId,
+                                            selected:
+                                                f.id == s.selectedForm?.id,
                                             onSelected: (value) {
                                               if (value) {
                                                 s.selectFormItems(
@@ -390,7 +498,7 @@ class VisitPrescriptionPage extends StatelessWidget {
                                                       .firstWhere((x) =>
                                                           x.form_id == f.id)
                                                       .form_data,
-                                                  f.id,
+                                                  f,
                                                 );
                                               } else {
                                                 s.selectFormItems(null, null);

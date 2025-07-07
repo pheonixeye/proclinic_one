@@ -240,27 +240,47 @@ class _ClinicPrescriptionDialogState extends State<ClinicPrescriptionDialog>
                                 c.clinic!.prescription_file != '')
                               ..._state!.details.entries.map(
                                 (e) {
-                                  return Positioned(
-                                    top: e.value.y_coord,
-                                    left: e.value.x_coord,
-                                    child: Draggable(
-                                      onDragUpdate: (details) {
-                                        setState(() {
-                                          _state = _state!.updateItemDetail(
-                                            key: e.key,
-                                            x_coord: details.localPosition.dx,
-                                            y_coord: details.localPosition.dy,
-                                          );
-                                        });
-                                      },
-                                      // onDragEnd: (details) {
-                                      //   //todo: remove later
-                                      //   prettyPrint(_state);
-                                      // },
-                                      dragAnchorStrategy:
-                                          pointerDragAnchorStrategy,
-                                      feedback: Material(
-                                        color: Colors.amber.shade100,
+                                  //HACK: Remove later
+                                  return Visibility(
+                                    visible: false,
+                                    child: Positioned(
+                                      top: e.value.y_coord,
+                                      left: e.value.x_coord,
+                                      child: Draggable(
+                                        onDragUpdate: (details) {
+                                          setState(() {
+                                            _state = _state!.updateItemDetail(
+                                              key: e.key,
+                                              x_coord: details.localPosition.dx,
+                                              y_coord: details.localPosition.dy,
+                                            );
+                                          });
+                                        },
+                                        dragAnchorStrategy:
+                                            pointerDragAnchorStrategy,
+                                        feedback: Material(
+                                          color: Colors.amber.shade100,
+                                          child: Row(
+                                            children: [
+                                              MouseRegion(
+                                                cursor:
+                                                    SystemMouseCursors.click,
+                                                child: SizedBox(
+                                                  width: 20,
+                                                  child: const Icon(
+                                                    Icons.drag_indicator,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                              ),
+                                              Text(
+                                                l.isEnglish
+                                                    ? e.value.name_en
+                                                    : e.value.name_ar,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                         child: Row(
                                           children: [
                                             MouseRegion(
@@ -269,7 +289,7 @@ class _ClinicPrescriptionDialogState extends State<ClinicPrescriptionDialog>
                                                 width: 20,
                                                 child: const Icon(
                                                   Icons.drag_indicator,
-                                                  color: Colors.black,
+                                                  color: Colors.blue,
                                                 ),
                                               ),
                                             ),
@@ -281,25 +301,6 @@ class _ClinicPrescriptionDialogState extends State<ClinicPrescriptionDialog>
                                           ],
                                         ),
                                       ),
-                                      child: Row(
-                                        children: [
-                                          MouseRegion(
-                                            cursor: SystemMouseCursors.click,
-                                            child: SizedBox(
-                                              width: 20,
-                                              child: const Icon(
-                                                Icons.drag_indicator,
-                                                color: Colors.blue,
-                                              ),
-                                            ),
-                                          ),
-                                          Text(
-                                            l.isEnglish
-                                                ? e.value.name_en
-                                                : e.value.name_ar,
-                                          ),
-                                        ],
-                                      ),
                                     ),
                                   );
                                 },
@@ -307,77 +308,86 @@ class _ClinicPrescriptionDialogState extends State<ClinicPrescriptionDialog>
                           ],
                         ),
                         //the state is not equal to the initial state
-                        floatingActionButton: FloatingActionMenuBubble(
-                          animation: _animation,
-                          // On pressed change animation state
-                          onPress: () => _animationController.isCompleted
-                              ? _animationController.reverse()
-                              : _animationController.forward(),
-                          // Floating Action button Icon color
-                          iconColor: Colors.white,
-                          // Flaoting Action button Icon
-                          // iconData: Icons.settings,
-                          animatedIconData: AnimatedIcons.menu_close,
-                          backGroundColor: Colors.amber,
-                          items: [
-                            Bubble(
-                              title: context.loc.save,
-                              iconColor: Colors.white,
-                              bubbleColor: Colors.amber,
-                              icon: Icons.save,
-                              titleStyle:
-                                  TextStyle(fontSize: 16, color: Colors.white),
-                              onPress: () async {
-                                _animationController.reverse();
-                                //todo: save updated prescriptionDetails
-                                if (_state == null ||
-                                    DeepCollectionEquality.unordered().equals(
-                                        _state,
-                                        c.clinic?.prescription_details)) {
-                                  return;
-                                }
-                                await shellFunction(
-                                  context,
-                                  toExecute: () async {
-                                    await c.updatePrescriptionDetails(_state!);
-                                  },
-                                );
-                              },
-                            ),
-                            Bubble(
-                              title: context.loc.viewPdfPrescription,
-                              iconColor: Colors.white,
-                              bubbleColor: Colors.amber,
-                              icon: Icons.remove_red_eye_outlined,
-                              titleStyle:
-                                  TextStyle(fontSize: 16, color: Colors.white),
-                              onPress: () async {
-                                _animationController.reverse();
-                                _controller.animateTo(1);
-                                setState(() {
-                                  _currentIndex = 1;
-                                });
-                              },
-                            ),
-                          ],
+                        //HACK: Remove later
+                        floatingActionButton: Visibility(
+                          visible: false,
+                          child: FloatingActionMenuBubble(
+                            animation: _animation,
+                            // On pressed change animation state
+                            onPress: () => _animationController.isCompleted
+                                ? _animationController.reverse()
+                                : _animationController.forward(),
+                            // Floating Action button Icon color
+                            iconColor: Colors.white,
+                            // Flaoting Action button Icon
+                            // iconData: Icons.settings,
+                            animatedIconData: AnimatedIcons.menu_close,
+                            backGroundColor: Colors.amber,
+                            items: [
+                              Bubble(
+                                title: context.loc.save,
+                                iconColor: Colors.white,
+                                bubbleColor: Colors.amber,
+                                icon: Icons.save,
+                                titleStyle: TextStyle(
+                                    fontSize: 16, color: Colors.white),
+                                onPress: () async {
+                                  _animationController.reverse();
+                                  //todo: save updated prescriptionDetails
+                                  if (_state == null ||
+                                      DeepCollectionEquality.unordered().equals(
+                                          _state,
+                                          c.clinic?.prescription_details)) {
+                                    return;
+                                  }
+                                  await shellFunction(
+                                    context,
+                                    toExecute: () async {
+                                      await c
+                                          .updatePrescriptionDetails(_state!);
+                                    },
+                                  );
+                                },
+                              ),
+                              Bubble(
+                                title: context.loc.viewPdfPrescription,
+                                iconColor: Colors.white,
+                                bubbleColor: Colors.amber,
+                                icon: Icons.remove_red_eye_outlined,
+                                titleStyle: TextStyle(
+                                    fontSize: 16, color: Colors.white),
+                                onPress: () async {
+                                  _animationController.reverse();
+                                  _controller.animateTo(1);
+                                  setState(() {
+                                    _currentIndex = 1;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
                         ),
                       );
                     },
                   ),
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(12)),
-                    border: Border.all(),
-                  ),
-                  child: Scaffold(
-                    body: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: PrescriptionPdfBuilder(
-                        doc_id: c.api.doc_id,
-                        clinic: c.clinic!,
-                        app_locale: l.lang,
-                      ).widget,
+                //HACK: Remove later
+                Visibility(
+                  visible: false,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(12)),
+                      border: Border.all(),
+                    ),
+                    child: Scaffold(
+                      body: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: PrescriptionPdfBuilder(
+                          doc_id: c.api.doc_id,
+                          clinic: c.clinic!,
+                          app_locale: l.lang,
+                        ).widget,
+                      ),
                     ),
                   ),
                 ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:proklinik_one/models/clinic/prescription_details.dart';
+import 'package:proklinik_one/models/pc_form.dart';
 import 'package:proklinik_one/models/visit_data/visit_form_item.dart';
 import 'package:screenshot/screenshot.dart';
 
@@ -13,6 +14,10 @@ class PxVisitPrescriptionState extends ChangeNotifier {
     init();
   }
 
+  static final Map<String, Offset> _offsetsSessionCache = {};
+
+  static final Map<String, double> _fontSizedSessionCache = {};
+
   final ScreenshotController _screenshotController1 = ScreenshotController();
   ScreenshotController get screenshotControllerWithImage =>
       _screenshotController1;
@@ -25,11 +30,41 @@ class PxVisitPrescriptionState extends ChangeNotifier {
   Map<String, bool> get visitPrescriptionVisibility =>
       _visitPrescriptionVisibility;
 
+  Map<String, Offset> _visitPrescriptionItemsOffset = {};
+  Map<String, Offset> get visitPrescriptionItemsOffset =>
+      _visitPrescriptionItemsOffset;
+
+  Map<String, double> _visitPrescriptionItemsFontSize = {};
+  Map<String, double> get visitPrescriptionItemsFontSize =>
+      _visitPrescriptionItemsFontSize;
+
   void init() {
     _visitPrescriptionVisibility = Map.fromEntries(
       PrescriptionDetails.initial().details.keys.map(
         (e) {
           return MapEntry(e, true);
+        },
+      ),
+    );
+    _visitPrescriptionItemsOffset = Map.fromEntries(
+      PrescriptionDetails.initial().details.entries.map(
+        (e) {
+          if (_offsetsSessionCache[e.key] != null) {
+            return MapEntry(e.key, _offsetsSessionCache[e.key]!);
+          } else {
+            return MapEntry(e.key, Offset(e.value.x_coord, e.value.y_coord));
+          }
+        },
+      ),
+    );
+    _visitPrescriptionItemsFontSize = Map.fromEntries(
+      PrescriptionDetails.initial().details.entries.map(
+        (e) {
+          if (_fontSizedSessionCache[e.key] != null) {
+            return MapEntry(e.key, _fontSizedSessionCache[e.key]!);
+          } else {
+            return MapEntry(e.key, 14);
+          }
         },
       ),
     );
@@ -39,6 +74,30 @@ class PxVisitPrescriptionState extends ChangeNotifier {
   void toggleVisibility(String key) {
     _visitPrescriptionVisibility[key] = !_visitPrescriptionVisibility[key]!;
     notifyListeners();
+  }
+
+  void updateItemOffset(String key, Offset offset) {
+    _visitPrescriptionItemsOffset[key] = offset;
+    notifyListeners();
+    _offsetsSessionCache[key] = offset;
+  }
+
+  void increaseItemFontSize(String key) {
+    if (_visitPrescriptionItemsFontSize[key] != null) {
+      _visitPrescriptionItemsFontSize[key] =
+          _visitPrescriptionItemsFontSize[key]! + 1;
+      notifyListeners();
+      _fontSizedSessionCache[key] = _visitPrescriptionItemsFontSize[key]!;
+    }
+  }
+
+  void decreaseItemFontSize(String key) {
+    if (_visitPrescriptionItemsFontSize[key] != null) {
+      _visitPrescriptionItemsFontSize[key] =
+          _visitPrescriptionItemsFontSize[key]! - 1;
+      notifyListeners();
+      _fontSizedSessionCache[key] = _visitPrescriptionItemsFontSize[key]!;
+    }
   }
 
   PrescriptionView _view = PrescriptionView.regular;
@@ -54,12 +113,12 @@ class PxVisitPrescriptionState extends ChangeNotifier {
   List<SingleFieldData>? _formItems;
   List<SingleFieldData>? get formItems => _formItems;
 
-  String? _selectedFormId;
-  String? get selectedFormId => _selectedFormId;
+  PcForm? _selectedForm;
+  PcForm? get selectedForm => _selectedForm;
 
-  void selectFormItems(List<SingleFieldData>? items, String? formId) {
+  void selectFormItems(List<SingleFieldData>? items, PcForm? form) {
     _formItems = items;
-    _selectedFormId = formId;
+    _selectedForm = form;
     notifyListeners();
   }
 
