@@ -59,4 +59,6 @@ class PxAuth extends ChangeNotifier {
   bool get isLoggedIn => _auth != null;
 
   String get doc_id => _auth!.record.id;
+
+  static String get doc_id_static_getter => _auth!.record.id;
 }

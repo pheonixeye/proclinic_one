@@ -1,7 +1,9 @@
 import 'package:intl/intl.dart';
 import 'package:pocketbase/pocketbase.dart';
 import 'package:proklinik_one/core/api/_api_result.dart';
+import 'package:proklinik_one/core/api/bookkeeping_api.dart';
 import 'package:proklinik_one/core/api/constants/pocketbase_helper.dart';
+import 'package:proklinik_one/core/logic/bookkeeping_transformer.dart';
 import 'package:proklinik_one/errors/code_to_error.dart';
 import 'package:proklinik_one/models/app_constants/account_type.dart';
 import 'package:proklinik_one/models/app_constants/app_permission.dart';
@@ -110,6 +112,7 @@ class VisitsApi {
   Future<void> addNewVisit(VisitCreateDto dto) async {
     final _result = await PocketbaseHelper.pb.collection(collection).create(
           body: dto.toJson(),
+          expand: _expand,
         );
     await PocketbaseHelper.pb.collection(visit_data_collection).create(
           body: VisitDataDto.initial(
@@ -118,15 +121,47 @@ class VisitsApi {
             clinic_id: dto.clinic_id,
           ).toJson(),
         );
+
+    //todo: parse result
+    final _visit = Visit.fromRecordModel(_result);
+
+    //todo: initialize transformer
+    final _bk_transformer = BookkeepingTransformer(
+      item_id: _visit.id,
+      collection_id: collection,
+    );
+
+    //todo: initialize bk_item
+    final _item = _bk_transformer.fromVisitCreate(_visit);
+
+    //todo: send bookkeeping request
+    await BookkeepingApi(doc_id: doc_id).addBookkeepingItem(_item);
   }
 
-  Future<void> updateVisit(String visit_id, String key, dynamic value) async {
-    await PocketbaseHelper.pb.collection(collection).update(
-      visit_id,
-      body: {
-        key: value,
-      },
+  Future<void> updateVisit(Visit visit, String key, dynamic value) async {
+    final _response = await PocketbaseHelper.pb.collection(collection).update(
+          visit.id,
+          body: {
+            key: value,
+          },
+          expand: _expand,
+        );
+
+    //todo: parse result
+    final _old_visit = visit;
+    final _new_visit = Visit.fromRecordModel(_response);
+
+    //todo: initialize transformer
+    final _bk_transformer = BookkeepingTransformer(
+      item_id: visit.id,
+      collection_id: collection,
     );
+
+    //todo: initialize bk_item
+    final _item = _bk_transformer.fromVisitUpdate(_old_visit, _new_visit);
+
+    //todo: send bookkeeping request
+    await BookkeepingApi(doc_id: doc_id).addBookkeepingItem(_item);
   }
 
   // Future<UnsubscribeFunc> todayVisitsSubscription(

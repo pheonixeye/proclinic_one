@@ -74,7 +74,7 @@ class PxVisits extends ChangeNotifier {
     return _clinicVisits.length + 1;
   }
 
-  //TODO:
+  //todo:
   Future<int?> calculateRemainingVisitsPerClinicShift(
     ScheduleShift? shift,
     DateTime? visit_date,
@@ -82,10 +82,12 @@ class PxVisits extends ChangeNotifier {
     if (shift == null || visit_date == null) {
       return null;
     }
+    toggleIsUpdating();
     final _visits = await _fetchVisitsOfASpecificDate(visit_date)
         as ApiDataResult<List<Visit>>;
     final _shift_visits =
         _visits.data.where((e) => e.clinic_schedule_shift == shift).toList();
+    toggleIsUpdating();
     _remainingVisitsPerClinicShift = _shift_visits.length;
     notifyListeners();
     return _shift_visits.length;
@@ -107,7 +109,7 @@ class PxVisits extends ChangeNotifier {
     required String key,
     required dynamic value,
   }) async {
-    await api.updateVisit(visit.id, key, value);
+    await api.updateVisit(visit, key, value);
     await _fetchVisitsOfToday();
   }
 }

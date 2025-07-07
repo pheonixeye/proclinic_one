@@ -12,6 +12,7 @@ import 'package:proklinik_one/models/visits/visit_create_dto.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/patients_page/widgets/add_new_visit_dialog.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/patients_page/widgets/create_edit_patient_dialog.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/patients_page/widgets/patient_forms_dialog.dart';
+import 'package:proklinik_one/providers/px_app_constants.dart';
 import 'package:proklinik_one/providers/px_clinics.dart';
 import 'package:proklinik_one/providers/px_forms.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
@@ -43,9 +44,9 @@ class _PatientInfoCardState extends State<PatientInfoCard> {
       elevation: 6,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer2<PxPatients, PxClinics>(
-          builder: (context, p, c, _) {
-            while (c.result == null) {
+        child: Consumer3<PxAppConstants, PxPatients, PxClinics>(
+          builder: (context, a, p, c, _) {
+            while (c.result == null || a.constants == null) {
               return ListTile(
                 title: Row(
                   children: [
@@ -220,6 +221,7 @@ class _PatientInfoCardState extends State<PatientInfoCard> {
                                         .read<PxVisits>()
                                         .addNewVisit(_visitDto);
                                     //TODO: notify patient with visit details && entry number
+                                    //TODO: generate bookkeeping entry based on the state of the visit
                                   },
                                   duration: const Duration(milliseconds: 500),
                                 );
