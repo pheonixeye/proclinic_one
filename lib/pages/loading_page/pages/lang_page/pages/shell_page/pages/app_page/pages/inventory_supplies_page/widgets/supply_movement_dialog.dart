@@ -29,17 +29,19 @@ class _SupplyMovementDialogState extends State<SupplyMovementDialog> {
   final formKey = GlobalKey<FormState>();
   late final TextEditingController _movement_amount_controller;
   DoctorSupplyItem? _supplyItem;
-  Clinic? _clinic;
+  Clinic? _sourceClinic;
+  Clinic? _destinationClinic;
   String? _reason;
   double? _movement_amount;
   double? _movement_quantity;
   String? _movement_type;
+  SupplyMovementType? _supplyMovementType;
 
   @override
   void initState() {
     super.initState();
     _supplyItem = widget.supplyMovement?.supply_item;
-    _clinic = widget.supplyMovement?.clinic;
+    _sourceClinic = widget.supplyMovement?.clinic;
     _reason = widget.supplyMovement?.reason;
     _movement_amount = widget.supplyMovement?.movement_amount;
     _movement_amount_controller = TextEditingController(
@@ -51,6 +53,7 @@ class _SupplyMovementDialogState extends State<SupplyMovementDialog> {
 
   @override
   Widget build(BuildContext context) {
+    //todo: Update to accomodate for adding supplies initially && inter-clinic supply transfer
     return Consumer3<PxClinics, PxDoctorProfileItems<DoctorSupplyItem>,
         PxLocale>(
       builder: (context, c, s, l, _) {
@@ -84,36 +87,6 @@ class _SupplyMovementDialogState extends State<SupplyMovementDialog> {
             child: Column(
               spacing: 8,
               children: [
-                ListTile(
-                  title: Text(context.loc.pickClinic),
-                  subtitle: Row(
-                    children: [
-                      Expanded(
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButtonFormField<Clinic>(
-                            items: (c.result as ApiDataResult<List<Clinic>>)
-                                .data
-                                .map((e) {
-                              return DropdownMenuItem<Clinic>(
-                                alignment: Alignment.center,
-                                value: e,
-                                child: Text(
-                                  l.isEnglish ? e.name_en : e.name_ar,
-                                ),
-                              );
-                            }).toList(),
-                            alignment: Alignment.center,
-                            onChanged: (val) {
-                              setState(() {
-                                _clinic = val;
-                              });
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
                 ListTile(
                   title: Text(context.loc.pickSupplyItem),
                   subtitle: Row(
@@ -164,6 +137,8 @@ class _SupplyMovementDialogState extends State<SupplyMovementDialog> {
                             alignment: Alignment.center,
                             onChanged: (val) {
                               setState(() {
+                                _supplyMovementType = SupplyMovementType.values
+                                    .firstWhere((e) => e.en == val);
                                 _movement_type = val;
                                 _movement_quantity = null;
                                 _movement_amount = null;
@@ -175,6 +150,71 @@ class _SupplyMovementDialogState extends State<SupplyMovementDialog> {
                     ],
                   ),
                 ),
+                ...[
+                  ListTile(
+                    title: _supplyMovementType == SupplyMovementType.IN_IN
+                        ? Text(context.loc.pickSourceClinic)
+                        : Text(context.loc.pickClinic),
+                    subtitle: Row(
+                      children: [
+                        Expanded(
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButtonFormField<Clinic>(
+                              items: (c.result as ApiDataResult<List<Clinic>>)
+                                  .data
+                                  .map((e) {
+                                return DropdownMenuItem<Clinic>(
+                                  alignment: Alignment.center,
+                                  value: e,
+                                  child: Text(
+                                    l.isEnglish ? e.name_en : e.name_ar,
+                                  ),
+                                );
+                              }).toList(),
+                              alignment: Alignment.center,
+                              onChanged: (val) {
+                                setState(() {
+                                  _sourceClinic = val;
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  if (_supplyMovementType == SupplyMovementType.IN_IN)
+                    ListTile(
+                      title: Text(context.loc.pickDestinationClinic),
+                      subtitle: Row(
+                        children: [
+                          Expanded(
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButtonFormField<Clinic>(
+                                items: (c.result as ApiDataResult<List<Clinic>>)
+                                    .data
+                                    .map((e) {
+                                  return DropdownMenuItem<Clinic>(
+                                    alignment: Alignment.center,
+                                    value: e,
+                                    child: Text(
+                                      l.isEnglish ? e.name_en : e.name_ar,
+                                    ),
+                                  );
+                                }).toList(),
+                                alignment: Alignment.center,
+                                onChanged: (val) {
+                                  setState(() {
+                                    _destinationClinic = val;
+                                  });
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                ],
                 ListTile(
                   title: Text(context.loc.movementReason),
                   subtitle: Row(
@@ -219,13 +259,16 @@ class _SupplyMovementDialogState extends State<SupplyMovementDialog> {
                             if (_supplyItem != null &&
                                 _movement_quantity != null) {
                               _movement_amount_controller.text =
-                                  switch (_movement_type) {
-                                'in' => (-_supplyItem!.buying_price *
-                                        _movement_quantity!)
-                                    .toString(),
-                                'out' => (_supplyItem!.selling_price *
-                                        _movement_quantity!)
-                                    .toString(),
+                                  switch (_supplyMovementType) {
+                                SupplyMovementType.IN_IN => '0',
+                                SupplyMovementType.IN_OUT =>
+                                  (_supplyItem!.selling_price *
+                                          _movement_quantity!)
+                                      .toString(),
+                                SupplyMovementType.OUT_IN =>
+                                  (-_supplyItem!.buying_price *
+                                          _movement_quantity!)
+                                      .toString(),
                                 _ => '',
                               };
                               _movement_amount = double.parse(
@@ -282,13 +325,23 @@ class _SupplyMovementDialogState extends State<SupplyMovementDialog> {
             ElevatedButton.icon(
               onPressed: () {
                 if (formKey.currentState!.validate()) {
-                  final _supplyMovementDto = SupplyMovementDto(
+                  SupplyMovementDto? _supplyMovementDestinationDto;
+                  String? _src_reason;
+                  String? _dest_reason;
+                  if (_supplyMovementType == SupplyMovementType.IN_IN) {
+                    _src_reason = '${_reason}__${context.loc.from}';
+                    _dest_reason = '${_reason}__${context.loc.to}';
+                  } else {
+                    _src_reason = _reason;
+                    _dest_reason = _reason;
+                  }
+                  final _supplyMovementSourceDto = SupplyMovementDto(
                     id: '',
-                    clinic_id: _clinic?.id ?? '',
+                    clinic_id: _sourceClinic?.id ?? '',
                     supply_item_id: _supplyItem?.id ?? '',
                     movement_type: _movement_type ?? '',
                     related_visit_id: widget.supplyMovement?.visit?.id ?? '',
-                    reason: _reason ?? '',
+                    reason: _src_reason ?? '',
                     added_by_id: context.read<PxAuth>().doc_id,
                     movement_amount: _movement_amount ?? 0.0,
                     movement_quantity: _movement_quantity ?? 0.0,
@@ -296,7 +349,26 @@ class _SupplyMovementDialogState extends State<SupplyMovementDialog> {
                     updated_by_id: '',
                     number_of_updates: 0,
                   );
-                  Navigator.pop(context, _supplyMovementDto);
+                  if (_supplyMovementType == SupplyMovementType.IN_IN) {
+                    _supplyMovementDestinationDto = SupplyMovementDto(
+                      id: '',
+                      clinic_id: _destinationClinic?.id ?? '',
+                      supply_item_id: _supplyItem?.id ?? '',
+                      movement_type: _movement_type ?? '',
+                      related_visit_id: widget.supplyMovement?.visit?.id ?? '',
+                      reason: _dest_reason ?? '',
+                      added_by_id: context.read<PxAuth>().doc_id,
+                      movement_amount: _movement_amount ?? 0.0,
+                      movement_quantity: _movement_quantity ?? 0.0,
+                      auto_add: false,
+                      updated_by_id: '',
+                      number_of_updates: 0,
+                    );
+                  }
+                  Navigator.pop(context, [
+                    _supplyMovementSourceDto,
+                    _supplyMovementDestinationDto,
+                  ]);
                 }
               },
               label: Text(context.loc.confirm),

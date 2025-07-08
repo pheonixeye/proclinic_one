@@ -7,6 +7,7 @@ import 'package:proklinik_one/core/api/doctor_profile_items_api.dart';
 import 'package:proklinik_one/core/api/doctor_subscription_info_api.dart';
 import 'package:proklinik_one/core/api/forms_api.dart';
 import 'package:proklinik_one/core/api/patients_api.dart';
+import 'package:proklinik_one/core/api/supply_movement_api.dart';
 import 'package:proklinik_one/core/api/visits_api.dart';
 import 'package:proklinik_one/models/doctor_items/doctor_drug_item.dart';
 import 'package:proklinik_one/models/doctor_items/doctor_lab_item.dart';
@@ -23,6 +24,7 @@ import 'package:proklinik_one/providers/px_doctor_profile_items.dart';
 import 'package:proklinik_one/providers/px_forms.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:proklinik_one/providers/px_patients.dart';
+import 'package:proklinik_one/providers/px_supply_movements.dart';
 import 'package:proklinik_one/providers/px_visits.dart';
 import 'package:proklinik_one/router/router.dart';
 import 'package:provider/provider.dart';
@@ -128,6 +130,14 @@ final List<SingleChildWidget> providers = [
   ChangeNotifierProvider(
     create: (context) => PxVisits(
       api: VisitsApi(
+        doc_id: context.read<PxAuth>().doc_id,
+      ),
+    ),
+  ),
+
+  ChangeNotifierProvider(
+    create: (context) => PxSupplyMovements(
+      api: SupplyMovementApi(
         doc_id: context.read<PxAuth>().doc_id,
       ),
     ),

@@ -814,4 +814,20 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get enterMovementAmount => 'Enter Movement Amount';
+
+  @override
+  String get pickSourceClinic => 'Pick Source Clinic';
+
+  @override
+  String get pickDestinationClinic => 'Pick Destination Clinic';
+
+  @override
+  String get noSupplyMovementsFound =>
+      'No Supply Movements Found In Given Duration';
+
+  @override
+  String get addedBy => 'Added By';
+
+  @override
+  String get supplyItemsMovement => 'Supply Items Movements';
 }

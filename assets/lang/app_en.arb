@@ -286,6 +286,11 @@
     "movementQuantity" : "Movement Quantity (Number Of Items)",
     "enterMovementQuantity" : "Enter Movement Quantity",
     "movementAmount" : "Movement Amount (Total Price Of Items)",
-    "enterMovementAmount" : "Enter Movement Amount"
+    "enterMovementAmount" : "Enter Movement Amount",
+    "pickSourceClinic" : "Pick Source Clinic",
+    "pickDestinationClinic" : "Pick Destination Clinic",
+    "noSupplyMovementsFound" : "No Supply Movements Found In Given Duration",
+    "addedBy" : "Added By",
+    "supplyItemsMovement" : "Supply Items Movements"
 
 }

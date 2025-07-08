@@ -285,5 +285,10 @@
     "movementQuantity" : "كمية الحركة (عدد الوحدات)",
     "enterMovementQuantity" : "ادخل كمية الحركة",
     "movementAmount" : "اجمالي الحركة (سعر)",
-    "enterMovementAmount" : "ادخل اجمالي الحركة"
+    "enterMovementAmount" : "ادخل اجمالي الحركة",
+    "pickSourceClinic" : "اختر عيادة المصدر",
+    "pickDestinationClinic" : "اختر عيادة الاستلام",
+    "noSupplyMovementsFound" : "لم يتم العثور علي حركات للمستلزمات في الفترة المحددة",
+    "addedBy" : "اضافة بواسطة",
+    "supplyItemsMovement" : "حركة المستلزمات"
     }

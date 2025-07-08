@@ -130,8 +130,17 @@ class SupplyMovement extends Equatable {
       clinic: Clinic.fromJson(e.get<RecordModel>('expand.clinic_id').toJson()),
       supply_item: DoctorSupplyItem.fromJson(
           e.get<RecordModel>('expand.supply_item_id').toJson()),
-      added_by:
-          User.fromJson(e.get<RecordModel>('expand.added_by_id').toJson()),
+      added_by: User.fromJson({
+        ...e.get<RecordModel>('expand.added_by_id').toJson(),
+        'account_type': e
+            .get<RecordModel>('expand.added_by_id.expand.account_type_id')
+            .toJson(),
+        'app_permissions': e
+            .get<List<RecordModel>>(
+                'expand.added_by_id.expand.app_permissions_ids')
+            .map((x) => x.toJson())
+            .toList(),
+      }),
       movement_type: e.getStringValue('movement_type'),
       reason: e.getStringValue('reason'),
       movement_quantity: e.getDoubleValue('movement_quantity'),
@@ -143,8 +152,18 @@ class SupplyMovement extends Equatable {
               e.get<RecordModel?>('expand.related_visit_id')!.toJson()),
       updated_by: e.get<RecordModel?>('expand.updated_by_id') == null
           ? null
-          : User.fromJson(
-              e.get<RecordModel?>('expand.updated_by_id')!.toJson()),
+          : User.fromJson({
+              ...e.get<RecordModel>('expand.updated_by_id').toJson(),
+              'account_type': e
+                  .get<RecordModel>(
+                      'expand.updated_by_id.expand.account_type_id')
+                  .toJson(),
+              'app_permissions': e
+                  .get<List<RecordModel>>(
+                      'expand.updated_by_id.expand.app_permissions_ids')
+                  .map((x) => x.toJson())
+                  .toList(),
+            }),
       number_of_updates: e.getIntValue('number_of_updates'),
     );
   }

@@ -813,4 +813,20 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get enterMovementAmount => 'ادخل اجمالي الحركة';
+
+  @override
+  String get pickSourceClinic => 'اختر عيادة المصدر';
+
+  @override
+  String get pickDestinationClinic => 'اختر عيادة الاستلام';
+
+  @override
+  String get noSupplyMovementsFound =>
+      'لم يتم العثور علي حركات للمستلزمات في الفترة المحددة';
+
+  @override
+  String get addedBy => 'اضافة بواسطة';
+
+  @override
+  String get supplyItemsMovement => 'حركة المستلزمات';
 }

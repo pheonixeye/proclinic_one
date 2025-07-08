@@ -1657,6 +1657,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Enter Movement Amount'**
   String get enterMovementAmount;
+
+  /// No description provided for @pickSourceClinic.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick Source Clinic'**
+  String get pickSourceClinic;
+
+  /// No description provided for @pickDestinationClinic.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick Destination Clinic'**
+  String get pickDestinationClinic;
+
+  /// No description provided for @noSupplyMovementsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No Supply Movements Found In Given Duration'**
+  String get noSupplyMovementsFound;
+
+  /// No description provided for @addedBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Added By'**
+  String get addedBy;
+
+  /// No description provided for @supplyItemsMovement.
+  ///
+  /// In en, this message translates to:
+  /// **'Supply Items Movements'**
+  String get supplyItemsMovement;
 }
 
 class _AppLocalizationsDelegate
