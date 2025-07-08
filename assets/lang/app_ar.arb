@@ -290,5 +290,9 @@
     "pickDestinationClinic" : "اختر عيادة الاستلام",
     "noSupplyMovementsFound" : "لم يتم العثور علي حركات للمستلزمات في الفترة المحددة",
     "addedBy" : "اضافة بواسطة",
-    "supplyItemsMovement" : "حركة المستلزمات"
+    "supplyItemsMovement" : "حركة المستلزمات",
+    "clinicInventory" : "مخزن العيادة",
+    "addItemsWithCount" : "اضافة المستلزمات بالاعداد",
+    "enterInitialItemAvailableQuantity" : "ادخل الكمية المتاحة حاليا بالعيادة"
+
     }

@@ -291,6 +291,9 @@
     "pickDestinationClinic" : "Pick Destination Clinic",
     "noSupplyMovementsFound" : "No Supply Movements Found In Given Duration",
     "addedBy" : "Added By",
-    "supplyItemsMovement" : "Supply Items Movements"
+    "supplyItemsMovement" : "Supply Items Movements",
+    "clinicInventory" : "Clinic Inventory",
+    "addItemsWithCount" : "Add Items With Count",
+    "enterInitialItemAvailableQuantity" : "Enter Initial Item Available Quantity"
 
 }

@@ -829,4 +829,14 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get supplyItemsMovement => 'حركة المستلزمات';
+
+  @override
+  String get clinicInventory => 'مخزن العيادة';
+
+  @override
+  String get addItemsWithCount => 'اضافة المستلزمات بالاعداد';
+
+  @override
+  String get enterInitialItemAvailableQuantity =>
+      'ادخل الكمية المتاحة حاليا بالعيادة';
 }

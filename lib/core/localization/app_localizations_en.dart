@@ -830,4 +830,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get supplyItemsMovement => 'Supply Items Movements';
+
+  @override
+  String get clinicInventory => 'Clinic Inventory';
+
+  @override
+  String get addItemsWithCount => 'Add Items With Count';
+
+  @override
+  String get enterInitialItemAvailableQuantity =>
+      'Enter Initial Item Available Quantity';
 }

@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:proklinik_one/core/api/clinic_inventory_api.dart';
 import 'package:proklinik_one/extensions/loc_ext.dart';
 import 'package:proklinik_one/functions/shell_function.dart';
 import 'package:proklinik_one/models/clinic/clinic.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/clinics_page/widgets/clinic_inventory_dialog.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/clinics_page/widgets/clinic_prescription_dialog.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/clinics_page/widgets/clinic_schedule_dialog.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/clinics_page/widgets/create_edit_clinic_dialog.dart';
+import 'package:proklinik_one/providers/px_auth.dart';
+import 'package:proklinik_one/providers/px_clinic_inventory.dart';
 import 'package:proklinik_one/providers/px_clinics.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:proklinik_one/widgets/prompt_dialog.dart';
@@ -254,6 +258,37 @@ class ClinicViewCard extends StatelessWidget {
                                 return ChangeNotifierProvider.value(
                                   value: c,
                                   child: ClinicPrescriptionDialog(),
+                                );
+                              },
+                            ).whenComplete(() {
+                              c.selectClinic(null);
+                            });
+                          },
+                        ),
+                        PopupMenuItem(
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.warehouse_rounded,
+                              ),
+                              Text(
+                                context.loc.clinicInventory,
+                              ),
+                            ],
+                          ),
+                          onTap: () async {
+                            c.selectClinic(clinic);
+                            await showDialog<void>(
+                              context: context,
+                              builder: (context) {
+                                return ChangeNotifierProvider(
+                                  create: (context) => PxClinicInventory(
+                                    api: ClinicInventoryApi(
+                                      clinic_id: clinic.id,
+                                      doc_id: context.read<PxAuth>().doc_id,
+                                    ),
+                                  ),
+                                  child: ClinicInventoryDialog(),
                                 );
                               },
                             ).whenComplete(() {

@@ -76,7 +76,7 @@ class EndDrawer extends StatelessWidget {
               ),
               const ThinDivider(),
               DrawerNavBtn(
-                title: context.loc.inventorySupplies,
+                title: context.loc.supplyItemsMovement,
                 icondata: Icons.warehouse,
                 routePath: AppRouter.inventory_supplies,
                 selected: selected(AppRouter.inventory_supplies),

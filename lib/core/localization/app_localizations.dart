@@ -1687,6 +1687,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Supply Items Movements'**
   String get supplyItemsMovement;
+
+  /// No description provided for @clinicInventory.
+  ///
+  /// In en, this message translates to:
+  /// **'Clinic Inventory'**
+  String get clinicInventory;
+
+  /// No description provided for @addItemsWithCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Items With Count'**
+  String get addItemsWithCount;
+
+  /// No description provided for @enterInitialItemAvailableQuantity.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Initial Item Available Quantity'**
+  String get enterInitialItemAvailableQuantity;
 }
 
 class _AppLocalizationsDelegate
