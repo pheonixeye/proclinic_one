@@ -273,5 +273,17 @@
     "visitPrescription" : "روشتة الزيارة",
     "print" : "طباعة",
     "printPrescription" : "طباعة الروشتة",
-    "toggleFormsView" : "النماذج الملحقة"
+    "toggleFormsView" : "النماذج الملحقة",
+    "visitNotAttended" : "لم يتم حضور المريض",
+    "inventorySupplies" : "مخزن المستلزمات",
+    "newSupplyMovement" : "حركة مستلزمات جديدة",
+    "editSupplyMovement" : "تعديل حركة مستلزمات",
+    "pickSupplyItem" : "اختر عنصر المستلزمات",
+    "movementDirection" : "اتجاه الحركة (صادر / وارد)",
+    "movementReason" : "سبب الحركة",
+    "enterMovementReason" : "ادخل سبب الحركة",
+    "movementQuantity" : "كمية الحركة (عدد الوحدات)",
+    "enterMovementQuantity" : "ادخل كمية الحركة",
+    "movementAmount" : "اجمالي الحركة (سعر)",
+    "enterMovementAmount" : "ادخل اجمالي الحركة"
     }

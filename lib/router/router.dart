@@ -18,8 +18,10 @@ import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_pag
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/bookkeeping_page/bookkeeping_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/forms_page/forms_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/my_subscription_page/pages/order_details_page/order_details_page.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/inventory_supplies_page/inventory_supplies_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/today_visits_page/pages/visit_data_page/pages/visit_prescription_page/visit_prescription_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/today_visits_page/pages/visit_data_page/visit_data_page.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/today_visits_page/today_visits_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/transaction/transaction_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/visits_page/visits_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/patients_page/patients_page.dart';
@@ -81,9 +83,12 @@ class AppRouter {
   static const String bookkeeping = "bookkeeping";
   static const String settings = "settings";
   static const String transaction = "transaction";
+  static const String inventory_supplies = "inventory_supplies";
   //visit_data
   static const String visit_data = "data/:visit_id";
   static const String visit_prescription = "prescription";
+  //routes_inside_app
+  static const String today_visits = "today_visits";
 
   String? get currentRouteName =>
       router.routerDelegate.currentConfiguration.last.route.name;
@@ -244,15 +249,30 @@ class AppRouter {
                       return null;
                     },
                     routes: [
-                      //transaction_result page
                       GoRoute(
-                        path: transaction,
-                        name: transaction,
+                        path: today_visits,
+                        name: today_visits,
                         builder: (context, state) {
-                          final _query = state.uri.queryParameters;
-                          return TransactionPage(
+                          return TodayVisitsPage(
                             key: state.pageKey,
-                            query: _query,
+                          );
+                        },
+                      ),
+                      GoRoute(
+                        path: visits,
+                        name: visits,
+                        builder: (context, state) {
+                          return VisitsPage(
+                            key: state.pageKey,
+                          );
+                        },
+                      ),
+                      GoRoute(
+                        path: bookkeeping,
+                        name: bookkeeping,
+                        builder: (context, state) {
+                          return BookkeepingPage(
+                            key: state.pageKey,
                           );
                         },
                       ),
@@ -300,7 +320,7 @@ class AppRouter {
                         },
                         routes: [
                           GoRoute(
-                            path: visit_prescription,
+                            path: visit_prescription, //:visit_id/prescription
                             name: visit_prescription,
                             builder: (context, state) {
                               final _visit_id =
@@ -356,15 +376,7 @@ class AppRouter {
                           ),
                         ],
                       ),
-                      GoRoute(
-                        path: visits,
-                        name: visits,
-                        builder: (context, state) {
-                          return VisitsPage(
-                            key: state.pageKey,
-                          );
-                        },
-                      ),
+
                       GoRoute(
                         path: patients,
                         name: patients,
@@ -413,21 +425,34 @@ class AppRouter {
                           );
                         },
                       ),
-                      GoRoute(
-                        path: bookkeeping,
-                        name: bookkeeping,
-                        builder: (context, state) {
-                          return BookkeepingPage(
-                            key: state.pageKey,
-                          );
-                        },
-                      ),
+
                       GoRoute(
                         path: settings,
                         name: settings,
                         builder: (context, state) {
                           return SettingsPage(
                             key: state.pageKey,
+                          );
+                        },
+                      ),
+                      GoRoute(
+                        path: inventory_supplies,
+                        name: inventory_supplies,
+                        builder: (context, state) {
+                          return InventorySuppliesPage(
+                            key: state.pageKey,
+                          );
+                        },
+                      ),
+                      //transaction_result page
+                      GoRoute(
+                        path: transaction,
+                        name: transaction,
+                        builder: (context, state) {
+                          final _query = state.uri.queryParameters;
+                          return TransactionPage(
+                            key: state.pageKey,
+                            query: _query,
                           );
                         },
                       ),

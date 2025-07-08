@@ -273,9 +273,19 @@
     "visitPrescription" : "Visit Prescription",
     "print" : "Print",
     "printPrescription" : "Print Prescription",
-    "toggleFormsView" : "Toggle Forms View"
-
-
-
+    "toggleFormsView" : "Toggle Forms View",
+    "visitNotAttended" : "Visit Not Attended",
+    "@@inventory_supplies_page": "",
+    "inventorySupplies" : "Inventory Supplies",
+    "newSupplyMovement" : "New Supply Movement",
+    "editSupplyMovement" : "Edit Supply Movement",
+    "pickSupplyItem" : "Pick Supply Item",
+    "movementDirection" : "Movement Direction",
+    "movementReason" : "Movement Reason",
+    "enterMovementReason" : "Enter Movement Reason",
+    "movementQuantity" : "Movement Quantity (Number Of Items)",
+    "enterMovementQuantity" : "Enter Movement Quantity",
+    "movementAmount" : "Movement Amount (Total Price Of Items)",
+    "enterMovementAmount" : "Enter Movement Amount"
 
 }

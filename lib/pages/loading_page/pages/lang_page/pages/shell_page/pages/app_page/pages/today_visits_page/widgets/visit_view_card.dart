@@ -8,6 +8,7 @@ import 'package:proklinik_one/providers/px_app_constants.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:proklinik_one/providers/px_visits.dart';
 import 'package:proklinik_one/router/router.dart';
+import 'package:proklinik_one/widgets/snackbar_.dart';
 import 'package:provider/provider.dart';
 
 class VisitViewCard extends StatelessWidget {
@@ -400,6 +401,10 @@ class VisitViewCard extends StatelessWidget {
                             visit.patient_progress_status.id +
                             visit.patient.id,
                         onPressed: () {
+                          if (visit.visit_status.id == a.notAttended.id) {
+                            showIsnackbar(context.loc.visitNotAttended);
+                            return;
+                          }
                           GoRouter.of(context).goNamed(
                             AppRouter.visit_data,
                             pathParameters: defaultPathParameters(context)

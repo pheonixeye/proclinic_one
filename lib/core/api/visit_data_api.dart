@@ -1,7 +1,10 @@
 import 'package:pocketbase/pocketbase.dart';
 import 'package:proklinik_one/core/api/_api_result.dart';
+import 'package:proklinik_one/core/api/bookkeeping_api.dart';
 import 'package:proklinik_one/core/api/constants/pocketbase_helper.dart';
+import 'package:proklinik_one/core/logic/bookkeeping_transformer.dart';
 import 'package:proklinik_one/errors/code_to_error.dart';
+import 'package:proklinik_one/functions/first_where_or_null.dart';
 import 'package:proklinik_one/models/doctor_items/profile_setup_item.dart';
 import 'package:proklinik_one/models/visit_data/visit_data.dart';
 import 'package:proklinik_one/models/visit_data/visit_form_item.dart';
@@ -20,7 +23,7 @@ class VisitDataApi {
   late final String forms_data_collection = '${doc_id}__visit__formdata';
 
   final String _expand =
-      'patient_id, labs_ids, rads_ids, procedures_ids, drugs_ids, supplies_ids, forms_data_ids, forms_data_ids.form_id';
+      'patient_id, labs_ids, rads_ids, procedures_ids, drugs_ids, supplies_ids, forms_data_ids, forms_data_ids.form_id, supply_movements_ids';
 
   Future<ApiResult<VisitData>> fetchVisitData() async {
     try {
@@ -144,10 +147,39 @@ class VisitDataApi {
       ProfileSetupItem.procedures => {'procedures_ids+': item_id},
       ProfileSetupItem.supplies => {'supplies_ids+': item_id},
     };
-    await PocketbaseHelper.pb.collection(collection).update(
+    final _response = await PocketbaseHelper.pb.collection(collection).update(
           visit_data.id,
           body: _update,
+          expand: _expand,
         );
+
+    if (setupItem == ProfileSetupItem.procedures) {
+      //todo: parse data
+      final _visit_data = VisitData.fromRecordModel(_response);
+
+      //todo: initialize transformer
+      final _bk_transformer = BookkeepingTransformer(
+        item_id: _visit_data.id,
+        collection_id: collection,
+      );
+      //todo: get added item
+      final _added_procedure =
+          _visit_data.procedures.firstWhereOrNull((x) => x.id == item_id);
+
+      //todo: initialize bk_item
+      if (_added_procedure != null) {
+        final _item = _bk_transformer.fromVisitDataAddProcedure(
+          _visit_data,
+          _added_procedure,
+        );
+
+        //todo: send bookkeeping request
+        await BookkeepingApi(doc_id: doc_id).addBookkeepingItem(_item);
+      }
+    }
+    if (setupItem == ProfileSetupItem.supplies) {
+      //TODO:
+    }
   }
 
   Future<void> removeFromItemList(
@@ -162,9 +194,38 @@ class VisitDataApi {
       ProfileSetupItem.procedures => {'procedures_ids-': item_id},
       ProfileSetupItem.supplies => {'supplies_ids-': item_id},
     };
-    await PocketbaseHelper.pb.collection(collection).update(
+    final _response = await PocketbaseHelper.pb.collection(collection).update(
           visit_data.id,
           body: _update,
+          expand: _expand,
         );
+
+    if (setupItem == ProfileSetupItem.procedures) {
+      //todo: parse data
+      final _visit_data = VisitData.fromRecordModel(_response);
+
+      //todo: initialize transformer
+      final _bk_transformer = BookkeepingTransformer(
+        item_id: _visit_data.id,
+        collection_id: collection,
+      );
+      //todo: get added item
+      final _removed_procedure =
+          visit_data.procedures.firstWhereOrNull((x) => x.id == item_id);
+
+      //todo: initialize bk_item
+      if (_removed_procedure != null) {
+        final _item = _bk_transformer.fromVisitDataRemoveProcedure(
+          _visit_data,
+          _removed_procedure,
+        );
+
+        //todo: send bookkeeping request
+        await BookkeepingApi(doc_id: doc_id).addBookkeepingItem(_item);
+      }
+    }
+    if (setupItem == ProfileSetupItem.supplies) {
+      //TODO:
+    }
   }
 }

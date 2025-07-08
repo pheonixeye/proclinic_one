@@ -778,4 +778,40 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get toggleFormsView => 'Toggle Forms View';
+
+  @override
+  String get visitNotAttended => 'Visit Not Attended';
+
+  @override
+  String get inventorySupplies => 'Inventory Supplies';
+
+  @override
+  String get newSupplyMovement => 'New Supply Movement';
+
+  @override
+  String get editSupplyMovement => 'Edit Supply Movement';
+
+  @override
+  String get pickSupplyItem => 'Pick Supply Item';
+
+  @override
+  String get movementDirection => 'Movement Direction';
+
+  @override
+  String get movementReason => 'Movement Reason';
+
+  @override
+  String get enterMovementReason => 'Enter Movement Reason';
+
+  @override
+  String get movementQuantity => 'Movement Quantity (Number Of Items)';
+
+  @override
+  String get enterMovementQuantity => 'Enter Movement Quantity';
+
+  @override
+  String get movementAmount => 'Movement Amount (Total Price Of Items)';
+
+  @override
+  String get enterMovementAmount => 'Enter Movement Amount';
 }

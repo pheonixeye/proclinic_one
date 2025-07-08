@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:proklinik_one/extensions/is_mobile_context.dart';
 import 'package:proklinik_one/extensions/loc_ext.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/app_profile_setup/app_profile_setup.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/bookkeeping_page/bookkeeping_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/today_visits_page/today_visits_page.dart';
-import 'package:proklinik_one/providers/px_doctor.dart';
-import 'package:provider/provider.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/visits_page/visits_page.dart';
 
 class AppPage extends StatefulWidget {
   const AppPage({super.key});
@@ -24,14 +25,14 @@ class _AppPageState extends State<AppPage> with SingleTickerProviderStateMixin {
       label: Text(context.loc.todayVisits),
     ),
     NavigationRailDestination(
-      icon: const Icon(Icons.home),
-      selectedIcon: const Icon(Icons.home_max),
-      label: Text('Home'),
+      icon: const Icon(Icons.person),
+      selectedIcon: const Icon(FontAwesomeIcons.personCirclePlus),
+      label: Text(context.loc.visits),
     ),
     NavigationRailDestination(
-      icon: const Icon(Icons.person),
-      selectedIcon: const Icon(Icons.person_pin),
-      label: Text('Profile'),
+      icon: const Icon(Icons.monetization_on),
+      selectedIcon: const Icon(FontAwesomeIcons.moneyCheck),
+      label: Text(context.loc.bookkeeping),
     ),
     NavigationRailDestination(
       icon: const Icon(Icons.settings),
@@ -88,35 +89,8 @@ class _AppPageState extends State<AppPage> with SingleTickerProviderStateMixin {
               index: _index,
               children: <Widget>[
                 const TodayVisitsPage(),
-                const Center(
-                  child: Text("Home"),
-                ),
-                Center(
-                  child: Consumer<PxDoctor>(
-                    builder: (context, d, _) {
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(context.loc.homepage),
-                          if (d.doctor == null)
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 12.0),
-                              child: CircularProgressIndicator(),
-                            )
-                          else if (d.doctor != null) ...[
-                            Text('${d.doctor?.name_en}'),
-                            Text('${d.doctor?.name_ar}'),
-                            Text('${d.doctor?.phone}'),
-                            Text('${d.doctor?.speciality.name_en}'),
-                            Text('${d.doctor?.speciality.name_ar}'),
-                            Text('${d.doctor?.email}'),
-                          ]
-                        ],
-                      );
-                    },
-                  ),
-                ),
+                const VisitsPage(),
+                const BookkeepingPage(),
                 const AppProfileSetup(),
               ],
             ),
@@ -143,14 +117,14 @@ class _AppPageState extends State<AppPage> with SingleTickerProviderStateMixin {
                   label: context.loc.todayVisits,
                 ),
                 BottomNavigationBarItem(
-                  icon: const Icon(Icons.home),
-                  activeIcon: const Icon(Icons.home_max),
-                  label: 'Home',
+                  icon: const Icon(Icons.person),
+                  activeIcon: const Icon(FontAwesomeIcons.personCirclePlus),
+                  label: context.loc.visits,
                 ),
                 BottomNavigationBarItem(
-                  icon: const Icon(Icons.person),
-                  activeIcon: const Icon(Icons.person_pin),
-                  label: 'Profile',
+                  icon: const Icon(Icons.monetization_on),
+                  activeIcon: const Icon(FontAwesomeIcons.moneyCheck),
+                  label: context.loc.bookkeeping,
                 ),
                 BottomNavigationBarItem(
                   tooltip: context.loc.profileSetup,

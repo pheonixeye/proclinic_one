@@ -8,6 +8,7 @@ import 'package:proklinik_one/models/doctor_items/doctor_rad_item.dart';
 import 'package:proklinik_one/models/doctor_items/doctor_supply_item.dart';
 import 'package:proklinik_one/models/patient.dart';
 import 'package:proklinik_one/models/pc_form.dart';
+import 'package:proklinik_one/models/supplies/supply_movement.dart';
 import 'package:proklinik_one/models/visit_data/visit_form_item.dart';
 
 class VisitData extends Equatable {
@@ -23,6 +24,7 @@ class VisitData extends Equatable {
   final List<PcForm> forms;
   final List<VisitFormItem> forms_data;
   final Map drug_data;
+  final List<SupplyMovement> supply_movements;
 
   const VisitData({
     required this.id,
@@ -37,6 +39,7 @@ class VisitData extends Equatable {
     required this.forms,
     required this.forms_data,
     required this.drug_data,
+    required this.supply_movements,
   });
 
   VisitData copyWith({
@@ -52,6 +55,7 @@ class VisitData extends Equatable {
     List<PcForm>? forms,
     List<VisitFormItem>? forms_data,
     Map? drug_data,
+    List<SupplyMovement>? supply_movements,
   }) {
     return VisitData(
       id: id ?? this.id,
@@ -66,6 +70,7 @@ class VisitData extends Equatable {
       forms: forms ?? this.forms,
       forms_data: forms_data ?? this.forms_data,
       drug_data: drug_data ?? this.drug_data,
+      supply_movements: supply_movements ?? this.supply_movements,
     );
   }
 
@@ -83,6 +88,7 @@ class VisitData extends Equatable {
       'forms': forms.map((x) => x.toJson()).toList(),
       'forms_data': forms_data.map((e) => e.toJson()).toList(),
       'drug_data': drug_data,
+      'supply_movements': supply_movements.map((x) => x.toJson()).toList(),
     };
   }
 
@@ -126,6 +132,11 @@ class VisitData extends Equatable {
           .map((e) => VisitFormItem.fromJson(e))
           .toList(),
       drug_data: Map.from((map['drug_data'] as Map)),
+      supply_movements: List<SupplyMovement>.from(
+        (map['forms'] as List<dynamic>).map<SupplyMovement>(
+          (x) => SupplyMovement.fromJson(x as Map<String, dynamic>),
+        ),
+      ),
     );
   }
 
@@ -147,6 +158,7 @@ class VisitData extends Equatable {
       forms,
       forms_data,
       drug_data,
+      supply_movements,
     ];
   }
 
@@ -186,6 +198,10 @@ class VisitData extends Equatable {
           .map((x) => VisitFormItem.fromJson(x.toJson()))
           .toList(),
       drug_data: e.data['drug_data'],
+      supply_movements: e
+          .get<List<RecordModel>>('expand.supply_movements_ids')
+          .map((x) => SupplyMovement.fromJson(x.toJson()))
+          .toList(),
     );
   }
 }

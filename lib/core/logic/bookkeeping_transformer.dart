@@ -1,6 +1,8 @@
 import 'package:proklinik_one/core/api/constants_api.dart';
 import 'package:proklinik_one/models/bookkeeping/bookkeeping_item.dart';
 import 'package:proklinik_one/models/bookkeeping/bookkeeping_name.dart';
+import 'package:proklinik_one/models/doctor_items/doctor_procedure_item.dart';
+import 'package:proklinik_one/models/visit_data/visit_data.dart';
 import 'package:proklinik_one/models/visits/_visit.dart';
 import 'package:proklinik_one/providers/px_app_constants.dart';
 import 'package:proklinik_one/providers/px_auth.dart';
@@ -54,13 +56,14 @@ class BookkeepingTransformer {
   }
 
   BookkeepingItem fromVisitUpdate(Visit old_visit, Visit updated_visit) {
+    //TODO: error prone logic - needs to improve by a long shot
     late final BookkeepingName _item_name;
     late final String _type;
     late final double _bk_item_amount;
 
     if (old_visit.visit_status.id == _attended_id &&
         updated_visit.visit_status.id == _not_attended_id) {
-      _item_name = BookkeepingName.visit_attendance_update_not_attended;
+      //old : attended - new : not-attended
       if (old_visit.visit_type.id == _consultation_id) {
         _bk_item_amount = (-old_visit.clinic.consultation_fees).toDouble();
       }
@@ -70,9 +73,10 @@ class BookkeepingTransformer {
       if (old_visit.visit_type.id == _procedure_id) {
         _bk_item_amount = (-old_visit.clinic.procedure_fees).toDouble();
       }
+      _item_name = BookkeepingName.visit_attendance_update_not_attended;
     } else if (old_visit.visit_status.id == _not_attended_id &&
         updated_visit.visit_status.id == _attended_id) {
-      _item_name = BookkeepingName.visit_attendance_update_attended;
+      //old : not-attended - new : attended
       if (old_visit.visit_type.id == _consultation_id) {
         _bk_item_amount = (old_visit.clinic.consultation_fees).toDouble();
       }
@@ -82,12 +86,15 @@ class BookkeepingTransformer {
       if (old_visit.visit_type.id == _procedure_id) {
         _bk_item_amount = (old_visit.clinic.procedure_fees).toDouble();
       }
+      _item_name = BookkeepingName.visit_attendance_update_attended;
     } else if (old_visit.visit_status.id == _not_attended_id &&
         updated_visit.visit_status.id == _not_attended_id) {
+      //old : not-attended - new : not-attended
       _item_name = BookkeepingName.visit_type_update;
       _bk_item_amount = 0;
-    } else {
-      //old_visit.visit_status.id == new_visit.visit_status.id
+    } else if (old_visit.visit_status.id == _attended_id &&
+        updated_visit.visit_status.id == _attended_id) {
+      //old : attended - new : attended
       if (old_visit.visit_type.id == _consultation_id &&
           updated_visit.visit_type.id == _followup_id) {
         //consultation => followup
@@ -137,16 +144,58 @@ class BookkeepingTransformer {
                 .toDouble();
       }
     }
-    if (old_visit.visit_status.id == updated_visit.visit_status.id &&
-        old_visit.visit_type.id == updated_visit.visit_type.id) {
-      _item_name = BookkeepingName.visit_no_update;
-      _bk_item_amount = 0;
-    }
+
     _type = _bk_item_amount > 0
         ? 'in'
         : _bk_item_amount == 0
             ? 'none'
             : 'out';
+
+    final _item = BookkeepingItem(
+      id: '',
+      item_name: _item_name.name,
+      item_id: item_id,
+      collection_id: collection_id,
+      added_by_id: PxAuth.doc_id_static_getter,
+      updated_by_id: '',
+      amount: _bk_item_amount,
+      type: _type,
+      update_reason: '',
+      auto_add: true,
+    );
+
+    return _item;
+  }
+
+  BookkeepingItem fromVisitDataAddProcedure(
+      VisitData visit_data, DoctorProcedureItem procedure) {
+    final BookkeepingName _item_name = BookkeepingName.visit_procedure_add;
+    final String _type = 'in';
+    final double _bk_item_amount = procedure.price -
+        ((procedure.price * procedure.discount_percentage) / 100);
+
+    final _item = BookkeepingItem(
+      id: '',
+      item_name: _item_name.name,
+      item_id: item_id,
+      collection_id: collection_id,
+      added_by_id: PxAuth.doc_id_static_getter,
+      updated_by_id: '',
+      amount: _bk_item_amount,
+      type: _type,
+      update_reason: '',
+      auto_add: true,
+    );
+
+    return _item;
+  }
+
+  BookkeepingItem fromVisitDataRemoveProcedure(
+      VisitData visit_data, DoctorProcedureItem procedure) {
+    final BookkeepingName _item_name = BookkeepingName.visit_procedure_remove;
+    final String _type = 'out';
+    final double _bk_item_amount = -(procedure.price -
+        ((procedure.price * procedure.discount_percentage) / 100));
 
     final _item = BookkeepingItem(
       id: '',

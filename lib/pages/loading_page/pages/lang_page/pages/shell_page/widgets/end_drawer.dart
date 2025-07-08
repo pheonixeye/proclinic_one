@@ -55,13 +55,6 @@ class EndDrawer extends StatelessWidget {
               ),
               const ThinDivider(),
               DrawerNavBtn(
-                title: context.loc.visits,
-                icondata: FontAwesomeIcons.personCirclePlus,
-                routePath: AppRouter.visits,
-                selected: selected(AppRouter.visits),
-              ),
-              const ThinDivider(),
-              DrawerNavBtn(
                 title: context.loc.patients,
                 icondata: FontAwesomeIcons.person,
                 routePath: AppRouter.patients,
@@ -83,17 +76,17 @@ class EndDrawer extends StatelessWidget {
               ),
               const ThinDivider(),
               DrawerNavBtn(
+                title: context.loc.inventorySupplies,
+                icondata: Icons.warehouse,
+                routePath: AppRouter.inventory_supplies,
+                selected: selected(AppRouter.inventory_supplies),
+              ),
+              const ThinDivider(),
+              DrawerNavBtn(
                 title: context.loc.mySubscription,
                 icondata: Icons.receipt_long,
                 routePath: AppRouter.mysubscription,
                 selected: selected(AppRouter.mysubscription),
-              ),
-              const ThinDivider(),
-              DrawerNavBtn(
-                title: context.loc.bookkeeping,
-                icondata: Icons.monetization_on,
-                routePath: AppRouter.bookkeeping,
-                selected: selected(AppRouter.bookkeeping),
               ),
               const ThinDivider(),
               DrawerNavBtn(

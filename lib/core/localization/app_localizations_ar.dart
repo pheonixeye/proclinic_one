@@ -777,4 +777,40 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get toggleFormsView => 'النماذج الملحقة';
+
+  @override
+  String get visitNotAttended => 'لم يتم حضور المريض';
+
+  @override
+  String get inventorySupplies => 'مخزن المستلزمات';
+
+  @override
+  String get newSupplyMovement => 'حركة مستلزمات جديدة';
+
+  @override
+  String get editSupplyMovement => 'تعديل حركة مستلزمات';
+
+  @override
+  String get pickSupplyItem => 'اختر عنصر المستلزمات';
+
+  @override
+  String get movementDirection => 'اتجاه الحركة (صادر / وارد)';
+
+  @override
+  String get movementReason => 'سبب الحركة';
+
+  @override
+  String get enterMovementReason => 'ادخل سبب الحركة';
+
+  @override
+  String get movementQuantity => 'كمية الحركة (عدد الوحدات)';
+
+  @override
+  String get enterMovementQuantity => 'ادخل كمية الحركة';
+
+  @override
+  String get movementAmount => 'اجمالي الحركة (سعر)';
+
+  @override
+  String get enterMovementAmount => 'ادخل اجمالي الحركة';
 }

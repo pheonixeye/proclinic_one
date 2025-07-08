@@ -1585,6 +1585,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Toggle Forms View'**
   String get toggleFormsView;
+
+  /// No description provided for @visitNotAttended.
+  ///
+  /// In en, this message translates to:
+  /// **'Visit Not Attended'**
+  String get visitNotAttended;
+
+  /// No description provided for @inventorySupplies.
+  ///
+  /// In en, this message translates to:
+  /// **'Inventory Supplies'**
+  String get inventorySupplies;
+
+  /// No description provided for @newSupplyMovement.
+  ///
+  /// In en, this message translates to:
+  /// **'New Supply Movement'**
+  String get newSupplyMovement;
+
+  /// No description provided for @editSupplyMovement.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Supply Movement'**
+  String get editSupplyMovement;
+
+  /// No description provided for @pickSupplyItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick Supply Item'**
+  String get pickSupplyItem;
+
+  /// No description provided for @movementDirection.
+  ///
+  /// In en, this message translates to:
+  /// **'Movement Direction'**
+  String get movementDirection;
+
+  /// No description provided for @movementReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Movement Reason'**
+  String get movementReason;
+
+  /// No description provided for @enterMovementReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Movement Reason'**
+  String get enterMovementReason;
+
+  /// No description provided for @movementQuantity.
+  ///
+  /// In en, this message translates to:
+  /// **'Movement Quantity (Number Of Items)'**
+  String get movementQuantity;
+
+  /// No description provided for @enterMovementQuantity.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Movement Quantity'**
+  String get enterMovementQuantity;
+
+  /// No description provided for @movementAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Movement Amount (Total Price Of Items)'**
+  String get movementAmount;
+
+  /// No description provided for @enterMovementAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Movement Amount'**
+  String get enterMovementAmount;
 }
 
 class _AppLocalizationsDelegate
