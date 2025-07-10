@@ -1729,6 +1729,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Transfer Quantity'**
   String get transferQuantity;
+
+  /// No description provided for @removeSupplyItemAmountFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Supply Item Amount First'**
+  String get removeSupplyItemAmountFirst;
 }
 
 class _AppLocalizationsDelegate

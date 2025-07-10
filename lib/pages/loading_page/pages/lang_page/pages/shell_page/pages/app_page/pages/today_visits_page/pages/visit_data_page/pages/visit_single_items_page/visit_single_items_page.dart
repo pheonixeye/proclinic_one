@@ -146,9 +146,13 @@ class VisitSingleItemsPage<T extends DoctorItem> extends StatelessWidget {
                         return Card.outlined(
                           elevation: 6,
                           child: switch (setupItem) {
-                            ProfileSetupItem.supplies => SupplyItemTile(
-                                item: _item as DoctorSupplyItem,
-                                index: index,
+                            ProfileSetupItem.supplies => Consumer<PxVisitData>(
+                                builder: (context, v, _) {
+                                  return SupplyItemTile(
+                                    item: _item as DoctorSupplyItem,
+                                    index: index,
+                                  );
+                                },
                               ),
                             //ui for items other than supplies
                             _ => CheckboxListTile(

@@ -8,6 +8,7 @@ import 'package:proklinik_one/models/visit_data/visit_data.dart';
 import 'package:proklinik_one/providers/px_doctor_profile_items.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:proklinik_one/providers/px_visit_data.dart';
+import 'package:proklinik_one/widgets/snackbar_.dart';
 import 'package:provider/provider.dart';
 
 class SupplyItemTile extends StatefulWidget {
@@ -24,6 +25,7 @@ class SupplyItemTile extends StatefulWidget {
 
 class _SupplyItemTileState extends State<SupplyItemTile> {
   double quantity = 0;
+  double delta_quantity = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,7 @@ class _SupplyItemTileState extends State<SupplyItemTile> {
         }
         final _visit_data = (v.result as ApiDataResult<VisitData>).data;
         final _item_quantity =
-            _visit_data.supplies_data[widget.item.id] as double? ?? 0;
+            _visit_data.supplies_data?[widget.item.id] as double? ?? 0;
         return ListTile(
           title: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -62,6 +64,11 @@ class _SupplyItemTileState extends State<SupplyItemTile> {
                       toExecute: () async {
                         if (_visit_data.supplies.contains(widget.item) ==
                             true) {
+                          if (_visit_data.supplies_data?[widget.item.id] > 0) {
+                            showIsnackbar(
+                                context.loc.removeSupplyItemAmountFirst);
+                            return;
+                          }
                           await v.removeFromItemList(
                             widget.item.id,
                             ProfileSetupItem.supplies,
@@ -91,9 +98,6 @@ class _SupplyItemTileState extends State<SupplyItemTile> {
                         FloatingActionButton.small(
                           heroTag: UniqueKey(),
                           onPressed: () {
-                            if (quantity <= 0) {
-                              return;
-                            }
                             setState(() {
                               quantity =
                                   quantity - widget.item.transfer_quantity;
@@ -116,23 +120,19 @@ class _SupplyItemTileState extends State<SupplyItemTile> {
                         Spacer(),
                         ElevatedButton.icon(
                           onPressed: () async {
+                            delta_quantity = quantity - _item_quantity;
+                            if (delta_quantity == 0) {
+                              return;
+                            }
                             await shellFunction(
                               context,
                               toExecute: () async {
                                 //TODO:
-                                if (quantity > _item_quantity) {
-                                  await v.updateSupplyItemQuantity(
-                                    widget.item,
-                                    quantity,
-                                    true,
-                                  );
-                                } else if (quantity < _item_quantity) {
-                                  await v.updateSupplyItemQuantity(
-                                    widget.item,
-                                    quantity,
-                                    false,
-                                  );
-                                }
+                                await v.updateSupplyItemQuantity(
+                                  widget.item,
+                                  quantity,
+                                  delta_quantity, // +/-
+                                );
                               },
                             );
                           },

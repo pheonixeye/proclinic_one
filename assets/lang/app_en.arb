@@ -298,6 +298,7 @@
     "pickStartingDate" : "Pick Starting Date",
     "pickEndingDate" : "Pick Ending Date",
     "availableSupplyItemsQuantities" : "Available Supply Items Quantities",
-    "transferQuantity" : "Transfer Quantity"
+    "transferQuantity" : "Transfer Quantity",
+    "removeSupplyItemAmountFirst" : "Remove Supply Item Amount First"
 
 }

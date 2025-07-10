@@ -851,4 +851,8 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get transferQuantity => 'كمية الحركة';
+
+  @override
+  String get removeSupplyItemAmountFirst =>
+      'برجاء ازالة كمية المستلزمات من الزيارة اولا';
 }

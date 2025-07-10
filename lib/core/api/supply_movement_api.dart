@@ -101,8 +101,14 @@ class SupplyMovementApi {
           final _bk = _bookkeepingTransformer.fromManualSupplyMovement(x);
           await BookkeepingApi(doc_id: doc_id).addBookkeepingItem(_bk);
         } else {
-          final _bk = _bookkeepingTransformer.fromVisitSupplyMovement(x);
-          await BookkeepingApi(doc_id: doc_id).addBookkeepingItem(_bk);
+          if (x.movement_type == 'out_to_in') {
+            final _bk =
+                _bookkeepingTransformer.fromVisitRemoveSupplyMovement(x);
+            await BookkeepingApi(doc_id: doc_id).addBookkeepingItem(_bk);
+          } else if (x.movement_type == 'in_to_out') {
+            final _bk = _bookkeepingTransformer.fromVisitAddSupplyMovement(x);
+            await BookkeepingApi(doc_id: doc_id).addBookkeepingItem(_bk);
+          }
         }
       }).toList();
 

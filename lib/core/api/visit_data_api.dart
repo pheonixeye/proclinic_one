@@ -230,13 +230,13 @@ class VisitDataApi {
   Future<void> updateSupplyItemQuantity(
     VisitData visit_data,
     DoctorSupplyItem item,
-    double quantity, [
-    bool isAdd = true,
-  ]) async {
+    double new_quantity,
+    double quantity_change,
+  ) async {
     final _update = {
       'supplies_data': {
-        ...visit_data.supplies_data,
-        item.id: quantity,
+        ...visit_data.supplies_data ?? {},
+        item.id: new_quantity,
       }
     };
     final _response = await PocketbaseHelper.pb.collection(collection).update(
@@ -248,12 +248,9 @@ class VisitDataApi {
     final _visit_data = VisitData.fromRecordModel(_response);
 
     final _supplyMovementApi = SupplyMovementApi(doc_id: doc_id);
-
-    final _movement = isAdd
-        ? SupplyMovementTransformer()
-            .fromAddSuppliesToVisit(_visit_data, item, quantity)
-        : SupplyMovementTransformer()
-            .fromRemoveSuppliesFromVisit(_visit_data, item, quantity);
+    print('quantity_change ==>> $quantity_change');
+    final _movement = SupplyMovementTransformer()
+        .fromSuppliesOfVisit(_visit_data, item, quantity_change);
 
     await _supplyMovementApi.addSupplyMovements([_movement]);
   }

@@ -259,27 +259,35 @@ class BookkeepingTransformer {
     return _item;
   }
 
-  BookkeepingItem fromVisitSupplyMovement(SupplyMovement supplyMovement) {
-    final BookkeepingName _item_name =
-        switch (SupplyMovementType.fromString(supplyMovement.movement_type)) {
-      SupplyMovementType.OUT_IN => BookkeepingName.visit_supplies_remove,
-      SupplyMovementType.IN_OUT => BookkeepingName.visit_supplies_add,
-      SupplyMovementType.IN_IN => BookkeepingName.visit_supplies_no_update,
-    };
+  BookkeepingItem fromVisitAddSupplyMovement(SupplyMovement supplyMovement) {
+    final BookkeepingName _item_name = BookkeepingName.visit_supplies_add;
 
-    final String _type =
-        switch (SupplyMovementType.fromString(supplyMovement.movement_type)) {
-      SupplyMovementType.OUT_IN => 'in',
-      SupplyMovementType.IN_OUT => 'out',
-      SupplyMovementType.IN_IN => 'none',
-    };
+    final String _type = 'out';
 
-    final double _bk_item_amount =
-        switch (SupplyMovementType.fromString(supplyMovement.movement_type)) {
-      SupplyMovementType.OUT_IN => -supplyMovement.supply_item.selling_price,
-      SupplyMovementType.IN_OUT => supplyMovement.supply_item.selling_price,
-      SupplyMovementType.IN_IN => 0,
-    };
+    final double _bk_item_amount = supplyMovement.supply_item.selling_price;
+
+    final _item = BookkeepingItem(
+      id: '',
+      item_name: _item_name.name,
+      item_id: item_id,
+      collection_id: collection_id,
+      added_by_id: PxAuth.doc_id_static_getter,
+      updated_by_id: '',
+      amount: _bk_item_amount,
+      type: _type,
+      update_reason: '',
+      auto_add: true,
+    );
+
+    return _item;
+  }
+
+  BookkeepingItem fromVisitRemoveSupplyMovement(SupplyMovement supplyMovement) {
+    final BookkeepingName _item_name = BookkeepingName.visit_supplies_remove;
+
+    final String _type = 'in';
+
+    final double _bk_item_amount = -supplyMovement.supply_item.selling_price;
 
     final _item = BookkeepingItem(
       id: '',

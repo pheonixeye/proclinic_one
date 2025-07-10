@@ -23,7 +23,7 @@ class VisitData extends Equatable {
   final List<PcForm> forms;
   final List<VisitFormItem> forms_data;
   final Map drug_data;
-  final Map<String, dynamic> supplies_data;
+  final Map<String, dynamic>? supplies_data;
 
   const VisitData({
     required this.id,
@@ -131,7 +131,7 @@ class VisitData extends Equatable {
           .map((e) => VisitFormItem.fromJson(e))
           .toList(),
       drug_data: Map.from((map['drug_data'] as Map)),
-      supplies_data: map['supplies_data'] as Map<String, dynamic>,
+      supplies_data: map['supplies_data'] as Map<String, dynamic>?,
     );
   }
 
@@ -139,7 +139,7 @@ class VisitData extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object> get props {
+  List<Object?> get props {
     return [
       id,
       clinic_id,

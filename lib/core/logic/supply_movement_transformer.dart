@@ -15,6 +15,7 @@ class SupplyMovementTransformer {
     ClinicInventoryItem inventoryItem,
   ) {
     double? _newAvailableQuantity;
+
     if (supplyMovement.movement_type == SupplyMovementType.IN_OUT.name) {
       _newAvailableQuantity =
           inventoryItem.available_quantity - supplyMovement.movement_quantity;
@@ -33,6 +34,15 @@ class SupplyMovementTransformer {
       }
     }
 
+    if (supplyMovement.reason == BookkeepingName.visit_supplies_add.name) {
+      _newAvailableQuantity =
+          inventoryItem.available_quantity - supplyMovement.movement_quantity;
+    } else if (supplyMovement.reason ==
+        BookkeepingName.visit_supplies_remove.name) {
+      _newAvailableQuantity =
+          inventoryItem.available_quantity + supplyMovement.movement_quantity;
+    }
+
     return ClinicInventoryItem(
       id: inventoryItem.id,
       clinic_id: supplyMovement.clinic.id,
@@ -41,47 +51,33 @@ class SupplyMovementTransformer {
     );
   }
 
-  SupplyMovementDto fromAddSuppliesToVisit(
+  SupplyMovementDto fromSuppliesOfVisit(
     VisitData data,
     DoctorSupplyItem item,
-    double quantity,
+    double quantity_change,
   ) {
-    final _amount = quantity * item.selling_price;
+    String? _reason;
+    String? _movment_type;
+
+    if (quantity_change.isNegative) {
+      _reason = BookkeepingName.visit_supplies_remove.name;
+      _movment_type = SupplyMovementType.OUT_IN.en;
+    } else if (!quantity_change.isNegative) {
+      _reason = BookkeepingName.visit_supplies_add.name;
+      _movment_type = SupplyMovementType.IN_OUT.en;
+    }
 
     return SupplyMovementDto(
       id: '',
       clinic_id: data.clinic_id,
       supply_item_id: item.id,
-      movement_type: SupplyMovementType.IN_OUT.en,
+      movement_type: _movment_type!,
       related_visit_id: data.visit_id,
       added_by_id: PxAuth.doc_id_static_getter,
       updated_by_id: '',
-      reason: BookkeepingName.visit_supplies_add.name,
-      movement_amount: _amount,
-      movement_quantity: item.transfer_quantity,
-      number_of_updates: 0,
-      auto_add: true,
-    );
-  }
-
-  SupplyMovementDto fromRemoveSuppliesFromVisit(
-    VisitData data,
-    DoctorSupplyItem item,
-    double quantity,
-  ) {
-    final _amount = -(quantity * item.selling_price);
-
-    return SupplyMovementDto(
-      id: '',
-      clinic_id: data.clinic_id,
-      supply_item_id: item.id,
-      movement_type: SupplyMovementType.OUT_IN.en,
-      related_visit_id: data.visit_id,
-      added_by_id: PxAuth.doc_id_static_getter,
-      updated_by_id: '',
-      reason: BookkeepingName.visit_supplies_remove.name,
-      movement_amount: _amount,
-      movement_quantity: item.transfer_quantity,
+      reason: _reason!,
+      movement_amount: quantity_change * item.selling_price,
+      movement_quantity: quantity_change.abs(),
       number_of_updates: 0,
       auto_add: true,
     );

@@ -853,4 +853,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get transferQuantity => 'Transfer Quantity';
+
+  @override
+  String get removeSupplyItemAmountFirst => 'Remove Supply Item Amount First';
 }
