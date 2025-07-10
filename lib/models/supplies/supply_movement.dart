@@ -3,13 +3,12 @@ import 'package:pocketbase/pocketbase.dart';
 import 'package:proklinik_one/models/clinic/clinic.dart';
 import 'package:proklinik_one/models/doctor_items/doctor_supply_item.dart';
 import 'package:proklinik_one/models/user.dart';
-import 'package:proklinik_one/models/visits/_visit.dart';
 
 class SupplyMovement extends Equatable {
   final String id;
   final Clinic clinic;
   final DoctorSupplyItem supply_item;
-  final Visit? visit;
+  final String? visit_id;
   final User added_by;
   final User? updated_by;
   final String movement_type;
@@ -23,7 +22,7 @@ class SupplyMovement extends Equatable {
     required this.id,
     required this.clinic,
     required this.supply_item,
-    this.visit,
+    this.visit_id,
     this.updated_by,
     required this.added_by,
     required this.movement_type,
@@ -38,7 +37,7 @@ class SupplyMovement extends Equatable {
     String? id,
     Clinic? clinic,
     DoctorSupplyItem? supply_item,
-    Visit? visit,
+    String? visit_id,
     User? added_by,
     User? updated_by,
     String? movement_type,
@@ -52,7 +51,7 @@ class SupplyMovement extends Equatable {
       id: id ?? this.id,
       clinic: clinic ?? this.clinic,
       supply_item: supply_item ?? this.supply_item,
-      visit: visit ?? this.visit,
+      visit_id: visit_id ?? this.visit_id,
       added_by: added_by ?? this.added_by,
       updated_by: updated_by ?? this.updated_by,
       movement_type: movement_type ?? this.movement_type,
@@ -69,7 +68,7 @@ class SupplyMovement extends Equatable {
       'id': id,
       'clinic': clinic.toJson(),
       'supply_item': supply_item.toJson(),
-      'visit': visit?.toJson(),
+      'related_visit_id': visit_id,
       'added_by': added_by.toJson(),
       'updated_by': updated_by?.toJson(),
       'movement_type': movement_type,
@@ -87,9 +86,7 @@ class SupplyMovement extends Equatable {
       clinic: Clinic.fromJson(map['clinic'] as Map<String, dynamic>),
       supply_item:
           DoctorSupplyItem.fromJson(map['supply_item'] as Map<String, dynamic>),
-      visit: map['visit'] != null
-          ? Visit.fromJson(map['visit'] as Map<String, dynamic>)
-          : null,
+      visit_id: map['related_visit_id'] as String?,
       updated_by: map['updated_by'] != null
           ? User.fromJson(map['updated_by'] as Map<String, dynamic>)
           : null,
@@ -112,7 +109,7 @@ class SupplyMovement extends Equatable {
       id,
       clinic,
       supply_item,
-      visit,
+      visit_id,
       movement_type,
       added_by,
       reason,
@@ -146,10 +143,7 @@ class SupplyMovement extends Equatable {
       movement_quantity: e.getDoubleValue('movement_quantity'),
       movement_amount: e.getDoubleValue('movement_amount'),
       auto_add: e.getBoolValue('auto_add'),
-      visit: e.get<RecordModel?>('expand.related_visit_id') == null
-          ? null
-          : Visit.fromJson(
-              e.get<RecordModel?>('expand.related_visit_id')!.toJson()),
+      visit_id: e.get<String?>('related_visit_id'),
       updated_by: e.get<RecordModel?>('expand.updated_by_id') == null
           ? null
           : User.fromJson({

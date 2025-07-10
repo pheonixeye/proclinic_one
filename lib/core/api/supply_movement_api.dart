@@ -82,7 +82,6 @@ class SupplyMovementApi {
           );
           //TODO: create a new entry in the clinic__supplies collection with the movement amount
           await _clinicInventoryApi.addNewInventoryItems([_unfoundItem]);
-          return;
         } else {
           //TODO: transform the item based on the movement
           final _transformedItem =
@@ -98,14 +97,12 @@ class SupplyMovementApi {
           item_id: x.id,
           collection_id: collection,
         );
-        if (x.visit == null) {
+        if (x.visit_id == null || x.visit_id == '') {
           final _bk = _bookkeepingTransformer.fromManualSupplyMovement(x);
           await BookkeepingApi(doc_id: doc_id).addBookkeepingItem(_bk);
-          return;
         } else {
           final _bk = _bookkeepingTransformer.fromVisitSupplyMovement(x);
           await BookkeepingApi(doc_id: doc_id).addBookkeepingItem(_bk);
-          return;
         }
       }).toList();
 

@@ -54,82 +54,96 @@ class _SupplyItemTileState extends State<SupplyItemTile> {
                     l.isEnglish ? widget.item.name_en : widget.item.name_ar,
                   ),
                 ),
+                Checkbox(
+                  value: _visit_data.supplies.contains(widget.item),
+                  onChanged: (value) async {
+                    await shellFunction(
+                      context,
+                      toExecute: () async {
+                        if (_visit_data.supplies.contains(widget.item) ==
+                            true) {
+                          await v.removeFromItemList(
+                            widget.item.id,
+                            ProfileSetupItem.supplies,
+                          );
+                        } else if (_visit_data.supplies.contains(widget.item) ==
+                            false) {
+                          await v.addToItemList(
+                            widget.item.id,
+                            ProfileSetupItem.supplies,
+                          );
+                        }
+                      },
+                    );
+                  },
+                ),
               ],
             ),
           ),
-          subtitle: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Row(
-                spacing: 16,
-                children: [
-                  FloatingActionButton.small(
-                    heroTag: UniqueKey(),
-                    onPressed: () {
-                      if (quantity <= 0) {
-                        return;
-                      }
-                      setState(() {
-                        quantity = quantity - widget.item.transfer_quantity;
-                      });
-                    },
-                    child: const Icon(Icons.remove),
+          subtitle: (_visit_data.supplies.contains(widget.item))
+              ? Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Row(
+                      spacing: 16,
+                      children: [
+                        FloatingActionButton.small(
+                          heroTag: UniqueKey(),
+                          onPressed: () {
+                            if (quantity <= 0) {
+                              return;
+                            }
+                            setState(() {
+                              quantity =
+                                  quantity - widget.item.transfer_quantity;
+                            });
+                          },
+                          child: const Icon(Icons.remove),
+                        ),
+                        Text(
+                            '($_item_quantity) ==>> ($quantity) ${l.isEnglish ? widget.item.unit_en : widget.item.unit_ar}'),
+                        FloatingActionButton.small(
+                          heroTag: UniqueKey(),
+                          onPressed: () {
+                            setState(() {
+                              quantity =
+                                  quantity + widget.item.transfer_quantity;
+                            });
+                          },
+                          child: const Icon(Icons.add),
+                        ),
+                        Spacer(),
+                        ElevatedButton.icon(
+                          onPressed: () async {
+                            await shellFunction(
+                              context,
+                              toExecute: () async {
+                                //TODO:
+                                if (quantity > _item_quantity) {
+                                  await v.updateSupplyItemQuantity(
+                                    widget.item,
+                                    quantity,
+                                    true,
+                                  );
+                                } else if (quantity < _item_quantity) {
+                                  await v.updateSupplyItemQuantity(
+                                    widget.item,
+                                    quantity,
+                                    false,
+                                  );
+                                }
+                              },
+                            );
+                          },
+                          label: Text(context.loc.save),
+                          icon: const Icon(Icons.save),
+                        ),
+                      ],
+                    ),
                   ),
-                  Text(
-                      '($_item_quantity) ==>> ($quantity) ${l.isEnglish ? widget.item.unit_en : widget.item.unit_ar}'),
-                  FloatingActionButton.small(
-                    heroTag: UniqueKey(),
-                    onPressed: () {
-                      setState(() {
-                        quantity = quantity + widget.item.transfer_quantity;
-                      });
-                    },
-                    child: const Icon(Icons.add),
-                  ),
-                  Spacer(),
-                  ElevatedButton.icon(
-                    onPressed: () async {
-                      await shellFunction(
-                        context,
-                        toExecute: () async {
-                          //TODO:
-                          if (quantity == 0) {
-                            await v.updateSupplyItemQuantity(
-                              widget.item,
-                              quantity,
-                              false,
-                            );
-                            await v.removeFromItemList(
-                              widget.item.id,
-                              ProfileSetupItem.supplies,
-                            );
-                            return;
-                          } else if (quantity > _item_quantity) {
-                            await v.updateSupplyItemQuantity(
-                              widget.item,
-                              quantity,
-                              true,
-                            );
-                          } else if (quantity < _item_quantity) {
-                            await v.updateSupplyItemQuantity(
-                              widget.item,
-                              quantity,
-                              false,
-                            );
-                          } else {
-                            return;
-                          }
-                        },
-                      );
-                    },
-                    label: Text(context.loc.save),
-                    icon: const Icon(Icons.save),
-                  ),
-                ],
-              ),
-            ),
-          ),
+                )
+              : const SizedBox(),
         );
       },
     );

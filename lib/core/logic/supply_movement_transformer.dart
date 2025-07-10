@@ -79,7 +79,7 @@ class SupplyMovementTransformer {
       related_visit_id: data.visit_id,
       added_by_id: PxAuth.doc_id_static_getter,
       updated_by_id: '',
-      reason: BookkeepingName.visit_supplies_add.name,
+      reason: BookkeepingName.visit_supplies_remove.name,
       movement_amount: _amount,
       movement_quantity: item.transfer_quantity,
       number_of_updates: 0,
