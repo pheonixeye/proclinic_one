@@ -11,9 +11,9 @@ class VisitDataDto extends Equatable {
   final List<String> procedures_ids;
   final List<String> supplies_ids;
   final List<String> forms_data_ids;
-  final List<String> supply_movements_ids;
   final Map<String, dynamic> forms_data;
   final Map<String, dynamic> drug_data;
+  final Map<String, dynamic> supplies_data;
 
   const VisitDataDto({
     required this.id,
@@ -26,7 +26,7 @@ class VisitDataDto extends Equatable {
     required this.procedures_ids,
     required this.supplies_ids,
     required this.forms_data_ids,
-    required this.supply_movements_ids,
+    required this.supplies_data,
     required this.forms_data,
     required this.drug_data,
   });
@@ -42,8 +42,8 @@ class VisitDataDto extends Equatable {
     List<String>? procedures_ids,
     List<String>? supplies_ids,
     List<String>? forms_data_ids,
-    List<String>? supply_movements_ids,
     Map<String, dynamic>? forms_data,
+    Map<String, dynamic>? supplies_data,
     Map<String, dynamic>? drug_data,
   }) {
     return VisitDataDto(
@@ -56,7 +56,7 @@ class VisitDataDto extends Equatable {
       drugs_ids: drugs_ids ?? this.drugs_ids,
       procedures_ids: procedures_ids ?? this.procedures_ids,
       supplies_ids: supplies_ids ?? this.supplies_ids,
-      supply_movements_ids: supply_movements_ids ?? this.supply_movements_ids,
+      supplies_data: supplies_data ?? this.supplies_data,
       forms_data_ids: forms_data_ids ?? this.forms_data_ids,
       forms_data: forms_data ?? this.forms_data,
       drug_data: drug_data ?? this.drug_data,
@@ -81,7 +81,7 @@ class VisitDataDto extends Equatable {
       forms_data_ids: [],
       forms_data: {},
       drug_data: {},
-      supply_movements_ids: [],
+      supplies_data: {},
     );
   }
 
@@ -99,7 +99,7 @@ class VisitDataDto extends Equatable {
       'forms_data_ids': forms_data_ids,
       'forms_data': forms_data,
       'drug_data': drug_data,
-      'supply_movements_ids': supply_movements_ids,
+      'supplies_data': supplies_data,
     };
   }
 
@@ -118,7 +118,7 @@ class VisitDataDto extends Equatable {
       drugs_ids,
       procedures_ids,
       supplies_ids,
-      supply_movements_ids,
+      supplies_data,
       forms_data_ids,
       forms_data,
       drug_data,

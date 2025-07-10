@@ -213,6 +213,23 @@ extension WxDoctorSupplyItem on DoctorSupplyItem {
           ),
           Text.rich(
             TextSpan(
+              text: '• ${context.loc.transferQuantity}',
+              children: [
+                TextSpan(text: ' : '),
+                TextSpan(
+                  text: '$transfer_quantity',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const Divider(
+            color: Colors.grey,
+          ),
+          Text.rich(
+            TextSpan(
               text: '• ${context.loc.buyingPrice}',
               children: [
                 TextSpan(text: ' : '),

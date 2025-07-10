@@ -15,4 +15,9 @@ enum BookkeepingName {
   //visit_supplies
   visit_supplies_add,
   visit_supplies_remove,
+  visit_supplies_no_update,
+  //supplies
+  supplies_movement_add_manual,
+  supplies_movement_remove_manual,
+  supplies_movement_no_update_manual,
 }

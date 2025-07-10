@@ -840,4 +840,17 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get enterInitialItemAvailableQuantity =>
       'Enter Initial Item Available Quantity';
+
+  @override
+  String get pickStartingDate => 'Pick Starting Date';
+
+  @override
+  String get pickEndingDate => 'Pick Ending Date';
+
+  @override
+  String get availableSupplyItemsQuantities =>
+      'Available Supply Items Quantities';
+
+  @override
+  String get transferQuantity => 'Transfer Quantity';
 }

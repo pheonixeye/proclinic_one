@@ -2,7 +2,6 @@ import 'package:pocketbase/pocketbase.dart';
 import 'package:proklinik_one/core/api/_api_result.dart';
 import 'package:proklinik_one/core/api/constants/pocketbase_helper.dart';
 import 'package:proklinik_one/errors/code_to_error.dart';
-import 'package:proklinik_one/models/doctor_items/doctor_supply_item.dart';
 import 'package:proklinik_one/models/supplies/clinic_inventory_item.dart';
 
 class ClinicInventoryApi {
@@ -24,17 +23,8 @@ class ClinicInventoryApi {
                 expand: _expand,
               );
 
-      final _items = _response
-          .map(
-            (e) => ClinicInventoryItem(
-              id: e.id,
-              clinic_id: e.getStringValue('clinic_id'),
-              supply_item: DoctorSupplyItem.fromJson(
-                  e.get<RecordModel>('expand.supply_id').toJson()),
-              available_quantity: e.getDoubleValue('available_quantity'),
-            ),
-          )
-          .toList();
+      final _items =
+          _response.map((e) => ClinicInventoryItem.fromRecordModel(e)).toList();
 
       return ApiDataResult<List<ClinicInventoryItem>>(data: _items);
     } on ClientException catch (e) {
@@ -45,18 +35,40 @@ class ClinicInventoryApi {
     }
   }
 
-  Future<void> addNewInventoryItems(List<ClinicInventoryItem> items) async {
+  Future<ApiResult<List<ClinicInventoryItem>>> addNewInventoryItems(
+    List<ClinicInventoryItem> items,
+  ) async {
+    final List<ClinicInventoryItem> _itemsAddResult = [];
     for (final item in items) {
       try {
-        await PocketbaseHelper.pb.collection(collection).create(
-              body: item.toJson(),
-            );
+        final _response =
+            await PocketbaseHelper.pb.collection(collection).create(
+                  body: item.toJson(),
+                );
+        final _item = ClinicInventoryItem.fromRecordModel(_response);
+        _itemsAddResult.add(_item);
       } catch (e) {
-        await PocketbaseHelper.pb.collection(collection).update(
-              item.id,
-              body: item.toJson(),
-            );
+        final _response =
+            await PocketbaseHelper.pb.collection(collection).update(
+                  item.id,
+                  body: item.toJson(),
+                );
+        final _item = ClinicInventoryItem.fromRecordModel(_response);
+        _itemsAddResult.add(_item);
       }
     }
+    return ApiDataResult<List<ClinicInventoryItem>>(data: _itemsAddResult);
+  }
+
+  //#last step
+  Future<void> updateInventoryItemAvailableQuantity({
+    required ClinicInventoryItem inventoryItem,
+  }) async {
+    await PocketbaseHelper.pb.collection(collection).update(
+      inventoryItem.id,
+      body: {
+        'available_quantity': inventoryItem.available_quantity,
+      },
+    );
   }
 }

@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:proklinik_one/core/api/_api_result.dart';
+import 'package:proklinik_one/core/api/clinic_inventory_api.dart';
 import 'package:proklinik_one/extensions/loc_ext.dart';
 import 'package:proklinik_one/models/clinic/clinic.dart';
 import 'package:proklinik_one/models/doctor_items/doctor_supply_item.dart';
+import 'package:proklinik_one/models/supplies/clinic_inventory_item.dart';
 import 'package:proklinik_one/models/supplies/supply_movement.dart';
 import 'package:proklinik_one/models/supplies/supply_movement_dto.dart';
 import 'package:proklinik_one/models/supplies/supply_movement_type.dart';
 import 'package:proklinik_one/providers/px_auth.dart';
+import 'package:proklinik_one/providers/px_clinic_inventory.dart';
 import 'package:proklinik_one/providers/px_clinics.dart';
 import 'package:proklinik_one/providers/px_doctor_profile_items.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
@@ -28,10 +31,10 @@ class SupplyMovementDialog extends StatefulWidget {
 class _SupplyMovementDialogState extends State<SupplyMovementDialog> {
   final formKey = GlobalKey<FormState>();
   late final TextEditingController _movement_amount_controller;
+  late final TextEditingController _reason_controller;
   DoctorSupplyItem? _supplyItem;
   Clinic? _sourceClinic;
   Clinic? _destinationClinic;
-  String? _reason;
   double? _movement_amount;
   double? _movement_quantity;
   String? _movement_type;
@@ -42,10 +45,12 @@ class _SupplyMovementDialogState extends State<SupplyMovementDialog> {
     super.initState();
     _supplyItem = widget.supplyMovement?.supply_item;
     _sourceClinic = widget.supplyMovement?.clinic;
-    _reason = widget.supplyMovement?.reason;
     _movement_amount = widget.supplyMovement?.movement_amount;
     _movement_amount_controller = TextEditingController(
       text: _movement_amount?.toString() ?? '',
+    );
+    _reason_controller = TextEditingController(
+      text: widget.supplyMovement?.reason ?? '',
     );
     _movement_quantity = widget.supplyMovement?.movement_quantity;
     _movement_type = widget.supplyMovement?.movement_type;
@@ -139,6 +144,10 @@ class _SupplyMovementDialogState extends State<SupplyMovementDialog> {
                               setState(() {
                                 _supplyMovementType = SupplyMovementType.values
                                     .firstWhere((e) => e.en == val);
+                                if (_supplyMovementType !=
+                                    SupplyMovementType.IN_IN) {
+                                  _destinationClinic = null;
+                                }
                                 _movement_type = val;
                                 _movement_quantity = null;
                                 _movement_amount = null;
@@ -172,6 +181,7 @@ class _SupplyMovementDialogState extends State<SupplyMovementDialog> {
                                 );
                               }).toList(),
                               alignment: Alignment.center,
+                              value: _sourceClinic,
                               onChanged: (val) {
                                 setState(() {
                                   _sourceClinic = val;
@@ -183,6 +193,58 @@ class _SupplyMovementDialogState extends State<SupplyMovementDialog> {
                       ],
                     ),
                   ),
+                  if (_sourceClinic != null)
+                    ChangeNotifierProvider(
+                      key: UniqueKey(),
+                      create: (context) => PxClinicInventory(
+                        api: ClinicInventoryApi(
+                          clinic_id: _sourceClinic!.id,
+                          doc_id: context.read<PxAuth>().doc_id,
+                        ),
+                      ),
+                      builder: (context, child) {
+                        return Consumer<PxClinicInventory>(
+                          builder: (context, i, _) {
+                            while (i.result == null) {
+                              return LinearProgressIndicator();
+                            }
+                            final _items = (i.result
+                                    as ApiDataResult<List<ClinicInventoryItem>>)
+                                .data;
+                            return ListTile(
+                              title: Text(
+                                '(${l.isEnglish ? _sourceClinic?.name_en : _sourceClinic?.name_ar}) ${context.loc.availableSupplyItemsQuantities}',
+                              ),
+                              subtitle: Column(
+                                children: [
+                                  ..._items.map((e) {
+                                    if (e.supply_item.id == _supplyItem?.id) {
+                                      return Row(
+                                        spacing: 16,
+                                        children: [
+                                          Text(
+                                            l.isEnglish
+                                                ? e.supply_item.name_en
+                                                : e.supply_item.name_ar,
+                                          ),
+                                          Text('- ${e.available_quantity} -'),
+                                          Text(
+                                            l.isEnglish
+                                                ? e.supply_item.unit_en
+                                                : e.supply_item.unit_ar,
+                                          ),
+                                        ],
+                                      );
+                                    }
+                                    return const SizedBox();
+                                  }),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
                   if (_supplyMovementType == SupplyMovementType.IN_IN)
                     ListTile(
                       title: Text(context.loc.pickDestinationClinic),
@@ -203,6 +265,7 @@ class _SupplyMovementDialogState extends State<SupplyMovementDialog> {
                                   );
                                 }).toList(),
                                 alignment: Alignment.center,
+                                value: _destinationClinic,
                                 onChanged: (val) {
                                   setState(() {
                                     _destinationClinic = val;
@@ -213,6 +276,58 @@ class _SupplyMovementDialogState extends State<SupplyMovementDialog> {
                           ),
                         ],
                       ),
+                    ),
+                  if (_destinationClinic != null)
+                    ChangeNotifierProvider(
+                      key: UniqueKey(),
+                      create: (context) => PxClinicInventory(
+                        api: ClinicInventoryApi(
+                          clinic_id: _destinationClinic!.id,
+                          doc_id: context.read<PxAuth>().doc_id,
+                        ),
+                      ),
+                      builder: (context, child) {
+                        return Consumer<PxClinicInventory>(
+                          builder: (context, i, _) {
+                            while (i.result == null) {
+                              return LinearProgressIndicator();
+                            }
+                            final _items = (i.result
+                                    as ApiDataResult<List<ClinicInventoryItem>>)
+                                .data;
+                            return ListTile(
+                              title: Text(
+                                '(${l.isEnglish ? _destinationClinic?.name_en : _destinationClinic?.name_ar}) ${context.loc.availableSupplyItemsQuantities}',
+                              ),
+                              subtitle: Column(
+                                children: [
+                                  ..._items.map((e) {
+                                    if (e.supply_item.id == _supplyItem?.id) {
+                                      return Row(
+                                        spacing: 16,
+                                        children: [
+                                          Text(
+                                            l.isEnglish
+                                                ? e.supply_item.name_en
+                                                : e.supply_item.name_ar,
+                                          ),
+                                          Text('- ${e.available_quantity} -'),
+                                          Text(
+                                            l.isEnglish
+                                                ? e.supply_item.unit_en
+                                                : e.supply_item.unit_ar,
+                                          ),
+                                        ],
+                                      );
+                                    }
+                                    return const SizedBox();
+                                  }),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      },
                     ),
                 ],
                 ListTile(
@@ -227,11 +342,7 @@ class _SupplyMovementDialogState extends State<SupplyMovementDialog> {
                             ),
                             hintText: context.loc.enterMovementReason,
                           ),
-                          onChanged: (value) {
-                            setState(() {
-                              _reason = value;
-                            });
-                          },
+                          controller: _reason_controller,
                         ),
                       ),
                     ],
@@ -253,9 +364,7 @@ class _SupplyMovementDialogState extends State<SupplyMovementDialog> {
                             FilteringTextInputFormatter.digitsOnly
                           ],
                           onChanged: (value) {
-                            setState(() {
-                              _movement_quantity = double.parse(value);
-                            });
+                            _movement_quantity = double.parse(value);
                             if (_supplyItem != null &&
                                 _movement_quantity != null) {
                               _movement_amount_controller.text =
@@ -329,11 +438,13 @@ class _SupplyMovementDialogState extends State<SupplyMovementDialog> {
                   String? _src_reason;
                   String? _dest_reason;
                   if (_supplyMovementType == SupplyMovementType.IN_IN) {
-                    _src_reason = '${_reason}__${context.loc.from}';
-                    _dest_reason = '${_reason}__${context.loc.to}';
+                    _src_reason =
+                        '${_reason_controller.text}__${context.loc.from}';
+                    _dest_reason =
+                        '${_reason_controller.text}__${context.loc.to}';
                   } else {
-                    _src_reason = _reason;
-                    _dest_reason = _reason;
+                    _src_reason = _reason_controller.text;
+                    _dest_reason = _reason_controller.text;
                   }
                   final _supplyMovementSourceDto = SupplyMovementDto(
                     id: '',
@@ -341,7 +452,7 @@ class _SupplyMovementDialogState extends State<SupplyMovementDialog> {
                     supply_item_id: _supplyItem?.id ?? '',
                     movement_type: _movement_type ?? '',
                     related_visit_id: widget.supplyMovement?.visit?.id ?? '',
-                    reason: _src_reason ?? '',
+                    reason: _src_reason,
                     added_by_id: context.read<PxAuth>().doc_id,
                     movement_amount: _movement_amount ?? 0.0,
                     movement_quantity: _movement_quantity ?? 0.0,
@@ -356,7 +467,7 @@ class _SupplyMovementDialogState extends State<SupplyMovementDialog> {
                       supply_item_id: _supplyItem?.id ?? '',
                       movement_type: _movement_type ?? '',
                       related_visit_id: widget.supplyMovement?.visit?.id ?? '',
-                      reason: _dest_reason ?? '',
+                      reason: _dest_reason,
                       added_by_id: context.read<PxAuth>().doc_id,
                       movement_amount: _movement_amount ?? 0.0,
                       movement_quantity: _movement_quantity ?? 0.0,

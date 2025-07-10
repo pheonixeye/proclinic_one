@@ -17,7 +17,12 @@ class ConstantsApi {
   static const String patient_progress_status = 'patient_progress_status';
   static const String app_permissions = 'app_permissions';
 
+  static AppConstants? _cached;
+
   Future<AppConstants> fetchConstants() async {
+    if (_cached != null) {
+      return _cached!;
+    }
     late final List<AccountType> accountTypes;
     late final List<VisitStatus> visitStatus;
     late final List<VisitType> visitType;
@@ -76,7 +81,7 @@ class ConstantsApi {
         .map((e) => AppPermission.fromJson(e.toJson()))
         .toList();
 
-    return AppConstants(
+    final _appConstants = AppConstants(
       accountTypes: accountTypes,
       visitStatus: visitStatus,
       visitType: visitType,
@@ -84,5 +89,9 @@ class ConstantsApi {
       patientProgressStatus: patientProgressStatus,
       appPermission: appPermission,
     );
+
+    _cached = _appConstants;
+
+    return _appConstants;
   }
 }

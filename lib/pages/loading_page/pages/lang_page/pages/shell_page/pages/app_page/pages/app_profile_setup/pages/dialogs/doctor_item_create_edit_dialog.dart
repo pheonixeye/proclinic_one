@@ -47,8 +47,9 @@ class _DoctorItemCreateEditDialogState
   late final TextEditingController _supplyUnitEnController;
   late final TextEditingController _supplyUnitArController;
   late final TextEditingController _supplyReorderQuantityController;
-  late final TextEditingController _supplybuyingPriceController;
-  late final TextEditingController _supplysellingPriceController;
+  late final TextEditingController _supplyTransferQuantityController;
+  late final TextEditingController _supplyBuyingPriceController;
+  late final TextEditingController _supplySellingPriceController;
   bool? _supplyNotifyOnOrderQuantityController;
 
   ///[DRUG]
@@ -119,9 +120,11 @@ class _DoctorItemCreateEditDialogState
         TextEditingController(text: widget.item?['unit_ar'] ?? '');
     _supplyReorderQuantityController = TextEditingController(
         text: '${widget.item?['reorder_quantity'] ?? '0'}');
-    _supplybuyingPriceController =
+    _supplyTransferQuantityController = TextEditingController(
+        text: '${widget.item?['transfer_quantity'] ?? '0'}');
+    _supplyBuyingPriceController =
         TextEditingController(text: '${widget.item?['buying_price'] ?? '0'}');
-    _supplysellingPriceController =
+    _supplySellingPriceController =
         TextEditingController(text: '${widget.item?['selling_price'] ?? '0'}');
     _supplyNotifyOnOrderQuantityController =
         widget.item?['notify_on_reorder_quantity'] ?? false;
@@ -154,8 +157,9 @@ class _DoctorItemCreateEditDialogState
     _supplyUnitEnController.dispose();
     _supplyUnitArController.dispose();
     _supplyReorderQuantityController.dispose();
-    _supplybuyingPriceController.dispose();
-    _supplysellingPriceController.dispose();
+    _supplyTransferQuantityController.dispose();
+    _supplyBuyingPriceController.dispose();
+    _supplySellingPriceController.dispose();
     super.dispose();
   }
 
@@ -502,6 +506,25 @@ class _DoctorItemCreateEditDialogState
                   ListTile(
                     title: Padding(
                       padding: const EdgeInsets.all(8.0),
+                      child: Text(context.loc.transferQuantity),
+                    ),
+                    subtitle: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: context.loc.transferQuantity,
+                        ),
+                        controller: _supplyTransferQuantityController,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                      ),
+                    ),
+                  ),
+                  ListTile(
+                    title: Padding(
+                      padding: const EdgeInsets.all(8.0),
                       child: Text(context.loc.buyingPrice),
                     ),
                     subtitle: Padding(
@@ -511,7 +534,7 @@ class _DoctorItemCreateEditDialogState
                           border: OutlineInputBorder(),
                           hintText: context.loc.buyingPrice,
                         ),
-                        controller: _supplybuyingPriceController,
+                        controller: _supplyBuyingPriceController,
                         inputFormatters: [
                           FilteringTextInputFormatter.digitsOnly
                         ],
@@ -530,7 +553,7 @@ class _DoctorItemCreateEditDialogState
                           border: OutlineInputBorder(),
                           hintText: context.loc.sellingPrice,
                         ),
-                        controller: _supplysellingPriceController,
+                        controller: _supplySellingPriceController,
                       ),
                     ),
                   ),
@@ -580,11 +603,13 @@ class _DoctorItemCreateEditDialogState
                 'unit_en': _supplyUnitEnController.text,
                 'unit_ar': _supplyUnitArController.text,
                 'reorder_quantity':
-                    int.tryParse(_supplyReorderQuantityController.text),
+                    double.tryParse(_supplyReorderQuantityController.text),
+                'transfer_quantity':
+                    double.tryParse(_supplyTransferQuantityController.text),
                 'buying_price':
-                    double.tryParse(_supplybuyingPriceController.text),
+                    double.tryParse(_supplyBuyingPriceController.text),
                 'selling_price':
-                    double.tryParse(_supplysellingPriceController.text),
+                    double.tryParse(_supplySellingPriceController.text),
                 'notify_on_reorder_quantity':
                     _supplyNotifyOnOrderQuantityController,
                 'price': int.tryParse(_procedurePriceController.text),

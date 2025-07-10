@@ -293,6 +293,9 @@
     "supplyItemsMovement" : "حركة المستلزمات",
     "clinicInventory" : "مخزن العيادة",
     "addItemsWithCount" : "اضافة المستلزمات بالاعداد",
-    "enterInitialItemAvailableQuantity" : "ادخل الكمية المتاحة حاليا بالعيادة"
-
+    "enterInitialItemAvailableQuantity" : "ادخل الكمية المتاحة حاليا بالعيادة",
+    "pickStartingDate" : "اختر تاريخ البداية",
+    "pickEndingDate" : "اختر تاريخ الانتهاء",
+    "availableSupplyItemsQuantities" : "الكميات المتاحة",
+    "transferQuantity" : "كمية الحركة"
     }

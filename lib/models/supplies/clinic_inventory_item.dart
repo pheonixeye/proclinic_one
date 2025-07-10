@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:pocketbase/pocketbase.dart';
 import 'package:proklinik_one/models/doctor_items/doctor_supply_item.dart';
 
 class ClinicInventoryItem extends Equatable {
@@ -57,4 +58,14 @@ class ClinicInventoryItem extends Equatable {
         supply_item,
         available_quantity,
       ];
+
+  factory ClinicInventoryItem.fromRecordModel(RecordModel e) {
+    return ClinicInventoryItem(
+      id: e.id,
+      clinic_id: e.getStringValue('clinic_id'),
+      supply_item: DoctorSupplyItem.fromJson(
+          e.get<RecordModel>('expand.supply_id').toJson()),
+      available_quantity: e.getDoubleValue('available_quantity'),
+    );
+  }
 }

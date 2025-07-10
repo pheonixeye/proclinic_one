@@ -294,6 +294,10 @@
     "supplyItemsMovement" : "Supply Items Movements",
     "clinicInventory" : "Clinic Inventory",
     "addItemsWithCount" : "Add Items With Count",
-    "enterInitialItemAvailableQuantity" : "Enter Initial Item Available Quantity"
+    "enterInitialItemAvailableQuantity" : "Enter Initial Item Available Quantity",
+    "pickStartingDate" : "Pick Starting Date",
+    "pickEndingDate" : "Pick Ending Date",
+    "availableSupplyItemsQuantities" : "Available Supply Items Quantities",
+    "transferQuantity" : "Transfer Quantity"
 
 }

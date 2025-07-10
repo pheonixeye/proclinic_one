@@ -1705,6 +1705,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Enter Initial Item Available Quantity'**
   String get enterInitialItemAvailableQuantity;
+
+  /// No description provided for @pickStartingDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick Starting Date'**
+  String get pickStartingDate;
+
+  /// No description provided for @pickEndingDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick Ending Date'**
+  String get pickEndingDate;
+
+  /// No description provided for @availableSupplyItemsQuantities.
+  ///
+  /// In en, this message translates to:
+  /// **'Available Supply Items Quantities'**
+  String get availableSupplyItemsQuantities;
+
+  /// No description provided for @transferQuantity.
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer Quantity'**
+  String get transferQuantity;
 }
 
 class _AppLocalizationsDelegate

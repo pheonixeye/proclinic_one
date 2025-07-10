@@ -221,7 +221,7 @@ class _PatientInfoCardState extends State<PatientInfoCard> {
                                         .read<PxVisits>()
                                         .addNewVisit(_visitDto);
                                     //TODO: notify patient with visit details && entry number
-                                    //TODO: generate bookkeeping entry based on the state of the visit
+                                    //todo: generate bookkeeping entry based on the state of the visit
                                   },
                                   duration: const Duration(milliseconds: 500),
                                 );

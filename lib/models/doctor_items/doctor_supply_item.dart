@@ -7,6 +7,7 @@ class DoctorSupplyItem extends DoctorItem implements Equatable {
   final String unit_en;
   final String unit_ar;
   final double reorder_quantity;
+  final double transfer_quantity;
   final double buying_price;
   final double selling_price;
   final bool notify_on_reorder_quantity;
@@ -19,6 +20,7 @@ class DoctorSupplyItem extends DoctorItem implements Equatable {
     required this.unit_en,
     required this.unit_ar,
     required this.reorder_quantity,
+    required this.transfer_quantity,
     required this.buying_price,
     required this.selling_price,
     required this.notify_on_reorder_quantity,
@@ -32,6 +34,7 @@ class DoctorSupplyItem extends DoctorItem implements Equatable {
     String? unit_en,
     String? unit_ar,
     double? reorder_quantity,
+    double? transfer_quantity,
     double? buying_price,
     double? selling_price,
     bool? notify_on_reorder_quantity,
@@ -43,6 +46,7 @@ class DoctorSupplyItem extends DoctorItem implements Equatable {
       unit_en: unit_en ?? this.unit_en,
       unit_ar: unit_ar ?? this.unit_ar,
       reorder_quantity: reorder_quantity ?? this.reorder_quantity,
+      transfer_quantity: transfer_quantity ?? this.transfer_quantity,
       buying_price: buying_price ?? this.buying_price,
       selling_price: selling_price ?? this.selling_price,
       notify_on_reorder_quantity:
@@ -59,6 +63,7 @@ class DoctorSupplyItem extends DoctorItem implements Equatable {
       'unit_en': unit_en,
       'unit_ar': unit_ar,
       'reorder_quantity': reorder_quantity,
+      'transfer_quantity': transfer_quantity,
       'buying_price': buying_price,
       'selling_price': selling_price,
       'notify_on_reorder_quantity': notify_on_reorder_quantity,
@@ -73,6 +78,7 @@ class DoctorSupplyItem extends DoctorItem implements Equatable {
       unit_en: map['unit_en'] as String,
       unit_ar: map['unit_ar'] as String,
       reorder_quantity: map['reorder_quantity'] as double,
+      transfer_quantity: map['transfer_quantity'] as double,
       buying_price: map['buying_price'] as double,
       selling_price: map['selling_price'] as double,
       notify_on_reorder_quantity: map['notify_on_reorder_quantity'] as bool,

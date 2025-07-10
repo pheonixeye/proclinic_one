@@ -2,6 +2,8 @@ import 'package:proklinik_one/core/api/constants_api.dart';
 import 'package:proklinik_one/models/bookkeeping/bookkeeping_item.dart';
 import 'package:proklinik_one/models/bookkeeping/bookkeeping_name.dart';
 import 'package:proklinik_one/models/doctor_items/doctor_procedure_item.dart';
+import 'package:proklinik_one/models/supplies/supply_movement.dart';
+import 'package:proklinik_one/models/supplies/supply_movement_type.dart';
 import 'package:proklinik_one/models/visit_data/visit_data.dart';
 import 'package:proklinik_one/models/visits/_visit.dart';
 import 'package:proklinik_one/providers/px_app_constants.dart';
@@ -168,7 +170,9 @@ class BookkeepingTransformer {
   }
 
   BookkeepingItem fromVisitDataAddProcedure(
-      VisitData visit_data, DoctorProcedureItem procedure) {
+    VisitData visit_data,
+    DoctorProcedureItem procedure,
+  ) {
     final BookkeepingName _item_name = BookkeepingName.visit_procedure_add;
     final String _type = 'in';
     final double _bk_item_amount = procedure.price -
@@ -191,11 +195,91 @@ class BookkeepingTransformer {
   }
 
   BookkeepingItem fromVisitDataRemoveProcedure(
-      VisitData visit_data, DoctorProcedureItem procedure) {
+    VisitData visit_data,
+    DoctorProcedureItem procedure,
+  ) {
     final BookkeepingName _item_name = BookkeepingName.visit_procedure_remove;
     final String _type = 'out';
     final double _bk_item_amount = -(procedure.price -
         ((procedure.price * procedure.discount_percentage) / 100));
+
+    final _item = BookkeepingItem(
+      id: '',
+      item_name: _item_name.name,
+      item_id: item_id,
+      collection_id: collection_id,
+      added_by_id: PxAuth.doc_id_static_getter,
+      updated_by_id: '',
+      amount: _bk_item_amount,
+      type: _type,
+      update_reason: '',
+      auto_add: true,
+    );
+
+    return _item;
+  }
+
+  BookkeepingItem fromManualSupplyMovement(SupplyMovement supplyMovement) {
+    final BookkeepingName _item_name =
+        switch (SupplyMovementType.fromString(supplyMovement.movement_type)) {
+      SupplyMovementType.OUT_IN => BookkeepingName.supplies_movement_add_manual,
+      SupplyMovementType.IN_OUT =>
+        BookkeepingName.supplies_movement_remove_manual,
+      SupplyMovementType.IN_IN =>
+        BookkeepingName.supplies_movement_no_update_manual,
+    };
+
+    final String _type =
+        switch (SupplyMovementType.fromString(supplyMovement.movement_type)) {
+      SupplyMovementType.OUT_IN => 'in',
+      SupplyMovementType.IN_OUT => 'out',
+      SupplyMovementType.IN_IN => 'none',
+    };
+
+    final double _bk_item_amount =
+        switch (SupplyMovementType.fromString(supplyMovement.movement_type)) {
+      SupplyMovementType.OUT_IN => -supplyMovement.supply_item.buying_price,
+      SupplyMovementType.IN_OUT => supplyMovement.supply_item.selling_price,
+      SupplyMovementType.IN_IN => 0,
+    };
+
+    final _item = BookkeepingItem(
+      id: '',
+      item_name: _item_name.name,
+      item_id: item_id,
+      collection_id: collection_id,
+      added_by_id: PxAuth.doc_id_static_getter,
+      updated_by_id: '',
+      amount: _bk_item_amount,
+      type: _type,
+      update_reason: '',
+      auto_add: true,
+    );
+
+    return _item;
+  }
+
+  BookkeepingItem fromVisitSupplyMovement(SupplyMovement supplyMovement) {
+    final BookkeepingName _item_name =
+        switch (SupplyMovementType.fromString(supplyMovement.movement_type)) {
+      SupplyMovementType.OUT_IN => BookkeepingName.visit_supplies_remove,
+      SupplyMovementType.IN_OUT => BookkeepingName.visit_supplies_add,
+      SupplyMovementType.IN_IN => BookkeepingName.visit_supplies_no_update,
+    };
+
+    final String _type =
+        switch (SupplyMovementType.fromString(supplyMovement.movement_type)) {
+      SupplyMovementType.OUT_IN => 'in',
+      SupplyMovementType.IN_OUT => 'out',
+      SupplyMovementType.IN_IN => 'none',
+    };
+
+    final double _bk_item_amount =
+        switch (SupplyMovementType.fromString(supplyMovement.movement_type)) {
+      SupplyMovementType.OUT_IN => -supplyMovement.supply_item.selling_price,
+      SupplyMovementType.IN_OUT => supplyMovement.supply_item.selling_price,
+      SupplyMovementType.IN_IN => 0,
+    };
 
     final _item = BookkeepingItem(
       id: '',

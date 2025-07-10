@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:proklinik_one/core/api/_api_result.dart';
 import 'package:proklinik_one/core/api/visit_data_api.dart';
+import 'package:proklinik_one/models/doctor_items/doctor_supply_item.dart';
 import 'package:proklinik_one/models/doctor_items/profile_setup_item.dart';
 import 'package:proklinik_one/models/visit_data/visit_data.dart';
 import 'package:proklinik_one/models/visit_data/visit_form_item.dart';
@@ -80,7 +81,10 @@ class PxVisitData extends ChangeNotifier {
     await _fetchVisitData();
   }
 
-  Future<void> addToItemList(String item_id, ProfileSetupItem setupItem) async {
+  Future<void> addToItemList(
+    String item_id,
+    ProfileSetupItem setupItem,
+  ) async {
     await api.addToItemList(
       (_result as ApiDataResult<VisitData>).data,
       item_id,
@@ -90,12 +94,27 @@ class PxVisitData extends ChangeNotifier {
   }
 
   Future<void> removeFromItemList(
-      String item_id, ProfileSetupItem setupItem) async {
+    String item_id,
+    ProfileSetupItem setupItem,
+  ) async {
     await api.removeFromItemList(
       (_result as ApiDataResult<VisitData>).data,
       item_id,
       setupItem,
     );
     await _fetchVisitData();
+  }
+
+  Future<void> updateSupplyItemQuantity(
+    DoctorSupplyItem item,
+    double quantity, [
+    bool isAdd = true,
+  ]) async {
+    await api.updateSupplyItemQuantity(
+      (_result as ApiDataResult<VisitData>).data,
+      item,
+      quantity,
+      isAdd,
+    );
   }
 }

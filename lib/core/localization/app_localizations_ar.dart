@@ -839,4 +839,16 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get enterInitialItemAvailableQuantity =>
       'ادخل الكمية المتاحة حاليا بالعيادة';
+
+  @override
+  String get pickStartingDate => 'اختر تاريخ البداية';
+
+  @override
+  String get pickEndingDate => 'اختر تاريخ الانتهاء';
+
+  @override
+  String get availableSupplyItemsQuantities => 'الكميات المتاحة';
+
+  @override
+  String get transferQuantity => 'كمية الحركة';
 }

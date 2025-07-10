@@ -1,8 +1,14 @@
 import 'package:intl/intl.dart';
 import 'package:pocketbase/pocketbase.dart';
 import 'package:proklinik_one/core/api/_api_result.dart';
+import 'package:proklinik_one/core/api/bookkeeping_api.dart';
+import 'package:proklinik_one/core/api/clinic_inventory_api.dart';
 import 'package:proklinik_one/core/api/constants/pocketbase_helper.dart';
+import 'package:proklinik_one/core/logic/bookkeeping_transformer.dart';
+import 'package:proklinik_one/core/logic/supply_movement_transformer.dart';
 import 'package:proklinik_one/errors/code_to_error.dart';
+import 'package:proklinik_one/functions/first_where_or_null.dart';
+import 'package:proklinik_one/models/supplies/clinic_inventory_item.dart';
 import 'package:proklinik_one/models/supplies/supply_movement.dart';
 import 'package:proklinik_one/models/supplies/supply_movement_dto.dart';
 
@@ -47,6 +53,61 @@ class SupplyMovementApi {
       final _movements = _responseModels
           .map((e) => SupplyMovement.fromRecordModel(e))
           .toList();
+
+      _movements.map((x) async {
+        //TODO: mutate clinic_supplies with the movement
+        final _clinicInventoryApi = ClinicInventoryApi(
+          clinic_id: x.clinic.id,
+          doc_id: doc_id,
+        );
+        //TODO: get the supplies of the clinic
+        final _invItemsRequest =
+            await _clinicInventoryApi.fetchClinicInventoryItems();
+
+        //TODO: parse into list of clinicInventoryItems
+        final _items =
+            (_invItemsRequest as ApiDataResult<List<ClinicInventoryItem>>).data;
+
+        //TODO: find the item that needs mutation
+        ClinicInventoryItem? _item = _items
+            .firstWhereOrNull((i) => i.supply_item.id == x.supply_item.id);
+
+        //TODO: if the item is not found
+        if (_item == null) {
+          final _unfoundItem = ClinicInventoryItem(
+            id: '',
+            clinic_id: x.clinic.id,
+            supply_item: x.supply_item,
+            available_quantity: x.movement_quantity,
+          );
+          //TODO: create a new entry in the clinic__supplies collection with the movement amount
+          await _clinicInventoryApi.addNewInventoryItems([_unfoundItem]);
+          return;
+        } else {
+          //TODO: transform the item based on the movement
+          final _transformedItem =
+              SupplyMovementTransformer().toClinicInventoryItem(x, _item);
+
+          //TODO: add/update item in the collection
+          await _clinicInventoryApi.updateInventoryItemAvailableQuantity(
+            inventoryItem: _transformedItem,
+          );
+        }
+        //TODO: mutate bookkeeping with the movement
+        final _bookkeepingTransformer = BookkeepingTransformer(
+          item_id: x.id,
+          collection_id: collection,
+        );
+        if (x.visit == null) {
+          final _bk = _bookkeepingTransformer.fromManualSupplyMovement(x);
+          await BookkeepingApi(doc_id: doc_id).addBookkeepingItem(_bk);
+          return;
+        } else {
+          final _bk = _bookkeepingTransformer.fromVisitSupplyMovement(x);
+          await BookkeepingApi(doc_id: doc_id).addBookkeepingItem(_bk);
+          return;
+        }
+      }).toList();
 
       return ApiDataResult<List<SupplyMovement>>(data: _movements);
     } on ClientException catch (e) {

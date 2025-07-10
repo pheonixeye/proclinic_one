@@ -29,8 +29,12 @@ class _InventorySuppliesPageState extends State<InventorySuppliesPage> {
   @override
   void initState() {
     super.initState();
-    _fromController = TextEditingController();
-    _toController = TextEditingController();
+    final _s = context.read<PxSupplyMovements>();
+    final _l = context.read<PxLocale>();
+    _fromController = TextEditingController(
+        text: DateFormat('yyyy-MM-dd', _l.lang).format(_s.from));
+    _toController = TextEditingController(
+        text: DateFormat('yyyy-MM-dd', _l.lang).format(_s.to));
   }
 
   @override
@@ -42,6 +46,7 @@ class _InventorySuppliesPageState extends State<InventorySuppliesPage> {
 
   @override
   Widget build(BuildContext context) {
+    //TODO: Change to table layout
     return Consumer2<PxSupplyMovements, PxLocale>(
       builder: (context, s, l, _) {
         return Scaffold(
@@ -73,6 +78,7 @@ class _InventorySuppliesPageState extends State<InventorySuppliesPage> {
                         ),
                         FloatingActionButton.small(
                           heroTag: UniqueKey(),
+                          tooltip: context.loc.pickStartingDate,
                           onPressed: () async {
                             final _from = await showDatePicker(
                               context: context,
@@ -89,7 +95,10 @@ class _InventorySuppliesPageState extends State<InventorySuppliesPage> {
                                 await shellFunction(
                                   context,
                                   toExecute: () async {
-                                    await s.changeDate(from: _from, to: s.to);
+                                    await s.changeDate(
+                                      from: _from,
+                                      to: s.to,
+                                    );
                                   },
                                 );
                               }
@@ -110,6 +119,7 @@ class _InventorySuppliesPageState extends State<InventorySuppliesPage> {
                           ),
                         ),
                         FloatingActionButton.small(
+                          tooltip: context.loc.pickEndingDate,
                           heroTag: UniqueKey(),
                           onPressed: () async {
                             final _to = await showDatePicker(
@@ -126,7 +136,10 @@ class _InventorySuppliesPageState extends State<InventorySuppliesPage> {
                                 await shellFunction(
                                   context,
                                   toExecute: () async {
-                                    await s.changeDate(from: s.from, to: _to);
+                                    await s.changeDate(
+                                      from: s.from,
+                                      to: _to,
+                                    );
                                   },
                                 );
                               }

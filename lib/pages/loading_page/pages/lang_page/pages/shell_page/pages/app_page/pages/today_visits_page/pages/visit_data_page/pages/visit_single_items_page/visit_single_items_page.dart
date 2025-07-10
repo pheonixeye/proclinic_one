@@ -4,8 +4,10 @@ import 'package:proklinik_one/core/api/_api_result.dart';
 import 'package:proklinik_one/extensions/loc_ext.dart';
 import 'package:proklinik_one/functions/shell_function.dart';
 import 'package:proklinik_one/models/doctor_items/_doctor_item.dart';
+import 'package:proklinik_one/models/doctor_items/doctor_supply_item.dart';
 import 'package:proklinik_one/models/doctor_items/profile_setup_item.dart';
 import 'package:proklinik_one/models/visit_data/visit_data.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/today_visits_page/pages/visit_data_page/pages/visit_single_items_page/widgets/supply_item_tile.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/today_visits_page/pages/visit_data_page/widgets/visit_details_page_info_header.dart';
 import 'package:proklinik_one/providers/px_doctor_profile_items.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
@@ -91,7 +93,9 @@ class VisitSingleItemsPage<T extends DoctorItem> extends StatelessWidget {
                             _ => ''
                           },
                           heroTag: '${setupItem.name}add-documents',
-                          onPressed: () async {},
+                          onPressed: () async {
+                            //TODO:
+                          },
                           child: const Icon(Icons.upload_file),
                         ),
                       _ => null,
@@ -141,50 +145,57 @@ class VisitSingleItemsPage<T extends DoctorItem> extends StatelessWidget {
                         final _item = _doctor_items[index];
                         return Card.outlined(
                           elevation: 6,
-                          child: CheckboxListTile(
-                            title: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8.0),
-                                    child: FloatingActionButton.small(
-                                      heroTag: UniqueKey(),
-                                      onPressed: null,
-                                      child: Text('${index + 1}'),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      l.isEnglish
-                                          ? _item.name_en
-                                          : _item.name_ar,
-                                    ),
-                                  ),
-                                ],
+                          child: switch (setupItem) {
+                            ProfileSetupItem.supplies => SupplyItemTile(
+                                item: _item as DoctorSupplyItem,
+                                index: index,
                               ),
-                            ),
-                            value: _visit_items.contains(_item),
-                            onChanged: (value) async {
-                              await shellFunction(
-                                context,
-                                toExecute: () async {
-                                  if (_visit_items.contains(_item)) {
-                                    await v.removeFromItemList(
-                                      _item.id,
-                                      setupItem,
-                                    );
-                                  } else {
-                                    await v.addToItemList(
-                                      _item.id,
-                                      setupItem,
-                                    );
-                                  }
+                            //ui for items other than supplies
+                            _ => CheckboxListTile(
+                                title: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8.0),
+                                        child: FloatingActionButton.small(
+                                          heroTag: UniqueKey(),
+                                          onPressed: null,
+                                          child: Text('${index + 1}'),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Text(
+                                          l.isEnglish
+                                              ? _item.name_en
+                                              : _item.name_ar,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                value: _visit_items.contains(_item),
+                                onChanged: (value) async {
+                                  await shellFunction(
+                                    context,
+                                    toExecute: () async {
+                                      if (_visit_items.contains(_item)) {
+                                        await v.removeFromItemList(
+                                          _item.id,
+                                          setupItem,
+                                        );
+                                      } else {
+                                        await v.addToItemList(
+                                          _item.id,
+                                          setupItem,
+                                        );
+                                      }
+                                    },
+                                  );
                                 },
-                              );
-                            },
-                          ),
+                              ),
+                          },
                         );
                       },
                     ),

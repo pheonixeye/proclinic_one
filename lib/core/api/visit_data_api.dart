@@ -2,9 +2,12 @@ import 'package:pocketbase/pocketbase.dart';
 import 'package:proklinik_one/core/api/_api_result.dart';
 import 'package:proklinik_one/core/api/bookkeeping_api.dart';
 import 'package:proklinik_one/core/api/constants/pocketbase_helper.dart';
+import 'package:proklinik_one/core/api/supply_movement_api.dart';
 import 'package:proklinik_one/core/logic/bookkeeping_transformer.dart';
+import 'package:proklinik_one/core/logic/supply_movement_transformer.dart';
 import 'package:proklinik_one/errors/code_to_error.dart';
 import 'package:proklinik_one/functions/first_where_or_null.dart';
+import 'package:proklinik_one/models/doctor_items/doctor_supply_item.dart';
 import 'package:proklinik_one/models/doctor_items/profile_setup_item.dart';
 import 'package:proklinik_one/models/visit_data/visit_data.dart';
 import 'package:proklinik_one/models/visit_data/visit_form_item.dart';
@@ -23,7 +26,7 @@ class VisitDataApi {
   late final String forms_data_collection = '${doc_id}__visit__formdata';
 
   final String _expand =
-      'patient_id, labs_ids, rads_ids, procedures_ids, drugs_ids, supplies_ids, forms_data_ids, forms_data_ids.form_id, supply_movements_ids';
+      'patient_id, labs_ids, rads_ids, procedures_ids, drugs_ids, supplies_ids, forms_data_ids, forms_data_ids.form_id';
 
   Future<ApiResult<VisitData>> fetchVisitData() async {
     try {
@@ -147,16 +150,16 @@ class VisitDataApi {
       ProfileSetupItem.procedures => {'procedures_ids+': item_id},
       ProfileSetupItem.supplies => {'supplies_ids+': item_id},
     };
+
     final _response = await PocketbaseHelper.pb.collection(collection).update(
           visit_data.id,
           body: _update,
           expand: _expand,
         );
+    //todo: parse data
+    final _visit_data = VisitData.fromRecordModel(_response);
 
     if (setupItem == ProfileSetupItem.procedures) {
-      //todo: parse data
-      final _visit_data = VisitData.fromRecordModel(_response);
-
       //todo: initialize transformer
       final _bk_transformer = BookkeepingTransformer(
         item_id: _visit_data.id,
@@ -177,9 +180,6 @@ class VisitDataApi {
         await BookkeepingApi(doc_id: doc_id).addBookkeepingItem(_item);
       }
     }
-    if (setupItem == ProfileSetupItem.supplies) {
-      //TODO:
-    }
   }
 
   Future<void> removeFromItemList(
@@ -194,16 +194,17 @@ class VisitDataApi {
       ProfileSetupItem.procedures => {'procedures_ids-': item_id},
       ProfileSetupItem.supplies => {'supplies_ids-': item_id},
     };
+
     final _response = await PocketbaseHelper.pb.collection(collection).update(
           visit_data.id,
           body: _update,
           expand: _expand,
         );
 
-    if (setupItem == ProfileSetupItem.procedures) {
-      //todo: parse data
-      final _visit_data = VisitData.fromRecordModel(_response);
+    //todo: parse data
+    final _visit_data = VisitData.fromRecordModel(_response);
 
+    if (setupItem == ProfileSetupItem.procedures) {
       //todo: initialize transformer
       final _bk_transformer = BookkeepingTransformer(
         item_id: _visit_data.id,
@@ -224,8 +225,36 @@ class VisitDataApi {
         await BookkeepingApi(doc_id: doc_id).addBookkeepingItem(_item);
       }
     }
-    if (setupItem == ProfileSetupItem.supplies) {
-      //TODO:
-    }
+  }
+
+  Future<void> updateSupplyItemQuantity(
+    VisitData visit_data,
+    DoctorSupplyItem item,
+    double quantity, [
+    bool isAdd = true,
+  ]) async {
+    final _update = {
+      'supplies_data': {
+        ...visit_data.supplies_data,
+        item.id: quantity,
+      }
+    };
+    final _response = await PocketbaseHelper.pb.collection(collection).update(
+          visit_data.id,
+          body: _update,
+          expand: _expand,
+        );
+
+    final _visit_data = VisitData.fromRecordModel(_response);
+
+    final _supplyMovementApi = SupplyMovementApi(doc_id: doc_id);
+
+    final _movement = isAdd
+        ? SupplyMovementTransformer()
+            .fromAddSuppliesToVisit(_visit_data, item, quantity)
+        : SupplyMovementTransformer()
+            .fromRemoveSuppliesFromVisit(_visit_data, item, quantity);
+
+    await _supplyMovementApi.addSupplyMovements([_movement]);
   }
 }
