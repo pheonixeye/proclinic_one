@@ -1735,6 +1735,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Remove Supply Item Amount First'**
   String get removeSupplyItemAmountFirst;
+
+  /// No description provided for @availableQuantity.
+  ///
+  /// In en, this message translates to:
+  /// **'Available Quantity'**
+  String get availableQuantity;
+
+  /// No description provided for @noAvailableQuantity.
+  ///
+  /// In en, this message translates to:
+  /// **'No Available Quantity'**
+  String get noAvailableQuantity;
 }
 
 class _AppLocalizationsDelegate

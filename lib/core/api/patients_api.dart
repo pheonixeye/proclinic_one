@@ -12,19 +12,10 @@ class PatientsApi {
 
   late final String _collection = '${doc_id}__patients';
 
-  // String get key => _collection;
-
-  // static final _cacheService = ApiCachingService<List<Patient>>();
-
-  // final String _fetchPatients = 'fetchPatients';
-
   Future<ApiResult> fetchPatients({
     required int page,
     required int perPage,
   }) async {
-    // if (_cacheService.operationIsCached(key, _fetchPatients)) {
-    //   return _cacheService.getDataByKeys(key, _fetchPatients)!;
-    // }
     try {
       final _response =
           await PocketbaseHelper.pb.collection(_collection).getList(
@@ -35,14 +26,6 @@ class PatientsApi {
 
       final patients =
           _response.items.map((e) => Patient.fromJson(e.toJson())).toList();
-
-      // _cacheService.addToCache(
-      //   key,
-      //   Cachable(
-      //     parametrizedQueryName: _fetchPatients,
-      //     data: ApiDataResult<List<Patient>>(data: patients),
-      //   ),
-      // );
 
       return ApiDataResult<List<Patient>>(data: patients);
     } on ClientException catch (e) {
@@ -57,20 +40,11 @@ class PatientsApi {
     await PocketbaseHelper.pb.collection(_collection).create(
           body: patient.toJson(),
         );
-    // _cacheService.invalidateCache(
-    //   key,
-    //   _fetchPatients,
-    // );
   }
-
-  // String _searchPatientByPhone(String query) => '_searchPatientByPhone$query';
 
   Future<ApiResult> searchPatientByPhone({
     required String query,
   }) async {
-    // if (_cacheService.operationIsCached(key, _searchPatientByPhone(query))) {
-    //   return _cacheService.getDataByKeys(key, _searchPatientByPhone(query))!;
-    // }
     try {
       final _response = await PocketbaseHelper.pb
           .collection(_collection)
@@ -78,14 +52,6 @@ class PatientsApi {
 
       final patients =
           _response.items.map((e) => Patient.fromJson(e.toJson())).toList();
-
-      // _cacheService.addToCache(
-      //   key,
-      //   Cachable(
-      //     parametrizedQueryName: _searchPatientByPhone(query),
-      //     data: ApiDataResult<List<Patient>>(data: patients),
-      //   ),
-      // );
 
       return ApiDataResult<List<Patient>>(data: patients);
     } on ClientException catch (e) {
@@ -96,19 +62,12 @@ class PatientsApi {
     }
   }
 
-  // String _searchPatientByName(String query) => '_searchPatientByName$query';
-
   Future<ApiResult> searchPatientByName({
     required String query,
     required int page,
     required int perPage,
   }) async {
-    // final _parametrizedQuery =
-    //     _searchPatientByName('${query}_${page}_$perPage');
     try {
-      // if (_cacheService.operationIsCached(key, _parametrizedQuery)) {
-      //   return _cacheService.getDataByKeys(key, _parametrizedQuery)!;
-      // }
       final _response =
           await PocketbaseHelper.pb.collection(_collection).getList(
                 filter: "name ?~ '$query'",
@@ -118,14 +77,6 @@ class PatientsApi {
               );
       final patients =
           _response.items.map((e) => Patient.fromJson(e.toJson())).toList();
-
-      // _cacheService.addToCache(
-      //   key,
-      //   Cachable(
-      //     parametrizedQueryName: _parametrizedQuery,
-      //     data: ApiDataResult<List<Patient>>(data: patients),
-      //   ),
-      // );
 
       return ApiDataResult<List<Patient>>(data: patients);
     } on ClientException catch (e) {
@@ -141,9 +92,5 @@ class PatientsApi {
           patient.id,
           body: patient.toJson(),
         );
-    // _cacheService.invalidateCache(
-    //   key,
-    //   _fetchPatients,
-    // );
   }
 }

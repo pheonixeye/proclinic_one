@@ -22,18 +22,9 @@ class DoctorProfileItemsApi<T extends DoctorItem> {
   final String doc_id;
   final ProfileSetupItem item;
 
-  // static final _cacheService = ApiCachingService<List<DoctorItem>>();
-
   late final String collection = '${doc_id}__${item.name}';
 
-  // String get key => collection;
-
-  // static const String _fetch = 'fetchDoctorProfileItems';
-
   Future<ApiResult<List<T>>> fetchDoctorProfileItems() async {
-    // if (_cacheService.operationIsCached(key, _fetch)) {
-    //   return _cacheService.getDataByKeys(key, _fetch)!;
-    // }
     try {
       final _result = await PocketbaseHelper.pb.collection(collection).getList(
             perPage: 500,
@@ -55,15 +46,6 @@ class DoctorProfileItemsApi<T extends DoctorItem> {
               })
           .toList();
 
-      // prettyPrint(_items);
-      // _cacheService.addToCache(
-      //   key,
-      //   Cachable(
-      //     parametrizedQueryName: _fetch,
-      //     data: ApiDataResult<List<DoctorItem>>(data: _items),
-      //   ),
-      // );
-
       return ApiDataResult<List<T>>(data: _items);
     } catch (e) {
       return ApiErrorResult<List<T>>(
@@ -77,10 +59,6 @@ class DoctorProfileItemsApi<T extends DoctorItem> {
     await PocketbaseHelper.pb.collection(collection).create(
           body: item,
         );
-    // _cacheService.invalidateCache(
-    //   key,
-    //   _fetch,
-    // );
   }
 
   Future<void> updateItem(Map<String, dynamic> item) async {
@@ -88,20 +66,12 @@ class DoctorProfileItemsApi<T extends DoctorItem> {
           item['id'],
           body: item,
         );
-    // _cacheService.invalidateCache(
-    //   key,
-    //   _fetch,
-    // );
   }
 
   Future<void> deleteItem(DoctorItem item) async {
     await PocketbaseHelper.pb.collection(collection).delete(
           item.id,
         );
-    // _cacheService.invalidateCache(
-    //   key,
-    //   _fetch,
-    // );
   }
 
   @Unused()

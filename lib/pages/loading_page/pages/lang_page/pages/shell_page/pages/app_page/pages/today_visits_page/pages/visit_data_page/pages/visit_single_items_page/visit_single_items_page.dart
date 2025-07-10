@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:proklinik_one/core/api/_api_result.dart';
+import 'package:proklinik_one/core/api/clinic_inventory_api.dart';
 import 'package:proklinik_one/extensions/loc_ext.dart';
 import 'package:proklinik_one/functions/shell_function.dart';
 import 'package:proklinik_one/models/doctor_items/_doctor_item.dart';
@@ -9,6 +10,8 @@ import 'package:proklinik_one/models/doctor_items/profile_setup_item.dart';
 import 'package:proklinik_one/models/visit_data/visit_data.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/today_visits_page/pages/visit_data_page/pages/visit_single_items_page/widgets/supply_item_tile.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/today_visits_page/pages/visit_data_page/widgets/visit_details_page_info_header.dart';
+import 'package:proklinik_one/providers/px_auth.dart';
+import 'package:proklinik_one/providers/px_clinic_inventory.dart';
 import 'package:proklinik_one/providers/px_doctor_profile_items.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:proklinik_one/providers/px_visit_data.dart';
@@ -139,69 +142,78 @@ class VisitSingleItemsPage<T extends DoctorItem> extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    child: ListView.builder(
-                      itemCount: _doctor_items.length,
-                      itemBuilder: (context, index) {
-                        final _item = _doctor_items[index];
-                        return Card.outlined(
-                          elevation: 6,
-                          child: switch (setupItem) {
-                            ProfileSetupItem.supplies => Consumer<PxVisitData>(
-                                builder: (context, v, _) {
-                                  return SupplyItemTile(
-                                    item: _item as DoctorSupplyItem,
-                                    index: index,
-                                  );
-                                },
-                              ),
-                            //ui for items other than supplies
-                            _ => CheckboxListTile(
-                                title: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 8.0),
-                                        child: FloatingActionButton.small(
-                                          heroTag: UniqueKey(),
-                                          onPressed: null,
-                                          child: Text('${index + 1}'),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                          l.isEnglish
-                                              ? _item.name_en
-                                              : _item.name_ar,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                value: _visit_items.contains(_item),
-                                onChanged: (value) async {
-                                  await shellFunction(
-                                    context,
-                                    toExecute: () async {
-                                      if (_visit_items.contains(_item)) {
-                                        await v.removeFromItemList(
-                                          _item.id,
-                                          setupItem,
-                                        );
-                                      } else {
-                                        await v.addToItemList(
-                                          _item.id,
-                                          setupItem,
-                                        );
-                                      }
-                                    },
-                                  );
-                                },
-                              ),
-                          },
+                    child: ChangeNotifierProvider(
+                      create: (context) {
+                        final clinic_id = (v.result as ApiDataResult<VisitData>)
+                            .data
+                            .clinic_id;
+                        return PxClinicInventory(
+                          api: ClinicInventoryApi(
+                            clinic_id: clinic_id,
+                            doc_id: context.read<PxAuth>().doc_id,
+                          ),
                         );
                       },
+                      child: ListView.builder(
+                        itemCount: _doctor_items.length,
+                        itemBuilder: (context, index) {
+                          final _item = _doctor_items[index];
+                          return Card.outlined(
+                            elevation: 6,
+                            child: switch (setupItem) {
+                              ProfileSetupItem.supplies => SupplyItemTile(
+                                  item: _item as DoctorSupplyItem,
+                                  index: index,
+                                ),
+                              //ui for items other than supplies
+                              _ => CheckboxListTile(
+                                  title: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8.0),
+                                          child: FloatingActionButton.small(
+                                            heroTag: UniqueKey(),
+                                            onPressed: null,
+                                            child: Text('${index + 1}'),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            l.isEnglish
+                                                ? _item.name_en
+                                                : _item.name_ar,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  value: _visit_items.contains(_item),
+                                  onChanged: (value) async {
+                                    await shellFunction(
+                                      context,
+                                      toExecute: () async {
+                                        if (_visit_items.contains(_item)) {
+                                          await v.removeFromItemList(
+                                            _item.id,
+                                            setupItem,
+                                          );
+                                        } else {
+                                          await v.addToItemList(
+                                            _item.id,
+                                            setupItem,
+                                          );
+                                        }
+                                      },
+                                    );
+                                  },
+                                ),
+                            },
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ],

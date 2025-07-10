@@ -298,5 +298,7 @@
     "pickEndingDate" : "اختر تاريخ الانتهاء",
     "availableSupplyItemsQuantities" : "الكميات المتاحة",
     "transferQuantity" : "كمية الحركة",
-    "removeSupplyItemAmountFirst" : "برجاء ازالة كمية المستلزمات من الزيارة اولا"
+    "removeSupplyItemAmountFirst" : "برجاء ازالة كمية المستلزمات من الزيارة اولا",
+    "availableQuantity" : "الكمية المتاحة",
+    "noAvailableQuantity" : "كمية غير متوفرة"
     }

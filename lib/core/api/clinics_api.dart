@@ -17,30 +17,13 @@ class ClinicsApi {
 
   late final String _collection = '${doc_id}__clinics';
 
-  // String get key => _collection;
-
-  // static final _cacheService = ApiCachingService<List<Clinic>>();
-
-  // final String _fetchDoctorClinics = 'fetchDoctorClinics';
-
   Future<ApiResult<List<Clinic>>> fetchDoctorClinics() async {
-    // if (_cacheService.operationIsCached(key, _fetchDoctorClinics)) {
-    //   return _cacheService.getDataByKeys(key, _fetchDoctorClinics)!;
-    // }
     try {
       final _response =
           await PocketbaseHelper.pb.collection(_collection).getList();
 
       final _clinics =
           _response.items.map((e) => Clinic.fromJson(e.toJson())).toList();
-
-      // _cacheService.addToCache(
-      //   key,
-      //   Cachable(
-      //     parametrizedQueryName: _fetchDoctorClinics,
-      //     data: ApiDataResult<List<Clinic>>(data: _clinics),
-      //   ),
-      // );
 
       return ApiDataResult<List<Clinic>>(data: _clinics);
     } catch (e) {
@@ -55,10 +38,6 @@ class ClinicsApi {
     await PocketbaseHelper.pb
         .collection(_collection)
         .create(body: clinic.toJson());
-    // _cacheService.invalidateCache(
-    //   key,
-    //   _fetchDoctorClinics,
-    // );
   }
 
   Future<void> updateClinicInfo(Clinic clinic) async {
@@ -66,10 +45,6 @@ class ClinicsApi {
           clinic.id,
           body: clinic.toJson(),
         );
-    // _cacheService.invalidateCache(
-    //   key,
-    //   _fetchDoctorClinics,
-    // );
   }
 
   Future<void> addPrescriptionImageFileToClinic(
@@ -87,10 +62,6 @@ class ClinicsApi {
         ),
       ],
     );
-    // _cacheService.invalidateCache(
-    //   key,
-    //   _fetchDoctorClinics,
-    // );
   }
 
   Future<void> deletePrescriptionFile(Clinic clinic) async {
@@ -100,20 +71,12 @@ class ClinicsApi {
         'prescription_file': '',
       },
     );
-    // _cacheService.invalidateCache(
-    //   key,
-    //   _fetchDoctorClinics,
-    // );
   }
 
   Future<void> deleteClinic(Clinic clinic) async {
     await PocketbaseHelper.pb.collection(_collection).delete(
           clinic.id,
         );
-    // _cacheService.invalidateCache(
-    //   key,
-    //   _fetchDoctorClinics,
-    // );
   }
 
   Future<void> toggleClinicActivation(Clinic clinic) async {
@@ -123,10 +86,6 @@ class ClinicsApi {
         'is_active': !clinic.is_active,
       },
     );
-    // _cacheService.invalidateCache(
-    //   key,
-    //   _fetchDoctorClinics,
-    // );
   }
 
   Future<void> updatePrescriptionDetails(
@@ -139,10 +98,6 @@ class ClinicsApi {
         'prescription_details': details.toJson(),
       },
     );
-    // _cacheService.invalidateCache(
-    //   key,
-    //   _fetchDoctorClinics,
-    // );
   }
 
   Future<void> addClinicSchedule(Clinic clinic, ClinicSchedule schedule) async {

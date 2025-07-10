@@ -855,4 +855,10 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get removeSupplyItemAmountFirst =>
       'برجاء ازالة كمية المستلزمات من الزيارة اولا';
+
+  @override
+  String get availableQuantity => 'الكمية المتاحة';
+
+  @override
+  String get noAvailableQuantity => 'كمية غير متوفرة';
 }

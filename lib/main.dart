@@ -51,10 +51,14 @@ class MyApp extends StatelessWidget {
     );
   }
   //TODO: add caching for pdf.min.js via cdn "https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.min.js"
-  //TODO: implement api cache over the whole app*(only in patients && clinics apis yet)
-  //todo: add ios safari logic script in index.html
-  //todo: add validation that the doctor inputs atleast 2 names in the registeration form
+  //TODO: implement api cache over the whole app
   //TODO: add application error codes && messages
   //TODO: add initialization logic / workflow for newly registered doctors (backend)
   //TODO: migrate (create doctor_subscription) to the backend
+  //TODO: subscription controlles access
+  //TODO: supply movements in table form
+  //TODO: bookkeeping in table form
+  //TODO: patient documents
+  //TODO: doctor visits in table form
+  //TODO: patient visit progression view => listen to todays visits realtime => assistant app (same app vs another)
 }

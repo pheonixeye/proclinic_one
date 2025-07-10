@@ -1,5 +1,4 @@
 import 'package:proklinik_one/core/api/_api_result.dart';
-import 'package:proklinik_one/functions/dprint.dart';
 
 typedef ParametrizedQueryName = String;
 
@@ -31,7 +30,6 @@ class ApiCachingService<T> {
     ParametrizedQueryName key,
   ) {
     final _classIsCached = _cache[key] != null;
-    prettyPrint(_cache.toString());
     if (_classIsCached) {
       return true;
     }
