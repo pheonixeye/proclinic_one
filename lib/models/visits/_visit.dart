@@ -10,7 +10,7 @@ import 'package:proklinik_one/models/clinic/clinic.dart';
 import 'package:proklinik_one/models/clinic/clinic_schedule.dart';
 import 'package:proklinik_one/models/clinic/schedule_shift.dart';
 import 'package:proklinik_one/models/patient.dart';
-import 'package:proklinik_one/models/user.dart';
+import 'package:proklinik_one/models/user/user.dart';
 
 class Visit extends Equatable {
   final String id;

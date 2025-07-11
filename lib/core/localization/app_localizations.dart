@@ -1789,6 +1789,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Print Supply Movements'**
   String get printSupplyMovements;
+
+  /// No description provided for @noBookkeepingEntriesFoundInSelectedDate.
+  ///
+  /// In en, this message translates to:
+  /// **'No Bookkeeping Entries Found In Selected Date'**
+  String get noBookkeepingEntriesFoundInSelectedDate;
+
+  /// No description provided for @date.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get date;
+
+  /// No description provided for @operation.
+  ///
+  /// In en, this message translates to:
+  /// **'Operation'**
+  String get operation;
+
+  /// No description provided for @bkType.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get bkType;
+
+  /// No description provided for @amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get amount;
+
+  /// No description provided for @bookkeepingBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'Bookkeeping Balance'**
+  String get bookkeepingBalance;
+
+  /// No description provided for @durationBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration Balance'**
+  String get durationBalance;
+
+  /// No description provided for @printBookkeepingReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Print Bookkeeping Report'**
+  String get printBookkeepingReport;
+
+  /// No description provided for @addBookkeepingEntry.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Bookkeeping Entry'**
+  String get addBookkeepingEntry;
+
+  /// No description provided for @operationName.
+  ///
+  /// In en, this message translates to:
+  /// **'Operation Name'**
+  String get operationName;
+
+  /// No description provided for @amountInPounds.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount In EGP'**
+  String get amountInPounds;
+
+  /// No description provided for @totalExpenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Expenses'**
+  String get totalExpenses;
+
+  /// No description provided for @totalIncome.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Income'**
+  String get totalIncome;
+
+  /// No description provided for @netBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'Net Balance'**
+  String get netBalance;
 }
 
 class _AppLocalizationsDelegate

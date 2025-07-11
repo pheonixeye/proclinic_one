@@ -307,5 +307,19 @@
     "autoAdd" : "اضافة تلقائية",
     "movementDate" : "تاريخ الحركة",
     "number" : "الرقم",
-    "printSupplyMovements" : "طباعة حركة المستلزمات"
+    "printSupplyMovements" : "طباعة حركة المستلزمات",
+    "noBookkeepingEntriesFoundInSelectedDate" : "لم يتم العثور على نتيجة في الفترة المحددة",
+    "date" : "التاريخ",
+    "operation" : "العملية",
+    "bkType" : "الاتجاه",
+    "amount" : "القيمة",
+    "bookkeepingBalance" : "اجمالي الرصيد",
+    "durationBalance" : "رصيد المدة",
+    "printBookkeepingReport" : "طباعة تقرير حسابات",
+    "addBookkeepingEntry" : "اضافة عملية",
+    "operationName" : "اسم الحركة",
+    "amountInPounds" : "السعر بالجنيه",
+    "totalExpenses" : "اجمالي الانفاق",
+    "totalIncome" : "اجمالي الوارد",
+    "netBalance" : "الصافي"
     }

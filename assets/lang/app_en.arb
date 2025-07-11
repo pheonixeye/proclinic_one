@@ -308,6 +308,20 @@
     "autoAdd" : "Auto Add",
     "movementDate" : "Movement Date",
     "number" : "Number",
-    "printSupplyMovements" : "Print Supply Movements"
+    "printSupplyMovements" : "Print Supply Movements",
+    "noBookkeepingEntriesFoundInSelectedDate" : "No Bookkeeping Entries Found In Selected Date",
+    "date" : "Date",
+    "operation" : "Operation",
+    "bkType" : "Type",
+    "amount" : "Amount",
+    "bookkeepingBalance" : "Bookkeeping Balance",
+    "durationBalance" : "Duration Balance",
+    "printBookkeepingReport" : "Print Bookkeeping Report",
+    "addBookkeepingEntry" : "Add Bookkeeping Entry",
+    "operationName" : "Operation Name",
+    "amountInPounds" : "Amount In EGP",
+    "totalExpenses" : "Total Expenses",
+    "totalIncome" : "Total Income",
+    "netBalance" : "Net Balance"
 
 }

@@ -882,4 +882,47 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get printSupplyMovements => 'طباعة حركة المستلزمات';
+
+  @override
+  String get noBookkeepingEntriesFoundInSelectedDate =>
+      'لم يتم العثور على نتيجة في الفترة المحددة';
+
+  @override
+  String get date => 'التاريخ';
+
+  @override
+  String get operation => 'العملية';
+
+  @override
+  String get bkType => 'الاتجاه';
+
+  @override
+  String get amount => 'القيمة';
+
+  @override
+  String get bookkeepingBalance => 'اجمالي الرصيد';
+
+  @override
+  String get durationBalance => 'رصيد المدة';
+
+  @override
+  String get printBookkeepingReport => 'طباعة تقرير حسابات';
+
+  @override
+  String get addBookkeepingEntry => 'اضافة عملية';
+
+  @override
+  String get operationName => 'اسم الحركة';
+
+  @override
+  String get amountInPounds => 'السعر بالجنيه';
+
+  @override
+  String get totalExpenses => 'اجمالي الانفاق';
+
+  @override
+  String get totalIncome => 'اجمالي الوارد';
+
+  @override
+  String get netBalance => 'الصافي';
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:proklinik_one/core/api/auth/api_auth.dart';
+import 'package:proklinik_one/core/api/bookkeeping_api.dart';
 import 'package:proklinik_one/core/api/clinics_api.dart';
 import 'package:proklinik_one/core/api/constants_api.dart';
 import 'package:proklinik_one/core/api/doctor_api.dart';
@@ -17,6 +18,7 @@ import 'package:proklinik_one/models/doctor_items/doctor_supply_item.dart';
 import 'package:proklinik_one/models/doctor_items/profile_setup_item.dart';
 import 'package:proklinik_one/providers/px_app_constants.dart';
 import 'package:proklinik_one/providers/px_auth.dart';
+import 'package:proklinik_one/providers/px_bookkeeping.dart';
 import 'package:proklinik_one/providers/px_clinics.dart';
 import 'package:proklinik_one/providers/px_doc_subscription_info.dart';
 import 'package:proklinik_one/providers/px_doctor.dart';
@@ -138,6 +140,14 @@ final List<SingleChildWidget> providers = [
   ChangeNotifierProvider(
     create: (context) => PxSupplyMovements(
       api: SupplyMovementApi(
+        doc_id: context.read<PxAuth>().doc_id,
+      ),
+    ),
+  ),
+
+  ChangeNotifierProvider(
+    create: (context) => PxBookkeeping(
+      api: BookkeepingApi(
         doc_id: context.read<PxAuth>().doc_id,
       ),
     ),

@@ -12,7 +12,7 @@ import 'package:proklinik_one/models/app_constants/visit_status.dart';
 import 'package:proklinik_one/models/app_constants/visit_type.dart';
 import 'package:proklinik_one/models/clinic/clinic.dart';
 import 'package:proklinik_one/models/patient.dart';
-import 'package:proklinik_one/models/user.dart';
+import 'package:proklinik_one/models/user/user.dart';
 import 'package:proklinik_one/models/visit_data/visit_data_dto.dart';
 import 'package:proklinik_one/models/visits/_visit.dart';
 import 'package:proklinik_one/models/visits/visit_create_dto.dart';

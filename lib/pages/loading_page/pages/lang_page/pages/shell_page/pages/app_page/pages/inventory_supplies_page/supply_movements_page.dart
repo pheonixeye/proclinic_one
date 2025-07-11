@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:proklinik_one/core/api/_api_result.dart';
@@ -210,11 +211,22 @@ class _SupplyMovementsPageState extends State<SupplyMovementsPage> {
                           ),
                         ),
                         DataCell(
-                          Text(
-                            (x.visit_id == null || x.visit_id!.isEmpty)
-                                ? '----'
-                                : x.visit_id!,
-                            textAlign: TextAlign.center,
+                          Text.rich(
+                            TextSpan(
+                              text: (x.visit_id == null || x.visit_id!.isEmpty)
+                                  ? '----'
+                                  : x.visit_id!,
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  //TODO: navigate to visit
+                                },
+                            ),
+                            style: TextStyle(
+                              decoration:
+                                  (x.visit_id == null || x.visit_id!.isEmpty)
+                                      ? TextDecoration.none
+                                      : TextDecoration.underline,
+                            ),
                           ),
                         ),
                         DataCell(

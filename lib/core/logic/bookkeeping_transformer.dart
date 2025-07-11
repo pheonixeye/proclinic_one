@@ -1,5 +1,5 @@
 import 'package:proklinik_one/core/api/constants_api.dart';
-import 'package:proklinik_one/models/bookkeeping/bookkeeping_item.dart';
+import 'package:proklinik_one/models/bookkeeping/bookkeeping_item_dto.dart';
 import 'package:proklinik_one/models/bookkeeping/bookkeeping_name.dart';
 import 'package:proklinik_one/models/doctor_items/doctor_procedure_item.dart';
 import 'package:proklinik_one/models/supplies/supply_movement.dart';
@@ -25,7 +25,7 @@ class BookkeepingTransformer {
   late final _followup_id = _appConstants.followup.id;
   late final _procedure_id = _appConstants.procedure.id;
 
-  BookkeepingItem fromVisitCreate(Visit visit) {
+  BookkeepingItemDto fromVisitCreate(Visit visit) {
     late double _bk_item_amount;
 
     if (visit.visit_status.id == _not_attended_id) {
@@ -41,7 +41,7 @@ class BookkeepingTransformer {
         _bk_item_amount = visit.clinic.procedure_fees.toDouble();
       }
     }
-    final _item = BookkeepingItem(
+    final _item = BookkeepingItemDto(
       id: '',
       item_name: BookkeepingName.visit_create.name,
       item_id: item_id,
@@ -57,7 +57,7 @@ class BookkeepingTransformer {
     return _item;
   }
 
-  BookkeepingItem fromVisitUpdate(Visit old_visit, Visit updated_visit) {
+  BookkeepingItemDto fromVisitUpdate(Visit old_visit, Visit updated_visit) {
     //TODO: error prone logic - needs to improve by a long shot
     late final BookkeepingName _item_name;
     late final String _type;
@@ -153,7 +153,7 @@ class BookkeepingTransformer {
             ? 'none'
             : 'out';
 
-    final _item = BookkeepingItem(
+    final _item = BookkeepingItemDto(
       id: '',
       item_name: _item_name.name,
       item_id: item_id,
@@ -169,7 +169,7 @@ class BookkeepingTransformer {
     return _item;
   }
 
-  BookkeepingItem fromVisitDataAddProcedure(
+  BookkeepingItemDto fromVisitDataAddProcedure(
     VisitData visit_data,
     DoctorProcedureItem procedure,
   ) {
@@ -178,7 +178,7 @@ class BookkeepingTransformer {
     final double _bk_item_amount = procedure.price -
         ((procedure.price * procedure.discount_percentage) / 100);
 
-    final _item = BookkeepingItem(
+    final _item = BookkeepingItemDto(
       id: '',
       item_name: _item_name.name,
       item_id: item_id,
@@ -194,7 +194,7 @@ class BookkeepingTransformer {
     return _item;
   }
 
-  BookkeepingItem fromVisitDataRemoveProcedure(
+  BookkeepingItemDto fromVisitDataRemoveProcedure(
     VisitData visit_data,
     DoctorProcedureItem procedure,
   ) {
@@ -203,7 +203,7 @@ class BookkeepingTransformer {
     final double _bk_item_amount = -(procedure.price -
         ((procedure.price * procedure.discount_percentage) / 100));
 
-    final _item = BookkeepingItem(
+    final _item = BookkeepingItemDto(
       id: '',
       item_name: _item_name.name,
       item_id: item_id,
@@ -219,7 +219,7 @@ class BookkeepingTransformer {
     return _item;
   }
 
-  BookkeepingItem fromManualSupplyMovement(SupplyMovement supplyMovement) {
+  BookkeepingItemDto fromManualSupplyMovement(SupplyMovement supplyMovement) {
     final BookkeepingName _item_name =
         switch (SupplyMovementType.fromString(supplyMovement.movement_type)) {
       SupplyMovementType.OUT_IN => BookkeepingName.supplies_movement_add_manual,
@@ -243,7 +243,7 @@ class BookkeepingTransformer {
       SupplyMovementType.IN_IN => 0,
     };
 
-    final _item = BookkeepingItem(
+    final _item = BookkeepingItemDto(
       id: '',
       item_name: _item_name.name,
       item_id: item_id,
@@ -259,14 +259,14 @@ class BookkeepingTransformer {
     return _item;
   }
 
-  BookkeepingItem fromVisitAddSupplyMovement(SupplyMovement supplyMovement) {
+  BookkeepingItemDto fromVisitAddSupplyMovement(SupplyMovement supplyMovement) {
     final BookkeepingName _item_name = BookkeepingName.visit_supplies_add;
 
     final String _type = 'out';
 
     final double _bk_item_amount = supplyMovement.supply_item.selling_price;
 
-    final _item = BookkeepingItem(
+    final _item = BookkeepingItemDto(
       id: '',
       item_name: _item_name.name,
       item_id: item_id,
@@ -282,14 +282,15 @@ class BookkeepingTransformer {
     return _item;
   }
 
-  BookkeepingItem fromVisitRemoveSupplyMovement(SupplyMovement supplyMovement) {
+  BookkeepingItemDto fromVisitRemoveSupplyMovement(
+      SupplyMovement supplyMovement) {
     final BookkeepingName _item_name = BookkeepingName.visit_supplies_remove;
 
     final String _type = 'in';
 
     final double _bk_item_amount = -supplyMovement.supply_item.selling_price;
 
-    final _item = BookkeepingItem(
+    final _item = BookkeepingItemDto(
       id: '',
       item_name: _item_name.name,
       item_id: item_id,

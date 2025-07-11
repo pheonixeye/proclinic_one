@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:pocketbase/pocketbase.dart';
 import 'package:proklinik_one/models/clinic/clinic.dart';
 import 'package:proklinik_one/models/doctor_items/doctor_supply_item.dart';
-import 'package:proklinik_one/models/user.dart';
+import 'package:proklinik_one/models/user/user.dart';
 
 class SupplyMovement extends Equatable {
   final String id;

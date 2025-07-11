@@ -883,4 +883,47 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get printSupplyMovements => 'Print Supply Movements';
+
+  @override
+  String get noBookkeepingEntriesFoundInSelectedDate =>
+      'No Bookkeeping Entries Found In Selected Date';
+
+  @override
+  String get date => 'Date';
+
+  @override
+  String get operation => 'Operation';
+
+  @override
+  String get bkType => 'Type';
+
+  @override
+  String get amount => 'Amount';
+
+  @override
+  String get bookkeepingBalance => 'Bookkeeping Balance';
+
+  @override
+  String get durationBalance => 'Duration Balance';
+
+  @override
+  String get printBookkeepingReport => 'Print Bookkeeping Report';
+
+  @override
+  String get addBookkeepingEntry => 'Add Bookkeeping Entry';
+
+  @override
+  String get operationName => 'Operation Name';
+
+  @override
+  String get amountInPounds => 'Amount In EGP';
+
+  @override
+  String get totalExpenses => 'Total Expenses';
+
+  @override
+  String get totalIncome => 'Total Income';
+
+  @override
+  String get netBalance => 'Net Balance';
 }

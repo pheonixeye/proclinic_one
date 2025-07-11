@@ -57,8 +57,8 @@ class MyApp extends StatelessWidget {
   //TODO: migrate (create doctor_subscription) to the backend
   //---------------------------------------------------------------------------------//
   //todo: supply movements in table form
-  //TODO: subscription controlles access
   //TODO: bookkeeping in table form
+  //TODO: subscription controlles access
   //TODO: patient documents
   //TODO: doctor visits in table form
   //TODO: create / link assistant account => add permissions +/-
