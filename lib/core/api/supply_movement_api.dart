@@ -126,16 +126,17 @@ class SupplyMovementApi {
     required DateTime to,
   }) async {
     final _fromFormatted = DateFormat('yyyy-MM-dd', 'en').format(from);
-    final _toFormatted = DateFormat('yyyy-MM-dd', 'en').format(to);
+    final _toFormatted =
+        DateFormat('yyyy-MM-dd', 'en').format(to.copyWith(day: to.day + 1));
 
     try {
-      final _response = await PocketbaseHelper.pb
-          .collection(collection)
-          .getFullList(
-            expand: _expand,
-            filter: "created >= '$_fromFormatted' && created < '$_toFormatted'",
-            sort: '-created',
-          );
+      final _response =
+          await PocketbaseHelper.pb.collection(collection).getFullList(
+                expand: _expand,
+                filter:
+                    "created >= '$_fromFormatted' && created <= '$_toFormatted'",
+                sort: '-created',
+              );
 
       // prettyPrint(_response);
 

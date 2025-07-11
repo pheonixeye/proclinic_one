@@ -300,5 +300,12 @@
     "transferQuantity" : "كمية الحركة",
     "removeSupplyItemAmountFirst" : "برجاء ازالة كمية المستلزمات من الزيارة اولا",
     "availableQuantity" : "الكمية المتاحة",
-    "noAvailableQuantity" : "كمية غير متوفرة"
+    "noAvailableQuantity" : "كمية غير متوفرة",
+    "supplyItem" : "المستلزم",
+    "clinic" : "العيادة",
+    "relatedVisitId" : "زيارة الحركة",
+    "autoAdd" : "اضافة تلقائية",
+    "movementDate" : "تاريخ الحركة",
+    "number" : "الرقم",
+    "printSupplyMovements" : "طباعة حركة المستلزمات"
     }

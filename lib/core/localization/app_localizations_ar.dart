@@ -861,4 +861,25 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get noAvailableQuantity => 'كمية غير متوفرة';
+
+  @override
+  String get supplyItem => 'المستلزم';
+
+  @override
+  String get clinic => 'العيادة';
+
+  @override
+  String get relatedVisitId => 'زيارة الحركة';
+
+  @override
+  String get autoAdd => 'اضافة تلقائية';
+
+  @override
+  String get movementDate => 'تاريخ الحركة';
+
+  @override
+  String get number => 'الرقم';
+
+  @override
+  String get printSupplyMovements => 'طباعة حركة المستلزمات';
 }

@@ -17,18 +17,19 @@ import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:proklinik_one/widgets/central_loading.dart';
 import 'package:provider/provider.dart';
 
-class SupplyMovementDialog extends StatefulWidget {
-  const SupplyMovementDialog({
+class AddSupplyMovementDialog extends StatefulWidget {
+  const AddSupplyMovementDialog({
     super.key,
     this.supplyMovement,
   });
   final SupplyMovement? supplyMovement;
 
   @override
-  State<SupplyMovementDialog> createState() => _SupplyMovementDialogState();
+  State<AddSupplyMovementDialog> createState() =>
+      _AddSupplyMovementDialogState();
 }
 
-class _SupplyMovementDialogState extends State<SupplyMovementDialog> {
+class _AddSupplyMovementDialogState extends State<AddSupplyMovementDialog> {
   final formKey = GlobalKey<FormState>();
   late final TextEditingController _movement_amount_controller;
   late final TextEditingController _reason_controller;

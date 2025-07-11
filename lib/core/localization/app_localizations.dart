@@ -1747,6 +1747,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No Available Quantity'**
   String get noAvailableQuantity;
+
+  /// No description provided for @supplyItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Supply Item'**
+  String get supplyItem;
+
+  /// No description provided for @clinic.
+  ///
+  /// In en, this message translates to:
+  /// **'Clinic'**
+  String get clinic;
+
+  /// No description provided for @relatedVisitId.
+  ///
+  /// In en, this message translates to:
+  /// **'Related Visit Id'**
+  String get relatedVisitId;
+
+  /// No description provided for @autoAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto Add'**
+  String get autoAdd;
+
+  /// No description provided for @movementDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Movement Date'**
+  String get movementDate;
+
+  /// No description provided for @number.
+  ///
+  /// In en, this message translates to:
+  /// **'Number'**
+  String get number;
+
+  /// No description provided for @printSupplyMovements.
+  ///
+  /// In en, this message translates to:
+  /// **'Print Supply Movements'**
+  String get printSupplyMovements;
 }
 
 class _AppLocalizationsDelegate

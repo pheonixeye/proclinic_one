@@ -301,6 +301,13 @@
     "transferQuantity" : "Transfer Quantity",
     "removeSupplyItemAmountFirst" : "Remove Supply Item Amount First",
     "availableQuantity" : "Available Quantity",
-    "noAvailableQuantity" : "No Available Quantity"
+    "noAvailableQuantity" : "No Available Quantity",
+    "supplyItem" : "Supply Item",
+    "clinic" : "Clinic",
+    "relatedVisitId" : "Related Visit Id",
+    "autoAdd" : "Auto Add",
+    "movementDate" : "Movement Date",
+    "number" : "Number",
+    "printSupplyMovements" : "Print Supply Movements"
 
 }

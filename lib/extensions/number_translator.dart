@@ -37,4 +37,8 @@ extension NumberTranslator on String {
     final isEnglish = context.read<PxLocale>().isEnglish;
     return isEnglish ? this : ArabicNumbers.convert(this);
   }
+
+  String toForcedArabicNumber(BuildContext context) {
+    return ArabicNumbers.convert(this);
+  }
 }

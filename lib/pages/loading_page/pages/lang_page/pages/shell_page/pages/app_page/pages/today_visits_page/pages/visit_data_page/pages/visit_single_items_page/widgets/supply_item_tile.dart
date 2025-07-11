@@ -155,19 +155,20 @@ class _SupplyItemTileState extends State<SupplyItemTile> {
                             if (delta_quantity == 0) {
                               return;
                             }
-                            if (_item_visit_quantity < delta_quantity) {
+                            if (_item_clinic_quantity < delta_quantity) {
                               showIsnackbar(context.loc.noAvailableQuantity);
                               return;
                             }
                             await shellFunction(
                               context,
                               toExecute: () async {
-                                //TODO:
+                                //todo:
                                 await v.updateSupplyItemQuantity(
                                   widget.item,
                                   quantity,
                                   delta_quantity, // +/-
                                 );
+                                await i.retry();
                               },
                             );
                           },

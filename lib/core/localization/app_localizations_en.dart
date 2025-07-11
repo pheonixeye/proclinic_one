@@ -862,4 +862,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noAvailableQuantity => 'No Available Quantity';
+
+  @override
+  String get supplyItem => 'Supply Item';
+
+  @override
+  String get clinic => 'Clinic';
+
+  @override
+  String get relatedVisitId => 'Related Visit Id';
+
+  @override
+  String get autoAdd => 'Auto Add';
+
+  @override
+  String get movementDate => 'Movement Date';
+
+  @override
+  String get number => 'Number';
+
+  @override
+  String get printSupplyMovements => 'Print Supply Movements';
 }

@@ -17,6 +17,7 @@ class SupplyMovement extends Equatable {
   final double movement_amount;
   final bool auto_add;
   final int number_of_updates;
+  final DateTime created;
 
   const SupplyMovement({
     required this.id,
@@ -31,6 +32,7 @@ class SupplyMovement extends Equatable {
     required this.movement_amount,
     required this.auto_add,
     required this.number_of_updates,
+    required this.created,
   });
 
   SupplyMovement copyWith({
@@ -46,6 +48,7 @@ class SupplyMovement extends Equatable {
     double? movement_amount,
     bool? auto_add,
     int? number_of_updates,
+    DateTime? created,
   }) {
     return SupplyMovement(
       id: id ?? this.id,
@@ -60,6 +63,7 @@ class SupplyMovement extends Equatable {
       movement_amount: movement_amount ?? this.movement_amount,
       auto_add: auto_add ?? this.auto_add,
       number_of_updates: number_of_updates ?? this.number_of_updates,
+      created: created ?? this.created,
     );
   }
 
@@ -77,6 +81,7 @@ class SupplyMovement extends Equatable {
       'movement_amount': movement_amount,
       'auto_add': auto_add,
       'number_of_updated': number_of_updates,
+      'created': created.toIso8601String(),
     };
   }
 
@@ -97,6 +102,7 @@ class SupplyMovement extends Equatable {
       movement_amount: map['movement_amount'] as double,
       auto_add: map['auto_add'] as bool,
       number_of_updates: map['number_of_updated'] as int,
+      created: DateTime.parse(map['created'] as String),
     );
   }
 
@@ -118,6 +124,7 @@ class SupplyMovement extends Equatable {
       auto_add,
       updated_by,
       number_of_updates,
+      created,
     ];
   }
 
@@ -159,6 +166,7 @@ class SupplyMovement extends Equatable {
                   .toList(),
             }),
       number_of_updates: e.getIntValue('number_of_updates'),
+      created: DateTime.parse(e.getStringValue('created')),
     );
   }
 }

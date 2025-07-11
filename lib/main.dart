@@ -55,10 +55,12 @@ class MyApp extends StatelessWidget {
   //TODO: add application error codes && messages
   //TODO: add initialization logic / workflow for newly registered doctors (backend)
   //TODO: migrate (create doctor_subscription) to the backend
+  //---------------------------------------------------------------------------------//
+  //todo: supply movements in table form
   //TODO: subscription controlles access
-  //TODO: supply movements in table form
   //TODO: bookkeeping in table form
   //TODO: patient documents
   //TODO: doctor visits in table form
+  //TODO: create / link assistant account => add permissions +/-
   //TODO: patient visit progression view => listen to todays visits realtime => assistant app (same app vs another)
 }
