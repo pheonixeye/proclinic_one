@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:hive_ce/hive.dart';
 import 'package:proklinik_one/core/api/constants/pocketbase_helper.dart';
 import 'package:proklinik_one/models/app_constants/account_type.dart';
 import 'package:proklinik_one/models/app_constants/_app_constants.dart';
@@ -9,6 +12,7 @@ import 'package:proklinik_one/models/app_constants/visit_type.dart';
 
 class ConstantsApi {
   const ConstantsApi();
+  static final _n = DateTime.now();
 
   static const String account_types = 'account_types';
   static const String visit_status = 'visit_status';
@@ -17,12 +21,32 @@ class ConstantsApi {
   static const String patient_progress_status = 'patient_progress_status';
   static const String app_permissions = 'app_permissions';
 
-  static AppConstants? _cached;
+  static const String collection = 'constants';
+  static String collectionSaveDate = 'constants_save_date';
+
+  static final _box = Hive.box<String>(collection);
+  static final _boxSaveDate = Hive.box<String>(collectionSaveDate);
 
   Future<AppConstants> fetchConstants() async {
-    if (_cached != null) {
-      return _cached!;
+    late AppConstants _constants;
+
+    await Hive.openBox<String>(collection);
+    await Hive.openBox<String>(collectionSaveDate);
+
+    if (_boxSaveDate.get(collectionSaveDate) != null &&
+        _boxSaveDate.isNotEmpty) {
+      final _saveDate = DateTime.parse(_boxSaveDate.get(collectionSaveDate)!);
+      if (_saveDate.add(const Duration(days: 7)).isAfter(_n)) {
+        _box.clear();
+        await _boxSaveDate.put(collectionSaveDate,
+            DateTime(_n.year, _n.month, _n.day).toIso8601String());
+      }
     }
+    if (_box.get(collection) != null && _box.isNotEmpty) {
+      _constants = AppConstants.fromJson((json.decode(_box.get(collection)!)));
+      return _constants;
+    }
+
     late final List<AccountType> accountTypes;
     late final List<VisitStatus> visitStatus;
     late final List<VisitType> visitType;
@@ -81,7 +105,7 @@ class ConstantsApi {
         .map((e) => AppPermission.fromJson(e.toJson()))
         .toList();
 
-    final _appConstants = AppConstants(
+    _constants = AppConstants(
       accountTypes: accountTypes,
       visitStatus: visitStatus,
       visitType: visitType,
@@ -90,8 +114,10 @@ class ConstantsApi {
       appPermission: appPermission,
     );
 
-    _cached = _appConstants;
+    await _box.put(collection, json.encode(_constants.toJson()));
+    await _boxSaveDate.put(collectionSaveDate,
+        DateTime(_n.year, _n.month, _n.day).toIso8601String());
 
-    return _appConstants;
+    return _constants;
   }
 }

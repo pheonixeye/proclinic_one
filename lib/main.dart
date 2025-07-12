@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_web_plugins/url_strategy.dart' show usePathUrlStrategy;
+import 'package:hive_ce_flutter/adapters.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:proklinik_one/core/localization/app_localizations.dart';
 import 'package:proklinik_one/providers/_main.dart';
@@ -15,6 +15,8 @@ void main() async {
   initAsyncPrefs();
   await initializeDateFormatting('ar');
   await initializeDateFormatting('en');
+  await Hive.initFlutter();
+
   runApp(const AppProvider());
 }
 
@@ -51,13 +53,13 @@ class MyApp extends StatelessWidget {
     );
   }
   //TODO: add caching for pdf.min.js via cdn "https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.min.js"
-  //TODO: implement api cache over the whole app
+  //todo: implement api cache over the whole app - done what can be done
   //TODO: add application error codes && messages
   //TODO: add initialization logic / workflow for newly registered doctors (backend)
   //TODO: migrate (create doctor_subscription) to the backend
   //---------------------------------------------------------------------------------//
   //todo: supply movements in table form
-  //TODO: bookkeeping in table form
+  //todo: bookkeeping in table form
   //TODO: subscription controlles access
   //TODO: patient documents
   //TODO: doctor visits in table form

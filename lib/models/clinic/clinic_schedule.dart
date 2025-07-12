@@ -3,7 +3,7 @@ import 'package:proklinik_one/models/clinic/schedule_shift.dart';
 import 'package:proklinik_one/models/weekdays.dart';
 import 'package:uuid/uuid.dart';
 
-class ClinicSchedule extends Equatable {
+class ClinicSchedule implements Equatable {
   final String id;
   final String clinic_id;
   final int intday;

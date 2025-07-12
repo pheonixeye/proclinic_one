@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:proklinik_one/models/clinic/clinic_schedule.dart';
 import 'package:proklinik_one/models/clinic/prescription_details.dart';
 
-class Clinic extends Equatable {
+class Clinic implements Equatable {
   final String id;
   final String name_en;
   final String name_ar;

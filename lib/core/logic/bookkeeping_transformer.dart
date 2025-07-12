@@ -15,7 +15,7 @@ class BookkeepingTransformer {
     required this.collection_id,
   });
 
-  final _appConstants = PxAppConstants(api: const ConstantsApi());
+  final _appConstants = PxAppConstants(api: ConstantsApi());
   final String item_id;
   final String collection_id;
 

@@ -1,9 +1,12 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:hive_ce_flutter/adapters.dart';
 import 'package:proklinik_one/core/api/_api_result.dart';
 // import 'package:proklinik_one/core/api/cache/api_caching_service.dart';
 import 'package:proklinik_one/core/api/constants/pocketbase_helper.dart';
 import 'package:proklinik_one/errors/code_to_error.dart';
+import 'package:proklinik_one/functions/dprint.dart';
 import 'package:proklinik_one/models/clinic/clinic.dart';
 import 'package:http/http.dart' as http;
 import 'package:proklinik_one/models/clinic/clinic_schedule.dart';
@@ -11,19 +14,37 @@ import 'package:proklinik_one/models/clinic/prescription_details.dart';
 import 'package:proklinik_one/models/clinic/schedule_shift.dart';
 
 class ClinicsApi {
-  final String doc_id;
-
   ClinicsApi({required this.doc_id});
+
+  final String doc_id;
 
   late final String _collection = '${doc_id}__clinics';
 
+  late final _box = Hive.box<String>(_collection);
+
   Future<ApiResult<List<Clinic>>> fetchDoctorClinics() async {
+    await Hive.openBox<String>(_collection);
+
+    late List<Clinic> _clinics;
+
+    if (_box.get(_collection) != null && _box.isNotEmpty) {
+      _clinics = (json.decode(_box.get(_collection)!) as List<dynamic>)
+          .map((e) => Clinic.fromJson(e))
+          .toList();
+      return ApiDataResult<List<Clinic>>(data: _clinics);
+    }
     try {
       final _response =
           await PocketbaseHelper.pb.collection(_collection).getList();
 
-      final _clinics =
+      _clinics =
           _response.items.map((e) => Clinic.fromJson(e.toJson())).toList();
+      try {
+        await _box.put(
+            _collection, json.encode(_clinics.map((x) => x.toJson()).toList()));
+      } catch (e) {
+        dprint('caching Error => ${e.toString()}');
+      }
 
       return ApiDataResult<List<Clinic>>(data: _clinics);
     } catch (e) {
@@ -38,6 +59,7 @@ class ClinicsApi {
     await PocketbaseHelper.pb
         .collection(_collection)
         .create(body: clinic.toJson());
+    await _box.clear();
   }
 
   Future<void> updateClinicInfo(Clinic clinic) async {
@@ -45,6 +67,7 @@ class ClinicsApi {
           clinic.id,
           body: clinic.toJson(),
         );
+    await _box.clear();
   }
 
   Future<void> addPrescriptionImageFileToClinic(
@@ -62,6 +85,7 @@ class ClinicsApi {
         ),
       ],
     );
+    await _box.clear();
   }
 
   Future<void> deletePrescriptionFile(Clinic clinic) async {
@@ -71,12 +95,14 @@ class ClinicsApi {
         'prescription_file': '',
       },
     );
+    await _box.clear();
   }
 
   Future<void> deleteClinic(Clinic clinic) async {
     await PocketbaseHelper.pb.collection(_collection).delete(
           clinic.id,
         );
+    await _box.clear();
   }
 
   Future<void> toggleClinicActivation(Clinic clinic) async {
@@ -86,6 +112,7 @@ class ClinicsApi {
         'is_active': !clinic.is_active,
       },
     );
+    await _box.clear();
   }
 
   Future<void> updatePrescriptionDetails(
@@ -98,6 +125,7 @@ class ClinicsApi {
         'prescription_details': details.toJson(),
       },
     );
+    await _box.clear();
   }
 
   Future<void> addClinicSchedule(Clinic clinic, ClinicSchedule schedule) async {
@@ -108,6 +136,7 @@ class ClinicsApi {
         'clinic_schedule': _newSchedule.map((e) => e.toJson()).toList(),
       },
     );
+    await _box.clear();
   }
 
   Future<void> removeClinicSchedule(
@@ -123,6 +152,7 @@ class ClinicsApi {
         'clinic_schedule': _newSchedule.map((e) => e.toJson()).toList(),
       },
     );
+    await _box.clear();
   }
 
   Future<void> updateClinicSchedule(
@@ -142,6 +172,7 @@ class ClinicsApi {
         'clinic_schedule': _newSchedule.map((e) => e.toJson()).toList(),
       },
     );
+    await _box.clear();
   }
 
   Future<void> addScheduleShift(
@@ -164,6 +195,7 @@ class ClinicsApi {
         'clinic_schedule': _newSchedule.map((e) => e.toJson()).toList(),
       },
     );
+    await _box.clear();
   }
 
   Future<void> removeScheduleShift(
@@ -186,6 +218,7 @@ class ClinicsApi {
         'clinic_schedule': _newSchedule.map((e) => e.toJson()).toList(),
       },
     );
+    await _box.clear();
   }
 
   Future<void> updateScheduleShift(
@@ -212,5 +245,6 @@ class ClinicsApi {
         'clinic_schedule': _newSchedule.map((e) => e.toJson()).toList(),
       },
     );
+    await _box.clear();
   }
 }

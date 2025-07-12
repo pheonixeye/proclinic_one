@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:uuid/uuid.dart';
 
-class ScheduleShift extends Equatable {
+class ScheduleShift implements Equatable {
   final String id;
   final int start_hour;
   final int start_min;

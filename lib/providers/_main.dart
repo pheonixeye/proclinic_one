@@ -41,7 +41,7 @@ final List<SingleChildWidget> providers = [
   ),
   ChangeNotifierProvider(
     create: (context) => PxAppConstants(
-      api: const ConstantsApi(),
+      api: ConstantsApi(),
     ),
   ),
   ChangeNotifierProvider(

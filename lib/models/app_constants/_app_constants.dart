@@ -14,6 +14,7 @@ class AppConstants extends Equatable {
   final List<SubscriptionPlan> subscriptionPlan;
   final List<PatientProgressStatus> patientProgressStatus;
   final List<AppPermission> appPermission;
+
   const AppConstants({
     required this.accountTypes,
     required this.visitStatus,
@@ -99,5 +100,7 @@ class AppConstants extends Equatable {
         visitStatus,
         visitType,
         subscriptionPlan,
+        patientProgressStatus,
+        appPermission,
       ];
 }

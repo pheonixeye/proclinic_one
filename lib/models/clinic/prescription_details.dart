@@ -13,7 +13,7 @@ enum PrescriptionPaperSize {
   }
 }
 
-class ItemDetail extends Equatable {
+class ItemDetail implements Equatable {
   final String name_en;
   final String name_ar;
   final double x_coord;
@@ -72,7 +72,7 @@ class ItemDetail extends Equatable {
   }
 }
 
-class PrescriptionDetails extends Equatable {
+class PrescriptionDetails implements Equatable {
   final Map<String, ItemDetail> details;
 
   const PrescriptionDetails({
