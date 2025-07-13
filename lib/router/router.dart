@@ -13,6 +13,7 @@ import 'package:proklinik_one/pages/loading_page/loading_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/login_page/login_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/register_page/register_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/app_page.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/app_profile_setup/app_profile_setup.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/app_profile_setup/pages/profile_item_page/profile_item_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/clinics_page/clinics_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/bookkeeping_page/bookkeeping_page.dart';
@@ -65,30 +66,31 @@ class AppRouter {
   static const String login = "login";
   static const String register = "register";
   static const String thankyou = "thankyou";
-  static const String app = "app";
-  //profile_setup_routes
-  static const _profile_setup = 'profile_setup_';
-  static const String drugs = "${_profile_setup}drugs";
-  static const String labs = "${_profile_setup}labs";
-  static const String rads = "${_profile_setup}rads";
-  static const String procedures = "${_profile_setup}procedures";
-  static const String supplies = "${_profile_setup}supplies";
   //main_routes
   static const String mysubscription = "subscription";
   static const String orderdetails = "orderdetails";
-  static const String visits = "visits";
   static const String patients = "patients";
   static const String clinics = "clinics";
   static const String forms = "forms";
-  static const String bookkeeping = "bookkeeping";
   static const String settings = "settings";
   static const String transaction = "transaction";
   static const String inventory_supplies = "inventory_supplies";
+  //begining of stateful_shell_route
+  static const String app = "app";
   //visit_data
   static const String visit_data = "data/:visit_id";
   static const String visit_prescription = "prescription";
   //routes_inside_app
   static const String today_visits = "today_visits";
+  static const String visits = "visits";
+  static const String bookkeeping = "bookkeeping";
+  //profile_setup_routes
+  static const _profile_setup = 'profile_setup';
+  static const String drugs = "drugs";
+  static const String labs = "labs";
+  static const String rads = "rads";
+  static const String procedures = "procedures";
+  static const String supplies = "supplies";
 
   String? get currentRouteName =>
       router.routerDelegate.currentConfiguration.last.route.name;
@@ -124,7 +126,7 @@ class AppRouter {
     },
     routes: [
       GoRoute(
-        path: loading,
+        path: loading, // /
         name: loading,
         builder: (context, state) {
           return LoadingPage(
@@ -144,7 +146,7 @@ class AppRouter {
         },
         routes: [
           GoRoute(
-            path: lang,
+            path: lang, // /:lang
             name: lang,
             builder: (context, state) {
               return LangPage(
@@ -173,7 +175,7 @@ class AppRouter {
             },
             routes: [
               GoRoute(
-                path: login,
+                path: login, // /:lang/login
                 name: login,
                 builder: (context, state) {
                   return LoginPage(
@@ -188,7 +190,7 @@ class AppRouter {
                 },
               ),
               GoRoute(
-                path: register,
+                path: register, // /:lang/register
                 name: register,
                 builder: (context, state) {
                   return ChangeNotifierProvider.value(
@@ -207,7 +209,7 @@ class AppRouter {
                 },
               ),
               GoRoute(
-                path: thankyou,
+                path: thankyou, // /:lang/thankyou
                 name: thankyou,
                 builder: (context, state) {
                   return ThankyouPage(
@@ -222,241 +224,276 @@ class AppRouter {
                     child: child,
                   );
                 },
+                redirect: (context, state) async {
+                  final _auth = context.read<PxAuth>();
+                  if (_auth.isLoggedIn) {
+                    return null;
+                  }
+                  if (!_auth.isLoggedIn) {
+                    try {
+                      await _auth.loginWithToken();
+                      dprint(
+                          'authWithToken(AppPage-Redirect)(isLoggedIn=${_auth.isLoggedIn})');
+                      return null;
+                    } catch (e) {
+                      return '/${state.pathParameters['lang']}/$login';
+                    }
+                  }
+                  return null;
+                },
                 routes: [
-                  GoRoute(
-                    path: app,
-                    name: app,
-                    builder: (context, state) {
+                  StatefulShellRoute.indexedStack(
+                    builder: (context, state, navigationShell) {
+                      // print(state.pageKey.value);
                       return AppPage(
+                        key: state.pageKey,
+                        navigationShell: navigationShell,
+                      );
+                    },
+                    branches: [
+                      StatefulShellBranch(
+                        // initialLocation: app,
+                        routes: [
+                          GoRoute(
+                            path: '/$app', // /:lang/app
+                            name: app,
+                            builder: (context, state) {
+                              return TodayVisitsPage(
+                                key: state.pageKey,
+                              );
+                            },
+                            routes: [
+                              GoRoute(
+                                path: visit_data, // /:lang/data/:visit_id
+                                name: visit_data,
+                                builder: (context, state) {
+                                  final _visit_id =
+                                      state.pathParameters['visit_id'];
+                                  try {
+                                    return ChangeNotifierProvider(
+                                      create: (context) => PxVisitData(
+                                        api: VisitDataApi(
+                                          doc_id: context.read<PxAuth>().doc_id,
+                                          visit_id: _visit_id!,
+                                        ),
+                                      ),
+                                      child: VisitDataPage(
+                                        key: state.pageKey,
+                                      ),
+                                    );
+                                  } catch (e) {
+                                    rethrow;
+                                  }
+                                },
+                                routes: [
+                                  GoRoute(
+                                    path:
+                                        visit_prescription, //:visit_id/prescription
+                                    name: visit_prescription,
+                                    builder: (context, state) {
+                                      final _visit_id =
+                                          state.pathParameters['visit_id'];
+                                      try {
+                                        return ChangeNotifierProvider(
+                                          create: (context) => PxVisitData(
+                                            api: VisitDataApi(
+                                              doc_id:
+                                                  context.read<PxAuth>().doc_id,
+                                              visit_id: _visit_id!,
+                                            ),
+                                          ),
+                                          child: ChangeNotifierProvider(
+                                            create: (context) =>
+                                                PxVisitPrescriptionState(),
+                                            child: VisitPrescriptionPage(
+                                              key: state.pageKey,
+                                            ),
+                                          ),
+                                        );
+                                      } catch (e) {
+                                        rethrow;
+                                      }
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      StatefulShellBranch(
+                        routes: [
+                          GoRoute(
+                            path: '/$visits',
+                            name: visits,
+                            builder: (context, state) {
+                              return VisitsPage(
+                                key: state.pageKey,
+                              );
+                            },
+                            routes: [
+                              //TODO
+                            ],
+                          ),
+                        ],
+                      ),
+                      StatefulShellBranch(
+                        routes: [
+                          GoRoute(
+                            path: '/$bookkeeping',
+                            name: bookkeeping,
+                            builder: (context, state) {
+                              return BookkeepingPage(
+                                key: state.pageKey,
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                      StatefulShellBranch(
+                        routes: [
+                          GoRoute(
+                            path: '/$_profile_setup',
+                            name: _profile_setup,
+                            builder: (context, state) {
+                              return AppProfileSetup(
+                                key: state.pageKey,
+                              );
+                            },
+                            routes: [
+                              ...ProfileSetupItem.values.map((e) {
+                                return GoRoute(
+                                  path: e.route,
+                                  name: e.route,
+                                  builder: (context, state) {
+                                    return ChangeNotifierProvider.value(
+                                      value: PxDoctorProfileItems(
+                                        api: DoctorProfileItemsApi(
+                                          doc_id: context.read<PxAuth>().doc_id,
+                                          item: e,
+                                        ),
+                                      ),
+                                      child: ProfileItemPage(
+                                        key: state.pageKey,
+                                        profileSetupItem: e,
+                                      ),
+                                    );
+                                  },
+                                );
+                              }),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+
+                  //main_routes
+                  GoRoute(
+                    path: mysubscription,
+                    name: mysubscription,
+                    builder: (context, state) {
+                      return MySubscriptionPage(
                         key: state.pageKey,
                       );
                     },
-                    redirect: (context, state) async {
-                      final _auth = context.read<PxAuth>();
-                      if (_auth.isLoggedIn) {
-                        return null;
-                      }
-                      if (!_auth.isLoggedIn) {
-                        try {
-                          await _auth.loginWithToken();
-                          dprint(
-                              'authWithToken(AppPage-Redirect)(isLoggedIn=${_auth.isLoggedIn})');
-                          return null;
-                        } catch (e) {
-                          return '/${state.pathParameters['lang']}/$login';
-                        }
-                      }
-                      return null;
-                    },
                     routes: [
                       GoRoute(
-                        path: today_visits,
-                        name: today_visits,
+                        path: orderdetails,
+                        name: orderdetails,
                         builder: (context, state) {
-                          return TodayVisitsPage(
-                            key: state.pageKey,
-                          );
-                        },
-                      ),
-                      GoRoute(
-                        path: visits,
-                        name: visits,
-                        builder: (context, state) {
-                          return VisitsPage(
-                            key: state.pageKey,
-                          );
-                        },
-                      ),
-                      GoRoute(
-                        path: bookkeeping,
-                        name: bookkeeping,
-                        builder: (context, state) {
-                          return BookkeepingPage(
-                            key: state.pageKey,
-                          );
-                        },
-                      ),
-                      //profile_setup_routes
-                      ...ProfileSetupItem.values.map((e) {
-                        return GoRoute(
-                          path: e.route,
-                          name: e.route,
-                          builder: (context, state) {
-                            return ChangeNotifierProvider.value(
-                              value: PxDoctorProfileItems(
-                                api: DoctorProfileItemsApi(
-                                  doc_id: context.read<PxAuth>().doc_id,
-                                  item: e,
-                                ),
-                              ),
-                              child: ProfileItemPage(
-                                key: state.pageKey,
-                                profileSetupItem: e,
-                              ),
-                            );
-                          },
-                        );
-                      }),
-                      GoRoute(
-                        path: visit_data, //:visit_id
-                        name: visit_data,
-                        builder: (context, state) {
-                          final _visit_id = state.pathParameters['visit_id'];
                           try {
-                            return ChangeNotifierProvider(
-                              create: (context) => PxVisitData(
-                                api: VisitDataApi(
-                                  doc_id: context.read<PxAuth>().doc_id,
-                                  visit_id: _visit_id!,
-                                ),
-                              ),
-                              child: VisitDataPage(
-                                key: state.pageKey,
-                              ),
+                            final _data = state.extra as Map<String, dynamic>?;
+                            return OrderDetailsPage(
+                              key: state.pageKey,
+                              data: _data,
                             );
                           } catch (e) {
                             rethrow;
                           }
                         },
-                        routes: [
-                          GoRoute(
-                            path: visit_prescription, //:visit_id/prescription
-                            name: visit_prescription,
-                            builder: (context, state) {
-                              final _visit_id =
-                                  state.pathParameters['visit_id'];
-                              try {
-                                return ChangeNotifierProvider(
-                                  create: (context) => PxVisitData(
-                                    api: VisitDataApi(
-                                      doc_id: context.read<PxAuth>().doc_id,
-                                      visit_id: _visit_id!,
-                                    ),
-                                  ),
-                                  child: ChangeNotifierProvider(
-                                    create: (context) =>
-                                        PxVisitPrescriptionState(),
-                                    child: VisitPrescriptionPage(
-                                      key: state.pageKey,
-                                    ),
-                                  ),
-                                );
-                              } catch (e) {
-                                rethrow;
-                              }
-                            },
-                          ),
-                        ],
-                      ),
-                      //main_routes
-                      GoRoute(
-                        path: mysubscription,
-                        name: mysubscription,
-                        builder: (context, state) {
-                          return MySubscriptionPage(
-                            key: state.pageKey,
-                          );
-                        },
-                        routes: [
-                          GoRoute(
-                            path: orderdetails,
-                            name: orderdetails,
-                            builder: (context, state) {
-                              try {
-                                final _data =
-                                    state.extra as Map<String, dynamic>?;
-                                return OrderDetailsPage(
-                                  key: state.pageKey,
-                                  data: _data,
-                                );
-                              } catch (e) {
-                                rethrow;
-                              }
-                            },
-                          ),
-                        ],
-                      ),
-
-                      GoRoute(
-                        path: patients,
-                        name: patients,
-                        builder: (context, state) {
-                          return ChangeNotifierProvider.value(
-                            value: PxPatients(
-                              api: PatientsApi(
-                                doc_id: context.read<PxAuth>().doc_id,
-                              ),
-                            ),
-                            child: PatientsPage(
-                              key: state.pageKey,
-                            ),
-                          );
-                        },
-                      ),
-                      GoRoute(
-                        path: clinics,
-                        name: clinics,
-                        builder: (context, state) {
-                          return ChangeNotifierProvider.value(
-                            value: PxClinics(
-                              api: ClinicsApi(
-                                doc_id: context.read<PxAuth>().doc_id,
-                              ),
-                            ),
-                            child: ClinicsPage(
-                              key: state.pageKey,
-                            ),
-                          );
-                        },
-                      ),
-                      GoRoute(
-                        path: forms,
-                        name: forms,
-                        builder: (context, state) {
-                          return ChangeNotifierProvider.value(
-                            value: PxForms(
-                              api: FormsApi(
-                                doc_id: context.read<PxAuth>().doc_id,
-                              ),
-                            ),
-                            child: FormsPage(
-                              key: state.pageKey,
-                            ),
-                          );
-                        },
-                      ),
-
-                      GoRoute(
-                        path: settings,
-                        name: settings,
-                        builder: (context, state) {
-                          return SettingsPage(
-                            key: state.pageKey,
-                          );
-                        },
-                      ),
-                      GoRoute(
-                        path: inventory_supplies,
-                        name: inventory_supplies,
-                        builder: (context, state) {
-                          return SupplyMovementsPage(
-                            key: state.pageKey,
-                          );
-                        },
-                      ),
-                      //transaction_result page
-                      GoRoute(
-                        path: transaction,
-                        name: transaction,
-                        builder: (context, state) {
-                          final _query = state.uri.queryParameters;
-                          return TransactionPage(
-                            key: state.pageKey,
-                            query: _query,
-                          );
-                        },
                       ),
                     ],
+                  ),
+
+                  GoRoute(
+                    path: patients,
+                    name: patients,
+                    builder: (context, state) {
+                      return ChangeNotifierProvider.value(
+                        value: PxPatients(
+                          api: PatientsApi(
+                            doc_id: context.read<PxAuth>().doc_id,
+                          ),
+                        ),
+                        child: PatientsPage(
+                          key: state.pageKey,
+                        ),
+                      );
+                    },
+                  ),
+                  GoRoute(
+                    path: clinics,
+                    name: clinics,
+                    builder: (context, state) {
+                      return ChangeNotifierProvider.value(
+                        value: PxClinics(
+                          api: ClinicsApi(
+                            doc_id: context.read<PxAuth>().doc_id,
+                          ),
+                        ),
+                        child: ClinicsPage(
+                          key: state.pageKey,
+                        ),
+                      );
+                    },
+                  ),
+                  GoRoute(
+                    path: forms,
+                    name: forms,
+                    builder: (context, state) {
+                      return ChangeNotifierProvider.value(
+                        value: PxForms(
+                          api: FormsApi(
+                            doc_id: context.read<PxAuth>().doc_id,
+                          ),
+                        ),
+                        child: FormsPage(
+                          key: state.pageKey,
+                        ),
+                      );
+                    },
+                  ),
+
+                  GoRoute(
+                    path: settings,
+                    name: settings,
+                    builder: (context, state) {
+                      return SettingsPage(
+                        key: state.pageKey,
+                      );
+                    },
+                  ),
+                  GoRoute(
+                    path: inventory_supplies,
+                    name: inventory_supplies,
+                    builder: (context, state) {
+                      return SupplyMovementsPage(
+                        key: state.pageKey,
+                      );
+                    },
+                  ),
+                  //transaction_result page
+                  GoRoute(
+                    path: transaction,
+                    name: transaction,
+                    builder: (context, state) {
+                      final _query = state.uri.queryParameters;
+                      return TransactionPage(
+                        key: state.pageKey,
+                        query: _query,
+                      );
+                    },
                   ),
                 ],
               ),

@@ -11,25 +11,24 @@ class PxVisits extends ChangeNotifier {
 
   PxVisits({required this.api}) {
     _fetchVisitsOfToday();
-    // _subscribe(); //TODO: Find why is erroring
   }
 
-  static TabController? _tabController;
-  TabController? get tabController => _tabController;
+  // static TabController? _tabController;
+  // TabController? get tabController => _tabController;
 
-  TabController getTabController({
-    required int length,
-    required TickerProvider vsync,
-  }) {
-    if (_tabController == null) {
-      _tabController = TabController(
-        length: length,
-        vsync: vsync,
-      );
-      return _tabController!;
-    }
-    return _tabController!;
-  }
+  // TabController getTabController({
+  //   required int length,
+  //   required TickerProvider vsync,
+  // }) {
+  //   if (_tabController == null) {
+  //     _tabController = TabController(
+  //       length: length,
+  //       vsync: vsync,
+  //     );
+  //     return _tabController!;
+  //   }
+  //   return _tabController!;
+  // }
 
   ApiResult<List<Visit>>? _visits;
   ApiResult<List<Visit>>? get visits => _visits;

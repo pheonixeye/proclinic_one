@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:proklinik_one/extensions/is_mobile_context.dart';
 import 'package:proklinik_one/extensions/loc_ext.dart';
-import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/app_profile_setup/app_profile_setup.dart';
-import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/bookkeeping_page/bookkeeping_page.dart';
-import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/today_visits_page/today_visits_page.dart';
-import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/visits_page/visits_page.dart';
 
 class AppPage extends StatefulWidget {
-  const AppPage({super.key});
+  const AppPage({
+    super.key,
+    required this.navigationShell,
+  });
+  final StatefulNavigationShell navigationShell;
 
   @override
   State<AppPage> createState() => _AppPageState();
 }
 
 class _AppPageState extends State<AppPage> with SingleTickerProviderStateMixin {
-  int _index = 0;
   bool _isExtended = false;
 
   late final _navDestinationItems = <NavigationRailDestination>[
@@ -54,17 +54,19 @@ class _AppPageState extends State<AppPage> with SingleTickerProviderStateMixin {
               backgroundColor: Colors.blue.shade200,
               extended: _isExtended,
               destinations: _navDestinationItems,
-              selectedIndex: _index,
+              selectedIndex: widget.navigationShell.currentIndex,
               leading: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: CircleAvatar(
                   backgroundColor: Colors.amber.shade200,
-                  child: _navDestinationItems[_index].selectedIcon,
+                  child:
+                      _navDestinationItems[widget.navigationShell.currentIndex]
+                          .selectedIcon,
                 ),
               ),
               onDestinationSelected: (value) {
+                widget.navigationShell.goBranch(value);
                 setState(() {
-                  _index = value;
                   _isExtended = false;
                 });
               },
@@ -84,31 +86,20 @@ class _AppPageState extends State<AppPage> with SingleTickerProviderStateMixin {
               ),
             ),
           Expanded(
-            child: IndexedStack(
-              alignment: Alignment.center,
-              index: _index,
-              children: <Widget>[
-                const TodayVisitsPage(),
-                const VisitsPage(),
-                const BookkeepingPage(),
-                const AppProfileSetup(),
-              ],
-            ),
+            child: widget.navigationShell,
           ),
         ],
       ),
       bottomNavigationBar: context.isMobile
           ? BottomNavigationBar(
               useLegacyColorScheme: false,
-              currentIndex: _index,
+              currentIndex: widget.navigationShell.currentIndex,
               type: BottomNavigationBarType.shifting,
               elevation: 6,
               mouseCursor: SystemMouseCursors.click,
               showSelectedLabels: true,
               onTap: (value) {
-                setState(() {
-                  _index = value;
-                });
+                widget.navigationShell.goBranch(value);
               },
               items: [
                 BottomNavigationBarItem(

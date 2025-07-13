@@ -25,6 +25,14 @@ class TodayVisitsPage extends StatefulWidget {
 
 class _TodayVisitsPageState extends State<TodayVisitsPage>
     with TickerProviderStateMixin {
+  TabController? _tabController;
+
+  @override
+  void dispose() {
+    _tabController?.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer3<PxVisits, PxClinics, PxLocale>(
@@ -41,9 +49,10 @@ class _TodayVisitsPageState extends State<TodayVisitsPage>
 
         final _clinics = (c.result as ApiDataResult<List<Clinic>>).data;
 
-        final _tabController =
-            v.getTabController(length: _clinics.length, vsync: this);
-
+        _tabController = TabController(
+          length: _clinics.length,
+          vsync: this,
+        );
         return Scaffold(
           body: Column(
             children: [
@@ -51,7 +60,7 @@ class _TodayVisitsPageState extends State<TodayVisitsPage>
                 children: [
                   ClinicsTabBar(
                     clinics: _clinics,
-                    controller: _tabController,
+                    controller: _tabController!,
                   ),
                   if (v.isUpdating)
                     Align(

@@ -89,7 +89,7 @@ class VisitsApi {
             page: page,
             perPage: perPage,
             filter:
-                "visit_date >= '$_dateOfVisitFormatted' && visit_date < '$_dateAfterVisitFormatted'",
+                "visit_date >= '$_dateOfVisitFormatted' && visit_date <= '$_dateAfterVisitFormatted'",
             expand: _expand,
             sort: '-patient_entry_number',
           );
