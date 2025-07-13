@@ -426,6 +426,8 @@ class VisitPrescriptionPage extends StatelessWidget {
                                     _bytesWithImage = await s
                                         .screenshotControllerWithImage
                                         .capture();
+                                    //TODO: Add to patient documents collection
+                                    //TODO: Send patient the link
                                     _bytesWithoutImage = await s
                                         .screenshotControllerWithoutImage
                                         .capture();

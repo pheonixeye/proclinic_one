@@ -15,6 +15,8 @@ import 'package:proklinik_one/pages/loading_page/pages/error_page/error_page.dar
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/lang_page.dart';
 import 'package:proklinik_one/pages/loading_page/loading_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/login_page/login_page.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/patient_portal_page/pages/patient_information_page/patient_information_page.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/patient_portal_page/patient_portal_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/register_page/register_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/app_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/app_profile_setup/app_profile_setup.dart';
@@ -107,6 +109,9 @@ class AppRouter {
   static const String rads = "rads";
   static const String procedures = "procedures";
   static const String supplies = "supplies";
+  //profile_setup_routes
+  static const String patient_portal = 'patient_portal';
+  static const String patient_id = ':patient_id';
 
   String? get currentRouteName =>
       router.routerDelegate.currentConfiguration.last.route.name;
@@ -190,6 +195,26 @@ class AppRouter {
               return null;
             },
             routes: [
+              GoRoute(
+                path: patient_portal,
+                name: patient_portal,
+                builder: (context, state) {
+                  return PatientPortalPage(
+                    key: state.pageKey,
+                  );
+                },
+                routes: [
+                  GoRoute(
+                    path: patient_id,
+                    name: patient_id,
+                    builder: (context, state) {
+                      return PatientInformationPage(
+                        key: state.pageKey,
+                      );
+                    },
+                  ),
+                ],
+              ),
               GoRoute(
                 path: login, // /:lang/login
                 name: login,
