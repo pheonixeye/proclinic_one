@@ -49,9 +49,9 @@ class _AppPageState extends State<AppPage> with SingleTickerProviderStateMixin {
           if (!context.isMobile)
             NavigationRail(
               useIndicator: true,
-              indicatorColor: Colors.amber.shade200,
+              indicatorColor: Colors.amber.shade300,
               elevation: 6,
-              backgroundColor: Colors.blue.shade200,
+              backgroundColor: Colors.blue.shade300,
               extended: _isExtended,
               destinations: _navDestinationItems,
               selectedIndex: widget.navigationShell.currentIndex,

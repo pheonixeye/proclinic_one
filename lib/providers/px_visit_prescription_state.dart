@@ -12,6 +12,7 @@ enum PrescriptionView {
 class PxVisitPrescriptionState extends ChangeNotifier {
   PxVisitPrescriptionState() {
     init();
+    //TODO: Implement hive caching instead of session caching
   }
 
   static final Map<String, Offset> _offsetsSessionCache = {};

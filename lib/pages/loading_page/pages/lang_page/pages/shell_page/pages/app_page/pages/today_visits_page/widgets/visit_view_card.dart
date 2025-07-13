@@ -406,7 +406,7 @@ class VisitViewCard extends StatelessWidget {
                             return;
                           }
                           GoRouter.of(context).goNamed(
-                            AppRouter.visit_data,
+                            AppRouter.visit_forms,
                             pathParameters: defaultPathParameters(context)
                               ..addAll({
                                 'visit_id': visit.id,

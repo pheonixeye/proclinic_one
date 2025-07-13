@@ -6,6 +6,10 @@ import 'package:proklinik_one/core/api/forms_api.dart';
 import 'package:proklinik_one/core/api/patients_api.dart';
 import 'package:proklinik_one/core/api/visit_data_api.dart';
 import 'package:proklinik_one/functions/dprint.dart';
+import 'package:proklinik_one/models/doctor_items/doctor_lab_item.dart';
+import 'package:proklinik_one/models/doctor_items/doctor_procedure_item.dart';
+import 'package:proklinik_one/models/doctor_items/doctor_rad_item.dart';
+import 'package:proklinik_one/models/doctor_items/doctor_supply_item.dart';
 import 'package:proklinik_one/models/doctor_items/profile_setup_item.dart';
 import 'package:proklinik_one/pages/loading_page/pages/error_page/error_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/lang_page.dart';
@@ -20,7 +24,10 @@ import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_pag
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/forms_page/forms_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/my_subscription_page/pages/order_details_page/order_details_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/inventory_supplies_page/supply_movements_page.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/today_visits_page/pages/visit_data_page/pages/drugs_page/drugs_page.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/today_visits_page/pages/visit_data_page/pages/forms_page/forms_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/today_visits_page/pages/visit_data_page/pages/visit_prescription_page/visit_prescription_page.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/today_visits_page/pages/visit_data_page/pages/visit_single_items_page/visit_single_items_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/today_visits_page/pages/visit_data_page/visit_data_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/today_visits_page/today_visits_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/transaction/transaction_page.dart';
@@ -41,6 +48,7 @@ import 'package:proklinik_one/providers/px_visit_data.dart';
 import 'package:proklinik_one/providers/px_visit_prescription_state.dart';
 import 'package:proklinik_one/utils/shared_prefs.dart';
 import 'package:proklinik_one/utils/utils_keys.dart';
+import 'package:proklinik_one/widgets/central_loading.dart';
 import 'package:provider/provider.dart';
 
 Map<String, String> defaultPathParameters(BuildContext context) {
@@ -79,7 +87,13 @@ class AppRouter {
   static const String app = "app";
   //visit_data
   static const String visit_data = "data/:visit_id";
-  static const String visit_prescription = "prescription";
+  static const String visit_forms = "visit_forms";
+  static const String visit_drugs = "visit_drugs";
+  static const String visit_labs = "visit_labs";
+  static const String visit_rads = "visit_rads";
+  static const String visit_procedures = "visit_procedures";
+  static const String visit_supplies = "visit_supplies";
+  static const String visit_prescription = "visit_prescription";
   //routes_inside_app
   static const String today_visits = "today_visits";
   static const String visits = "visits";
@@ -264,33 +278,26 @@ class AppRouter {
                             },
                             routes: [
                               GoRoute(
-                                path: visit_data, // /:lang/data/:visit_id
+                                path: visit_data, // /data/:visit_id
                                 name: visit_data,
                                 builder: (context, state) {
+                                  return CentralLoading(
+                                    key: state.pageKey,
+                                  );
+                                },
+                                redirect: (context, state) {
+                                  final _lang = state.pathParameters['lang'];
                                   final _visit_id =
                                       state.pathParameters['visit_id'];
-                                  try {
-                                    return ChangeNotifierProvider(
-                                      create: (context) => PxVisitData(
-                                        api: VisitDataApi(
-                                          doc_id: context.read<PxAuth>().doc_id,
-                                          visit_id: _visit_id!,
-                                        ),
-                                      ),
-                                      child: VisitDataPage(
-                                        key: state.pageKey,
-                                      ),
-                                    );
-                                  } catch (e) {
-                                    rethrow;
+                                  if (state.fullPath ==
+                                      '/:lang/app/data/:visit_id') {
+                                    return '/$_lang/app/data/$_visit_id/visit_forms';
                                   }
+                                  return null;
                                 },
                                 routes: [
-                                  GoRoute(
-                                    path:
-                                        visit_prescription, //:visit_id/prescription
-                                    name: visit_prescription,
-                                    builder: (context, state) {
+                                  StatefulShellRoute.indexedStack(
+                                    builder: (context, state, navigationShell) {
                                       final _visit_id =
                                           state.pathParameters['visit_id'];
                                       try {
@@ -302,18 +309,129 @@ class AppRouter {
                                               visit_id: _visit_id!,
                                             ),
                                           ),
-                                          child: ChangeNotifierProvider(
-                                            create: (context) =>
-                                                PxVisitPrescriptionState(),
-                                            child: VisitPrescriptionPage(
-                                              key: state.pageKey,
-                                            ),
+                                          child: VisitDataPage(
+                                            key: state.pageKey,
+                                            navigationShell: navigationShell,
                                           ),
                                         );
                                       } catch (e) {
                                         rethrow;
                                       }
                                     },
+                                    branches: [
+                                      StatefulShellBranch(
+                                        routes: [
+                                          GoRoute(
+                                            path: '/$visit_forms',
+                                            name: visit_forms,
+                                            builder: (context, state) {
+                                              return VisitFormsPage(
+                                                key: state.pageKey,
+                                              );
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                      StatefulShellBranch(
+                                        routes: [
+                                          GoRoute(
+                                            path: '/$visit_drugs',
+                                            name: visit_drugs,
+                                            builder: (context, state) {
+                                              return VisitDrugsPage(
+                                                key: state.pageKey,
+                                              );
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                      StatefulShellBranch(
+                                        routes: [
+                                          GoRoute(
+                                            path: '/$visit_labs',
+                                            name: visit_labs,
+                                            builder: (context, state) {
+                                              return VisitSingleItemsPage<
+                                                  DoctorLabItem>(
+                                                key: state.pageKey,
+                                                setupItem:
+                                                    ProfileSetupItem.labs,
+                                              );
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                      StatefulShellBranch(
+                                        routes: [
+                                          GoRoute(
+                                            path: '/$visit_rads',
+                                            name: visit_rads,
+                                            builder: (context, state) {
+                                              return VisitSingleItemsPage<
+                                                  DoctorRadItem>(
+                                                key: state.pageKey,
+                                                setupItem:
+                                                    ProfileSetupItem.rads,
+                                              );
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                      StatefulShellBranch(
+                                        routes: [
+                                          GoRoute(
+                                            path: '/$visit_procedures',
+                                            name: visit_procedures,
+                                            builder: (context, state) {
+                                              return VisitSingleItemsPage<
+                                                  DoctorProcedureItem>(
+                                                key: state.pageKey,
+                                                setupItem:
+                                                    ProfileSetupItem.procedures,
+                                              );
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                      StatefulShellBranch(
+                                        routes: [
+                                          GoRoute(
+                                            path: '/$visit_supplies',
+                                            name: visit_supplies,
+                                            builder: (context, state) {
+                                              return VisitSingleItemsPage<
+                                                  DoctorSupplyItem>(
+                                                key: state.pageKey,
+                                                setupItem:
+                                                    ProfileSetupItem.supplies,
+                                              );
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                      StatefulShellBranch(
+                                        routes: [
+                                          GoRoute(
+                                            path:
+                                                '/$visit_prescription', //:visit_id/visit_prescription
+                                            name: visit_prescription,
+                                            builder: (context, state) {
+                                              try {
+                                                return ChangeNotifierProvider(
+                                                  create: (context) =>
+                                                      PxVisitPrescriptionState(),
+                                                  child: VisitPrescriptionPage(
+                                                    key: state.pageKey,
+                                                  ),
+                                                );
+                                              } catch (e) {
+                                                rethrow;
+                                              }
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),

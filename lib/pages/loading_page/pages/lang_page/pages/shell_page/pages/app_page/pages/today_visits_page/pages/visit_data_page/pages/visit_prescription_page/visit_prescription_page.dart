@@ -69,6 +69,7 @@ class VisitPrescriptionPage extends StatelessWidget {
                       child: ConstrainedBox(
                         constraints: BoxConstraints(
                           maxWidth: 420,
+                          minWidth: 420,
                         ),
                         child: Screenshot(
                           controller: s.screenshotControllerWithoutImage,

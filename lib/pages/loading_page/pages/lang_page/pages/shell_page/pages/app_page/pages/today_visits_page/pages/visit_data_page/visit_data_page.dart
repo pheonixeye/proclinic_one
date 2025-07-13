@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:proklinik_one/extensions/is_mobile_context.dart';
 import 'package:proklinik_one/models/visit_data/visit_data_nav_item.dart';
 
 class VisitDataPage extends StatefulWidget {
-  const VisitDataPage({super.key});
+  const VisitDataPage({
+    super.key,
+    required this.navigationShell,
+  });
+  final StatefulNavigationShell navigationShell;
 
   @override
   State<VisitDataPage> createState() => _VisitDataPageState();
@@ -11,7 +16,6 @@ class VisitDataPage extends StatefulWidget {
 
 class _VisitDataPageState extends State<VisitDataPage> {
   bool _isExtended = false;
-  int _index = 0;
   late final _items = VisitDataNavItem.items(context);
 
   @override
@@ -33,10 +37,10 @@ class _VisitDataPageState extends State<VisitDataPage> {
                   label: Text(e.title),
                 );
               }).toList(),
-              selectedIndex: _index,
+              selectedIndex: widget.navigationShell.currentIndex,
               onDestinationSelected: (value) {
+                widget.navigationShell.goBranch(value);
                 setState(() {
-                  _index = value;
                   _isExtended = false;
                 });
               },
@@ -56,18 +60,14 @@ class _VisitDataPageState extends State<VisitDataPage> {
               ),
             ),
           Expanded(
-            child: IndexedStack(
-              index: _index,
-              alignment: Alignment.center,
-              children: _items.map((e) => e.page).toList(),
-            ),
+            child: widget.navigationShell,
           ),
         ],
       ),
       bottomNavigationBar: context.isMobile
           ? BottomNavigationBar(
               useLegacyColorScheme: false,
-              currentIndex: _index,
+              currentIndex: widget.navigationShell.currentIndex,
               type: BottomNavigationBarType.shifting,
               elevation: 6,
               mouseCursor: SystemMouseCursors.click,
@@ -82,9 +82,7 @@ class _VisitDataPageState extends State<VisitDataPage> {
                   )
                   .toList(),
               onTap: (value) {
-                setState(() {
-                  _index = value;
-                });
+                widget.navigationShell.goBranch(value);
               },
             )
           : null,
