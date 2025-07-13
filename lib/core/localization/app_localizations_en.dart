@@ -926,4 +926,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get netBalance => 'Net Balance';
+
+  @override
+  String get patientMovementProgress => 'Patient Movement Progress';
 }

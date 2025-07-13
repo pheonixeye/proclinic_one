@@ -568,8 +568,11 @@ class _AddNewVisitDialogState extends State<AddNewVisitDialog> {
                   setState(() {
                     _isLoading = true;
                   });
-                  final _nextEntryNumber =
-                      await v.nextEntryNumber(_visitDate!, _clinic!.id);
+                  final _nextEntryNumber = await v.nextEntryNumber(
+                    _visitDate!,
+                    _clinic!.id,
+                    _scheduleShift!.id,
+                  );
                   setState(() {
                     _isLoading = false;
                   });
@@ -597,10 +600,7 @@ class _AddNewVisitDialogState extends State<AddNewVisitDialog> {
                 color: Colors.green.shade100,
               ),
             ),
-            if (_isLoading)
-              CircularProgressIndicator(
-                backgroundColor: Colors.amber.shade200,
-              ),
+            if (_isLoading) CupertinoActivityIndicator(),
             ElevatedButton.icon(
               onPressed: () {
                 Navigator.pop(context, null);

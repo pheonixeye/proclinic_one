@@ -321,5 +321,7 @@
     "amountInPounds" : "السعر بالجنيه",
     "totalExpenses" : "اجمالي الانفاق",
     "totalIncome" : "اجمالي الوارد",
-    "netBalance" : "الصافي"
+    "netBalance" : "الصافي",
+    "@@clinics_patients_progress_page": "",
+    "patientMovementProgress" : "متابعة تقدم المرضي"
     }

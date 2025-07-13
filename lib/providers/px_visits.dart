@@ -61,13 +61,20 @@ class PxVisits extends ChangeNotifier {
     await _fetchVisitsOfToday();
   }
 
-  Future<int> nextEntryNumber(DateTime visit_date, String clinic_id) async {
+  Future<int> nextEntryNumber(
+    DateTime visit_date,
+    String clinic_id,
+    String schedule_shift_id,
+  ) async {
     toggleIsUpdating();
     final _result = (await _fetchVisitsOfASpecificDate(visit_date)
             as ApiDataResult<List<Visit>>)
         .data;
-    final _clinicVisits =
-        _result.where((e) => e.clinic.id == clinic_id).toList();
+    final _clinicVisits = _result
+        .where((e) =>
+            e.clinic.id == clinic_id &&
+            e.clinic_schedule_shift.id == schedule_shift_id)
+        .toList();
 
     toggleIsUpdating();
     return _clinicVisits.length + 1;

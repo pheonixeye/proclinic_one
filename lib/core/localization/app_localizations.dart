@@ -1873,6 +1873,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Net Balance'**
   String get netBalance;
+
+  /// No description provided for @patientMovementProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Patient Movement Progress'**
+  String get patientMovementProgress;
 }
 
 class _AppLocalizationsDelegate

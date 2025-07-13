@@ -925,4 +925,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get netBalance => 'الصافي';
+
+  @override
+  String get patientMovementProgress => 'متابعة تقدم المرضي';
 }

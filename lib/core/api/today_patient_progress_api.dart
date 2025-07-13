@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:intl/intl.dart';
 import 'package:pocketbase/pocketbase.dart';
 import 'package:proklinik_one/core/api/constants/pocketbase_helper.dart';
+import 'package:proklinik_one/models/visits/_visit.dart';
 
 class TodayPatientProgressApi {
   final String doc_id;
@@ -57,5 +58,17 @@ class TodayPatientProgressApi {
           "visit_date >= '$_dateOfVisitFormatted' && visit_date <= '$_dateAfterVisitFormatted'",
     );
     return _Stream;
+  }
+
+  Future<List<Visit>> fetchTodayVisits() async {
+    final _response =
+        await PocketbaseHelper.pb.collection(collection).getFullList(
+              expand: _expand,
+              filter:
+                  "visit_date >= '$_dateOfVisitFormatted' && visit_date <= '$_dateAfterVisitFormatted'",
+              sort: '-patient_entry_number',
+            );
+
+    return _response.map((e) => Visit.fromRecordModel(e)).toList();
   }
 }

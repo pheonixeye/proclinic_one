@@ -322,6 +322,7 @@
     "amountInPounds" : "Amount In EGP",
     "totalExpenses" : "Total Expenses",
     "totalIncome" : "Total Income",
-    "netBalance" : "Net Balance"
-
+    "netBalance" : "Net Balance",
+    "@@clinics_patients_progress_page": "",
+    "patientMovementProgress" : "Patient Movement Progress"
 }

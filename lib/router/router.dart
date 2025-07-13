@@ -21,6 +21,7 @@ import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_pag
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/app_profile_setup/pages/profile_item_page/profile_item_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/clinics_page/clinics_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/bookkeeping_page/bookkeeping_page.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/clinics_patients_movements_page/clinics_patients_movements_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/forms_page/forms_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/my_subscription_page/pages/order_details_page/order_details_page.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/inventory_supplies_page/supply_movements_page.dart';
@@ -82,6 +83,7 @@ class AppRouter {
   static const String forms = "forms";
   static const String settings = "settings";
   static const String transaction = "transaction";
+  static const String clinics_patients_movements = "clinics_patients_movements";
   static const String inventory_supplies = "inventory_supplies";
   //begining of stateful_shell_route
   static const String app = "app";
@@ -610,6 +612,16 @@ class AppRouter {
                       return TransactionPage(
                         key: state.pageKey,
                         query: _query,
+                      );
+                    },
+                  ),
+                  //transaction_result page
+                  GoRoute(
+                    path: clinics_patients_movements,
+                    name: clinics_patients_movements,
+                    builder: (context, state) {
+                      return ClinicsPatientsMovementsPage(
+                        key: state.pageKey,
                       );
                     },
                   ),
