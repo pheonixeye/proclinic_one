@@ -59,9 +59,9 @@ class BookkeepingTransformer {
 
   BookkeepingItemDto fromVisitUpdate(Visit old_visit, Visit updated_visit) {
     //TODO: error prone logic - needs to improve by a long shot
-    late final BookkeepingName _item_name;
+    BookkeepingName _item_name = BookkeepingName.visit_no_update;
     late final String _type;
-    late final double _bk_item_amount;
+    double _bk_item_amount = 0;
 
     if (old_visit.visit_status.id == _attended_id &&
         updated_visit.visit_status.id == _not_attended_id) {

@@ -149,7 +149,7 @@ class VisitsApi {
 
     //todo: parse result
     final _old_visit = visit;
-    final _new_visit = Visit.fromRecordModel(_response);
+    final _updated_visit = Visit.fromRecordModel(_response);
 
     //todo: initialize transformer
     final _bk_transformer = BookkeepingTransformer(
@@ -158,7 +158,7 @@ class VisitsApi {
     );
 
     //todo: initialize bk_item
-    final _item = _bk_transformer.fromVisitUpdate(_old_visit, _new_visit);
+    final _item = _bk_transformer.fromVisitUpdate(_old_visit, _updated_visit);
 
     //todo: send bookkeeping request
     await BookkeepingApi(doc_id: doc_id).addBookkeepingItem(_item);

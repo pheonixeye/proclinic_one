@@ -42,22 +42,15 @@ class TodayPatientProgressApi {
 
   late final collection = '${doc_id}__visits';
 
-  final _sub = StreamController<RecordSubscriptionEvent>.broadcast();
-  late final _Stream = _sub.stream;
-  late final _sink = _sub.sink;
-
-  Future<Stream<RecordSubscriptionEvent>>
-      listenToVisitsCollectionStream() async {
-    await PocketbaseHelper.pb.collection(collection).subscribe(
-      '*',
-      (event) {
-        _sink.add(event);
-      },
-      expand: _expand,
-      filter:
-          "visit_date >= '$_dateOfVisitFormatted' && visit_date <= '$_dateAfterVisitFormatted'",
-    );
-    return _Stream;
+  Future<UnsubscribeFunc> listenToVisitsCollectionStream(
+      void Function(RecordSubscriptionEvent) callback) async {
+    return await PocketbaseHelper.pb.collection(collection).subscribe(
+          '*',
+          callback,
+          expand: _expand,
+          filter:
+              "visit_date >= '$_dateOfVisitFormatted' && visit_date <= '$_dateAfterVisitFormatted'",
+        );
   }
 
   Future<List<Visit>> fetchTodayVisits() async {
