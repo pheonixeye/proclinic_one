@@ -151,6 +151,25 @@ class PxVisitPrescriptionState extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  double _formItemsVerticalScale = 1;
+  double get formItemsVerticalScale => _formItemsVerticalScale;
+  double _formItemsHorizontalScale = 1;
+  double get formItemsHorizontalScale => _formItemsHorizontalScale;
+
+  Offset _formItemsOffset = Offset(0, 0);
+  Offset get formItemsOffset => _formItemsOffset;
+
+  void updateFormItemsScale(double xScale, yScale) {
+    _formItemsHorizontalScale = xScale;
+    _formItemsVerticalScale = yScale;
+    notifyListeners();
+  }
+
+  void updateFormItemsOffset(Offset value) {
+    _formItemsOffset = value;
+    notifyListeners();
+  }
 }
 
 final _axisAlignments = [

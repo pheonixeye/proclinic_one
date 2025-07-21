@@ -328,32 +328,54 @@ class VisitPrescriptionPage extends StatelessWidget {
                                 }),
                               if (s.view == PrescriptionView.forms &&
                                   s.formItems != null)
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment:
-                                      s.formItemsCrossAxisAlignment,
-                                  children: [
-                                    ...s.formItems!.map((f) {
-                                      return Text.rich(
-                                        TextSpan(
-                                          text: '${f.field_name} : \n',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                          children: [
-                                            TextSpan(
-                                              text: f.field_value,
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.normal,
+                                GestureDetector(
+                                  onScaleUpdate: (details) {
+                                    s.updateFormItemsScale(
+                                      details.verticalScale,
+                                      details.horizontalScale,
+                                    );
+                                    s.updateFormItemsOffset(
+                                        details.localFocalPoint);
+                                  },
+                                  child: Transform.scale(
+                                    scaleX: s.formItemsHorizontalScale,
+                                    scaleY: s.formItemsVerticalScale,
+                                    origin: s.formItemsOffset,
+                                    child: SizedBox(
+                                      width: s.formItemsHorizontalScale * 10,
+                                      height: s.formItemsVerticalScale * 10,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            s.formItemsCrossAxisAlignment,
+                                        children: [
+                                          ...s.formItems!.map((f) {
+                                            //TODO: Adjust large paragraphs to fit the prescription image
+                                            return Text.rich(
+                                              TextSpan(
+                                                text: '${f.field_name} : \n',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.w700,
+                                                ),
+                                                children: [
+                                                  TextSpan(
+                                                    text: f.field_value,
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.normal,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                        textAlign: s.formItemsTextAlign,
-                                      );
-                                    })
-                                  ],
+                                              textAlign: s.formItemsTextAlign,
+                                            );
+                                          })
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 )
                             ],
                           ),
