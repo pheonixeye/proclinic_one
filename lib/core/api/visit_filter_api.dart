@@ -15,22 +15,18 @@ class VisitFilterApi {
       'patient_id, clinic_id, added_by_id, added_by_id.account_type_id, added_by_id.app_permissions_ids, visit_status_id, visit_type_id, patient_progress_status_id';
 
   Future<ApiResult<List<Visit>>> fetctVisitsOfDateRange({
-    required int page,
-    required int perPage,
     required String from,
     required String to,
   }) async {
     try {
       final _response =
-          await PocketbaseHelper.pb.collection(collection).getList(
-                page: page,
-                perPage: perPage,
+          await PocketbaseHelper.pb.collection(collection).getFullList(
                 filter: "visit_date >= '$from' && visit_date <= '$to'",
-                sort: '-created',
+                sort: '-visit_date',
                 expand: _expand,
               );
 
-      final _visits = _response.items.map((e) {
+      final _visits = _response.map((e) {
         return Visit.fromRecordModel(e);
       }).toList();
 

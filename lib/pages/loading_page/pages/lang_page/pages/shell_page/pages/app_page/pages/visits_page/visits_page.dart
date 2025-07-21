@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:proklinik_one/core/api/_api_result.dart';
+import 'package:proklinik_one/core/api/visit_data_api.dart';
+import 'package:proklinik_one/extensions/clinic_schedule_shift_ext.dart';
 import 'package:proklinik_one/extensions/loc_ext.dart';
 import 'package:proklinik_one/extensions/number_translator.dart';
-import 'package:proklinik_one/functions/shell_function.dart';
 import 'package:proklinik_one/models/visits/_visit.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/visits_page/widgets/visit_data_view_dialog.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/visits_page/widgets/visits_filter_header.dart';
+import 'package:proklinik_one/providers/px_app_constants.dart';
+import 'package:proklinik_one/providers/px_auth.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
+import 'package:proklinik_one/providers/px_visit_data.dart';
 import 'package:proklinik_one/providers/px_visit_filter.dart';
 import 'package:proklinik_one/widgets/central_error.dart';
 import 'package:proklinik_one/widgets/central_loading.dart';
@@ -17,8 +23,8 @@ class VisitsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer2<PxVisitFilter, PxLocale>(
-      builder: (context, v, l, _) {
+    return Consumer3<PxVisitFilter, PxAppConstants, PxLocale>(
+      builder: (context, v, a, l, _) {
         return Scaffold(
           body: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -27,7 +33,7 @@ class VisitsPage extends StatelessWidget {
               Expanded(
                 child: Builder(
                   builder: (context) {
-                    while (v.visits == null) {
+                    while (v.visits == null || a.constants == null) {
                       return CentralLoading();
                     }
                     while (v.visits is ApiErrorResult) {
@@ -43,62 +49,166 @@ class VisitsPage extends StatelessWidget {
                         message: context.loc.noVisitsFoundForSelectedDateRange,
                       );
                     }
-                    return ListView.builder(
-                      itemCount: _items.length,
-                      itemBuilder: (context, index) {
-                        final _item = _items[index];
-                        return Card.outlined(
-                          elevation: 6,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: ListTile(
-                              title: Row(
-                                spacing: 8,
-                                children: [
-                                  FloatingActionButton.small(
-                                    heroTag: UniqueKey(),
-                                    onPressed: null,
-                                    child: Text(
-                                        '${index + 1}'.toArabicNumber(context)),
+                    return SingleChildScrollView(
+                      restorationId: 'v-vertical',
+                      scrollDirection: Axis.vertical,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: SingleChildScrollView(
+                              restorationId: 'v-horizontal',
+                              scrollDirection: Axis.horizontal,
+                              child: DataTable(
+                                border: TableBorder.all(),
+                                dividerThickness: 2,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                headingRowColor: WidgetStatePropertyAll(
+                                  Colors.amber.shade50,
+                                ),
+                                columns: [
+                                  DataColumn(
+                                    label: Text(context.loc.number),
                                   ),
-                                  Text(_item.patient.name),
+                                  DataColumn(
+                                    label: Text(context.loc.patientName),
+                                  ),
+                                  DataColumn(
+                                    label: Text(context.loc.attendanceStatus),
+                                  ),
+                                  DataColumn(
+                                    label: Text(context.loc.visitDate),
+                                  ),
+                                  DataColumn(
+                                    label: Text(context.loc.visitType),
+                                  ),
+                                  DataColumn(
+                                    label: Text(context.loc.clinic),
+                                  ),
+                                  DataColumn(
+                                    label: Text(context.loc.clinicShift),
+                                  ),
+                                  DataColumn(
+                                    label: Text(context.loc.addedBy),
+                                  ),
+                                ],
+                                rows: [
+                                  ..._items.map((x) {
+                                    final index = _items.indexOf(x);
+                                    return DataRow(
+                                      cells: [
+                                        DataCell(
+                                          Center(
+                                            child: Text('${index + 1}'
+                                                .toArabicNumber(context)),
+                                          ),
+                                        ),
+                                        DataCell(
+                                          Center(
+                                            child: InkWell(
+                                              hoverColor: Colors.amber.shade50,
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              onTap: () async {
+                                                //TODO: Go to visit Data View Dialog
+                                                await showDialog<void>(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return ChangeNotifierProvider(
+                                                      create: (context) =>
+                                                          PxVisitData(
+                                                              api: VisitDataApi(
+                                                        doc_id: PxAuth
+                                                            .doc_id_static_getter,
+                                                        visit_id: x.id,
+                                                      )),
+                                                      child:
+                                                          VisitDataViewDialog(),
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Text(x.patient.name),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        DataCell(
+                                          Builder(
+                                            builder: (context) {
+                                              final _isAttended =
+                                                  x.visit_status == a.attended;
+                                              return Center(
+                                                child: Icon(
+                                                  _isAttended
+                                                      ? Icons.check
+                                                      : Icons.close,
+                                                  color: _isAttended
+                                                      ? Colors.green
+                                                      : Colors.red,
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                        DataCell(
+                                          Center(
+                                            child: Text(
+                                              DateFormat(
+                                                      'dd - MM - yyyy', l.lang)
+                                                  .format(x.visit_date),
+                                            ),
+                                          ),
+                                        ),
+                                        DataCell(
+                                          Center(
+                                            child: Text(
+                                              l.isEnglish
+                                                  ? x.visit_type.name_en
+                                                  : x.visit_type.name_ar,
+                                            ),
+                                          ),
+                                        ),
+                                        DataCell(
+                                          Center(
+                                            child: Text(
+                                              l.isEnglish
+                                                  ? x.clinic.name_en
+                                                  : x.clinic.name_ar,
+                                            ),
+                                          ),
+                                        ),
+                                        DataCell(
+                                          Center(
+                                            child: Text(
+                                              x.clinic_schedule_shift
+                                                  .formattedFromTo(context),
+                                            ),
+                                          ),
+                                        ),
+                                        DataCell(
+                                          Center(
+                                            child: Text(
+                                              x.added_by.email,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  })
                                 ],
                               ),
                             ),
                           ),
-                        );
-                      },
+                        ],
+                      ),
                     );
                   },
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton.outlined(
-                    onPressed: () async {
-                      await shellFunction(
-                        context,
-                        toExecute: () async {
-                          await v.previousPage();
-                        },
-                      );
-                    },
-                    icon: const Icon(Icons.arrow_back),
-                  ),
-                  Text('- ${v.page} -'),
-                  IconButton.outlined(
-                    onPressed: () async {
-                      await shellFunction(
-                        context,
-                        toExecute: () async {
-                          await v.nextPage();
-                        },
-                      );
-                    },
-                    icon: const Icon(Icons.arrow_forward),
-                  ),
-                ],
               ),
             ],
           ),

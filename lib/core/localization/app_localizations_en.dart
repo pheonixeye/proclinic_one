@@ -933,4 +933,19 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get noVisitsFoundForSelectedDateRange =>
       'No Visits Found For Selected Date Range';
+
+  @override
+  String get patientName => 'Patient Name';
+
+  @override
+  String get visitDate => 'Visit Date';
+
+  @override
+  String get clinicShift => 'Clinic Shift';
+
+  @override
+  String get visitType => 'Visit Type';
+
+  @override
+  String get visitData => 'Visit Data';
 }

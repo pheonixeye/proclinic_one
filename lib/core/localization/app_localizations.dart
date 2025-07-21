@@ -1885,6 +1885,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No Visits Found For Selected Date Range'**
   String get noVisitsFoundForSelectedDateRange;
+
+  /// No description provided for @patientName.
+  ///
+  /// In en, this message translates to:
+  /// **'Patient Name'**
+  String get patientName;
+
+  /// No description provided for @visitDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Visit Date'**
+  String get visitDate;
+
+  /// No description provided for @clinicShift.
+  ///
+  /// In en, this message translates to:
+  /// **'Clinic Shift'**
+  String get clinicShift;
+
+  /// No description provided for @visitType.
+  ///
+  /// In en, this message translates to:
+  /// **'Visit Type'**
+  String get visitType;
+
+  /// No description provided for @visitData.
+  ///
+  /// In en, this message translates to:
+  /// **'Visit Data'**
+  String get visitData;
 }
 
 class _AppLocalizationsDelegate

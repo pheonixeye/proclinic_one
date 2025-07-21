@@ -326,5 +326,10 @@
     "@@clinics_patients_progress_page": "",
     "patientMovementProgress" : "Patient Movement Progress",
     "@@visits_page": "",
-    "noVisitsFoundForSelectedDateRange" : "No Visits Found For Selected Date Range"
+    "noVisitsFoundForSelectedDateRange" : "No Visits Found For Selected Date Range",
+    "patientName" : "Patient Name",
+    "visitDate" : "Visit Date",
+    "clinicShift" : "Clinic Shift",
+    "visitType" : "Visit Type",
+    "visitData" : "Visit Data"
 }

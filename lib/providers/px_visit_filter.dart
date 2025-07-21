@@ -33,8 +33,8 @@ class PxVisitFilter extends ChangeNotifier {
 
   Future<void> _fetchVisitsOfDateRange() async {
     _visits = await api.fetctVisitsOfDateRange(
-      page: page,
-      perPage: perPage,
+      // page: page,
+      // perPage: perPage,
       from: formattedFrom,
       to: formattedTo,
     );

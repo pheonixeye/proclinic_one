@@ -1,7 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:proklinik_one/core/api/_api_result.dart';
 import 'package:proklinik_one/extensions/loc_ext.dart';
+import 'package:proklinik_one/extensions/number_translator.dart';
 import 'package:proklinik_one/functions/shell_function.dart';
+import 'package:proklinik_one/models/visits/_visit.dart';
 import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:proklinik_one/providers/px_visit_filter.dart';
 import 'package:provider/provider.dart';
@@ -48,6 +52,41 @@ class _VisitsFilterHeaderState extends State<VisitsFilterHeader> {
                 children: [
                   Expanded(
                     child: Text(context.loc.visits),
+                  ),
+                  Expanded(
+                    flex: 4,
+                    child: Row(
+                      children: [
+                        Text(context.loc.from),
+                        Text(' : '),
+                        Text(
+                          DateFormat('dd - MM - yyyy', l.lang).format(v.from),
+                          style: TextStyle(
+                            color: Colors.red,
+                          ),
+                        ),
+                        Text('  '),
+                        Text(context.loc.to),
+                        Text(' : '),
+                        Text(
+                          DateFormat('dd - MM - yyyy', l.lang).format(v.to),
+                          style: TextStyle(
+                            color: Colors.green,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Builder(
+                    builder: (context) {
+                      while (v.visits == null) {
+                        return CupertinoActivityIndicator();
+                      }
+                      final _length =
+                          (v.visits as ApiDataResult<List<Visit>>).data.length;
+                      return Text('($_length)'.toArabicNumber(context));
+                    },
                   ),
                 ],
               ),

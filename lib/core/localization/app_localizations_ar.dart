@@ -932,4 +932,19 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get noVisitsFoundForSelectedDateRange =>
       'لا يوجد زيارات في الفترة المحددة';
+
+  @override
+  String get patientName => 'اسم المريض';
+
+  @override
+  String get visitDate => 'تاريخ الزيارة';
+
+  @override
+  String get clinicShift => 'فترة الزيارة';
+
+  @override
+  String get visitType => 'نوع الزيارة';
+
+  @override
+  String get visitData => 'بيانات الزيارة';
 }

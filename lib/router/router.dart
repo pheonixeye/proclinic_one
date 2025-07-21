@@ -5,6 +5,7 @@ import 'package:proklinik_one/core/api/doctor_profile_items_api.dart';
 import 'package:proklinik_one/core/api/forms_api.dart';
 import 'package:proklinik_one/core/api/patients_api.dart';
 import 'package:proklinik_one/core/api/visit_data_api.dart';
+import 'package:proklinik_one/core/api/visit_filter_api.dart';
 import 'package:proklinik_one/functions/dprint.dart';
 import 'package:proklinik_one/models/doctor_items/doctor_lab_item.dart';
 import 'package:proklinik_one/models/doctor_items/doctor_procedure_item.dart';
@@ -48,6 +49,7 @@ import 'package:proklinik_one/providers/px_locale.dart';
 import 'package:proklinik_one/providers/px_patients.dart';
 import 'package:proklinik_one/providers/px_speciality.dart';
 import 'package:proklinik_one/providers/px_visit_data.dart';
+import 'package:proklinik_one/providers/px_visit_filter.dart';
 import 'package:proklinik_one/providers/px_visit_prescription_state.dart';
 import 'package:proklinik_one/utils/shared_prefs.dart';
 import 'package:proklinik_one/utils/utils_keys.dart';
@@ -472,8 +474,15 @@ class AppRouter {
                             path: '/$visits',
                             name: visits,
                             builder: (context, state) {
-                              return VisitsPage(
-                                key: state.pageKey,
+                              return ChangeNotifierProvider(
+                                create: (context) => PxVisitFilter(
+                                  api: VisitFilterApi(
+                                    doc_id: PxAuth.doc_id_static_getter,
+                                  ),
+                                ),
+                                child: VisitsPage(
+                                  key: state.pageKey,
+                                ),
                               );
                             },
                             routes: [

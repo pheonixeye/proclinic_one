@@ -325,5 +325,10 @@
     "@@clinics_patients_progress_page": "",
     "patientMovementProgress" : "متابعة تقدم المرضي",
     "@@visits_page": "",
-    "noVisitsFoundForSelectedDateRange" : "لا يوجد زيارات في الفترة المحددة"
+    "noVisitsFoundForSelectedDateRange" : "لا يوجد زيارات في الفترة المحددة",
+    "patientName" : "اسم المريض",
+    "visitDate" : "تاريخ الزيارة",
+    "clinicShift" : "فترة الزيارة",
+    "visitType" : "نوع الزيارة",
+    "visitData" : "بيانات الزيارة"
     }
