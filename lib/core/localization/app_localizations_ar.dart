@@ -928,4 +928,8 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get patientMovementProgress => 'متابعة تقدم المرضي';
+
+  @override
+  String get noVisitsFoundForSelectedDateRange =>
+      'لا يوجد زيارات في الفترة المحددة';
 }

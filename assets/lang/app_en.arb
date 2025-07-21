@@ -324,5 +324,7 @@
     "totalIncome" : "Total Income",
     "netBalance" : "Net Balance",
     "@@clinics_patients_progress_page": "",
-    "patientMovementProgress" : "Patient Movement Progress"
+    "patientMovementProgress" : "Patient Movement Progress",
+    "@@visits_page": "",
+    "noVisitsFoundForSelectedDateRange" : "No Visits Found For Selected Date Range"
 }

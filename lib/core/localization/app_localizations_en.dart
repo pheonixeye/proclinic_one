@@ -929,4 +929,8 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get patientMovementProgress => 'Patient Movement Progress';
+
+  @override
+  String get noVisitsFoundForSelectedDateRange =>
+      'No Visits Found For Selected Date Range';
 }

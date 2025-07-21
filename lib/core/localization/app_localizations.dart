@@ -1879,6 +1879,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Patient Movement Progress'**
   String get patientMovementProgress;
+
+  /// No description provided for @noVisitsFoundForSelectedDateRange.
+  ///
+  /// In en, this message translates to:
+  /// **'No Visits Found For Selected Date Range'**
+  String get noVisitsFoundForSelectedDateRange;
 }
 
 class _AppLocalizationsDelegate

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:proklinik_one/extensions/loc_ext.dart';
+import 'package:proklinik_one/extensions/number_translator.dart';
 import 'package:proklinik_one/extensions/visit_ext.dart';
 import 'package:proklinik_one/functions/shell_function.dart';
 import 'package:proklinik_one/models/visits/_visit.dart';
@@ -84,7 +85,8 @@ class VisitViewCard extends StatelessWidget {
                         heroTag:
                             '${visit.id}_${visit.patient_entry_number}_${visit.patient_progress_status}',
                         onPressed: null,
-                        child: Text('${visit.patient_entry_number}'),
+                        child: Text('${visit.patient_entry_number}'
+                            .toArabicNumber(context)),
                       ),
                       InkWell(
                         borderRadius: BorderRadius.circular(50),

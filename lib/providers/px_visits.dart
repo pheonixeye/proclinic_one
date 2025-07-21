@@ -13,23 +13,6 @@ class PxVisits extends ChangeNotifier {
     _fetchVisitsOfToday();
   }
 
-  // static TabController? _tabController;
-  // TabController? get tabController => _tabController;
-
-  // TabController getTabController({
-  //   required int length,
-  //   required TickerProvider vsync,
-  // }) {
-  //   if (_tabController == null) {
-  //     _tabController = TabController(
-  //       length: length,
-  //       vsync: vsync,
-  //     );
-  //     return _tabController!;
-  //   }
-  //   return _tabController!;
-  // }
-
   ApiResult<List<Visit>>? _visits;
   ApiResult<List<Visit>>? get visits => _visits;
 
@@ -91,11 +74,13 @@ class PxVisits extends ChangeNotifier {
     toggleIsUpdating();
     final _visits = await _fetchVisitsOfASpecificDate(visit_date)
         as ApiDataResult<List<Visit>>;
-    final _shift_visits =
-        _visits.data.where((e) => e.clinic_schedule_shift == shift).toList();
+    final _shift_visits = _visits.data
+        .where((e) => e.clinic_schedule_shift.id == shift.id)
+        .toList();
     toggleIsUpdating();
     _remainingVisitsPerClinicShift = _shift_visits.length;
     notifyListeners();
+    // print(_remainingVisitsPerClinicShift);
     return _shift_visits.length;
   }
 

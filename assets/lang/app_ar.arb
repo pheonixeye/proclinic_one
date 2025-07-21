@@ -323,5 +323,7 @@
     "totalIncome" : "اجمالي الوارد",
     "netBalance" : "الصافي",
     "@@clinics_patients_progress_page": "",
-    "patientMovementProgress" : "متابعة تقدم المرضي"
+    "patientMovementProgress" : "متابعة تقدم المرضي",
+    "@@visits_page": "",
+    "noVisitsFoundForSelectedDateRange" : "لا يوجد زيارات في الفترة المحددة"
     }

@@ -58,12 +58,13 @@ class VisitPrescriptionPage extends StatelessWidget {
                     controller: s.screenshotControllerWithImage,
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.amber.shade50,
+                        color: Colors.white,
                         image: DecorationImage(
                           image: CachedNetworkImageProvider(
                             clinic.prescriptionFileUrl(
                                 context.read<PxAuth>().doc_id),
                           ),
+                          fit: BoxFit.contain,
                         ),
                       ),
                       child: ConstrainedBox(
@@ -352,7 +353,7 @@ class VisitPrescriptionPage extends StatelessWidget {
                                             s.formItemsCrossAxisAlignment,
                                         children: [
                                           ...s.formItems!.map((f) {
-                                            //TODO: Adjust large paragraphs to fit the prescription image
+                                            //todo: Adjust large paragraphs to fit the prescription image
                                             return Text.rich(
                                               TextSpan(
                                                 text: '${f.field_name} : \n',
