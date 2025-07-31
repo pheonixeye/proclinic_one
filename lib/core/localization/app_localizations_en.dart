@@ -951,4 +951,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get patientCard => 'Patient Card';
+
+  @override
+  String get scanQrCode => 'Scan QrCode';
 }

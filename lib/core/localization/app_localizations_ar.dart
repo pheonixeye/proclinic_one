@@ -950,4 +950,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get patientCard => 'كارت المريض';
+
+  @override
+  String get scanQrCode => 'مسح الكود';
 }

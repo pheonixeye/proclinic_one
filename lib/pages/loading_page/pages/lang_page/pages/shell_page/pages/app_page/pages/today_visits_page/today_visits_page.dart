@@ -14,6 +14,7 @@ import 'package:proklinik_one/router/router.dart';
 import 'package:proklinik_one/widgets/central_error.dart';
 import 'package:proklinik_one/widgets/central_loading.dart';
 import 'package:proklinik_one/widgets/central_no_items.dart';
+import 'package:proklinik_one/widgets/floating_ax_menu_bubble.dart';
 import 'package:provider/provider.dart';
 
 class TodayVisitsPage extends StatefulWidget {
@@ -27,9 +28,27 @@ class _TodayVisitsPageState extends State<TodayVisitsPage>
     with TickerProviderStateMixin {
   TabController? _tabController;
 
+  late final AnimationController _animationController;
+  late final Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 260),
+    );
+
+    final curvedAnimation =
+        CurvedAnimation(curve: Curves.easeInOut, parent: _animationController);
+    _animation = Tween<double>(begin: 0, end: 1).animate(curvedAnimation);
+  }
+
   @override
   void dispose() {
     _tabController?.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
@@ -129,19 +148,69 @@ class _TodayVisitsPageState extends State<TodayVisitsPage>
               ),
             ],
           ),
-          floatingActionButton: FloatingActionButton.small(
-            heroTag: 'add-new-visit-nav',
-            tooltip: context.loc.addNewVisit,
-            onPressed: () {
-              GoRouter.of(context).goNamed(
-                AppRouter.patients,
-                pathParameters: defaultPathParameters(context),
-              );
-            },
-            child: const Icon(Icons.add),
+          floatingActionButton: FloatingActionMenuBubble(
+            animation: _animation,
+            // On pressed change animation state
+            onPress: () => _animationController.isCompleted
+                ? _animationController.reverse()
+                : _animationController.forward(),
+            // Floating Action button Icon color
+            iconColor: Colors.white,
+            // Flaoting Action button Icon
+            // iconData: Icons.settings,
+            animatedIconData: AnimatedIcons.menu_arrow,
+            backGroundColor: Colors.amber,
+            items: [
+              Bubble(
+                title: context.loc.addNewVisit,
+                iconColor: Colors.white,
+                bubbleColor: Colors.amber,
+                icon: Icons.add,
+                titleStyle: TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                ),
+                onPress: () async {
+                  _animationController.reverse();
+                  GoRouter.of(context).goNamed(
+                    AppRouter.patients,
+                    pathParameters: defaultPathParameters(context),
+                  );
+                },
+              ),
+              Bubble(
+                title: context.loc.scanQrCode,
+                iconColor: Colors.white,
+                bubbleColor: Colors.amber,
+                icon: Icons.qr_code,
+                titleStyle: TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                ),
+                onPress: () async {
+                  _animationController.reverse();
+                  //TODO: scan code
+                  //TODO: get patient data
+                  //TODO: open new visit dialog
+                },
+              ),
+            ],
           ),
         );
       },
     );
   }
 }
+
+
+// FloatingActionButton.small(
+//   heroTag: 'add-new-visit-nav',
+//   tooltip: context.loc.addNewVisit,
+//   onPressed: () {
+//     GoRouter.of(context).goNamed(
+//       AppRouter.patients,
+//       pathParameters: defaultPathParameters(context),
+//     );
+//   },
+//   child: const Icon(Icons.add),
+// ),

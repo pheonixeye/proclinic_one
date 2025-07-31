@@ -1921,6 +1921,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Patient Card'**
   String get patientCard;
+
+  /// No description provided for @scanQrCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan QrCode'**
+  String get scanQrCode;
 }
 
 class _AppLocalizationsDelegate

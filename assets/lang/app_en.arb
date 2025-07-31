@@ -332,5 +332,6 @@
     "clinicShift" : "Clinic Shift",
     "visitType" : "Visit Type",
     "visitData" : "Visit Data",
-    "patientCard" : "Patient Card"
+    "patientCard" : "Patient Card",
+    "scanQrCode" : "Scan QrCode"
 }

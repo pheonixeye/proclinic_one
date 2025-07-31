@@ -331,5 +331,6 @@
     "clinicShift" : "فترة الزيارة",
     "visitType" : "نوع الزيارة",
     "visitData" : "بيانات الزيارة",
-    "patientCard" : "كارت المريض"
+    "patientCard" : "كارت المريض",
+    "scanQrCode" : "مسح الكود"
     }
