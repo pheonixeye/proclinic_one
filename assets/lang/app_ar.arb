@@ -330,5 +330,6 @@
     "visitDate" : "تاريخ الزيارة",
     "clinicShift" : "فترة الزيارة",
     "visitType" : "نوع الزيارة",
-    "visitData" : "بيانات الزيارة"
+    "visitData" : "بيانات الزيارة",
+    "patientCard" : "كارت المريض"
     }

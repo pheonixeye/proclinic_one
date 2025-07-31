@@ -948,4 +948,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get visitData => 'Visit Data';
+
+  @override
+  String get patientCard => 'Patient Card';
 }

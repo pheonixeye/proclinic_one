@@ -12,6 +12,7 @@ import 'package:proklinik_one/models/visits/visit_create_dto.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/patients_page/widgets/add_new_visit_dialog.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/patients_page/widgets/create_edit_patient_dialog.dart';
 import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/patients_page/widgets/patient_forms_dialog.dart';
+import 'package:proklinik_one/pages/loading_page/pages/lang_page/pages/shell_page/pages/app_page/pages/patients_page/widgets/patient_id_card_dialog.dart';
 import 'package:proklinik_one/providers/px_app_constants.dart';
 import 'package:proklinik_one/providers/px_clinics.dart';
 import 'package:proklinik_one/providers/px_forms.dart';
@@ -196,6 +197,7 @@ class _PatientInfoCardState extends State<PatientInfoCard> {
                             child: Row(
                               children: [
                                 const Icon(Icons.event_available_rounded),
+                                SizedBox(width: 4),
                                 Text(context.loc.addNewVisit),
                               ],
                             ),
@@ -239,6 +241,7 @@ class _PatientInfoCardState extends State<PatientInfoCard> {
                             child: Row(
                               children: [
                                 const Icon(Icons.sick_sharp),
+                                SizedBox(width: 4),
                                 Text(context.loc.previousPatientVisits),
                               ],
                             ),
@@ -246,7 +249,27 @@ class _PatientInfoCardState extends State<PatientInfoCard> {
                           PopupMenuItem(
                             child: Row(
                               children: [
+                                const Icon(FontAwesomeIcons.idCard),
+                                SizedBox(width: 4),
+                                Text(context.loc.patientCard),
+                              ],
+                            ),
+                            onTap: () async {
+                              await showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return PatientIdCardDialog(
+                                    patient: widget.patient,
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                          PopupMenuItem(
+                            child: Row(
+                              children: [
                                 const Icon(Icons.attach_file),
+                                SizedBox(width: 4),
                                 Text(context.loc.patientForms),
                               ],
                             ),

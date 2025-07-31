@@ -947,4 +947,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get visitData => 'بيانات الزيارة';
+
+  @override
+  String get patientCard => 'كارت المريض';
 }

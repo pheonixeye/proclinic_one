@@ -331,5 +331,6 @@
     "visitDate" : "Visit Date",
     "clinicShift" : "Clinic Shift",
     "visitType" : "Visit Type",
-    "visitData" : "Visit Data"
+    "visitData" : "Visit Data",
+    "patientCard" : "Patient Card"
 }

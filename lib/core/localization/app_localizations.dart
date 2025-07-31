@@ -1915,6 +1915,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Visit Data'**
   String get visitData;
+
+  /// No description provided for @patientCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Patient Card'**
+  String get patientCard;
 }
 
 class _AppLocalizationsDelegate
