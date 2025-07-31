@@ -27,6 +27,11 @@ class _AppPageState extends State<AppPage> with SingleTickerProviderStateMixin {
     NavigationRailDestination(
       icon: const Icon(Icons.person),
       selectedIcon: const Icon(FontAwesomeIcons.personCirclePlus),
+      label: Text(context.loc.patients),
+    ),
+    NavigationRailDestination(
+      icon: const Icon(FontAwesomeIcons.hospitalUser),
+      selectedIcon: const Icon(FontAwesomeIcons.wheelchair),
       label: Text(context.loc.visits),
     ),
     NavigationRailDestination(
@@ -106,6 +111,11 @@ class _AppPageState extends State<AppPage> with SingleTickerProviderStateMixin {
                   icon: const Icon(Icons.perm_contact_calendar_outlined),
                   activeIcon: const Icon(Icons.perm_contact_calendar),
                   label: context.loc.todayVisits,
+                ),
+                BottomNavigationBarItem(
+                  icon: const Icon(FontAwesomeIcons.hospitalUser),
+                  activeIcon: const Icon(FontAwesomeIcons.wheelchair),
+                  label: context.loc.patients,
                 ),
                 BottomNavigationBarItem(
                   icon: const Icon(Icons.person),

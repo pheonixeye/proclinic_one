@@ -471,6 +471,26 @@ class AppRouter {
                       StatefulShellBranch(
                         routes: [
                           GoRoute(
+                            path: '/$patients',
+                            name: patients,
+                            builder: (context, state) {
+                              return ChangeNotifierProvider.value(
+                                value: PxPatients(
+                                  api: PatientsApi(
+                                    doc_id: context.read<PxAuth>().doc_id,
+                                  ),
+                                ),
+                                child: PatientsPage(
+                                  key: state.pageKey,
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                      StatefulShellBranch(
+                        routes: [
+                          GoRoute(
                             path: '/$visits',
                             name: visits,
                             builder: (context, state) {
@@ -570,22 +590,22 @@ class AppRouter {
                     ],
                   ),
 
-                  GoRoute(
-                    path: patients,
-                    name: patients,
-                    builder: (context, state) {
-                      return ChangeNotifierProvider.value(
-                        value: PxPatients(
-                          api: PatientsApi(
-                            doc_id: context.read<PxAuth>().doc_id,
-                          ),
-                        ),
-                        child: PatientsPage(
-                          key: state.pageKey,
-                        ),
-                      );
-                    },
-                  ),
+                  // GoRoute(
+                  //   path: patients,
+                  //   name: patients,
+                  //   builder: (context, state) {
+                  //     return ChangeNotifierProvider.value(
+                  //       value: PxPatients(
+                  //         api: PatientsApi(
+                  //           doc_id: context.read<PxAuth>().doc_id,
+                  //         ),
+                  //       ),
+                  //       child: PatientsPage(
+                  //         key: state.pageKey,
+                  //       ),
+                  //     );
+                  //   },
+                  // ),
                   GoRoute(
                     path: clinics,
                     name: clinics,
